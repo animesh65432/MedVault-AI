@@ -80,10 +80,10 @@ class Document(Base):
         JSON,
         nullable=True
     )
-
+    
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=datetime.utcnow
+        default=lambda: datetime.utcnow()
     )
 
     owner: Mapped["User"] = relationship(

@@ -348,6 +348,7 @@ RULES:
   - 1-0-1, 1-1-1, 0-0-1 etc. → morning-afternoon-night pattern
 - Do NOT hallucinate any field.
 - Do NOT invent data that is not present in the document.
+- Translate all the sentences in the document to English in your understanding, but return all extracted values exactly as they appear in the document (including non-English text).
 - Always return a single flat JSON object. No extra keys, no extra text.
 
 MISSING FIELDS RULE (important):

@@ -7,7 +7,7 @@ async def extract_text_from_image(image_url: str) -> str:
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an OCR and text extraction engine."
+                    "content": "You are an OCR and text extraction engine.and also translate to english if the text is in other language. Extract clean structured text from the given image URL. Only extract text and do not add any commentary or additional information."
                 },
                 {
                     "role": "user",

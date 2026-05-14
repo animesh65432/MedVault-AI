@@ -17,5 +17,6 @@ config = {
     "R2_PUBLIC_URL" : os.getenv("R2_PUBLIC_URL"),
     "GROQ_API_KEY": os.getenv("GROQ_API_KEY"),
     "CHECK_MEDICAL_RECORD_API_KEY": os.getenv("CHECK_MEDICAL_RECORD_API_KEY"),
-    "EXPLAIN_MEDICAL_API_KEY" : os.getenv("EXPLAIN_MEDICAL_API_KEY")
+    "EXPLAIN_MEDICAL_API_KEY": os.getenv("EXPLAIN_MEDICAL_API_KEY"),
+    "JINA_API_KEY": os.getenv("JINA_API_KEY")
 }
