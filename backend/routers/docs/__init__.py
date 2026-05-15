@@ -1,4 +1,5 @@
 import hashlib
+from datetime import datetime
 from fastapi import APIRouter, Depends,UploadFile ,HTTPException
 from db.database import async_get_db
 from middleware.auth import auth
@@ -25,7 +26,7 @@ async def generate_docs(file: UploadFile, db: AsyncSession = Depends(async_get_d
   already_exists = await CheckIfPhotoAlreadyExists(db, file_hash)
 
   if already_exists:
-    raise HTTPException(status_code=404, detail="Document not found")
+    raise HTTPException(status_code=404, detail="Document already exists")
 
 
   image_url = await upload_photo(file)
@@ -35,7 +36,7 @@ async def generate_docs(file: UploadFile, db: AsyncSession = Depends(async_get_d
   
   extracted_text = await extract_text_from_image(image_url)
 
-  if not extracted_text:
+  if not extracted_text or len(extracted_text.strip()) == 0:
     raise HTTPException(status_code=500, detail="Failed to extract text from image")
   
   is_medical = await checkItisMediCineOrNot(extracted_text)
@@ -44,6 +45,10 @@ async def generate_docs(file: UploadFile, db: AsyncSession = Depends(async_get_d
     raise HTTPException(status_code=400, detail="The uploaded document does not appear to be a medical record.")
 
   medical_record = await make_medical_record(extracted_text)
+
+  date_str = medical_record["document_metadata"].get("date", "")
+  
+  document_date = datetime.strptime(date_str, "%d-%m-%Y") if date_str else datetime.now()
 
   embedding = await generate_embedding(extracted_text)
 
@@ -56,6 +61,7 @@ async def generate_docs(file: UploadFile, db: AsyncSession = Depends(async_get_d
     "doc_type": medical_record["doc_type"],
     "document_metadata": medical_record["document_metadata"],
     "embedding": embedding,
+    "date": document_date
   })
 
   return {
@@ -69,6 +75,7 @@ async def generate_docs(file: UploadFile, db: AsyncSession = Depends(async_get_d
         "document_metadata": record.document_metadata,
         "created_at": record.created_at,
         "user_id": record.user_id,
+        "date": document_date
     }
   }
 

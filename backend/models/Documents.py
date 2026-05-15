@@ -8,7 +8,7 @@ from sqlalchemy import (
     UniqueConstraint
 )
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 from datetime import datetime
 
 from sqlalchemy.orm import (
@@ -92,4 +92,10 @@ class Document(Base):
         back_populates="documents",
         lazy="noload",
         init=False
+    )
+
+    date: Mapped[Optional[datetime]] = mapped_column(
+        DateTime,
+        nullable=True,
+        default=None
     )

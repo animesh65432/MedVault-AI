@@ -363,6 +363,13 @@ WHEN TO USE "Other":
   known types at all — e.g. a general letter, unknown form, or unrecognizable content.
 - If the document has even partial resemblance to a known type, prefer that type.
 
+DATE FORMAT RULE:                                          # ← add here
+- Always return all date fields in exactly this format: DD-MM-YYYY
+- Examples: "12-01-2025", "05-03-2025"
+- Never return dates in any other format.
+- If the date is unclear or missing, return "".
+
+
 Medical Document Text:
 {text}
 """

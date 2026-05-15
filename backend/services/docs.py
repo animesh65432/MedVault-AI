@@ -14,7 +14,6 @@ async def get_document_by_id(db: AsyncSession, document_id: int) -> Document:
 async def create_document(db: AsyncSession, document_data: dict) -> Document:
     try:
         new_document = Document(**document_data)
-        print("New Document:", new_document)
         db.add(new_document)
         await db.commit()
         await db.refresh(new_document)
