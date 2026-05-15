@@ -1,18 +1,19 @@
 import hashlib
-from fastapi import APIRouter, Depends,UploadFile
+from fastapi import APIRouter, Depends,UploadFile ,HTTPException
 from db.database import async_get_db
 from middleware.auth import auth
 from utils.upload_photo import upload_photo
 from utils.checkItisMediCineOrNot import checkItisMediCineOrNot
 from utils.EXtractText import extract_text_from_image
 from utils.MakeDocument import make_medical_record
-from services.docs import create_document
+from Schemas.DocumentResponse import DocumentResponse
+from services.docs import GetDocumentById, create_document , CheckIfPhotoAlreadyExists ,GetAllDocumentsForUser
 from utils.generate_embedding import generate_embedding
 from db.database import AsyncSession
 
 Docsrouter = APIRouter()
 
-@Docsrouter.post("/generate-pdf")
+@Docsrouter.post("/generate-docs")
 async def generate_docs(file: UploadFile, db: AsyncSession = Depends(async_get_db), current_user: dict = Depends(auth)):
 
   content = await file.read()
@@ -21,46 +22,32 @@ async def generate_docs(file: UploadFile, db: AsyncSession = Depends(async_get_d
 
   file.file.seek(0)
 
+  already_exists = await CheckIfPhotoAlreadyExists(db, file_hash)
+
+  if already_exists:
+    raise HTTPException(status_code=404, detail="Document not found")
+
+
   image_url = await upload_photo(file)
 
   if not image_url:
-    return {
-      "success": False,
-      "message": "Upload failed"
-    }
+    raise HTTPException(status_code=500, detail="Upload failed")
   
   extracted_text = await extract_text_from_image(image_url)
 
   if not extracted_text:
-    return {
-      "success": False,
-      "message": "Failed to extract text from image"
-    }
+    raise HTTPException(status_code=500, detail="Failed to extract text from image")
   
   is_medical = await checkItisMediCineOrNot(extracted_text)
 
   if is_medical.strip() != "True":
-    return {
-        "is_medical": False,
-        "message": "The uploaded document does not appear to be a medical record."
-    }
+    raise HTTPException(status_code=400, detail="The uploaded document does not appear to be a medical record.")
 
   medical_record = await make_medical_record(extracted_text)
 
   embedding = await generate_embedding(extracted_text)
 
-  # record = await create_document(db, {
-  #   "title": medical_record["title"],
-  #   "content": extracted_text,
-  #   "user_id": current_user["id"],
-  #   "file_hash": file_hash,
-  #   "source_link": image_url,
-  #   "doc_type": medical_record["doc_type"],
-  #   "document_metadata": medical_record["document_metadata"],
-  #   "embedding": embedding
-  # })
-
-  record =  {
+  record = await create_document(db, {
     "title": medical_record["title"],
     "content": extracted_text,
     "user_id": current_user["id"],
@@ -68,7 +55,49 @@ async def generate_docs(file: UploadFile, db: AsyncSession = Depends(async_get_d
     "source_link": image_url,
     "doc_type": medical_record["doc_type"],
     "document_metadata": medical_record["document_metadata"],
-    "embedding": embedding
+    "embedding": embedding,
+  })
+
+  return {
+    "is_medical": is_medical,
+    "record": {
+        "id": record.id,
+        "title": record.title,
+        "content": record.content,
+        "doc_type": record.doc_type,
+        "source_link": record.source_link,
+        "document_metadata": record.document_metadata,
+        "created_at": record.created_at,
+        "user_id": record.user_id,
+    }
   }
 
-  return {"is_medical": is_medical, "record": record}
+
+@Docsrouter.get("/GetAll",response_model=list[DocumentResponse])
+async def GetAllDocs(db: AsyncSession = Depends(async_get_db), current_user: dict = Depends(auth)):
+  auth_user_id = current_user["id"]
+  documents = await GetAllDocumentsForUser(db, auth_user_id)
+  return documents
+
+@Docsrouter.get("/Get/{doc_id}",response_model=DocumentResponse)
+async def GetDocument(doc_id: int, db: AsyncSession = Depends(async_get_db), current_user: dict = Depends(auth)):
+  auth_user_id = int(current_user["id"])
+  document = await GetDocumentById(db, doc_id, auth_user_id)
+  if not document:
+    raise HTTPException(status_code=404, detail="Document not found")
+  return document
+
+
+@Docsrouter.delete("/delete/{doc_id}")
+async def DeleteDocument(doc_id: int, db: AsyncSession = Depends(async_get_db), current_user: dict = Depends(auth)):
+  auth_user_id = int(current_user["id"])
+
+  document = await GetDocumentById(db, doc_id, auth_user_id)
+  
+  if not document:
+    raise HTTPException(status_code=404, detail="Document not found")
+  
+  await db.delete(document)
+  await db.commit()
+
+  return {"success": True, "message": "Document deleted successfully"}

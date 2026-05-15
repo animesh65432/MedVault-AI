@@ -83,11 +83,13 @@ class Document(Base):
     
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=lambda: datetime.utcnow()
+        insert_default=datetime.now, 
+        init=False
     )
 
     owner: Mapped["User"] = relationship(
         "User",
         back_populates="documents",
+        lazy="noload",
         init=False
     )
