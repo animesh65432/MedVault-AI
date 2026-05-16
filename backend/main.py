@@ -1,12 +1,21 @@
-from fastapi import FastAPI
+from fastapi import FastAPI 
 from exceptions.handlers import app_exception_handler
 from exceptions.custom_exceptions import AppException
 from routers import router as api_router
+from middleware.ratelimiter import rate_limiter
+from starlette.middleware.base import BaseHTTPMiddleware
 import uvicorn
 from db.database import async_engine, Base
 
 
 app = FastAPI()
+
+app.add_middleware(BaseHTTPMiddleware, dispatch=rate_limiter(limit=10, window_ms=60000))
+
+app.add_exception_handler(
+    AppException,
+    app_exception_handler
+)
 
 
 @app.on_event("startup")
@@ -21,11 +30,6 @@ def read_root():
 
 
 app.include_router(api_router, prefix="/api/v1")
-
-app.add_exception_handler(
-    AppException,
-    app_exception_handler
-)
 
 
 if __name__ == "__main__":

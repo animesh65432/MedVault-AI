@@ -26,6 +26,7 @@ from utils.make_chat import (
 from middleware.auth import auth
 
 
+
 ChatRouter = APIRouter()
 
 
@@ -85,7 +86,6 @@ async def chat(
 
     async def stream_generator():
 
-        # STREAM AI RESPONSE
         async for chunk in generate_chat_response_stream(
             query,
             context
@@ -96,7 +96,7 @@ async def chat(
                 "data": chunk
             }) + "\n"
 
-        # SEND SOURCES AT END
+      
         yield json.dumps({
             "type": "sources",
             "data": [
