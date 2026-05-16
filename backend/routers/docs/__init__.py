@@ -122,8 +122,6 @@ async def search_documents(query: str, db: AsyncSession = Depends(async_get_db),
   
   query_embedding = await generate_embedding(query, task="retrieval.query")
 
-  print("Query embedding first 5 values:", query_embedding[:5]) 
-  
   results = await SearchDocuments(
     db=db,
     user_id=current_user["id"],

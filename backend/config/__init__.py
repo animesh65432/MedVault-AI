@@ -18,5 +18,6 @@ config = {
     "GROQ_API_KEY": os.getenv("GROQ_API_KEY"),
     "CHECK_MEDICAL_RECORD_API_KEY": os.getenv("CHECK_MEDICAL_RECORD_API_KEY"),
     "EXPLAIN_MEDICAL_API_KEY": os.getenv("EXPLAIN_MEDICAL_API_KEY"),
-    "JINA_API_KEY": os.getenv("JINA_API_KEY")
+    "JINA_API_KEY": os.getenv("JINA_API_KEY"),
+    "CHAT_MEDICAL_API_KEY": os.getenv("CHAT_MEDICAL_API_KEY")
 }

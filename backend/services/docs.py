@@ -46,7 +46,9 @@ async def SearchDocuments(
     db: AsyncSession,
     user_id: int,
     query_embedding: list[float],
-    limit: int = 10
+    limit: int = 5,
+    max_distance: float = 0.7,
+    Is_source_link: bool = None
 ):
     stmt = (
         select(
@@ -54,15 +56,15 @@ async def SearchDocuments(
             Document.title,
             Document.content,
             Document.doc_type,
-            Document.embedding.cosine_distance(query_embedding).label("distance")
+            Document.embedding.cosine_distance(query_embedding).label("distance"),
+            Is_source_link and Document.source_link or None
         )
-        .where(Document.user_id == user_id)
-        .order_by(
-            Document.embedding.cosine_distance(query_embedding)
+        .where(
+            Document.user_id == user_id,
+            Document.embedding.cosine_distance(query_embedding) < max_distance 
         )
+        .order_by(Document.embedding.cosine_distance(query_embedding))
         .limit(limit)
     )
-
     result = await db.execute(stmt)
-
-    return result.mappings().all()
+    return [dict(row) for row in result.mappings().all()]
