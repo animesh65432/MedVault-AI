@@ -40,3 +40,29 @@ async def GetDocumentById(db: AsyncSession, document_id: int, user_id: int) -> D
     result = await db.execute(stmt)
     document = result.scalars().first()
     return document
+
+
+async def SearchDocuments(
+    db: AsyncSession,
+    user_id: int,
+    query_embedding: list[float],
+    limit: int = 10
+):
+    stmt = (
+        select(
+            Document.id,
+            Document.title,
+            Document.content,
+            Document.doc_type,
+            Document.embedding.cosine_distance(query_embedding).label("distance")
+        )
+        .where(Document.user_id == user_id)
+        .order_by(
+            Document.embedding.cosine_distance(query_embedding)
+        )
+        .limit(limit)
+    )
+
+    result = await db.execute(stmt)
+
+    return result.mappings().all()

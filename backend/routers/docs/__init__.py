@@ -8,9 +8,11 @@ from utils.checkItisMediCineOrNot import checkItisMediCineOrNot
 from utils.EXtractText import extract_text_from_image
 from utils.MakeDocument import make_medical_record
 from Schemas.DocumentResponse import DocumentResponse
-from services.docs import GetDocumentById, create_document , CheckIfPhotoAlreadyExists ,GetAllDocumentsForUser
+from services.docs import GetDocumentById, create_document , CheckIfPhotoAlreadyExists ,GetAllDocumentsForUser , SearchDocuments
 from utils.generate_embedding import generate_embedding
 from db.database import AsyncSession
+from utils.build_embedding_text import build_embedding_text
+
 
 Docsrouter = APIRouter()
 
@@ -50,7 +52,9 @@ async def generate_docs(file: UploadFile, db: AsyncSession = Depends(async_get_d
   
   document_date = datetime.strptime(date_str, "%d-%m-%Y") if date_str else datetime.now()
 
-  embedding = await generate_embedding(extracted_text)
+  embedding_text = build_embedding_text(medical_record)
+
+  embedding = await generate_embedding(embedding_text,task="retrieval.passage")
 
   record = await create_document(db, {
     "title": medical_record["title"],
@@ -108,3 +112,22 @@ async def DeleteDocument(doc_id: int, db: AsyncSession = Depends(async_get_db), 
   await db.commit()
 
   return {"success": True, "message": "Document deleted successfully"}
+
+
+@Docsrouter.get("/search")
+async def search_documents(query: str, db: AsyncSession = Depends(async_get_db), current_user: dict = Depends(auth)):
+
+  if not query or query.strip() == "":
+    raise HTTPException(status_code=400, detail="Query parameter is required")
+  
+  query_embedding = await generate_embedding(query, task="retrieval.query")
+
+  print("Query embedding first 5 values:", query_embedding[:5]) 
+  
+  results = await SearchDocuments(
+    db=db,
+    user_id=current_user["id"],
+    query_embedding=query_embedding
+  )
+
+  return results
