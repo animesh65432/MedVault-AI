@@ -16,14 +16,14 @@ GoogleSignin.configure({
 });
 
 export const User = createContext({
-    name: "Guest",
+    name: "",
     email: "",
     isLoggedIn: false,
     pofilepicture: "",
     token: "",
     IsLoading: false,
-    SignOut: () => { },
-    SignIn: () => { },
+    SignOut: () => new Promise<void>(() => { }),
+    SignIn: () => new Promise<void>(() => { }),
 })
 
 type Props = {
@@ -40,7 +40,7 @@ type UserProfile = {
 
 export const UserProvider: React.FC<Props> = ({ children }) => {
     const [user, setUser] = useState<UserProfile>({
-        name: "Guest",
+        name: "",
         email: "",
         isLoggedIn: false,
         pofilepicture: "",
@@ -68,11 +68,11 @@ export const UserProvider: React.FC<Props> = ({ children }) => {
         try {
             console.log('🚀 Starting Google Sign In...');
 
-            // Check if play services are available
             await GoogleSignin.hasPlayServices();
 
-            // Sign in
             const response = await GoogleSignin.signIn();
+
+            console.log('Google Sign In Response:', response);
 
             if (isSuccessResponse(response)) {
                 const { user } = response.data;

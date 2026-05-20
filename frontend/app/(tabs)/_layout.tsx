@@ -1,35 +1,77 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-
+import { StyleSheet, Platform } from "react-native";
 import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+
+import { Ionicons } from '@expo/vector-icons';
+
+const BRAND_COLORS = {
+  background: '#23423B',
+  active: '#EEF6A2',
+  inactive: '#6E827B',
+};
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
-      }}>
+        tabBarActiveTintColor: BRAND_COLORS.active,
+        tabBarInactiveTintColor: BRAND_COLORS.inactive,
+        tabBarStyle: styles.tabBar,
+        tabBarLabelStyle: styles.tabBarLabel,
+        tabBarItemStyle: styles.tabBarItem,
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              size={24}
+              name={focused ? "home" : "home-outline"}
+              color={focused ? BRAND_COLORS.active : BRAND_COLORS.inactive}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
           title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              size={24}
+              name={focused ? "paper-plane" : "paper-plane-outline"}
+              color={focused ? BRAND_COLORS.active : BRAND_COLORS.inactive}
+            />
+          ),
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: BRAND_COLORS.background,
+    borderTopWidth: 1,
+    borderTopColor: '#2D534A',
+    height: Platform.OS === 'ios' ? 88 : 72,
+    paddingTop: 8,
+    paddingBottom: Platform.OS === 'ios' ? 28 : 12,
+  },
+  tabBarItem: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tabBarLabel: {
+    fontFamily: "Aeonik-Regular",
+    fontSize: 11,
+    fontWeight: '500',
+    marginTop: 4,
+  }
+});

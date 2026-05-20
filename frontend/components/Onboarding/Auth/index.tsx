@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
     View,
     Text,
@@ -9,12 +9,14 @@ import {
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import { fs } from '@/utils/fs'
+import { User } from '@/context/User'
 
 type Props = {
     onAuthSuccess: () => void
 }
 
 const Auth: React.FC<Props> = ({ onAuthSuccess }) => {
+    const { SignIn } = useContext(User)
 
     const handleGoogleSignIn = async () => {
         try {
@@ -24,8 +26,12 @@ const Auth: React.FC<Props> = ({ onAuthSuccess }) => {
         }
     }
 
-    const handleEmailSignIn = () => {
-
+    const handleEmailSignIn = async () => {
+        try {
+            onAuthSuccess()
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     return (
@@ -34,9 +40,6 @@ const Auth: React.FC<Props> = ({ onAuthSuccess }) => {
 
                 {/* Top content */}
                 <View style={styles.topSection}>
-                    <View style={styles.badge}>
-                        <Text style={styles.badgeText}>🔒  256-bit encrypted</Text>
-                    </View>
 
                     <Text style={styles.title}>Your Medical Records,{'\n'}Always With You</Text>
 
@@ -93,7 +96,8 @@ const Auth: React.FC<Props> = ({ onAuthSuccess }) => {
 const styles = StyleSheet.create({
     safe: {
         flex: 1,
-        backgroundColor: '#F7FAF7',
+        height: '100%',
+        width: '100%',
     },
     container: {
         flex: 1,
