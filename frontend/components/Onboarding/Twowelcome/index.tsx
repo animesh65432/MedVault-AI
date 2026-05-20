@@ -60,9 +60,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
-        paddingHorizontal: scale(24),
-        paddingTop: vScale(30),
-        paddingBottom: vScale(32),
+        paddingHorizontal: scale(4),
+        paddingTop: vScale(3),
+        paddingBottom: vScale(3),
         gap: vScale(20),
     },
     dotsContainer: {

@@ -1,0 +1,220 @@
+import React from 'react'
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    SafeAreaView,
+} from 'react-native'
+import { scale } from '@/utils/scale'
+import { vScale } from '@/utils/vScale'
+import { fs } from '@/utils/fs'
+
+type Props = {
+    onAuthSuccess: () => void
+}
+
+const Auth: React.FC<Props> = ({ onAuthSuccess }) => {
+
+    const handleGoogleSignIn = async () => {
+        try {
+            onAuthSuccess()
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const handleEmailSignIn = () => {
+
+    }
+
+    return (
+        <SafeAreaView style={styles.safe}>
+            <View style={styles.container}>
+
+                {/* Top content */}
+                <View style={styles.topSection}>
+                    <View style={styles.badge}>
+                        <Text style={styles.badgeText}>🔒  256-bit encrypted</Text>
+                    </View>
+
+                    <Text style={styles.title}>Your Medical Records,{'\n'}Always With You</Text>
+
+                    <Text style={styles.description}>
+                        Securely organize, search, and manage your
+                        health documents in one place.
+                    </Text>
+                </View>
+
+                {/* Buttons */}
+                <View style={styles.buttonsSection}>
+
+                    <TouchableOpacity
+                        style={styles.googleButton}
+                        onPress={handleGoogleSignIn}
+                        activeOpacity={0.85}
+                    >
+                        {/* Replace with actual Google SVG icon */}
+                        <Text style={styles.googleIcon}>G</Text>
+                        <Text style={styles.googleButtonText}>Continue with Google</Text>
+                    </TouchableOpacity>
+
+                    {/* Divider */}
+                    <View style={styles.divider}>
+                        <View style={styles.dividerLine} />
+                        <Text style={styles.dividerText}>or</Text>
+                        <View style={styles.dividerLine} />
+                    </View>
+
+                    <TouchableOpacity
+                        style={styles.emailButton}
+                        onPress={handleEmailSignIn}
+                        activeOpacity={0.9}
+                    >
+                        <Text style={styles.emailIcon}>✉</Text>
+                        <Text style={styles.emailButtonText}>Continue with Email</Text>
+                    </TouchableOpacity>
+
+                </View>
+
+                {/* Terms */}
+                <Text style={styles.terms}>
+                    By continuing, you agree to our{' '}
+                    <Text style={styles.termsLink}>Terms</Text>
+                    {' '}&{' '}
+                    <Text style={styles.termsLink}>Privacy Policy</Text>
+                </Text>
+
+            </View>
+        </SafeAreaView>
+    )
+}
+
+const styles = StyleSheet.create({
+    safe: {
+        flex: 1,
+        backgroundColor: '#F7FAF7',
+    },
+    container: {
+        flex: 1,
+        paddingHorizontal: scale(24),
+        paddingBottom: vScale(32),
+        justifyContent: 'flex-end',
+    },
+
+    // Top section
+    topSection: {
+        marginBottom: vScale(40),
+        gap: vScale(12),
+    },
+    badge: {
+        backgroundColor: '#D4EAE3',
+        borderRadius: scale(20),
+        paddingVertical: vScale(6),
+        paddingHorizontal: scale(14),
+        alignSelf: 'flex-start',
+    },
+    badgeText: {
+        color: '#23423B',
+        fontSize: fs(12),
+        fontFamily: 'Aeonik-Medium',
+    },
+    title: {
+        color: '#234338',
+        fontSize: fs(28),
+        lineHeight: fs(36),
+        fontFamily: 'Aeonik-Bold',
+    },
+    description: {
+        color: '#6B6B6B',
+        fontSize: fs(15),
+        lineHeight: fs(22),
+        fontFamily: 'Aeonik-Regular',
+    },
+
+    // Buttons
+    buttonsSection: {
+        gap: vScale(12),
+        marginBottom: vScale(20),
+    },
+    googleButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: scale(10),
+        backgroundColor: '#FFFFFF',
+        borderWidth: 1,
+        borderColor: '#E0E0E0',
+        borderRadius: scale(10),
+        paddingVertical: vScale(16),
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.06,
+        shadowRadius: 3,
+        elevation: 2,
+    },
+    googleIcon: {
+        fontSize: fs(16),
+        fontFamily: 'Aeonik-Bold',
+        color: '#4285F4',
+    },
+    googleButtonText: {
+        fontSize: fs(15),
+        color: '#1A1A1A',
+        fontFamily: 'Aeonik-Medium',
+    },
+    divider: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(10),
+    },
+    dividerLine: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#E8E8E8',
+    },
+    dividerText: {
+        color: '#9B9B9B',
+        fontSize: fs(13),
+        fontFamily: 'Aeonik-Regular',
+    },
+    emailButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: scale(10),
+        backgroundColor: '#23423B',
+        borderRadius: scale(10),
+        paddingVertical: vScale(16),
+        shadowColor: '#23423B',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.25,
+        shadowRadius: 8,
+        elevation: 5,
+    },
+    emailIcon: {
+        fontSize: fs(16),
+        color: '#EEF6A2',
+    },
+    emailButtonText: {
+        fontSize: fs(15),
+        color: '#EEF6A2',
+        fontFamily: 'Aeonik-Medium',
+    },
+
+    // Terms
+    terms: {
+        color: '#9B9B9B',
+        fontSize: fs(12),
+        fontFamily: 'Aeonik-Regular',
+        textAlign: 'center',
+        lineHeight: fs(18),
+    },
+    termsLink: {
+        color: '#23423B',
+        textDecorationLine: 'underline',
+        fontFamily: 'Aeonik-Medium',
+    },
+})
+
+export default Auth

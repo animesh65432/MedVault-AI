@@ -4,9 +4,9 @@ import { StatusBar } from 'expo-status-bar';
 import { useFonts } from "expo-font";
 import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
-
 import { Onboarding } from "@/components";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
+import { UserProvider } from "@/context/User";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -53,8 +53,10 @@ export default function RootLayout() {
 
   return (
     <OnboardingProvider>
+      {/* <UserProvider> */}
       <RootLayoutContent />
       <StatusBar style="auto" />
+      {/* </UserProvider> */}
     </OnboardingProvider>
   );
 }
