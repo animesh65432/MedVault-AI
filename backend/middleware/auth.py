@@ -12,8 +12,9 @@ async def auth(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     try:
-
         token = credentials.credentials
+
+        print("Received token:", token)  # Debugging statement
 
         payload = jwt.decode(
             token,

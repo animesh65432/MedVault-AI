@@ -2,7 +2,6 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Platform } from "react-native";
 import { HapticTab } from '@/components/haptic-tab';
-
 import { Ionicons } from '@expo/vector-icons';
 
 const BRAND_COLORS = {
@@ -38,13 +37,53 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="Search"
         options={{
-          title: 'Explore',
+          title: 'Search',
           tabBarIcon: ({ focused }) => (
             <Ionicons
               size={24}
-              name={focused ? "paper-plane" : "paper-plane-outline"}
+              name={focused ? "search" : "search-outline"}
+              color={focused ? BRAND_COLORS.active : BRAND_COLORS.inactive}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Upload"
+        options={{
+          title: 'Upload',
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              size={24}
+              name={focused ? "cloud-upload" : "cloud-upload-outline"}
+              color={focused ? BRAND_COLORS.active : BRAND_COLORS.inactive}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Alerts"
+        options={{
+          title: 'Alerts',
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              size={24}
+              name={focused ? "notifications" : "notifications-outline"}
+              color={focused ? BRAND_COLORS.active : BRAND_COLORS.inactive}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="Profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              size={24}
+              name={focused ? "person" : "person-outline"}
               color={focused ? BRAND_COLORS.active : BRAND_COLORS.inactive}
             />
           ),
