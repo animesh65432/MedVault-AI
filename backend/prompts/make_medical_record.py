@@ -179,7 +179,7 @@ document_metadata:
   "referred_to": "",
   "date": "",
   "reason_for_referral": "",
-  "current_medicines": [
+  "medicines": [
     {{
       "name": "",
       "dosage": "",
@@ -240,7 +240,7 @@ document_metadata:
   "allergies": [],
   "chronic_conditions": [],
   "past_surgeries": [],
-  "current_medicines": [
+  "medicines": [
     {{
       "name": "",
       "dosage": "",

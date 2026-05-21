@@ -44,3 +44,10 @@ class User(Base):
         cascade="all, delete-orphan",
         init=False
     )
+
+    medications = relationship(
+        "Medication",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        init=False
+    )

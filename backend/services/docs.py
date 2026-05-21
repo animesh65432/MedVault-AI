@@ -1,6 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import func, select
 from models.Documents import Document
+from models.Medication import Medication
 from exceptions.custom_exceptions import AppException
 
 async def get_document_by_id(db: AsyncSession, document_id: int) -> Document:
@@ -13,15 +14,44 @@ async def get_document_by_id(db: AsyncSession, document_id: int) -> Document:
 
 async def create_document(db: AsyncSession, document_data: dict) -> Document:
     try:
+        medications = document_data["document_metadata"].get("medicines", [])
+
+        document_data["document_metadata"].pop("medicines", None)
+        
         new_document = Document(**document_data)
+
         db.add(new_document)
+
+        await db.flush()
+
+        medication_objects = []
+
+        for med in medications:
+            medication_objects.append(
+                Medication(
+                    name=med["name"],
+                    dosage=med["dosage"],
+                    frequency=med["frequency"],
+                    duration=med["duration"],
+                    timing=med["timing"],
+                    document_id=new_document.id,
+                    user_id=new_document.user_id
+                )
+            )
+        
+        db.add_all(medication_objects)
+
         await db.commit()
         await db.refresh(new_document)
+
         return new_document
+
     except Exception as e:
         await db.rollback()
-        raise AppException(status_code=500, detail=f"Error creating document: {str(e)}")
-
+        raise AppException(
+            status_code=500,
+            detail=f"Error creating document: {str(e)}"
+        )
 
 async def CheckIfPhotoAlreadyExists(db: AsyncSession, file_hash: str) -> bool:
     stmt = select(Document).where(Document.file_hash == file_hash)
@@ -68,3 +98,16 @@ async def SearchDocuments(
     )
     result = await db.execute(stmt)
     return [dict(row) for row in result.mappings().all()]
+
+
+async def count_user_documents(db: AsyncSession, user_id: int) -> int:
+    stmt = select(Document).where(Document.user_id == user_id)
+    result = await db.execute(stmt)
+    return result.scalar() or 0
+
+async def count_documents_medicine(db: AsyncSession, user_id: int) -> dict:
+    stmt = select(Document.doc_type, func.count(Document.id)).where(Document.user_id == user_id, Document.doc_type == "Medicine Record").group_by(Document.doc_type)
+    result = await db.execute(stmt)
+    return {row[0]: row[1] for row in result.all()}
+
+

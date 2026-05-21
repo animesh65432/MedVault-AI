@@ -1,6 +1,6 @@
 import hashlib
 import json
-from datetime import datetime, date
+from datetime import datetime
 from fastapi import APIRouter, Depends, UploadFile, HTTPException
 from db.database import async_get_db, AsyncSession
 from middleware.auth import auth
@@ -11,7 +11,7 @@ from utils.MakeDocument import make_medical_record
 from Schemas.DocumentResponse import DocumentResponse
 from services.docs import (
     GetDocumentById, create_document,
-    CheckIfPhotoAlreadyExists, GetAllDocumentsForUser, SearchDocuments,
+    CheckIfPhotoAlreadyExists, GetAllDocumentsForUser, SearchDocuments,count_user_documents,count_documents_medicine
 )
 from utils.generate_embedding import generate_embedding
 from services.redis import redis_client
@@ -180,3 +180,29 @@ async def search_documents(
     await redis_client.set(redis_key, dumps(results), ex=CACHE_TTL)
 
     return results
+
+@Docsrouter.get("/stats")
+async def get_document_stats(
+    db: AsyncSession = Depends(async_get_db),
+    current_user: dict = Depends(auth),
+):
+    auth_user_id = current_user["id"]
+    redis_key = f"user:{auth_user_id}:document:stats"
+
+    cached_stats = await redis_client.get(redis_key)
+
+    if cached_stats:
+        return json.loads(cached_stats)
+
+    total_docs = await count_user_documents(db, auth_user_id)
+    total_Medicines_Count = await count_documents_medicine(db, auth_user_id, doc_type="Medicine Record")
+
+    stats = {
+        "total_documents": total_docs,
+        "total_medicine_records": total_Medicines_Count
+    }
+
+    await redis_client.set(redis_key, dumps(stats), ex=CACHE_TTL)
+
+    return stats
+

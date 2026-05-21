@@ -27,7 +27,6 @@ if TYPE_CHECKING:
 
 class Document(Base):
     __tablename__ = "documents"
-
     __table_args__ = (
         UniqueConstraint(
             "user_id",
@@ -87,11 +86,17 @@ class Document(Base):
         init=False
     )
 
-    owner: Mapped["User"] = relationship(
-        "User",
+    owner: Mapped["User"] = relationship("User",
         back_populates="documents",
         lazy="noload",
         init=False
+    )
+    
+    
+    medications = relationship("Medication",
+        back_populates="document",
+        cascade="all, delete-orphan",
+        lazy="noload"
     )
 
     date: Mapped[Optional[datetime]] = mapped_column(
