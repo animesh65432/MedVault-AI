@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from "react-native"
+import { scale } from '@/utils/scale'
 
 type Props = {
     userName: string,
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start"
     },
     text: {
-        fontSize: 20,
+        fontSize: scale(20),
         fontFamily: "Aeonik-Medium",
     }
 })

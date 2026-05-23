@@ -16,6 +16,10 @@ async_engine = create_async_engine(
     config["DATABASE_URL"],
     echo=False,
     future=True,
+    pool_pre_ping=True,  
+    pool_recycle=1800,
+    pool_size=10,
+    max_overflow=20,
     connect_args={
         "ssl": True
     }
@@ -30,4 +34,9 @@ local_session = async_sessionmaker(
 
 async def async_get_db() -> AsyncGenerator[AsyncSession, None]:
     async with local_session() as db:
-        yield db
+        try:
+            yield db
+            await db.commit()       
+        except Exception:
+            await db.rollback()
+            raise

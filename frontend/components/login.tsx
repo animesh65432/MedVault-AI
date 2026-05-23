@@ -11,11 +11,7 @@ import { vScale } from '@/utils/vScale'
 import { fs } from '@/utils/fs'
 import { User } from '@/context/User'
 
-type Props = {
-    onAuthSuccess: () => void
-}
-
-const Login: React.FC<Props> = ({ onAuthSuccess }) => {
+const Login: React.FC = () => {
     const { SignIn } = useContext(User)
 
     const handleGoogleSignIn = async () => {

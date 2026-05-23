@@ -7,6 +7,7 @@ import Stats from './Stats'
 import { User } from '@/context/User'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
+import EmptyStats from './EmptyStats'
 import { GetStats } from '@/api/stats'
 
 const HomeLayOut = () => {
@@ -43,9 +44,6 @@ const HomeLayOut = () => {
         setShowStats(!isEmpty);
 
     }, [statsInformation]);
-
-    console.log(token)
-
     return (
         <View style={styles.container}>
             <Title
@@ -56,6 +54,9 @@ const HomeLayOut = () => {
                 <Stats
                     statsInformation={statsInformation}
                 />
+            )}
+            {!showStats && (
+                <EmptyStats />
             )}
 
         </View>
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(20),
         paddingTop: vScale(40),
         paddingBottom: vScale(32),
-        gap: vScale(20),
+        gap: vScale(24),
     }
 })
 

@@ -7,20 +7,18 @@ import { View, StyleSheet } from 'react-native';
 import OnboardingSwiper from "react-native-onboarding-swiper"
 
 const Onboarding: React.FC = () => {
-    const [currentPage, setCurrentPage] = useState(0);
-    const { IsonboardingComplete, setOnboardingComplete } = useContext(OnboardingContext)
+    const { setOnboardingCompleteAndCache } = useContext(OnboardingContext)
     const swiperRef = useRef<OnboardingSwiper>(null);
 
-    const handleDone = () => {
-        setOnboardingComplete(true);
+    const handleDone = async () => {
+        await setOnboardingCompleteAndCache(true);
     };
 
-    const handlePageChange = (index: number) => {
+    const handlePageChange = async (index: number) => {
         if (index > 2) {
-            setOnboardingComplete(true);
+            await setOnboardingCompleteAndCache(true);
             return;
         }
-        setCurrentPage(index);
         swiperRef.current?.goToPage(index, true);
     };
 

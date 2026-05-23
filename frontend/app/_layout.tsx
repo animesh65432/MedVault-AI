@@ -1,4 +1,5 @@
 import { useEffect, useContext } from 'react';
+import Login from '@/components/login';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from "expo-font";
@@ -21,17 +22,15 @@ function RootLayoutContent() {
 
   if (!IsonboardingComplete) {
     return (
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-      </Stack>
+      <Onboarding />
     );
   }
 
+  console.log("isAuthenticated:", isAuthenticated)
+
   if (!isAuthenticated) {
     return (
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="login" />
-      </Stack>
+      <Login />
     );
   }
 
