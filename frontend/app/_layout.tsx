@@ -26,8 +26,6 @@ function RootLayoutContent() {
     );
   }
 
-  console.log("isAuthenticated:", isAuthenticated)
-
   if (!isAuthenticated) {
     return (
       <Login />

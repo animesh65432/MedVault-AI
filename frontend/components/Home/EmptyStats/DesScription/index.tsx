@@ -10,7 +10,7 @@ const Description = () => {
                 Your medical history{"\n"}starts here.
             </Text>
             <Text style={styles.descriptionText}>
-                Add your medical documents, medicine records and reminders to get started.
+                Upload your first prescription, lab report, or medical bill to securely organize all your health records in one place.
             </Text>
         </View>
     )

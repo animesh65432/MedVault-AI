@@ -10,21 +10,27 @@ type Props = {
 const Title: React.FC<Props> = ({ userName, ShowStats }) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>{ShowStats ? "Hello" : "Welcome"}, {userName}</Text>
+            <Text style={styles.text}>
+                {ShowStats ? "Hello" : "Welcome"}, {userName.replace(/\b\w/g, c => c.toUpperCase())}
+            </Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        display: "flex",
         width: "100%",
-        margin: 0,
-        justifyContent: "flex-start"
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flex-start",
     },
     text: {
         fontSize: scale(20),
         fontFamily: "Aeonik-Medium",
+        color: "#000000",
+    },
+    icon: {
+        marginLeft: scale(6),
     }
 })
 
