@@ -6,9 +6,7 @@ from services.user import (
     create_user
 )
 
-from utils.verify_google_token import (
-    verify_google_token
-)
+from utils.verify_user_Create_Payload import VerifyUserCreatePayload
 
 from utils.create_token import (
     create_access_token
@@ -30,17 +28,16 @@ UserRouter = APIRouter()
 
 @UserRouter.post("/login")
 async def login(
-    token: UserCreate,
+    payload: UserCreate,
     db: AsyncSession = Depends(async_get_db)
 ):
 
-    user_info = verify_google_token(token)
-
+    user_info = VerifyUserCreatePayload(**payload.dict())
+    
     if not user_info:
-
         raise AppException(
             status_code=401,
-            detail="Invalid Google token"
+            detail="Invalid payload"
         )
 
     user = await get_user_by_email(

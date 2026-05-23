@@ -2,10 +2,10 @@ from pydantic import BaseModel, EmailStr
 
 
 class UserCreate(BaseModel):
-    token: str
+    email: EmailStr
+    name: str
+    profile_image: str
 
 
 class UserResponse(BaseModel):
-    id: str
-    name: str
-    email: str
+    token: str

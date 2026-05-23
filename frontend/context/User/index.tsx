@@ -1,3 +1,4 @@
+import { singinwithgoogle } from "@/api/user";
 import { IOS_CLIENT_ID, WEB_CLIENT_ID } from "@/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -66,20 +67,13 @@ export const UserProvider: React.FC<Props> = ({ children }) => {
     const SignIn = async () => {
         setIsLoading(true);
         try {
-            console.log('🚀 Starting Google Sign In...');
-
             await GoogleSignin.hasPlayServices();
 
             const response = await GoogleSignin.signIn();
 
-            console.log('Google Sign In Response:', response);
-
             if (isSuccessResponse(response)) {
                 const { user } = response.data;
 
-                console.log('✅ User Info:', user);
-
-                // Create user profile
                 const userProfile: UserProfile = {
                     name: user.name || "Guest",
                     email: user.email || "",
@@ -88,23 +82,21 @@ export const UserProvider: React.FC<Props> = ({ children }) => {
                     token: ""
                 };
 
-                // Send to your backend
-                // const authresponse = await singinwithgoogle(
-                //     userProfile.name,
-                //     userProfile.email
-                // ) as {
-                //     token: string;
-                //     message: string;
-                // };
+                const authresponse = await singinwithgoogle(
+                    userProfile.name,
+                    userProfile.email,
+                    userProfile.pofilepicture
+                ) as {
+                    access_token: string;
+                    message: string;
+                };
 
-                // Save to AsyncStorage
                 const completeProfile = {
                     ...userProfile,
-                    token: "dummy_token_from_backend" // Replace with actual token from backend
+                    token: authresponse.access_token
                 };
 
                 await AsyncStorage.setItem("userProfile", JSON.stringify(completeProfile));
-
 
                 setUser(completeProfile);
 
@@ -131,6 +123,7 @@ export const UserProvider: React.FC<Props> = ({ children }) => {
 
                 }
             } else {
+                console.log('Error during Google Sign In:', error);
             }
         } finally {
             setIsLoading(false);

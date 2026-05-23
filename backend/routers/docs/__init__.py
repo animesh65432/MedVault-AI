@@ -11,12 +11,14 @@ from utils.MakeDocument import make_medical_record
 from Schemas.DocumentResponse import DocumentResponse
 from services.docs import (
     GetDocumentById, create_document,
-    CheckIfPhotoAlreadyExists, GetAllDocumentsForUser, SearchDocuments,count_user_documents,count_documents_medicine
+    CheckIfPhotoAlreadyExists, GetAllDocumentsForUser, SearchDocuments,count_user_documents
 )
+from services.Reminder import GetAllRemindersForUser
 from utils.generate_embedding import generate_embedding
 from services.redis import redis_client
 from utils.build_embedding_text import build_embedding_text
 from utils.json_serializer import json_serializer
+from services.Medication import count_medicines
 
 Docsrouter = APIRouter()
 
@@ -187,22 +189,24 @@ async def get_document_stats(
     current_user: dict = Depends(auth),
 ):
     auth_user_id = current_user["id"]
-    redis_key = f"user:{auth_user_id}:document:stats"
+    # redis_key = f"user:{auth_user_id}:document:stats"
 
-    cached_stats = await redis_client.get(redis_key)
+    # cached_stats = await redis_client.get(redis_key)
 
-    if cached_stats:
-        return json.loads(cached_stats)
+    # if cached_stats:
+    #     return json.loads(cached_stats)
 
     total_docs = await count_user_documents(db, auth_user_id)
-    total_Medicines_Count = await count_documents_medicine(db, auth_user_id, doc_type="Medicine Record")
+    total_Medicines_Count = await count_medicines(db, auth_user_id)
+    total_reminders_count = await GetAllRemindersForUser(db, auth_user_id)
 
     stats = {
         "total_documents": total_docs,
-        "total_medicine_records": total_Medicines_Count
+        "total_medicine_records": total_Medicines_Count,
+        "total_reminders": total_reminders_count
     }
 
-    await redis_client.set(redis_key, dumps(stats), ex=CACHE_TTL)
+    # await redis_client.set(redis_key, dumps(stats), ex=CACHE_TTL)
 
     return stats
 

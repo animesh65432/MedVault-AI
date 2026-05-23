@@ -100,3 +100,9 @@ export interface MedicalDocument {
     user_id: number;
     date: string;
 }
+
+export interface StatsInformation {
+    total_documents: number;
+    total_medicine_records: number;
+    total_reminders: number;
+}

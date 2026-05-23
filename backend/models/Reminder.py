@@ -25,6 +25,8 @@ class Reminder(Base):
 
     is_active = mapped_column(Boolean, default=True)
 
+    medication_time = mapped_column(DateTime)
+
     created_at = mapped_column(
         DateTime,
         default=datetime.utcnow

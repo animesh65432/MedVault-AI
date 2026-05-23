@@ -1,16 +1,30 @@
 import React from 'react'
-import { View, Text } from "react-native"
+import { View, Text, StyleSheet } from "react-native"
 
 type Props = {
-    userName: string
+    userName: string,
+    ShowStats: boolean,
 }
 
-const Title: React.FC<Props> = ({ userName }) => {
+const Title: React.FC<Props> = ({ userName, ShowStats }) => {
     return (
-        <View>
-            <Text>Hello, {userName}</Text>
+        <View style={styles.container}>
+            <Text style={styles.text}>{ShowStats ? "Hello" : "Welcome"}, {userName}</Text>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        display: "flex",
+        width: "100%",
+        margin: 0,
+        justifyContent: "flex-start"
+    },
+    text: {
+        fontSize: 20,
+        fontFamily: "Aeonik-Medium",
+    }
+})
 
 export default Title

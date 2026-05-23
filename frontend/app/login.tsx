@@ -15,24 +15,20 @@ type Props = {
     onAuthSuccess: () => void
 }
 
-const Auth: React.FC<Props> = ({ onAuthSuccess }) => {
+const Login: React.FC<Props> = ({ onAuthSuccess }) => {
     const { SignIn } = useContext(User)
 
     const handleGoogleSignIn = async () => {
         try {
-            onAuthSuccess()
+            console.log('🚀 Initiating Google Sign In from Auth component...')
+
+            console.log(SignIn())
+
         } catch (error) {
             console.error(error)
         }
     }
 
-    const handleEmailSignIn = async () => {
-        try {
-            onAuthSuccess()
-        } catch (error) {
-            console.error(error)
-        }
-    }
 
     return (
         <SafeAreaView style={styles.safe}>
@@ -61,23 +57,6 @@ const Auth: React.FC<Props> = ({ onAuthSuccess }) => {
                         <Text style={styles.googleIcon}>G</Text>
                         <Text style={styles.googleButtonText}>Continue with Google</Text>
                     </TouchableOpacity>
-
-                    {/* Divider */}
-                    <View style={styles.divider}>
-                        <View style={styles.dividerLine} />
-                        <Text style={styles.dividerText}>or</Text>
-                        <View style={styles.dividerLine} />
-                    </View>
-
-                    <TouchableOpacity
-                        style={styles.emailButton}
-                        onPress={handleEmailSignIn}
-                        activeOpacity={0.9}
-                    >
-                        <Text style={styles.emailIcon}>✉</Text>
-                        <Text style={styles.emailButtonText}>Continue with Email</Text>
-                    </TouchableOpacity>
-
                 </View>
 
                 {/* Terms */}
@@ -221,4 +200,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Auth
+export default Login

@@ -1,7 +1,12 @@
 import React from 'react'
 import { View, Text } from "react-native"
+import { StatsInformation } from '@/types'
 
-const Stats: React.FC = () => {
+interface StatsProps {
+    statsInformation: StatsInformation;
+}
+
+const Stats: React.FC<StatsProps> = ({ statsInformation }) => {
     return (
         <View>
             <Text>Stats</Text>

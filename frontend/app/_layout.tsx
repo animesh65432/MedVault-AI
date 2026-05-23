@@ -6,7 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 import { Onboarding } from "@/components";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
-import { UserProvider } from "@/context/User";
+import { UserProvider, User } from "@/context/User";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -15,16 +15,29 @@ export const unstable_settings = {
 };
 
 function RootLayoutContent() {
+  const { token } = useContext(User);
+  const isAuthenticated = !!token;
   const { IsonboardingComplete } = useContext(OnboardingContext);
 
-
   if (!IsonboardingComplete) {
-    return <Onboarding />;
+    return (
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+      </Stack>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="login" />
+      </Stack>
+    );
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
       <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
     </Stack>
   );
@@ -53,10 +66,10 @@ export default function RootLayout() {
 
   return (
     <OnboardingProvider>
-      {/* <UserProvider> */}
-      <RootLayoutContent />
-      <StatusBar style="auto" />
-      {/* </UserProvider> */}
+      <UserProvider>
+        <RootLayoutContent />
+        <StatusBar style="auto" />
+      </UserProvider>
     </OnboardingProvider>
   );
 }

@@ -3,7 +3,6 @@ import React, { useRef, useContext, useState } from 'react'
 import WelCome from './welcome';
 import TwoWelCome from './Twowelcome';
 import ThreeWelcome from './ThreeWelcome';
-import Auth from './Auth';
 import { View, StyleSheet } from 'react-native';
 import OnboardingSwiper from "react-native-onboarding-swiper"
 
@@ -17,7 +16,7 @@ const Onboarding: React.FC = () => {
     };
 
     const handlePageChange = (index: number) => {
-        if (index > 3) {
+        if (index > 2) {
             setOnboardingComplete(true);
             return;
         }
@@ -48,13 +47,7 @@ const Onboarding: React.FC = () => {
                         image: <></>,
                         title: <ThreeWelcome handlePageChange={handlePageChange} />,
                         subtitle: '',
-                    },
-                    {
-                        backgroundColor: '#fff',
-                        image: <></>,
-                        title: <Auth onAuthSuccess={handleDone} />,
-                        subtitle: '',
-                    },
+                    }
                 ]}
                 showPagination={false}
                 showSkip={false}

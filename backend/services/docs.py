@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import func, select
+from sqlalchemy import select
 from models.Documents import Document
 from models.Medication import Medication
 from exceptions.custom_exceptions import AppException
@@ -104,10 +104,3 @@ async def count_user_documents(db: AsyncSession, user_id: int) -> int:
     stmt = select(Document).where(Document.user_id == user_id)
     result = await db.execute(stmt)
     return result.scalar() or 0
-
-async def count_documents_medicine(db: AsyncSession, user_id: int) -> dict:
-    stmt = select(Document.doc_type, func.count(Document.id)).where(Document.user_id == user_id, Document.doc_type == "Medicine Record").group_by(Document.doc_type)
-    result = await db.execute(stmt)
-    return {row[0]: row[1] for row in result.all()}
-
-

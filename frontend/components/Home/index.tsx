@@ -1,37 +1,75 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { View, StyleSheet } from "react-native"
-import { MedicalDocument } from "@/types"
+import { MedicalDocument, StatsInformation } from "@/types"
 import { GetDocs } from "@/api/docs"
 import Title from './Title'
 import Stats from './Stats'
+import { User } from '@/context/User'
+import { scale } from '@/utils/scale'
+import { vScale } from '@/utils/vScale'
+import { GetStats } from '@/api/stats'
 
 const HomeLayOut = () => {
-    const [documents, setDocuments] = useState<MedicalDocument[]>([]);
+    const { token, name } = useContext(User);
 
-    const FetchDocuments = async () => {
+    const [showStats, setShowStats] = useState(false);
+
+    const [statsInformation, setStatsInformation] =
+        useState<StatsInformation | null>(null);
+
+    const FetchStats = async () => {
         try {
-            const response = await GetDocs("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QGdtYWlsLmNvbSIsIm5hbWUiOiJBbmltZXNoIiwicHJvZmlsZV9pbWFnZSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vaW1hZ2UuanBnIiwiZXhwIjoxNzg3MDgzODkwfQ.GKBzZ3wo8Hd879SXpC8vwBhj2BEbEiHWXeWsjbMFD18") as MedicalDocument[];
-            setDocuments(response);
+            const response = await GetStats(token) as StatsInformation;
+
+            setStatsInformation(response);
+
         } catch (error) {
-            console.log("Error fetching documents:", error);
+            console.log("Error fetching stats:", error);
         }
-    }
+    };
 
     useEffect(() => {
-        FetchDocuments();
+        FetchStats();
     }, []);
+
+    useEffect(() => {
+        if (!statsInformation) return;
+
+        const isEmpty =
+            statsInformation.total_documents === 0 &&
+            statsInformation.total_medicine_records === 0 &&
+            statsInformation.total_reminders === 0;
+
+        setShowStats(!isEmpty);
+
+    }, [statsInformation]);
+
+    console.log(token)
 
     return (
         <View style={styles.container}>
-            <Title userName="John Doe" />
-            <Stats />
+            <Title
+                userName={name}
+                ShowStats={showStats}
+            />
+            {showStats && statsInformation && (
+                <Stats
+                    statsInformation={statsInformation}
+                />
+            )}
+
         </View>
-    )
-}
+    );
+};
+
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        paddingHorizontal: scale(20),
+        paddingTop: vScale(40),
+        paddingBottom: vScale(32),
+        gap: vScale(20),
     }
 })
 
