@@ -65,12 +65,27 @@ async def GetAllDocumentsForUser(db: AsyncSession, user_id: int) -> list[Documen
     documents = result.scalars().all()
     return documents
 
-async def GetDocumentById(db: AsyncSession, document_id: int, user_id: int) -> Document:
-    stmt = select(Document).where(Document.id == document_id, Document.user_id == user_id)
+from sqlalchemy import select
+from sqlalchemy.orm import selectinload
+
+async def GetDocumentById(
+    db: AsyncSession,
+    document_id: int,
+    user_id: int
+):
+    stmt = (
+        select(Document)
+        .options(
+            selectinload(Document.medications)
+        )
+        .where(
+            Document.id == document_id,
+            Document.user_id == user_id
+        )
+    )
     result = await db.execute(stmt)
     document = result.scalars().first()
     return document
-
 
 async def SearchDocuments(
     db: AsyncSession,

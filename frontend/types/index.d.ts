@@ -89,6 +89,11 @@ export interface DocumentMetadata {
     tags?: string[];
 }
 
+export interface Medicine {
+    id: number;
+    name: string;
+}
+
 export interface MedicalDocument {
     id: number;
     title: string;
@@ -99,6 +104,7 @@ export interface MedicalDocument {
     created_at: string;
     user_id: number;
     date: string;
+    medications: Medicine[];
 }
 
 export interface StatsInformation {

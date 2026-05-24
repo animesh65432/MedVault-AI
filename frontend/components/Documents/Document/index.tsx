@@ -2,8 +2,11 @@ import React, { useRef } from 'react'
 import { View, Text, StyleSheet, Animated, Pressable } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import { MedicalDocument, DocumentType } from "@/types"
+import { useRouter } from "expo-router"
 import { scale } from '@/utils/scale';
+import { formatDate } from '@/utils/formatDate';
 import { vScale } from '@/utils/vScale';
+
 
 type DocConfig = {
     icon: keyof typeof Ionicons.glyphMap;
@@ -25,18 +28,6 @@ const DOC_CONFIG: Record<DocumentType, DocConfig> = {
     "Other": { icon: "document-outline", accent: "#EEF6A2", label: "Document" },
 };
 
-const formatDate = (dateStr?: string) => {
-    if (!dateStr) return null;
-    try {
-        return new Date(dateStr).toLocaleDateString("en-US", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-        });
-    } catch {
-        return dateStr;
-    }
-};
 
 const getSubtitle = (doc: MedicalDocument): string | null => {
     const m = doc.document_metadata;
@@ -71,12 +62,14 @@ const getPills = (doc: MedicalDocument): string[] => {
 interface DocumentProps {
     document: MedicalDocument;
     onPress?: (doc: MedicalDocument) => void;
+    IsSearch?: boolean;
 }
 
-const Document: React.FC<DocumentProps> = ({ document, onPress }) => {
+const Document: React.FC<DocumentProps> = ({ document, onPress, IsSearch = false }) => {
     const config = DOC_CONFIG[document.doc_type] ?? DOC_CONFIG["Other"];
     const subtitle = getSubtitle(document);
     const pills = getPills(document);
+    const router = useRouter();
     const date = formatDate(document.date || document.created_at);
 
     const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -102,7 +95,7 @@ const Document: React.FC<DocumentProps> = ({ document, onPress }) => {
     return (
         <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
             <Pressable
-                onPress={() => onPress?.(document)}
+                onPress={() => router.push(`/document/${document.id}`)}
                 onPressIn={handlePressIn}
                 onPressOut={handlePressOut}
                 style={styles.card}
@@ -133,14 +126,16 @@ const Document: React.FC<DocumentProps> = ({ document, onPress }) => {
                         )}
                     </View>
 
-
-                    <Text style={styles.title} numberOfLines={1}>
+                    <Text
+                        style={styles.title}
+                        numberOfLines={IsSearch ? 4 : 1}
+                    >
                         {document.title}
                     </Text>
 
 
                     {subtitle && (
-                        <Text style={styles.subtitle} numberOfLines={1}>
+                        <Text style={styles.subtitle} numberOfLines={IsSearch ? 4 : 1}>
                             {subtitle}
                         </Text>
                     )}
@@ -260,7 +255,7 @@ const styles = StyleSheet.create({
     },
     chevron: {
         marginLeft: scale(8),
-    },
+    }
 });
 
 export default Document;

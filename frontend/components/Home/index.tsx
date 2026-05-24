@@ -11,14 +11,14 @@ import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import EmptyStats from './EmptyStats'
 import { GetStats } from '@/api/stats'
-import TopLoadingBar from '../TopLoadingBar'
+import { DocumentsContext } from "@/context/Documents"
 import { DocumentListSkeleton, StatsSkeleton } from './Skeleton'
 
 const HomeLayOut = () => {
     const { token, name } = useContext(User);
+    const { Documents, SetDocuments } = useContext(DocumentsContext);
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
-    const [documents, setDocuments] = useState<MedicalDocument[]>([]);
     const [statsInformation, setStatsInformation] = useState<StatsInformation | null>(null);
 
 
@@ -39,7 +39,7 @@ const HomeLayOut = () => {
             ]);
 
             setStatsInformation(statsResponse);
-            setDocuments(docsResponse);
+            SetDocuments(docsResponse);
         } catch (error) {
             console.error("Error fetching home data:", error);
             setHasError(true);
@@ -78,7 +78,7 @@ const HomeLayOut = () => {
                     {showStats && statsInformation && (
                         <>
                             <Stats statsInformation={statsInformation} />
-                            <NonEmptyStats documents={documents} />
+                            <NonEmptyStats documents={Documents} />
                         </>
                     )}
                     {!showStats && <EmptyStats />}

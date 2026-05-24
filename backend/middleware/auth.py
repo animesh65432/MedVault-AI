@@ -13,9 +13,7 @@ async def auth(
 ):
     try:
         token = credentials.credentials
-
-        print("Received token:", token)  # Debugging statement
-
+        
         payload = jwt.decode(
             token,
             config["SECRET_KEY"],

@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import {
-    View,
     TextInput,
     StyleSheet,
     Animated,
@@ -17,7 +16,7 @@ interface InputProps extends TextInputProps {
     placeholder?: string;
 }
 
-const Input: React.FC<InputProps> = ({
+const SearchInput: React.FC<InputProps> = ({
     value,
     onChangeText,
     placeholder = "Search your medical history...",
@@ -65,11 +64,6 @@ const Input: React.FC<InputProps> = ({
     const animatedBorderColor = borderAnim.interpolate({
         inputRange: [0, 1],
         outputRange: ["rgba(238, 246, 162, 0.12)", "rgba(238, 246, 162, 0.55)"],
-    });
-
-    const animatedIconColor = iconAnim.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["rgba(238, 246, 162, 0.35)", "rgba(238, 246, 162, 1)"],
     });
 
     const animatedBackground = borderAnim.interpolate({
@@ -156,4 +150,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Input;
+export default SearchInput;

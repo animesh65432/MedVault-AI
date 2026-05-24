@@ -6,6 +6,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 import { Onboarding } from "@/components";
+import { DocumentsProvider } from "@/context/Documents"
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { UserProvider, User } from "@/context/User";
 
@@ -64,8 +65,10 @@ export default function RootLayout() {
   return (
     <OnboardingProvider>
       <UserProvider>
-        <RootLayoutContent />
-        <StatusBar style="auto" />
+        <DocumentsProvider  >
+          <RootLayoutContent />
+          <StatusBar style="auto" />
+        </DocumentsProvider>
       </UserProvider>
     </OnboardingProvider>
   );
