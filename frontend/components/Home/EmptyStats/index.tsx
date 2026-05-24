@@ -14,8 +14,10 @@ const EmptyStats = () => {
                 source={require("../../../assets/images/empty-stats.png")}
                 resizeMode="cover"
             />
-            <Description />
-            <UpLoad />
+            <>
+                <Description />
+                <UpLoad />
+            </>
         </View>
     )
 }
@@ -24,7 +26,7 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 0
+        gap: vScale(2)
     },
     image: {
         width: scale(300),

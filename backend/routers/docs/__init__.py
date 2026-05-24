@@ -189,12 +189,12 @@ async def get_document_stats(
     current_user: dict = Depends(auth),
 ):
     auth_user_id = current_user["id"]
-    # redis_key = f"user:{auth_user_id}:document:stats"
+    redis_key = f"user:{auth_user_id}:document:stats"
 
-    # cached_stats = await redis_client.get(redis_key)
+    cached_stats = await redis_client.get(redis_key)
 
-    # if cached_stats:
-    #     return json.loads(cached_stats)
+    if cached_stats:
+        return json.loads(cached_stats)
 
     total_docs = await count_user_documents(db, auth_user_id)
     total_Medicines_Count = await count_medicines(db, auth_user_id)
@@ -206,7 +206,7 @@ async def get_document_stats(
         "total_reminders": total_reminders_count
     }
 
-    # await redis_client.set(redis_key, dumps(stats), ex=CACHE_TTL)
+    await redis_client.set(redis_key, dumps(stats), ex=CACHE_TTL)
 
     return stats
 

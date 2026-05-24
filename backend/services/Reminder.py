@@ -1,11 +1,12 @@
-from sqlalchemy import select
+from sqlalchemy import func, select
 from models.Reminder import Reminder
 from sqlalchemy.ext.asyncio import AsyncSession
 
 async def GetAllRemindersForUser(db: AsyncSession, user_id: int):
     
     stmt = (
-        select(Reminder)
+        select(func.count())
+        .select_from(Reminder)
         .where(
             Reminder.user_id == user_id,
             Reminder.is_active == True

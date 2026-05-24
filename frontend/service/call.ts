@@ -35,11 +35,17 @@ export async function Call<T, ResponseType>({
         responseType: responseType || "json",
         signal: signal
     };
-
-    if (formDataRequest && request instanceof FormData) {
+    if (formDataRequest) {
         config.data = request;
-    } else if (request && responseType !== "blob") {
+
+        config.headers = {
+            ...config.headers,
+            "Content-Type": "multipart/form-data",
+        };
+    }
+    else if (request && responseType !== "blob") {
         config.data = JSON.stringify(request);
+
         config.headers = {
             ...config.headers,
             "Content-Type": "application/json",

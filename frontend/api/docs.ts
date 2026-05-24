@@ -8,17 +8,14 @@ export const GetDocs = async (token: string) => Call({
     }
 })
 
-export const GenrateDoc = async (token: string, file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
-
+export const GenrateDoc = async (token: string, file: FormData) => {
     return Call({
         path: "/api/v1/docs/generate-docs",
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`,
         },
-        request: formData,
+        request: file,
         formDataRequest: true,
     });
 };

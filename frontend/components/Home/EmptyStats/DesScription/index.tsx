@@ -19,7 +19,7 @@ const Description = () => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        gap: vScale(9),
+        gap: vScale(12),
         paddingHorizontal: scale(16),
     },
     titleText: {

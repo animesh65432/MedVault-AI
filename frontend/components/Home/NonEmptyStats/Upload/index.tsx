@@ -48,7 +48,10 @@ const UpLoad = () => {
             activeOpacity={0.85}
             onPress={pickAndUpload}
         >
-            <MaterialIcons name="upload" size={scale(18)} color="#fff" />
+            <MaterialIcons name="camera-alt"
+                size={scale(18)}
+                color="#EEF6A2"
+            />
             <Text style={styles.text}>Upload Document</Text>
         </TouchableOpacity>
     )
@@ -56,7 +59,7 @@ const UpLoad = () => {
 
 const styles = StyleSheet.create({
     button: {
-        marginTop: vScale(15),
+        marginTop: vScale(9),
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
@@ -66,11 +69,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(24),
         borderRadius: scale(12),
         alignSelf: "center",
+        width: "100%",
     },
     text: {
         fontFamily: "Aeonik-Medium",
         fontSize: scale(14),
-        color: "#fff",
+        color: "#EEF6A2",
     }
 })
 
