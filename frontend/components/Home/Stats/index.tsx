@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react'
-import { View, Text, StyleSheet, Animated } from "react-native"
+import { View, Text, StyleSheet, Animated, TouchableOpacity } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import { vScale } from "@/utils/vScale"
 import { StatsInformation } from '@/types'
 import { scale } from '@/utils/scale';
+import { useRouter } from "expo-router"
 
 interface StatsProps {
     statsInformation: StatsInformation;
@@ -80,27 +81,48 @@ const StatCard: React.FC<StatCardProps> = ({ icon, value, label, delay }) => {
 };
 
 const Stats: React.FC<StatsProps> = ({ statsInformation }) => {
+    const router = useRouter();
+
+    const handleRoute = (route: "/Search" | "/Medicines") => {
+        router.push(route);
+    };
+
+
     return (
         <View style={styles.container}>
-            <StatCard
-                icon="document-text-outline"
-                value={statsInformation.total_documents}
-                label="Documents"
-                delay={0}
-            />
-            <StatCard
-                icon="medkit-outline"
-                value={statsInformation.total_medicine_records}
-                label="Medicines"
-                delay={80}
-            />
-            <StatCard
-                icon="alarm-outline"
-                value={statsInformation.total_reminders}
-                label="Reminders"
-                delay={160}
-            />
-        </View>
+            <TouchableOpacity
+                onPress={() => handleRoute("/Search")}
+                style={styles.pressable}
+            >
+                <StatCard
+                    icon="document-text-outline"
+                    value={statsInformation.total_documents}
+                    label="Documents"
+                    delay={0}
+                />
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => handleRoute("/Medicines")}
+                style={styles.pressable}
+            >
+                <StatCard
+                    icon="medkit-outline"
+                    value={statsInformation.total_medicine_records}
+                    label="Medicines"
+                    delay={80}
+                />
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.pressable}
+            >
+                <StatCard
+                    icon="alarm-outline"
+                    value={statsInformation.total_reminders}
+                    label="Alerts"
+                    delay={160}
+                />
+            </TouchableOpacity>
+        </View >
     );
 };
 
@@ -110,7 +132,6 @@ const styles = StyleSheet.create({
         gap: vScale(10),
     },
     card: {
-        flex: 1,
         alignItems: "center",
         backgroundColor: "#1E3A33",
         borderRadius: vScale(14),
@@ -118,7 +139,6 @@ const styles = StyleSheet.create({
         paddingBottom: vScale(14),
         paddingHorizontal: scale(8),
         overflow: "hidden",
-        // Subtle shadow for depth
         shadowColor: "#000",
         shadowOffset: { width: 0, height: vScale(4) },
         shadowOpacity: 0.18,
@@ -167,6 +187,12 @@ const styles = StyleSheet.create({
         fontFamily: "Aeonik-Medium",
         textAlign: "center",
         letterSpacing: 0.3,
+    },
+    pressable: {
+        flex: 1,
+    },
+    pressablePressed: {
+        opacity: 0.9,
     },
 });
 

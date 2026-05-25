@@ -119,21 +119,21 @@ async def GetDocument(
     current_user: dict = Depends(auth),
 ):
     auth_user_id = int(current_user["id"])
-    # redis_key = f"user:{auth_user_id}:document:{doc_id}"
+    redis_key = f"user:{auth_user_id}:document:{doc_id}"
 
-    # cached_doc = await redis_client.get(redis_key)
-    # if cached_doc:
-    #     return json.loads(cached_doc)
+    cached_doc = await redis_client.get(redis_key)
+    if cached_doc:
+        return json.loads(cached_doc)
 
     document = await GetDocumentById(db, doc_id, auth_user_id)
     if not document:
         raise HTTPException(status_code=404, detail="Document not found")
 
-    # await redis_client.set(
-    #     redis_key,
-    #     dumps(DocumentResponse.model_validate(document).model_dump()),
-    #     ex=CACHE_TTL,
-    # )
+    await redis_client.set(
+        redis_key,
+        dumps(DocumentResponse.model_validate(document).model_dump()),
+        ex=CACHE_TTL,
+    )
 
     return document
 
@@ -209,4 +209,5 @@ async def get_document_stats(
     await redis_client.set(redis_key, dumps(stats), ex=CACHE_TTL)
 
     return stats
+
 

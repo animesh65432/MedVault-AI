@@ -1,7 +1,7 @@
 import { Call } from "@/service/call"
 
 export const GetDocs = async (token: string) => Call({
-    path: "/api/v1/docs/GetAll",
+    path: "/docs/GetAll",
     method: "GET",
     headers: {
         "Authorization": `Bearer ${token}`
@@ -10,7 +10,7 @@ export const GetDocs = async (token: string) => Call({
 
 export const GenrateDoc = async (token: string, file: FormData) => {
     return Call({
-        path: "/api/v1/docs/generate-docs",
+        path: "/docs/generate-docs",
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`,
@@ -21,7 +21,7 @@ export const GenrateDoc = async (token: string, file: FormData) => {
 };
 
 export const GetDocById = async (token: string, id: string) => Call({
-    path: `/api/v1/docs/Get/${id}`,
+    path: `/docs/Get/${id}`,
     method: "GET",
     headers: {
         Authorization: `Bearer ${token}`,
@@ -29,7 +29,7 @@ export const GetDocById = async (token: string, id: string) => Call({
 });
 
 export const DeleteDocById = async (token: string, id: string) => Call({
-    path: `/api/v1/docs/delete/${id}`,
+    path: `/docs/delete/${id}`,
     method: "DELETE",
     headers: {
         Authorization: `Bearer ${token}`,

@@ -9,3 +9,8 @@ async def count_medicines(db: AsyncSession, user_id: int) -> int:
     )
     result = await db.execute(stmt)
     return result.scalar_one()
+
+async def GetAllMedicinesForUser(db: AsyncSession, user_id: int):
+    stmt = select(Medication).where(Medication.user_id == user_id)
+    result = await db.execute(stmt)
+    return result.scalars().all()

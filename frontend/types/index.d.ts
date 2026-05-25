@@ -112,3 +112,11 @@ export interface StatsInformation {
     total_medicine_records: number;
     total_reminders: number;
 }
+
+export interface MedicineRecord {
+    dosage: string,
+    frequency: string,
+    id: number,
+    name: string,
+    duration: string,
+}

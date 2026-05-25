@@ -37,7 +37,6 @@ const DOC_CONFIG: Record<DocumentType, DocConfig> = {
     "Other": { icon: "document-outline", accent: "#EEF6A2" },
 };
 
-// ─── Screen ───────────────────────────────────────────────────────────────────
 
 export default function DocumentDetailScreen() {
     const { token } = useContext(User);
@@ -182,35 +181,35 @@ export default function DocumentDetailScreen() {
                 )}
 
                 {/* ── Medicines (detailed metadata) ── */}
-                {m.medicines?.length > 0 && (
+                {(m.medicines ?? []).length > 0 && (
                     <Section icon="medkit-outline" title="Medicines" accent={accent}>
-                        <MedicineTable medicines={m.medicines} accent={accent} />
+                        <MedicineTable medicines={m.medicines ?? []} accent={accent} />
                     </Section>
                 )}
 
-                {m.current_medicines?.length > 0 && (
+                {(m.current_medicines?.length ?? 0) > 0 && (
                     <Section icon="medkit-outline" title="Current Medicines" accent={accent}>
-                        <MedicineTable medicines={m.current_medicines} accent={accent} />
+                        <MedicineTable medicines={m.current_medicines ?? []} accent={accent} />
                     </Section>
                 )}
 
                 {/* ── Tests ── */}
-                {m.tests?.length > 0 && (
+                {(m.tests ?? []).length > 0 && (
                     <Section icon="flask-outline" title="Test Results" accent={accent}>
-                        <TestTable tests={m.tests} accent={accent} />
+                        <TestTable tests={m.tests ?? []} accent={accent} />
                     </Section>
                 )}
 
-                {m.past_tests?.length > 0 && (
+                {(m.past_tests ?? []).length > 0 && (
                     <Section icon="flask-outline" title="Past Tests" accent={accent}>
-                        <TestTable tests={m.past_tests} accent={accent} />
+                        <TestTable tests={m.past_tests ?? []} accent={accent} />
                     </Section>
                 )}
 
                 {/* ── Billing ── */}
-                {m.billing_items?.length > 0 && (
+                {(m.billing_items ?? []).length > 0 && (
                     <Section icon="card-outline" title="Billing" accent={accent}>
-                        <BillingTable items={m.billing_items} doc={doc} accent={accent} />
+                        <BillingTable items={m.billing_items ?? []} doc={doc} accent={accent} />
                     </Section>
                 )}
 
@@ -232,22 +231,22 @@ export default function DocumentDetailScreen() {
                     </Section>
                 )}
 
-                {/* ── Health flags ── */}
+                {/* ── Health flags ── *(m.allergie/}
                 {hasHealthFlags && (
                     <Section icon="warning-outline" title="Health Flags" accent="#F5A8A8">
-                        {m.allergies?.length > 0 && (
+                        {(m.allergies ?? []).length > 0 && (
                             <View>
                                 <Text style={styles.textBlockLabel}>Allergies</Text>
                                 <View style={styles.pillsWrap}>
-                                    {m.allergies.map((a, i) => <TagPill key={i} label={a} accent="#F5A8A8" />)}
+                                    {s ?? []).map((a, i) => <TagPill key={i} label={a} accent="#F5A8A8" />)}
                                 </View>
                             </View>
                         )}
-                        {m.chronic_conditions?.length > 0 && (
+                        {(m.chronic_conditions ?? []).length > 0 && (
                             <View style={{ marginTop: vScale(10) }}>
                                 <Text style={styles.textBlockLabel}>Chronic Conditions</Text>
                                 <View style={styles.pillsWrap}>
-                                    {m.chronic_conditions.map((c, i) => <TagPill key={i} label={c} accent="#F5DDA8" />)}
+                                    {(m.chronic_conditions ?? []).map((c, i) => <TagPill key={i} label={c} accent="#F5DDA8" />)}
                                 </View>
                             </View>
                         )}
@@ -263,9 +262,9 @@ export default function DocumentDetailScreen() {
                 )}
 
                 {/* ── Important notes ── */}
-                {m.important_notes?.length > 0 && (
+                {(m.important_notes ?? []).length > 0 && (
                     <Section icon="alert-circle-outline" title="Important Notes" accent="#F5C97D">
-                        {m.important_notes.map((note, i) => (
+                        {(m.important_notes ?? []).map((note, i) => (
                             <View key={i} style={styles.noteRow}>
                                 <View style={styles.noteDot} />
                                 <Text style={styles.noteText}>{note}</Text>
@@ -275,10 +274,10 @@ export default function DocumentDetailScreen() {
                 )}
 
                 {/* ── Tags ── */}
-                {m.tags?.length > 0 && (
+                {(m.tags ?? []).length > 0 && (
                     <Section icon="pricetag-outline" title="Tags" accent={accent}>
                         <View style={styles.pillsWrap}>
-                            {m.tags.map((tag, i) => <TagPill key={i} label={tag} accent={accent} />)}
+                            {(m.tags ?? []).map((tag, i) => <TagPill key={i} label={tag} accent={accent} />)}
                         </View>
                     </Section>
                 )}

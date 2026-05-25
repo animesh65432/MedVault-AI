@@ -7,8 +7,6 @@ import { vScale } from '@/utils/vScale';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-// ─── Section ─────────────────────────────────────────────────────────────────
-
 export const Section: React.FC<{
     icon: keyof typeof Ionicons.glyphMap;
     title: string;
