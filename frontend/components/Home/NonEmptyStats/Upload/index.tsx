@@ -10,36 +10,37 @@ const UpLoad = () => {
     const router = useRouter();
 
     const pickAndUpload = async () => {
-        const result = await DocumentPicker.getDocumentAsync({
-            type: 'image/*',
-            copyToCacheDirectory: true,
-        });
+        router.push('/UploadModal')
+        // const result = await DocumentPicker.getDocumentAsync({
+        //     type: 'image/*',
+        //     copyToCacheDirectory: true,
+        // });
 
-        if (result.canceled) return;
+        // if (result.canceled) return;
 
-        const picked = result.assets[0];
+        // const picked = result.assets[0];
 
-        try {
-            const formData = new FormData();
+        // try {
+        //     const formData = new FormData();
 
-            formData.append('file', {
-                uri: picked.uri,
-                name: picked.name,
-                type: picked.mimeType ?? 'application/octet-stream',
-            } as any);
+        //     formData.append('file', {
+        //         uri: picked.uri,
+        //         name: picked.name,
+        //         type: picked.mimeType ?? 'application/octet-stream',
+        //     } as any);
 
-            router.push({
-                pathname: "/(tabs)/Upload",
-                params: {
-                    fileUri: picked.uri,
-                    fileName: picked.name,
-                    fileType: picked.mimeType,
-                },
-            });
+        //     router.push({
+        //         pathname: "/(tabs)/Upload",
+        //         params: {
+        //             fileUri: picked.uri,
+        //             fileName: picked.name,
+        //             fileType: picked.mimeType,
+        //         },
+        //     });
 
-        } catch (err) {
-            console.error('Upload failed:', err);
-        }
+        // } catch (err) {
+        //     console.error('Upload failed:', err);
+        // }
     };
 
     return (

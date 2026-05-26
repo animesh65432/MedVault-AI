@@ -26,8 +26,6 @@ const getFreqConfig = (freq: string) => {
     return FREQ_CONFIG[key] ?? { color: '#EEF6A2', label: freq || '—' }
 }
 
-// ─── Skeleton ─────────────────────────────────────────────────────────────────
-
 const MedicinesSkeleton: React.FC = () => {
     const shimmer = useRef(new Animated.Value(-SCREEN_WIDTH)).current
 
