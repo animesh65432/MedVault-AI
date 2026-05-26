@@ -31,13 +31,13 @@ export async function Call<T, ResponseType>({
         method,
         url: mergedPath,
         headers: headers || {},
-        withCredentials: true,
         responseType: responseType || "json",
-        signal: signal
+        signal: signal,
+        withCredentials: true,
     };
+
     if (formDataRequest) {
         config.data = request;
-
         config.headers = {
             ...config.headers,
             "Content-Type": "multipart/form-data",

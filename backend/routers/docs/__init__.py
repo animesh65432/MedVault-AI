@@ -39,6 +39,8 @@ async def generate_docs(
     file_hash = hashlib.sha256(content).hexdigest()
     file.file.seek(0)
 
+    print(f"Generated hash for uploaded file: {file_hash}")
+
     if await CheckIfPhotoAlreadyExists(db, file_hash):
         raise HTTPException(status_code=409, detail="Document already exists")
 

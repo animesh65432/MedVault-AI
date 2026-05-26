@@ -1,5 +1,4 @@
 import React from 'react';
-import { router } from 'expo-router';
 import { Toast } from 'toastify-react-native';
 import {
     StyleSheet,
@@ -7,16 +6,16 @@ import {
     View,
     TouchableOpacity,
     Pressable,
-    Alert,
 } from 'react-native';
-
 import * as ImagePicker from 'expo-image-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import { useRouter } from "expo-router"
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 
 const UploadModal: React.FC = () => {
+
+    const router = useRouter();
 
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -26,7 +25,14 @@ const UploadModal: React.FC = () => {
         });
 
         if (!result.canceled) {
-            console.log(result.assets[0].uri);
+            router.push({
+                pathname: "/DocumentResult",
+                params: {
+                    fileUri: result.assets[0].uri,
+                    fileName: result.assets[0].fileName,
+                    fileType: result.assets[0].mimeType || "image/jpeg",
+                },
+            });
         }
     };
 
@@ -46,7 +52,14 @@ const UploadModal: React.FC = () => {
         });
 
         if (!result.canceled) {
-            console.log(result.assets[0].uri);
+            router.push({
+                pathname: "/DocumentResult",
+                params: {
+                    fileUri: result.assets[0].uri,
+                    fileName: `photo_${Date.now()}.jpg`,
+                    fileType: result.assets[0].mimeType || "image/jpeg",
+                },
+            });
         }
     };
 
@@ -90,7 +103,6 @@ const UploadModal: React.FC = () => {
                     </Text>
                 </TouchableOpacity>
 
-                {/* Camera Upload */}
                 <TouchableOpacity
                     style={styles.button}
                     activeOpacity={0.85}
