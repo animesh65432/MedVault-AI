@@ -7,7 +7,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GetDocById } from '@/api/docs';
-import { User } from '@/context/User';
+// import { User } from '@/context/User';
+import { token } from '@/utils/token';
 import { MedicalDocument, DocumentType } from '@/types';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
@@ -39,7 +40,7 @@ const DOC_CONFIG: Record<DocumentType, DocConfig> = {
 
 
 export default function DocumentDetailScreen() {
-    const { token } = useContext(User);
+    // const { token } = useContext(User);
     const { id } = useLocalSearchParams();
     const router = useRouter();
     const insets = useSafeAreaInsets();

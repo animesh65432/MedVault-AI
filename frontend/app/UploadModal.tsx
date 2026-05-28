@@ -20,7 +20,7 @@ const UploadModal: React.FC = () => {
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ['images'],
-            allowsEditing: true,
+            allowsEditing: false,
             quality: 1,
         });
 

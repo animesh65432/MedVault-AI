@@ -1,0 +1,2 @@
+export const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ1c2VyQGV4YW1wbGUuY29tIiwibmFtZSI6ImFuaW1lc2giLCJwcm9maWxlX2ltYWdlIjoic3RyaW5nIiwiZXhwIjoxNzg3NzIxMzA0fQ.Ms7LqbfNPE33qCq2lESz-Ls5igkJC9MxBI5gewOL88U";
+export const UserName = "Animesh";

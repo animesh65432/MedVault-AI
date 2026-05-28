@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet } from "react-native"
 import { scale } from '@/utils/scale'
+import { vScale } from '@/utils/vScale'
 
 type Props = {
     userName: string,
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
+        paddingTop: vScale(18),
     },
     text: {
         fontSize: scale(20),

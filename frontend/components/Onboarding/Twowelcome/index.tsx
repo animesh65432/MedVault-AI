@@ -35,13 +35,6 @@ const TwoWelCome: React.FC<Props> = ({ handlePageChange }) => {
             />
 
             <View style={styles.buttonRow}>
-                <TouchableOpacity
-                    style={styles.buttonOutline}
-                    onPress={() => handlePageChange(0)}
-                    activeOpacity={0.8}
-                >
-                    <Text style={styles.buttonOutlineText}>Back</Text>
-                </TouchableOpacity>
 
                 <TouchableOpacity
                     style={styles.button}
@@ -60,9 +53,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
-        paddingHorizontal: scale(4),
-        paddingTop: vScale(3),
-        paddingBottom: vScale(3),
+        paddingHorizontal: scale(24),
+        paddingTop: vScale(30),
+        paddingBottom: vScale(32),
         gap: vScale(20),
     },
     dotsContainer: {
@@ -94,10 +87,10 @@ const styles = StyleSheet.create({
     },
     description: {
         color: '#6B6B6B',
-        fontSize: fs(15),
+        fontSize: fs(17),
         lineHeight: fs(22),
         textAlign: 'center',
-        fontFamily: 'Aeonik-Regular',
+        fontFamily: 'Aeonik-Medium',
         width: '95%',
         alignSelf: 'center',
     },
@@ -110,6 +103,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: scale(12),
         justifyContent: 'center',
+        width: "90%",
+        alignSelf: 'center',
     },
     button: {
         flex: 1,

@@ -5,7 +5,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { GetMedicineList } from '@/api/medicine'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
-import { User } from '@/context/User'
+// import { User } from '@/context/User'
+import { token } from "@/utils/token"
 import { MedicineRecord } from '@/types'
 import Error from '@/components/Error'
 import { ScreenHeader, EmptyState, BackButton } from '@/components/ui/component'
@@ -131,7 +132,7 @@ const MedicineCard: React.FC<{ item: MedicineRecord; index: number }> = ({ item,
 
 
 const Medicines = () => {
-    const { token } = useContext(User)
+    // const { token } = useContext(User)
     const insets = useSafeAreaInsets()
 
     const [medicineList, setMedicineList] = useState<MedicineRecord[]>([])

@@ -47,7 +47,7 @@ const WelCome: React.FC<Props> = ({ handlePageChange }) => {
                 onPress={() => handlePageChange(1)}
                 activeOpacity={0.9}
             >
-                <Text style={styles.buttonText}>Skip</Text>
+                <Text style={styles.buttonText}>Continue</Text>
             </TouchableOpacity>
 
         </View>
@@ -92,10 +92,10 @@ const styles = StyleSheet.create({
     },
     description: {
         color: '#6B6B6B',
-        fontSize: fs(15),
+        fontSize: fs(17),
         lineHeight: fs(22),
         textAlign: 'center',
-        fontFamily: 'Aeonik-Regular',
+        fontFamily: 'Aeonik-Medium',
         width: '95%',
         alignSelf: 'center',
     },
@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: scale(8),
         elevation: 5,
+        width: "100%"
     },
     buttonText: {
         fontSize: fs(16),

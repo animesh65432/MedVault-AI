@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
-        paddingHorizontal: scale(4),
-        paddingTop: vScale(3),
-        paddingBottom: vScale(2),
-        gap: vScale(20),
+        paddingHorizontal: scale(24),
+        paddingTop: vScale(30),
+        paddingBottom: vScale(32),
+        gap: vScale(13),
     },
     dotsContainer: {
         flexDirection: 'row',
@@ -92,10 +92,10 @@ const styles = StyleSheet.create({
     },
     description: {
         color: '#6B6B6B',
-        fontSize: fs(15),
+        fontSize: fs(17),
         lineHeight: fs(22),
         textAlign: 'center',
-        fontFamily: 'Aeonik-Regular',
+        fontFamily: 'Aeonik-Medium',
         width: '95%',
         alignSelf: 'center',
     },

@@ -8,7 +8,7 @@ import 'react-native-reanimated';
 import { Onboarding } from "@/components";
 import { DocumentsProvider } from "@/context/Documents"
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
-import { UserProvider, User } from "@/context/User";
+// import { UserProvider, User } from "@/context/User";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,21 +17,21 @@ export const unstable_settings = {
 };
 
 function RootLayoutContent() {
-  const { token } = useContext(User);
-  const isAuthenticated = !!token;
+  // const { token } = useContext(User);
+  // const isAuthenticated = !!token;
   const { IsonboardingComplete } = useContext(OnboardingContext);
 
-  if (!IsonboardingComplete) {
+  if (IsonboardingComplete) {
     return (
       <Onboarding />
     );
   }
 
-  if (!isAuthenticated) {
-    return (
-      <Login />
-    );
-  }
+  // if (!isAuthenticated) {
+  //   return (
+  //     <Login />
+  //   );
+  // }
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
@@ -74,12 +74,12 @@ export default function RootLayout() {
 
   return (
     <OnboardingProvider>
-      <UserProvider>
-        <DocumentsProvider  >
-          <RootLayoutContent />
-          <StatusBar style="auto" />
-        </DocumentsProvider>
-      </UserProvider>
+      {/* <UserProvider> */}
+      <DocumentsProvider  >
+        <RootLayoutContent />
+        <StatusBar style="auto" />
+      </DocumentsProvider>
+      {/* </UserProvider> */}
     </OnboardingProvider>
   );
 }

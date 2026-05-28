@@ -1,18 +1,21 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { StyleSheet, Platform, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Platform, View, TouchableOpacity } from 'react-native';
 import { HapticTab } from '@/components/haptic-tab';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { vScale } from '@/utils/vScale';
 
-
-const BRAND_COLORS = {
+const COLORS = {
   background: '#23423B',
+  border: '#2D534A',
   active: '#EEF6A2',
   inactive: '#6E827B',
   uploadBg: '#EEF6A2',
   uploadIcon: '#23423B',
 };
+
+const BUTTON_SIZE = 46;
 
 function UploadTabButton({ onPress }: { onPress: () => void }) {
   return (
@@ -22,7 +25,7 @@ function UploadTabButton({ onPress }: { onPress: () => void }) {
       style={styles.uploadWrapper}
     >
       <View style={styles.uploadButton}>
-        <Ionicons name="add" size={30} color={BRAND_COLORS.uploadIcon} />
+        <Ionicons name="add" size={30} color={COLORS.uploadIcon} />
       </View>
     </TouchableOpacity>
   );
@@ -36,8 +39,8 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarButton: HapticTab,
-        tabBarActiveTintColor: BRAND_COLORS.active,
-        tabBarInactiveTintColor: BRAND_COLORS.inactive,
+        tabBarActiveTintColor: COLORS.active,
+        tabBarInactiveTintColor: COLORS.inactive,
         tabBarStyle: styles.tabBar,
         tabBarLabelStyle: styles.tabBarLabel,
         tabBarItemStyle: styles.tabBarItem,
@@ -50,12 +53,13 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <Ionicons
               size={24}
-              name={focused ? "home" : "home-outline"}
-              color={focused ? BRAND_COLORS.active : BRAND_COLORS.inactive}
+              name={focused ? 'home' : 'home-outline'}
+              color={focused ? COLORS.active : COLORS.inactive}
             />
           ),
         }}
       />
+
       <Tabs.Screen
         name="Search"
         options={{
@@ -63,12 +67,13 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <Ionicons
               size={24}
-              name={focused ? "search" : "search-outline"}
-              color={focused ? BRAND_COLORS.active : BRAND_COLORS.inactive}
+              name={focused ? 'search' : 'search-outline'}
+              color={focused ? COLORS.active : COLORS.inactive}
             />
           ),
         }}
       />
+
       <Tabs.Screen
         name="Upload"
         options={{
@@ -88,12 +93,13 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <Ionicons
               size={24}
-              name={focused ? "notifications" : "notifications-outline"}
-              color={focused ? BRAND_COLORS.active : BRAND_COLORS.inactive}
+              name={focused ? 'notifications' : 'notifications-outline'}
+              color={focused ? COLORS.active : COLORS.inactive}
             />
           ),
         }}
       />
+
       <Tabs.Screen
         name="Profile"
         options={{
@@ -101,8 +107,8 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <Ionicons
               size={24}
-              name={focused ? "person" : "person-outline"}
-              color={focused ? BRAND_COLORS.active : BRAND_COLORS.inactive}
+              name={focused ? 'person' : 'person-outline'}
+              color={focused ? COLORS.active : COLORS.inactive}
             />
           ),
         }}
@@ -111,16 +117,15 @@ export default function TabLayout() {
   );
 }
 
-const BUTTON_SIZE = 46;
-
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: BRAND_COLORS.background,
+    backgroundColor: COLORS.background,
     borderTopWidth: 1,
-    borderTopColor: '#2D534A',
-    height: Platform.OS === 'ios' ? 88 : 72,
-    paddingTop: 8,
-    paddingBottom: Platform.OS === 'ios' ? 28 : 12,
+    borderTopColor: COLORS.border,
+    height: Platform.OS === 'ios' ? 84 : 64,
+    paddingTop: vScale(10),
+    paddingBottom: Platform.OS === 'ios' ? vScale(24) : vScale(12),
+    overflow: 'visible'
   },
   tabBarItem: {
     flex: 1,
@@ -128,12 +133,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tabBarLabel: {
-    fontFamily: "Aeonik-Regular",
+    fontFamily: 'Aeonik-Regular',
     fontSize: 11,
     fontWeight: '500',
     marginTop: 4,
   },
-
   uploadWrapper: {
     flex: 1,
     alignItems: 'center',
@@ -144,10 +148,9 @@ const styles = StyleSheet.create({
     width: BUTTON_SIZE,
     height: BUTTON_SIZE,
     borderRadius: BUTTON_SIZE / 2,
-    backgroundColor: BRAND_COLORS.uploadBg,
+    backgroundColor: COLORS.uploadBg,
     alignItems: 'center',
     justifyContent: 'center',
-    // Shadow for lift effect
     shadowColor: '#EEF6A2',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.35,

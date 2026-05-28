@@ -2,7 +2,7 @@ import React from 'react'
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
 import Description from './DesScription'
-import UpLoad from './Upload'
+import UpLoad from '../Upload'
 import { View, StyleSheet } from "react-native"
 import { Image } from 'react-native'
 

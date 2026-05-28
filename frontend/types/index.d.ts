@@ -107,6 +107,10 @@ export interface MedicalDocument {
     medications: Medicine[];
 }
 
+// export interface DocumentSummary extends MedicalDocument {
+//     exclude :
+// }
+
 export interface StatsInformation {
     total_documents: number;
     total_medicine_records: number;
@@ -114,6 +118,7 @@ export interface StatsInformation {
 }
 
 export interface MedicineRecord {
+    timing: any;
     dosage: string,
     frequency: string,
     id: number,

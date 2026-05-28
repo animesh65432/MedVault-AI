@@ -6,16 +6,17 @@ import Error from '../Error'
 import NonEmptyStats from './NonEmptyStats'
 import Title from './Title'
 import Stats from './Stats'
-import { User } from '@/context/User'
+// import { User } from '@/context/User'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import EmptyStats from './EmptyStats'
 import { GetStats } from '@/api/stats'
+import { token, UserName } from "@/utils/token"
 import { DocumentsContext } from "@/context/Documents"
 import { DocumentListSkeleton, StatsSkeleton } from './Skeleton'
 
 const HomeLayOut = () => {
-    const { token, name } = useContext(User);
+    // const { token, name } = useContext(User);
     const { Documents, SetDocuments } = useContext(DocumentsContext);
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
@@ -65,7 +66,7 @@ const HomeLayOut = () => {
     return (
         <View style={styles.container}>
             <Title
-                userName={name}
+                userName={UserName}
                 ShowStats={showStats}
             />
             {isLoading ? (

@@ -1,5 +1,5 @@
 type Env = "PROD" | "dev";
-export const API_BASE_URL = "http://10.0.2.2:8000/api/v1"
+export const API_BASE_URL = "http://192.168.29.193:8000/api/v1"
 export const env: Env = process.env.NODE_ENV === "production" ? "PROD" : "dev";
 export const LocalhostUrl = "http://192.168.29.193:3000"
 export const GoogleClientId = "574386738080-2e3d9rocmup7g73nlo8dqt6pj3b7ohql.apps.googleusercontent.com"

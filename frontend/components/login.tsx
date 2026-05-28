@@ -9,16 +9,16 @@ import {
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import { fs } from '@/utils/fs'
-import { User } from '@/context/User'
+// import { User } from '@/context/User'
 
 const Login: React.FC = () => {
-    const { SignIn } = useContext(User)
+    // const { SignIn } = useContext(User)
 
     const handleGoogleSignIn = async () => {
         try {
             console.log('🚀 Initiating Google Sign In from Auth component...')
 
-            console.log(SignIn())
+            // console.log(SignIn())
 
         } catch (error) {
             console.error(error)
@@ -73,6 +73,9 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
         width: '100%',
+        paddingBottom: vScale(62),
+        display: "flex",
+        flexDirection: "column",
     },
     container: {
         flex: 1,
