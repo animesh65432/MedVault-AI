@@ -107,9 +107,6 @@ export interface MedicalDocument {
     medications: Medicine[];
 }
 
-// export interface DocumentSummary extends MedicalDocument {
-//     exclude :
-// }
 
 export interface StatsInformation {
     total_documents: number;

@@ -14,10 +14,10 @@ async def get_document_by_id(db: AsyncSession, document_id: int) -> Document:
 
 async def create_document(db: AsyncSession, document_data: dict) -> Document:
     try:
-        medications = document_data["document_metadata"].get("medicines", [])
+        medications = document_data["medications"]
 
-        document_data["document_metadata"].pop("medicines", None)
-        
+        document_data.pop("medications", [])
+
         new_document = Document(**document_data)
 
         db.add(new_document)

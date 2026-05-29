@@ -4,7 +4,7 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, UploadFile, HTTPException
 from db.database import async_get_db, AsyncSession
 from middleware.auth import auth
-from utils.upload_photo import upload_photo
+from utils.upload_file import upload_file
 from utils.checkItisMediCineOrNot import checkItisMediCineOrNot
 from utils.EXtractText import extract_text_from_image
 from utils.MakeDocument import make_medical_record
@@ -16,9 +16,11 @@ from services.docs import (
 from services.Reminder import GetAllRemindersForUser
 from utils.generate_embedding import generate_embedding
 from services.redis import redis_client
+from utils.extract_text_from_pdf_url import extract_text_from_pdf_url
 from utils.build_embedding_text import build_embedding_text
 from utils.json_serializer import json_serializer
 from services.Medication import count_medicines
+from exceptions.custom_exceptions import AppException
 
 Docsrouter = APIRouter()
 
@@ -39,41 +41,52 @@ async def generate_docs(
     file_hash = hashlib.sha256(content).hexdigest()
     file.file.seek(0)
 
-    print(f"Generated hash for uploaded file: {file_hash}")
-
     if await CheckIfPhotoAlreadyExists(db, file_hash):
         raise HTTPException(status_code=409, detail="Document already exists")
 
-    image_url = await upload_photo(file)
-    if not image_url:
-        raise HTTPException(status_code=500, detail="Upload failed")
+    url = await upload_file(file)
 
-    extracted_text = await extract_text_from_image(image_url)
+    if not url:
+        raise HTTPException(status_code=500, detail="Upload failed")
+    
+
+    if file.content_type == "application/pdf":
+        extracted_text = await extract_text_from_pdf_url(url)
+    else:
+        extracted_text = await extract_text_from_image(url)
+        
+
     if not extracted_text or not extracted_text.strip():
-        raise HTTPException(status_code=500, detail="Failed to extract text from image")
+        raise AppException(status_code=500, detail="Failed to extract text from image")
 
     is_medical = await checkItisMediCineOrNot(extracted_text)
+
     if is_medical.strip() != "True":
-        raise HTTPException(status_code=400, detail="The uploaded document does not appear to be a medical record.")
+        raise AppException(status_code=400, detail="The uploaded document does not appear to be a medical record.")
 
     medical_record = await make_medical_record(extracted_text)
 
     date_str = medical_record["document_metadata"].get("date", "")
+
     document_date = datetime.strptime(date_str, "%d-%m-%Y") if date_str else datetime.now()
 
     embedding_text = build_embedding_text(medical_record)
+
     embedding = await generate_embedding(embedding_text, task="retrieval.passage")
+
+    medications = medical_record["document_metadata"].get("medicines", [])
 
     record = await create_document(db, {
         "title": medical_record["title"],
         "content": extracted_text,
         "user_id": current_user["id"],
         "file_hash": file_hash,
-        "source_link": image_url,
+        "source_link": url,
         "doc_type": medical_record["doc_type"],
         "document_metadata": medical_record["document_metadata"],
         "embedding": embedding,
         "date": document_date,
+        "medications": medications
     })
 
     await redis_client.delete(f"user:{current_user['id']}:documents")
@@ -90,6 +103,7 @@ async def generate_docs(
             "created_at": record.created_at,
             "user_id": record.user_id,
             "date": document_date,
+            "medicines": medications,
         },
     }
 

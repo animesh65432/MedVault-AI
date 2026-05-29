@@ -20,5 +20,6 @@ config = {
     "EXPLAIN_MEDICAL_API_KEY": os.getenv("EXPLAIN_MEDICAL_API_KEY"),
     "JINA_API_KEY": os.getenv("JINA_API_KEY"),
     "CHAT_MEDICAL_API_KEY": os.getenv("CHAT_MEDICAL_API_KEY"),
-    "REDIS_TOKEN" : os.getenv("REDIS_TOKEN")
+    "REDIS_TOKEN" : os.getenv("REDIS_TOKEN"),
+    "MISTRAL_API_KEY": os.getenv("MISTRAL_API_KEY")
 }

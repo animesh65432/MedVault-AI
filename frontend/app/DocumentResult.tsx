@@ -4,6 +4,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { GenrateDoc } from "@/api/docs"
 import { Toast } from "toastify-react-native";
 // import { User } from "@/context/User";
+import { DocumentMetadata } from "@/types"
 import { token } from "@/utils/token"
 import DocumentScaning from "@/components/DocumentScaning";
 import { isLoading } from "expo-font";
@@ -13,6 +14,7 @@ const first = (val: string | string[]) => Array.isArray(val) ? val[0] : val;
 
 const DocumentResult: React.FC = () => {
     // const { token } = useContext(User)
+    const [DocumentData, setDocumentData] = useState<DocumentMetadata | null>(null);
     const [IsLoading, setIsLoading] = useState(false);
     const { fileUri, fileName, fileType } = useLocalSearchParams();
 
@@ -35,10 +37,9 @@ const DocumentResult: React.FC = () => {
                 type: fileType as string,
             } as any);
 
-            const response = await GenrateDoc(token, formData);
+            const response = await GenrateDoc(token, formData) as DocumentMetadata;
 
-            console.log(response)
-
+            setDocumentData(response);
         }
         catch (error) {
             console.log('Error processing document:', error);

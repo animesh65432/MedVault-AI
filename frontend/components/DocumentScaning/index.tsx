@@ -33,8 +33,6 @@ const DocumentScanning: React.FC<Props> = ({ fileUri, fileName, fileType }) => {
             <View style={styles.bgGlow} pointerEvents="none" />
 
             <Animated.View style={[styles.content, { opacity: masterOpacity }]}>
-
-                {/* Document image + scan overlay */}
                 <DocumentCard fileUri={fileUri} fileName={fileName} />
 
                 {/* Gap */}

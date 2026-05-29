@@ -19,13 +19,13 @@ export const unstable_settings = {
 function RootLayoutContent() {
   // const { token } = useContext(User);
   // const isAuthenticated = !!token;
-  const { IsonboardingComplete } = useContext(OnboardingContext);
+  // const { IsonboardingComplete } = useContext(OnboardingContext);
 
-  if (IsonboardingComplete) {
-    return (
-      <Onboarding />
-    );
-  }
+  // if (IsonboardingComplete) {
+  //   return (
+  //     <Onboarding />
+  //   );
+  // }
 
   // if (!isAuthenticated) {
   //   return (

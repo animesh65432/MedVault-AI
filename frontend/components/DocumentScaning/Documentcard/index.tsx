@@ -26,7 +26,7 @@ const DocumentCard: React.FC<Props> = ({ fileUri, fileName }) => (
             <Image
                 source={{ uri: fileUri }}
                 style={styles.image}
-                resizeMode="cover"
+                resizeMode="contain"
                 alt={fileName}
             />
 
