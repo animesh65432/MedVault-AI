@@ -21,19 +21,16 @@ const DocumentCard: React.FC<Props> = ({ fileUri, fileName }) => (
         {/* Corner brackets sit outside the card */}
         <CornerBrackets />
 
-        {/* The actual document preview */}
         <View style={styles.card}>
             <Image
                 source={{ uri: fileUri }}
                 style={styles.image}
-                resizeMode="contain"
+                resizeMode="cover"
                 alt={fileName}
             />
 
-            {/* Subtle dark overlay so scan line is visible on light docs */}
             <View style={styles.overlay} pointerEvents="none" />
 
-            {/* Scan line clips inside card via overflow:hidden */}
             <ScanLine cardHeight={CARD_HEIGHT} />
         </View>
     </View>
@@ -60,7 +57,7 @@ const styles = StyleSheet.create({
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(0,0,0,0.12)',
+        backgroundColor: 'rgba(10, 10, 10, 0.12)',
     },
 })
 

@@ -29,9 +29,6 @@ const DocumentScanning: React.FC<Props> = ({ fileUri, fileName, fileType }) => {
         <View style={styles.screen}>
             <StatusBar barStyle="light-content" backgroundColor={Colors.bg} />
 
-            {/* Background radial glow */}
-            <View style={styles.bgGlow} pointerEvents="none" />
-
             <Animated.View style={[styles.content, { opacity: masterOpacity }]}>
                 <DocumentCard fileUri={fileUri} fileName={fileName} />
 
@@ -64,19 +61,9 @@ const DocumentScanning: React.FC<Props> = ({ fileUri, fileName, fileType }) => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: Colors.bg,
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-    },
-    bgGlow: {
-        position: 'absolute',
-        width: '140%',
-        aspectRatio: 1,
-        borderRadius: 9999,
-        backgroundColor: Colors.bgGlow,
-        top: '15%',
-        alignSelf: 'center',
     },
     content: {
         alignItems: 'center',

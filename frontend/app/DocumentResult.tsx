@@ -8,9 +8,7 @@ import { DocumentMetadata } from "@/types"
 import { token } from "@/utils/token"
 import DocumentScaning from "@/components/DocumentScaning";
 import { isLoading } from "expo-font";
-
-const first = (val: string | string[]) => Array.isArray(val) ? val[0] : val;
-
+import { first } from "@/utils/first"
 
 const DocumentResult: React.FC = () => {
     // const { token } = useContext(User)
@@ -50,10 +48,17 @@ const DocumentResult: React.FC = () => {
     }
 
     useEffect(() => {
+
         processDocument();
+
+        return () => {
+            processDocument();
+            setDocumentData(null);
+        }
+
     }, [fileName, fileType, fileUri]);
 
-    if (IsLoading) {
+    if (true) {
         return <DocumentScaning
             fileUri={first(fileUri)}
             fileName={first(fileName)}
@@ -63,6 +68,7 @@ const DocumentResult: React.FC = () => {
 
     return (
         <View style={styles.container}>
+
         </View>
     );
 };

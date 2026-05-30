@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Toast } from 'toastify-react-native';
 import {
     StyleSheet,
@@ -8,13 +8,15 @@ import {
     Pressable,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useRouter } from "expo-router"
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useRouter } from 'expo-router';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 
-const UploadModal: React.FC = () => {
 
+const UploadModal: React.FC = () => {
     const router = useRouter();
 
     const pickImage = async () => {
@@ -26,19 +28,18 @@ const UploadModal: React.FC = () => {
 
         if (!result.canceled) {
             router.push({
-                pathname: "/DocumentResult",
+                pathname: '/ShowDocument',
                 params: {
                     fileUri: result.assets[0].uri,
-                    fileName: result.assets[0].fileName,
-                    fileType: result.assets[0].mimeType || "image/jpeg",
+                    fileName: `image_${Date.now()}.jpg`,
+                    fileType: result.assets[0].mimeType || 'image/jpeg',
                 },
             });
         }
     };
 
     const takePhoto = async () => {
-        const permission =
-            await ImagePicker.requestCameraPermissionsAsync();
+        const permission = await ImagePicker.requestCameraPermissionsAsync();
 
         if (!permission.granted) {
             Toast.error('Camera permission is required to take photos.');
@@ -47,76 +48,94 @@ const UploadModal: React.FC = () => {
 
         const result = await ImagePicker.launchCameraAsync({
             cameraType: ImagePicker.CameraType.back,
-            allowsEditing: true,
             quality: 1,
         });
 
         if (!result.canceled) {
             router.push({
-                pathname: "/DocumentResult",
+                pathname: '/ShowDocument',
                 params: {
                     fileUri: result.assets[0].uri,
                     fileName: `photo_${Date.now()}.jpg`,
-                    fileType: result.assets[0].mimeType || "image/jpeg",
+                    fileType: result.assets[0].mimeType || 'image/jpeg',
                 },
             });
         }
     };
 
+    const pickPdf = async () => {
+        const result = await DocumentPicker.getDocumentAsync({
+            type: 'application/pdf',
+            copyToCacheDirectory: true,
+        });
+
+        if (!result.canceled) {
+            router.push({
+                pathname: '/ShowDocument',
+                params: {
+                    fileUri: result.assets[0].uri,
+                    fileName: result.assets[0].name,
+                    fileType: 'application/pdf',
+                },
+            });
+        }
+    };
+
+    const options = [
+        {
+            icon: <MaterialIcons name="camera-alt" size={scale(24)} color="#064E3B" />,
+            label: 'Take Photo',
+            description: 'Use camera to capture',
+            onPress: takePhoto,
+        },
+        {
+            icon: <MaterialIcons name="photo-library" size={scale(24)} color="#064E3B" />,
+            label: 'Upload from Gallery',
+            description: 'Choose an image from your library',
+            onPress: pickImage,
+        },
+        {
+            icon: <AntDesign name="file-pdf" size={scale(24)} color="#064E3B" />,
+            label: 'Choose PDF File',
+            description: 'Select a PDF document',
+            onPress: pickPdf,
+        },
+    ];
+
     return (
         <View style={styles.overlay}>
-            <Pressable
-                style={StyleSheet.absoluteFill}
-                onPress={() => router.back()}
-            />
+            <Pressable style={StyleSheet.absoluteFill} onPress={() => router.back()} />
 
             <View style={styles.modal}>
+                <View style={styles.header}>
+                    <Text style={styles.title}>Upload Document</Text>
+                    <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
+                        <MaterialIcons name="close" size={scale(22)} color="#222" />
+                    </TouchableOpacity>
+                </View>
+
+                {options.map((opt, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        style={styles.button}
+                        activeOpacity={0.85}
+                        onPress={opt.onPress}
+                    >
+                        <View style={styles.iconContainer}>{opt.icon}</View>
+                        <View style={styles.labelContainer}>
+                            <Text style={styles.buttonText}>{opt.label}</Text>
+                            <Text style={styles.description}>{opt.description}</Text>
+                        </View>
+                        <AntDesign name="right" size={scale(16)} color="#9CA3AF" />
+                    </TouchableOpacity>
+                ))}
+
                 <TouchableOpacity
-                    style={styles.closeButton}
+                    style={styles.cancelButton}
+                    activeOpacity={0.85}
                     onPress={() => router.back()}
                 >
-                    <MaterialIcons
-                        name="close"
-                        size={scale(22)}
-                        color="#222"
-                    />
-                </TouchableOpacity>
-
-                <Text style={styles.title}>
-                    Upload Document
-                </Text>
-
-                {/* Gallery Upload */}
-                <TouchableOpacity
-                    style={styles.button}
-                    activeOpacity={0.85}
-                    onPress={pickImage}
-                >
-                    <MaterialIcons
-                        name="photo-library"
-                        size={scale(18)}
-                        color="#EEF6A2"
-                    />
-
-                    <Text style={styles.text}>
-                        Upload From Gallery
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.button}
-                    activeOpacity={0.85}
-                    onPress={takePhoto}
-                >
-                    <MaterialIcons
-                        name="camera-alt"
-                        size={scale(18)}
-                        color="#EEF6A2"
-                    />
-
-                    <Text style={styles.text}>
-                        Take Photo
-                    </Text>
+                    <Text style={styles.cancelText}>Cancel</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -129,47 +148,67 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.45)',
         justifyContent: 'flex-end',
     },
-
     modal: {
         backgroundColor: '#fff',
         borderTopLeftRadius: scale(24),
         borderTopRightRadius: scale(24),
         padding: scale(20),
-        paddingBottom: vScale(40),
-        minHeight: '52%',
+        paddingBottom: vScale(36),
     },
-
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: vScale(20),
+    },
     closeButton: {
-        alignSelf: 'flex-end',
         padding: scale(4),
     },
-
     title: {
         fontSize: scale(20),
         fontFamily: 'Aeonik-Bold',
         color: '#111',
-        marginBottom: vScale(20),
     },
-
     button: {
-        marginTop: vScale(12),
+        marginTop: vScale(10),
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        gap: scale(6),
-
-        backgroundColor: '#23423B',
-
+        paddingHorizontal: scale(16),
         paddingVertical: vScale(14),
         borderRadius: scale(14),
-
-        width: '100%',
+        borderColor: '#6B8E8B',
+        borderWidth: 1,
     },
-
-    text: {
+    iconContainer: {
+        width: scale(36),
+        alignItems: 'center',
+    },
+    labelContainer: {
+        flex: 1,
+        marginLeft: scale(10),
+    },
+    buttonText: {
         fontFamily: 'Aeonik-Medium',
-        fontSize: scale(14),
-        color: '#EEF6A2',
+        fontSize: scale(15),
+        color: '#111',
+    },
+    description: {
+        fontFamily: 'Aeonik-Regular',
+        fontSize: scale(12),
+        color: '#6B7280',
+        marginTop: vScale(2),
+    },
+    cancelButton: {
+        marginTop: vScale(16),
+        paddingVertical: vScale(14),
+        borderRadius: scale(14),
+        backgroundColor: '#F3F4F6',
+        alignItems: 'center',
+    },
+    cancelText: {
+        fontFamily: 'Aeonik-Medium',
+        fontSize: scale(15),
+        color: '#374151',
     },
 });
 
