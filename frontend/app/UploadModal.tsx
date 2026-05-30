@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Toast } from 'toastify-react-native';
 import {
     StyleSheet,
@@ -6,6 +6,7 @@ import {
     View,
     TouchableOpacity,
     Pressable,
+    Animated
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
@@ -106,7 +107,9 @@ const UploadModal: React.FC = () => {
         <View style={styles.overlay}>
             <Pressable style={StyleSheet.absoluteFill} onPress={() => router.back()} />
 
-            <View style={styles.modal}>
+            <Animated.View
+                style={styles.modal}
+            >
                 <View style={styles.header}>
                     <Text style={styles.title}>Upload Document</Text>
                     <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
@@ -137,7 +140,7 @@ const UploadModal: React.FC = () => {
                 >
                     <Text style={styles.cancelText}>Cancel</Text>
                 </TouchableOpacity>
-            </View>
+            </Animated.View>
         </View>
     );
 };

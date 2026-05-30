@@ -57,7 +57,7 @@ const ShowDocument = () => {
                         <Image
                             source={{ uri: first(fileUri) }}
                             style={styles.image}
-                            resizeMode="cover"
+                            resizeMode="contain"
                         />
                     )}
                 </View>
