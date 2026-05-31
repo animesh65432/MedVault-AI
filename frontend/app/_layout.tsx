@@ -1,4 +1,8 @@
 import { useEffect, useContext } from 'react';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 import Login from '@/components/login';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -11,6 +15,8 @@ import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 // import { UserProvider, User } from "@/context/User";
 
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient()
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -73,13 +79,15 @@ export default function RootLayout() {
   }
 
   return (
-    <OnboardingProvider>
-      {/* <UserProvider> */}
-      <DocumentsProvider  >
-        <RootLayoutContent />
-        <StatusBar style="auto" />
-      </DocumentsProvider>
-      {/* </UserProvider> */}
-    </OnboardingProvider>
+    <QueryClientProvider client={queryClient}>
+      <OnboardingProvider>
+        {/* <UserProvider> */}
+        <DocumentsProvider  >
+          <RootLayoutContent />
+          <StatusBar style="auto" />
+        </DocumentsProvider>
+        {/* </UserProvider> */}
+      </OnboardingProvider>
+    </QueryClientProvider>
   );
 }

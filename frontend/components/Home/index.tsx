@@ -76,13 +76,14 @@ const HomeLayOut = () => {
                 </>
             ) : (
                 <>
-                    {showStats && statsInformation && (
+                    {/* {showStats && statsInformation && (
                         <>
                             <Stats statsInformation={statsInformation} />
                             <NonEmptyStats documents={Documents} />
                         </>
-                    )}
-                    {!showStats && <EmptyStats />}
+                    )} */}
+                    {/* {!showStats && <EmptyStats />} */}
+                    <EmptyStats />
                 </>
             )}
         </View>

@@ -6,11 +6,8 @@ import { View, StyleSheet, Text } from "react-native"
 const Description = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>
-                Your medical history{"\n"}starts here.
-            </Text>
             <Text style={styles.descriptionText}>
-                Upload your first prescription, lab report, or medical bill to securely organize all your health records in one place.
+                Start by uploading your first medical document .
             </Text>
         </View>
     )
@@ -22,15 +19,8 @@ const styles = StyleSheet.create({
         gap: vScale(12),
         paddingHorizontal: scale(16),
     },
-    titleText: {
-        fontFamily: 'Aeonik-Medium',
-        fontSize: scale(19),
-        color: '#111',
-        textAlign: 'center',
-        lineHeight: vScale(26),
-    },
     descriptionText: {
-        fontFamily: 'Aeonik-Regular',
+        fontFamily: 'Aeonik-Medium',
         fontSize: scale(15),
         color: '#888',
         textAlign: 'center',

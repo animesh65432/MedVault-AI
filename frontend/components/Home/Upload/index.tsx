@@ -30,21 +30,21 @@ const UpLoad = () => {
 
 const styles = StyleSheet.create({
     button: {
-        marginTop: vScale(9),
+        marginTop: vScale(19),
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
         gap: scale(6),
         backgroundColor: "#23423B",
-        paddingVertical: vScale(12),
-        paddingHorizontal: scale(24),
+        paddingVertical: vScale(16),
+        paddingHorizontal: scale(34),
         borderRadius: scale(12),
         alignSelf: "center",
-        width: "100%",
+        width: "90%",
     },
     text: {
         fontFamily: "Aeonik-Medium",
-        fontSize: scale(14),
+        fontSize: scale(15),
         color: "#EEF6A2",
     }
 })
