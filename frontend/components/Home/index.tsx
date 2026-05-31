@@ -80,7 +80,9 @@ const HomeLayOut = () => {
                     {showStats && statsInformation && (
                         <>
                             <Input />
-                            <Stats statsInformation={statsInformation} />
+                            <Stats
+                                statsInformation={statsInformation}
+                            />
                             <NonEmptyStats documents={Documents} />
                         </>
                     )}

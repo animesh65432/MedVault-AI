@@ -8,11 +8,10 @@ const Documents: React.FC<{ documents: MedicalDocument[], IsSearch?: boolean }> 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Recent Documents</Text>
-            {documents.map((doc) => (
+            {documents.slice(0, 2).map((doc) => (
                 <Document
                     key={doc.id}
                     document={doc}
-                    IsSearch={IsSearch}
                 />
             ))}
         </View>
@@ -25,7 +24,8 @@ const styles = StyleSheet.create({
         gap: vScale(15)
     },
     title: {
-        fontFamily: "Aeonik-Medium"
+        fontFamily: "Aeonik-Medium",
+        fontSize: vScale(18),
     }
 })
 

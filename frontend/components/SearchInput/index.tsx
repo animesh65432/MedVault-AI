@@ -63,7 +63,7 @@ const SearchInput: React.FC<InputProps> = ({
 
     const animatedBorderColor = borderAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: ["rgba(238, 246, 162, 0.12)", "rgba(238, 246, 162, 0.55)"],
+        outputRange: ["rgba(238, 246, 162, 0.12)", "#23423B"],
     });
 
     const animatedBackground = borderAnim.interpolate({
@@ -86,7 +86,7 @@ const SearchInput: React.FC<InputProps> = ({
                 <Ionicons
                     name="search-outline"
                     size={scale(18)}
-                    color={isFocused ? "#EEF6A2" : "rgba(25, 26, 25, 0.35)"}
+                    color="#23423B"
                 />
             </Animated.View>
 
@@ -99,11 +99,10 @@ const SearchInput: React.FC<InputProps> = ({
                 style={styles.input}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                selectionColor="#EEF6A2"
+                selectionColor="#23423B"
                 {...rest}
             />
 
-            {/* Clear button */}
             {value && value.length > 0 && (
                 <TouchableOpacity
                     onPress={() => onChangeText?.("")}
@@ -113,7 +112,7 @@ const SearchInput: React.FC<InputProps> = ({
                     <Ionicons
                         name="close-circle"
                         size={scale(16)}
-                        color="rgba(238, 246, 162, 0.45)"
+                        color="#23423B"
                     />
                 </TouchableOpacity>
             )}
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         fontSize: scale(16),
-        color: "#EEF6A2",
+        color: "#23423B",
         fontFamily: "Aeonik-Medium",
         padding: 0,
         margin: 0,

@@ -65,7 +65,7 @@ const StatCard: React.FC<StatCardProps> = ({ icon, value, label, delay }) => {
 
             {/* Icon badge */}
             <View style={styles.iconBadge}>
-                <Ionicons name={icon} size={scale(18)} color="#23423B" />
+                <Ionicons name={icon} size={scale(28)} color="#23423B" />
             </View>
 
             {/* Value */}
@@ -144,8 +144,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.18,
         shadowRadius: vScale(8),
         elevation: 4,
-        borderWidth: 1,
-        borderColor: "rgba(43, 43, 42, 0.08)",
+        borderWidth: 0.2,
+        borderColor: "#23423B",
     },
     accentBar: {
         position: "absolute",
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         height: vScale(3),
-        backgroundColor: "#EEF6A2",
+        // backgroundColor: "#EEF6A2",
         borderTopLeftRadius: vScale(14),
         borderTopRightRadius: vScale(14),
     },
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     valueText: {
         fontSize: scale(22),
         fontWeight: "700",
-        color: "#EEF6A2",
+        color: "#23423B",
         fontFamily: "Aeonik-Medium",
         letterSpacing: -0.5,
         lineHeight: scale(26),
@@ -180,9 +180,9 @@ const styles = StyleSheet.create({
         marginVertical: vScale(6),
     },
     labelText: {
-        fontSize: scale(11),
+        fontSize: scale(14),
         fontWeight: "500",
-        color: "rgba(238, 246, 162, 0.6)",
+        color: "#23423B",
         fontFamily: "Aeonik-Medium",
         textAlign: "center",
         letterSpacing: 0.3,

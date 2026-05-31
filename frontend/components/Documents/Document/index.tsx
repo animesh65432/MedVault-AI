@@ -7,71 +7,36 @@ import { scale } from '@/utils/scale';
 import { formatDate } from '@/utils/formatDate';
 import { vScale } from '@/utils/vScale';
 
-
 type DocConfig = {
     icon: keyof typeof Ionicons.glyphMap;
     accent: string;
     label: string;
+    subtitleIcon: keyof typeof Ionicons.glyphMap;
 };
 
 const DOC_CONFIG: Record<DocumentType, DocConfig> = {
-    "Prescription": { icon: "medkit-outline", accent: "#7DD4A8", label: "Prescription" },
-    "Prescription Receipt": { icon: "receipt-outline", accent: "#A8D4F5", label: "Rx Receipt" },
-    "Lab Report": { icon: "flask-outline", accent: "#F5C97D", label: "Lab Report" },
-    "Radiology Report": { icon: "scan-outline", accent: "#C9A8F5", label: "Radiology" },
-    "Medical Bill": { icon: "card-outline", accent: "#F5A8A8", label: "Bill" },
-    "Discharge Summary": { icon: "exit-outline", accent: "#A8F5E0", label: "Discharge" },
-    "Insurance Document": { icon: "shield-checkmark-outline", accent: "#A8C8F5", label: "Insurance" },
-    "Medical History Record": { icon: "time-outline", accent: "#F5DDA8", label: "History" },
-    "Referral Letter": { icon: "mail-outline", accent: "#D4A8F5", label: "Referral" },
-    "Consent Form": { icon: "pencil-outline", accent: "#A8F5B8", label: "Consent" },
-    "Other": { icon: "document-outline", accent: "#EEF6A2", label: "Document" },
+    "Prescription": { icon: "pencil-outline", accent: "#7DD4A8", label: "Prescription", subtitleIcon: "person-outline" },
+    "Prescription Receipt": { icon: "receipt-outline", accent: "#A8D4F5", label: "Rx Receipt", subtitleIcon: "person-outline" },
+    "Lab Report": { icon: "flask-outline", accent: "#F5C97D", label: "Lab Report", subtitleIcon: "analytics-outline" },
+    "Radiology Report": { icon: "scan-outline", accent: "#C9A8F5", label: "Radiology", subtitleIcon: "person-outline" },
+    "Medical Bill": { icon: "card-outline", accent: "#F5A8A8", label: "Bill", subtitleIcon: "business-outline" },
+    "Discharge Summary": { icon: "exit-outline", accent: "#A8F5E0", label: "Discharge", subtitleIcon: "person-outline" },
+    "Insurance Document": { icon: "shield-checkmark-outline", accent: "#A8C8F5", label: "Insurance", subtitleIcon: "business-outline" },
+    "Medical History Record": { icon: "time-outline", accent: "#F5DDA8", label: "History", subtitleIcon: "person-outline" },
+    "Referral Letter": { icon: "mail-outline", accent: "#D4A8F5", label: "Referral", subtitleIcon: "person-outline" },
+    "Consent Form": { icon: "pencil-outline", accent: "#A8F5B8", label: "Consent", subtitleIcon: "person-outline" },
+    "Other": { icon: "document-outline", accent: "#EEF6A2", label: "Document", subtitleIcon: "document-outline" },
 };
-
-
-const getSubtitle = (doc: MedicalDocument): string | null => {
-    const m = doc.document_metadata;
-    if (m.doctor_name) return `Dr. ${m.doctor_name}`;
-    if (m.clinic_name) return m.clinic_name;
-    if (m.hospital_name) return m.hospital_name;
-    if (m.lab_name) return m.lab_name;
-    if (m.pharmacy_name) return m.pharmacy_name;
-    if (m.patient_name) return m.patient_name;
-    return null;
-};
-
-const getPills = (doc: MedicalDocument): string[] => {
-    const m = doc.document_metadata;
-    const pills: string[] = [];
-
-    if (m.medicines?.length)
-        pills.push(`${m.medicines.length} Medicine${m.medicines.length > 1 ? "s" : ""}`);
-    if (m.tests?.length)
-        pills.push(`${m.tests.length} Test${m.tests.length > 1 ? "s" : ""}`);
-    if (m.diagnosis)
-        pills.push(m.diagnosis.length > 22 ? m.diagnosis.slice(0, 22) + "…" : m.diagnosis);
-    if (m.total_amount)
-        pills.push(`₹${m.total_amount}`);
-    if (m.follow_up)
-        pills.push("Follow-up");
-
-    return pills.slice(0, 3);
-};
-
 
 interface DocumentProps {
     document: MedicalDocument;
     onPress?: (doc: MedicalDocument) => void;
-    IsSearch?: boolean;
 }
 
-const Document: React.FC<DocumentProps> = ({ document, onPress, IsSearch = false }) => {
+const Document: React.FC<DocumentProps> = ({ document, onPress }) => {
     const config = DOC_CONFIG[document.doc_type] ?? DOC_CONFIG["Other"];
-    const subtitle = getSubtitle(document);
-    const pills = getPills(document);
     const router = useRouter();
     const date = formatDate(document.date || document.created_at);
-
     const scaleAnim = useRef(new Animated.Value(1)).current;
 
     const handlePressIn = () => {
@@ -92,170 +57,98 @@ const Document: React.FC<DocumentProps> = ({ document, onPress, IsSearch = false
         }).start();
     };
 
+    const handlePress = () => {
+        onPress ? onPress(document) : router.push(`/document/${document.id}`);
+    };
+
     return (
         <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
             <Pressable
-                onPress={() => router.push(`/document/${document.id}`)}
+                onPress={handlePress}
                 onPressIn={handlePressIn}
                 onPressOut={handlePressOut}
                 style={styles.card}
             >
 
-                <View style={[styles.stripe, { backgroundColor: config.accent }]} />
-
-
-                <View style={[styles.iconBadge, { backgroundColor: config.accent + "22" }]}>
-                    <Ionicons
-                        name={config.icon}
-                        size={scale(20)}
-                        color={config.accent}
-                    />
+                <View style={[styles.iconWrap, { backgroundColor: config.accent + "33" }]}>
+                    <Ionicons name={config.icon} size={scale(20)} color={config.accent.replace("33", "")} />
                 </View>
 
-                {/* Body */}
-                <View style={styles.body}>
-                    {/* Top row: type badge + date */}
-                    <View style={styles.topRow}>
-                        <View style={[styles.typeBadge, { backgroundColor: config.accent + "1A" }]}>
-                            <Text style={[styles.typeText, { color: config.accent }]}>
-                                {config.label}
-                            </Text>
-                        </View>
-                        {date && (
-                            <Text style={styles.dateText}>{date}</Text>
-                        )}
+                <View style={styles.content}>
+                    {/* Top row: doc type + date */}
+                    <View style={styles.titleRow}>
+                        <Text style={styles.title}>{document.doc_type}</Text>
+                        <Text style={styles.date}>{date}</Text>
                     </View>
 
-                    <Text
-                        style={styles.title}
-                        numberOfLines={IsSearch ? 4 : 1}
-                    >
-                        {document.title}
-                    </Text>
-
-
-                    {subtitle && (
-                        <Text style={styles.subtitle} numberOfLines={IsSearch ? 4 : 1}>
-                            {subtitle}
-                        </Text>
-                    )}
-
-
-                    {pills.length > 0 && (
-                        <View style={styles.pillRow}>
-                            {pills.map((pill, i) => (
-                                <View key={i} style={styles.pill}>
-                                    <Text style={styles.pillText}>{pill}</Text>
-                                </View>
-                            ))}
-                        </View>
-                    )}
+                    <View style={styles.subtitleRow}>
+                        <Ionicons name={config.subtitleIcon} size={scale(12)} color="#7A9E96" />
+                        <Text style={styles.subtitle} numberOfLines={2}>{document.title}</Text>
+                    </View>
                 </View>
-
-
-                <Ionicons
-                    name="chevron-forward"
-                    size={scale(16)}
-                    color="rgba(238, 246, 162, 0.25)"
-                    style={styles.chevron}
-                />
             </Pressable>
         </Animated.View>
     );
 };
 
-
 const styles = StyleSheet.create({
     card: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#1E3A33",
+        backgroundColor: "#fff",
         borderRadius: scale(14),
-        borderWidth: 1,
-        borderColor: "rgba(238, 246, 162, 0.08)",
-        paddingVertical: vScale(14),
-        paddingRight: scale(12),
         overflow: "hidden",
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: vScale(3) },
-        shadowOpacity: 0.15,
-        shadowRadius: vScale(8),
-        elevation: 3,
+        shadowOffset: { width: 0, height: vScale(2) },
+        shadowOpacity: 0.08,
+        shadowRadius: vScale(6),
+        elevation: 2,
+        marginBottom: vScale(10),
     },
-    stripe: {
-        width: scale(3),
+    accentBar: {
+        width: scale(4),
         alignSelf: "stretch",
-        borderTopRightRadius: scale(3),
-        borderBottomRightRadius: scale(3),
-        marginRight: scale(12),
     },
-    iconBadge: {
-        width: scale(42),
-        height: scale(42),
-        borderRadius: scale(12),
-        alignItems: "center",
+    iconWrap: {
+        width: scale(40),
+        height: scale(40),
+        borderRadius: scale(10),
         justifyContent: "center",
-        marginRight: scale(12),
+        alignItems: "center",
+        marginLeft: scale(12),
     },
-    body: {
+    content: {
         flex: 1,
+        paddingVertical: vScale(14),
+        paddingHorizontal: scale(12),
         gap: vScale(4),
     },
-    topRow: {
+    titleRow: {
         flexDirection: "row",
-        alignItems: "center",
         justifyContent: "space-between",
-        marginBottom: vScale(1),
-    },
-    typeBadge: {
-        paddingHorizontal: scale(8),
-        paddingVertical: vScale(2),
-        borderRadius: scale(6),
-    },
-    typeText: {
-        fontSize: scale(10),
-        fontFamily: "Aeonik-Medium",
-        fontWeight: "600",
-        letterSpacing: 0.4,
-        textTransform: "uppercase",
-    },
-    dateText: {
-        fontSize: scale(11),
-        color: "rgba(238, 246, 162, 0.4)",
-        fontFamily: "Aeonik-Medium",
+        alignItems: "center",
     },
     title: {
-        fontSize: scale(14),
-        fontWeight: "600",
-        color: "#EEF6A2",
+        fontSize: scale(15),
         fontFamily: "Aeonik-Medium",
-        letterSpacing: 0.1,
+        color: "#1A3530",
+    },
+    date: {
+        fontSize: scale(11),
+        fontFamily: "Aeonik-Regular",
+        color: "#7A9E96",
+    },
+    subtitleRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(4),
     },
     subtitle: {
-        fontSize: scale(12),
-        color: "rgba(238, 246, 162, 0.5)",
-        fontFamily: "Aeonik-Medium",
+        fontSize: scale(13),
+        fontFamily: "Aeonik-Regular",
+        color: "#7A9E96",
+        flexShrink: 1,
     },
-    pillRow: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        gap: scale(6),
-        marginTop: vScale(4),
-    },
-    pill: {
-        backgroundColor: "rgba(238, 246, 162, 0.08)",
-        borderRadius: scale(6),
-        paddingHorizontal: scale(8),
-        paddingVertical: vScale(3),
-    },
-    pillText: {
-        fontSize: scale(11),
-        color: "rgba(238, 246, 162, 0.6)",
-        fontFamily: "Aeonik-Medium",
-    },
-    chevron: {
-        marginLeft: scale(8),
-    }
 });
 
 export default Document;
