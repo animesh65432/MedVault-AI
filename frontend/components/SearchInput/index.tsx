@@ -68,7 +68,7 @@ const SearchInput: React.FC<InputProps> = ({
 
     const animatedBackground = borderAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: ["#1E3A33", "#213f38"],
+        outputRange: ["white", "white"],
     });
 
     return (
@@ -86,7 +86,7 @@ const SearchInput: React.FC<InputProps> = ({
                 <Ionicons
                     name="search-outline"
                     size={scale(18)}
-                    color={isFocused ? "#EEF6A2" : "rgba(238, 246, 162, 0.35)"}
+                    color={isFocused ? "#EEF6A2" : "rgba(25, 26, 25, 0.35)"}
                 />
             </Animated.View>
 
@@ -95,7 +95,7 @@ const SearchInput: React.FC<InputProps> = ({
                 value={value}
                 onChangeText={onChangeText}
                 placeholder={placeholder}
-                placeholderTextColor="rgba(238, 246, 162, 0.3)"
+                placeholderTextColor="rgba(13, 13, 13, 0.3)"
                 style={styles.input}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        fontSize: scale(14),
+        fontSize: scale(16),
         color: "#EEF6A2",
         fontFamily: "Aeonik-Medium",
         padding: 0,

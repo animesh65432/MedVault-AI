@@ -3,15 +3,14 @@ import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
 import Description from './DesScription'
 import UpLoad from '../Upload'
-import { View, StyleSheet, ScrollView } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { Image } from 'react-native'
 import Steps from './Steps'
 
 const EmptyStats = () => {
     return (
-        <ScrollView
-            contentContainerStyle={styles.container}
-            showsVerticalScrollIndicator={false}
+        <View
+            style={styles.container}
         >
             <Image
                 style={styles.image}
@@ -21,15 +20,15 @@ const EmptyStats = () => {
             <Description />
             <UpLoad />
             <Steps />
-        </ScrollView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        paddingBottom: vScale(32),
-        gap: vScale(24),
+        paddingBottom: vScale(9),
+        gap: vScale(20),
     },
     image: {
         width: scale(200),

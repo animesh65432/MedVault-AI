@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     },
     card: {
         alignItems: "center",
-        backgroundColor: "#1E3A33",
+        backgroundColor: "white",
         borderRadius: vScale(14),
         paddingTop: vScale(14),
         paddingBottom: vScale(14),
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         shadowRadius: vScale(8),
         elevation: 4,
         borderWidth: 1,
-        borderColor: "rgba(238, 246, 162, 0.08)",
+        borderColor: "rgba(43, 43, 42, 0.08)",
     },
     accentBar: {
         position: "absolute",
@@ -161,7 +161,6 @@ const styles = StyleSheet.create({
         width: scale(36),
         height: scale(36),
         borderRadius: scale(10),
-        backgroundColor: "#EEF6A2",
         alignItems: "center",
         justifyContent: "center",
         marginBottom: vScale(10),

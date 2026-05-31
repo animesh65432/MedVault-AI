@@ -30,7 +30,6 @@ const UpLoad = () => {
 
 const styles = StyleSheet.create({
     button: {
-        marginTop: vScale(19),
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(34),
         borderRadius: scale(12),
         alignSelf: "center",
-        width: "90%",
+        width: "100%"
     },
     text: {
         fontFamily: "Aeonik-Medium",
