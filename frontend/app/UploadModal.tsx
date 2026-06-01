@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: scale(24),
         borderTopRightRadius: scale(24),
         padding: scale(20),
-        paddingBottom: vScale(36),
+        paddingBottom: vScale(76),
     },
     header: {
         flexDirection: 'row',

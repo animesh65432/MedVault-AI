@@ -9,7 +9,7 @@ import { vScale } from '@/utils/vScale';
 const COLORS = {
   background: '#23423B',
   border: '#2D534A',
-  active: '#EEF6A2',
+  active: '#23423B',
   inactive: '#6E827B',
   uploadBg: '#EEF6A2',
   uploadIcon: '#23423B',
@@ -119,13 +119,12 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: COLORS.background,
     borderTopWidth: 1,
     borderTopColor: COLORS.border,
     height: Platform.OS === 'ios' ? 84 : 64,
     paddingTop: vScale(10),
-    paddingBottom: Platform.OS === 'ios' ? vScale(24) : vScale(12),
-    overflow: 'visible'
+    paddingBottom: Platform.OS === 'ios' ? vScale(200) : vScale(100),
+    overflow: 'visible',
   },
   tabBarItem: {
     flex: 1,
