@@ -8,7 +8,7 @@ const Documents: React.FC<{ documents: MedicalDocument[], IsSearch?: boolean }> 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Recent Documents</Text>
-            {documents.slice(0, 2).map((doc) => (
+            {documents.slice(0, 3).map((doc) => (
                 <Document
                     key={doc.id}
                     document={doc}

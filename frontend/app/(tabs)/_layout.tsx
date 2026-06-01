@@ -81,7 +81,7 @@ export default function TabLayout() {
           tabBarIcon: () => null,
           tabBarLabel: () => null,
           tabBarButton: () => (
-            <UploadTabButton onPress={() => router.push('/Upload')} />
+            <UploadTabButton onPress={() => router.push('/UploadModal')} />
           ),
         }}
       />
@@ -119,8 +119,6 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    borderTopWidth: 1,
-    borderTopColor: COLORS.border,
     height: Platform.OS === 'ios' ? 84 : 64,
     paddingTop: vScale(10),
     paddingBottom: Platform.OS === 'ios' ? vScale(200) : vScale(100),

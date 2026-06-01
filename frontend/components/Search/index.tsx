@@ -5,6 +5,7 @@ import SearchInput from '../SearchInput'
 import { scale } from '@/utils/scale'
 import Documents from '../Documents'
 import { DocumentsContext } from "@/context/Documents"
+import Empty from './Empty'
 
 const Search: React.FC = () => {
     const { Documents: documentsList } = useContext(DocumentsContext)
@@ -12,19 +13,20 @@ const Search: React.FC = () => {
     return (
         <View style={styles.container}>
             <SearchInput />
-            <Documents
-                documents={documentsList}
-                IsSearch={true}
-            />
+            <Empty />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: scale(10),
-        paddingTop: vScale(40),
+        paddingHorizontal: scale(20),
+        paddingTop: vScale(80),
         paddingBottom: vScale(32),
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        gap: vScale(24)
     }
 })
 

@@ -11,7 +11,6 @@ import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import EmptyStats from './EmptyStats'
 import { GetStats } from '@/api/stats'
-import Input from "../SearchInput"
 import { token, UserName } from "@/utils/token"
 import { DocumentsContext } from "@/context/Documents"
 import { DocumentListSkeleton, StatsSkeleton } from './Skeleton'
@@ -79,7 +78,6 @@ const HomeLayOut = () => {
                 <>
                     {showStats && statsInformation && (
                         <>
-                            <Input />
                             <Stats
                                 statsInformation={statsInformation}
                             />
