@@ -4,11 +4,12 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    Image,
 } from 'react-native'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import { fs } from '@/utils/fs'
+import LottieView from 'lottie-react-native'
+import animation from "@/assets/animations/Documents/animations/embedded.json";
 
 type Props = {
     handlePageChange: (index: number) => void
@@ -33,14 +34,15 @@ const WelCome: React.FC<Props> = ({ handlePageChange }) => {
                 Store prescriptions, lab reports, scans, and hospital bills
                 securely and access them anytime.
             </Text>
-
-            <Image
-                style={styles.image}
-                width={scale(500)}
-                height={vScale(450)}
-                source={require('../../../assets/images/Hero-1.png')}
-                resizeMode="contain"
-            />
+            <View style={styles.animationWrapper}>
+                <LottieView
+                    source={animation}
+                    autoPlay
+                    loop={true}
+                    style={styles.animation}
+                    resizeMode="contain"
+                />
+            </View>
 
             <TouchableOpacity
                 style={styles.button}
@@ -124,6 +126,14 @@ const styles = StyleSheet.create({
         color: '#EEF6A2',
         fontFamily: 'Aeonik-Bold',
         letterSpacing: 0.3,
+    },
+    animationWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    animation: {
+        width: '100%',
+        height: '100%',
     },
 })
 

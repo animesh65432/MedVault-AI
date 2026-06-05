@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         flex: 1,
         display: "flex",
         flexDirection: "column",
-        gap: vScale(24)
+        gap: vScale(60)
     }
 })
 

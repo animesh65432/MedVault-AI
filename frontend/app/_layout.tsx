@@ -27,11 +27,11 @@ function RootLayoutContent() {
   // const isAuthenticated = !!token;
   // const { IsonboardingComplete } = useContext(OnboardingContext);
 
-  // if (IsonboardingComplete) {
-  //   return (
-  //     <Onboarding />
-  //   );
-  // }
+  if (true) {
+    return (
+      <Onboarding />
+    );
+  }
 
   // if (!isAuthenticated) {
   //   return (

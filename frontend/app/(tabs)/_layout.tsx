@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   tabBar: {
     height: Platform.OS === 'ios' ? 84 : 64,
     paddingTop: vScale(10),
-    paddingBottom: Platform.OS === 'ios' ? vScale(200) : vScale(100),
+    paddingBottom: Platform.OS === 'ios' ? vScale(100) : vScale(50),
     overflow: 'visible',
   },
   tabBarItem: {
