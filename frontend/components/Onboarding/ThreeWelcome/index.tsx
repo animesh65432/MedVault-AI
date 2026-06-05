@@ -1,8 +1,10 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import { fs } from '@/utils/fs'
+import LottieView from 'lottie-react-native'
+import animation from "@/assets/animations/NeverMissUpdate/a/Main Scene.json"
 
 type Props = {
     handlePageChange: (index: number) => void
@@ -28,13 +30,12 @@ const ThreeWelcome: React.FC<Props> = ({ handlePageChange }) => {
                 Get reminders for every dose and stay on track
                 with your treatment and recovery.
             </Text>
-
-            <Image
+            <LottieView
+                source={animation}
+                autoPlay
+                loop={true}
                 style={styles.image}
-                source={require('../../../assets/images/Hero-3.png')}
-                resizeMode="contain"
             />
-
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => handlePageChange(3)}
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(24),
         paddingTop: vScale(30),
         paddingBottom: vScale(32),
-        gap: vScale(13),
+        gap: vScale(5),
     },
     dotsContainer: {
         flexDirection: 'row',

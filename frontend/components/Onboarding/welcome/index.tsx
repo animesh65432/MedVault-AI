@@ -9,7 +9,7 @@ import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import { fs } from '@/utils/fs'
 import LottieView from 'lottie-react-native'
-import animation from "@/assets/animations/Documents/animations/embedded.json";
+import animation from "@/assets/animations/Welcome/a/mainscene.json";
 
 type Props = {
     handlePageChange: (index: number) => void
@@ -38,7 +38,7 @@ const WelCome: React.FC<Props> = ({ handlePageChange }) => {
                 <LottieView
                     source={animation}
                     autoPlay
-                    loop={true}
+                    loop={false}
                     style={styles.animation}
                     resizeMode="contain"
                 />

@@ -3,6 +3,9 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import { fs } from '@/utils/fs'
+import LottieView from 'lottie-react-native'
+import animation from "@/assets/animations/Documents/animations/embedded.json";
+
 
 type Props = {
     handlePageChange: (index: number) => void
@@ -27,12 +30,15 @@ const TwoWelCome: React.FC<Props> = ({ handlePageChange }) => {
                 Search medicines, doctors, hospitals, symptoms, or dates
                 using smart AI-powered search.
             </Text>
-
-            <Image
-                style={styles.image}
-                source={require('../../../assets/images/Hero-2.png')}
-                resizeMode="contain"
-            />
+            <View style={styles.animationWrapper}>
+                <LottieView
+                    source={animation}
+                    autoPlay
+                    loop={false}
+                    style={styles.animation}
+                    resizeMode="contain"
+                />
+            </View>
 
             <View style={styles.buttonRow}>
 
@@ -139,6 +145,14 @@ const styles = StyleSheet.create({
         color: '#23423B',
         fontFamily: 'Aeonik-Bold',
         letterSpacing: 0.3,
+    },
+    animationWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    animation: {
+        width: '100%',
+        height: '100%',
     },
 })
 
