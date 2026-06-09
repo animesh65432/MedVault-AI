@@ -6,3 +6,5 @@ export const GoogleClientId = "574386738080-2e3d9rocmup7g73nlo8dqt6pj3b7ohql.app
 export const WEB_CLIENT_ID = '574386738080-lgu7oa370e7hnk0td05tv9vh9i311d6h.apps.googleusercontent.com'
 export const ANDRIOND_CLIENT_ID = process.env.ANDRIOND_CLIENT_ID
 export const IOS_CLIENT_ID = "574386738080-5jbpti4d2tfe1mg4gsg41nb9vbkth5kk.apps.googleusercontent.com"
+export const QwenModelDowloadUrl = "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1.5b-instruct-q4_k_m.gguf"
+

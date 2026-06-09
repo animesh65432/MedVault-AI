@@ -1,10 +1,10 @@
-import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import animation from "@/assets/animations/NeverMissUpdate/a/Main Scene.json"
+import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
-import { fs } from '@/utils/fs'
 import LottieView from 'lottie-react-native'
-import animation from "@/assets/animations/NeverMissUpdate/a/Main Scene.json"
+import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 type Props = {
     handlePageChange: (index: number) => void
@@ -27,8 +27,8 @@ const ThreeWelcome: React.FC<Props> = ({ handlePageChange }) => {
             </View>
 
             <Text style={styles.description}>
-                Get reminders for every dose and stay on track
-                with your treatment and recovery.
+                Your medical records stay protected
+                and available whenever you need them.
             </Text>
             <LottieView
                 source={animation}
@@ -36,6 +36,12 @@ const ThreeWelcome: React.FC<Props> = ({ handlePageChange }) => {
                 loop={true}
                 style={styles.image}
             />
+            <View style={styles.trustContainer}>
+                <Text style={styles.trustTitle}>🔒 Private by Design</Text>
+                <Text style={styles.trustText}>
+                    Works offline. No login required.
+                </Text>
+            </View>
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => handlePageChange(3)}
@@ -62,7 +68,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(24),
         paddingTop: vScale(30),
         paddingBottom: vScale(32),
-        gap: vScale(5),
+        gap: vScale(0),
     },
     dotsContainer: {
         flexDirection: 'row',
@@ -103,7 +109,7 @@ const styles = StyleSheet.create({
     image: {
         alignSelf: 'center',
         width: scale(500),
-        height: vScale(480),
+        height: vScale(400),
     },
     button: {
         backgroundColor: '#23423B',
@@ -127,10 +133,28 @@ const styles = StyleSheet.create({
     },
     backText: {
         fontSize: fs(15),
+        marginTop: vScale(16),
         color: '#6B6B6B',
         fontFamily: 'Aeonik-Regular',
         textAlign: 'center',
         textDecorationLine: 'underline',
+    },
+    trustContainer: {
+        alignItems: 'center',
+        marginBottom: vScale(16),
+    },
+
+    trustTitle: {
+        fontSize: fs(14),
+        fontFamily: 'Aeonik-Bold',
+        color: '#23423B',
+    },
+
+    trustText: {
+        fontSize: fs(12),
+        fontFamily: 'Aeonik-Regular',
+        color: '#6B6B6B',
+        marginTop: vScale(4),
     },
 })
 

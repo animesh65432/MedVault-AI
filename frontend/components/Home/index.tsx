@@ -1,22 +1,20 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { View, StyleSheet } from "react-native"
-import { MedicalDocument, StatsInformation } from "@/types"
 import { GetDocs } from "@/api/docs"
-import Error from '../Error'
-import NonEmptyStats from './NonEmptyStats'
-import Title from './Title'
-import Stats from './Stats'
-// import { User } from '@/context/User'
-import { scale } from '@/utils/scale'
-import { vScale } from '@/utils/vScale'
-import EmptyStats from './EmptyStats'
 import { GetStats } from '@/api/stats'
-import { token, UserName } from "@/utils/token"
 import { DocumentsContext } from "@/context/Documents"
+import { MedicalDocument, StatsInformation } from "@/types"
+import { scale } from '@/utils/scale'
+import { token, UserName } from "@/utils/token"
+import { vScale } from '@/utils/vScale'
+import React, { useCallback, useContext, useState } from 'react'
+import { StyleSheet, View } from "react-native"
+import Error from '../Error'
+import EmptyStats from './EmptyStats'
+import NonEmptyStats from './NonEmptyStats'
 import { DocumentListSkeleton, StatsSkeleton } from './Skeleton'
+import Stats from './Stats'
+import Title from './Title'
 
 const HomeLayOut = () => {
-    // const { token, name } = useContext(User);
     const { Documents, SetDocuments } = useContext(DocumentsContext);
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
@@ -48,11 +46,6 @@ const HomeLayOut = () => {
             setIsLoading(false);
         }
     }, [token]);
-
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
-
 
 
     if (hasError) {

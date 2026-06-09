@@ -1,17 +1,17 @@
-import React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    Image,
-    TouchableOpacity,
-    SafeAreaView,
-} from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { first } from '@/utils/first';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React from 'react';
+import {
+    Image,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/AntDesign';
 
 const ShowDocument = () => {
     const { fileUri, fileName, fileType } = useLocalSearchParams();

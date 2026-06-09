@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     description: {
         color: '#6B6B6B',
-        fontSize: fs(15),
+        fontSize: fs(16),
         lineHeight: fs(22),
         fontFamily: 'Aeonik-Regular',
     },
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     },
     dividerText: {
         color: '#9B9B9B',
-        fontSize: fs(13),
+        fontSize: fs(14),
         fontFamily: 'Aeonik-Regular',
     },
     emailButton: {

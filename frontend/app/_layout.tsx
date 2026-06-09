@@ -1,18 +1,18 @@
-import { useEffect, useContext } from 'react';
+import { Onboarding } from "@/components";
+import { DocumentsProvider } from "@/context/Documents";
+import DowLoadProvidder, { DownloadContext } from "@/context/DownloadModel";
+import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import {
   QueryClient,
   QueryClientProvider,
-} from '@tanstack/react-query'
-import Login from '@/components/login';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+} from '@tanstack/react-query';
 import { useFonts } from "expo-font";
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { useContext, useEffect } from 'react';
 import 'react-native-reanimated';
-import { Onboarding } from "@/components";
-import { DocumentsProvider } from "@/context/Documents"
-import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
-// import { UserProvider, User } from "@/context/User";
+import Download from "./Dowload";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,21 +23,18 @@ export const unstable_settings = {
 };
 
 function RootLayoutContent() {
-  // const { token } = useContext(User);
-  // const isAuthenticated = !!token;
-  // const { IsonboardingComplete } = useContext(OnboardingContext);
+  const { IsDownload } = useContext(DownloadContext);
+  const { IsonboardingComplete } = useContext(OnboardingContext);
 
-  if (true) {
+  if (!IsonboardingComplete) {
     return (
       <Onboarding />
     );
   }
 
-  // if (!isAuthenticated) {
-  //   return (
-  //     <Login />
-  //   );
-  // }
+  if (!IsDownload) {
+    return <Download />;
+  }
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
@@ -80,14 +77,14 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <OnboardingProvider>
-        {/* <UserProvider> */}
-        <DocumentsProvider  >
-          <RootLayoutContent />
-          <StatusBar style="auto" />
-        </DocumentsProvider>
-        {/* </UserProvider> */}
-      </OnboardingProvider>
-    </QueryClientProvider>
+      <DowLoadProvidder>
+        <OnboardingProvider>
+          <DocumentsProvider  >
+            <RootLayoutContent />
+            <StatusBar style="auto" />
+          </DocumentsProvider>
+        </OnboardingProvider>
+      </DowLoadProvidder>
+    </QueryClientProvider >
   );
 }

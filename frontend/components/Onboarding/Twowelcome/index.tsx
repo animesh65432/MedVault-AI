@@ -22,13 +22,14 @@ const TwoWelCome: React.FC<Props> = ({ handlePageChange }) => {
             </View>
 
             <View style={styles.textContainer}>
-                <Text style={styles.title}>Find Any Medical</Text>
-                <Text style={styles.title}>Record Instantly</Text>
+                <Text style={styles.title}>Find Any Report</Text>
+                <Text style={styles.title}>In Seconds</Text>
             </View>
 
             <Text style={styles.description}>
-                Search medicines, doctors, hospitals, symptoms, or dates
-                using smart AI-powered search.
+                Search prescriptions, blood tests,
+                scans, and bills instantly using
+                smart document search.
             </Text>
             <View style={styles.animationWrapper}>
                 <LottieView

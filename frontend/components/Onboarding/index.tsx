@@ -1,10 +1,10 @@
 import { OnboardingContext } from '@/context';
-import React, { useRef, useContext, useState } from 'react'
-import WelCome from './welcome';
-import TwoWelCome from './Twowelcome';
+import React, { useContext, useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
+import OnboardingSwiper from "react-native-onboarding-swiper";
 import ThreeWelcome from './ThreeWelcome';
-import { View, StyleSheet } from 'react-native';
-import OnboardingSwiper from "react-native-onboarding-swiper"
+import TwoWelCome from './Twowelcome';
+import WelCome from './welcome';
 
 const Onboarding: React.FC = () => {
     const { setOnboardingCompleteAndCache } = useContext(OnboardingContext)

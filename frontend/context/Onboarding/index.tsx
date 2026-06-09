@@ -1,6 +1,5 @@
-import { createContext } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React from "react"
+import React, { createContext } from "react";
 
 type OnboardingContextType = {
     IsonboardingComplete: boolean

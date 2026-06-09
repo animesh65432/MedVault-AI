@@ -1,15 +1,15 @@
-import React from 'react'
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-} from 'react-native'
+import animation from "@/assets/animations/Welcome/a/mainscene.json"
+import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
-import { fs } from '@/utils/fs'
 import LottieView from 'lottie-react-native'
-import animation from "@/assets/animations/Welcome/a/mainscene.json";
+import React from 'react'
+import {
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native'
 
 type Props = {
     handlePageChange: (index: number) => void
