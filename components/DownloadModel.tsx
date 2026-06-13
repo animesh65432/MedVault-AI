@@ -311,7 +311,7 @@ const DownloadModel = () => {
                     <TouchableOpacity
                         style={styles.btnSecondary}
                         activeOpacity={0.7}
-                        onPress={() => OnChangeModel(false)}
+                        onPress={() => OnChangeModel(true)}
                     >
                         <Text style={styles.btnSecondaryText}>Maybe later</Text>
                     </TouchableOpacity>
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: scale(20),
         paddingTop: vScale(50),
-        paddingBottom: vScale(32),
+        paddingBottom: vScale(52),
         gap: vScale(24),
     },
     titleContainer: { gap: vScale(8) },
@@ -424,7 +424,11 @@ const styles = StyleSheet.create({
         color: '#0F6E56',
         lineHeight: scale(18),
     },
-    buttonGroup: { gap: vScale(10), marginTop: 'auto' },
+    buttonGroup: {
+        gap: vScale(10),
+        marginTop: 'auto',
+        paddingBottom: vScale(30),
+    },
     btnPrimary: {
         height: vScale(52),
         backgroundColor: '#234338',

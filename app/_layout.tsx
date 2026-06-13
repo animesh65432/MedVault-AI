@@ -32,6 +32,8 @@ function RootLayoutContent() {
     return <Download />;
   }
 
+  console.log(IsDownload)
+
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
