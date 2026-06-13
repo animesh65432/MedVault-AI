@@ -1,7 +1,7 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
 type Props = {
     userName: string
@@ -37,7 +37,7 @@ const Title: React.FC<Props> = ({ userName, ShowStats }) => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        paddingTop: vScale(18),
+        paddingTop: vScale(3),
     },
     greeting: {
         fontSize: scale(16),

@@ -39,7 +39,6 @@
         }
       ],
       "expo-font",
-      "@react-native-google-signin/google-signin",
       "expo-sqlite"
     ],
     "experiments": {

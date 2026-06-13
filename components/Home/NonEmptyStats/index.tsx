@@ -1,12 +1,12 @@
-import React from 'react'
-import { View, StyleSheet, Text, Pressable } from "react-native"
 import { MedicalDocument } from '@/types'
-import Upload from '../Upload'
-import { vScale } from '@/utils/vScale'
-import Documents from '../../Documents'
-import { useRouter } from "expo-router"
 import { scale } from '@/utils/scale'
+import { vScale } from '@/utils/vScale'
+import { useRouter } from "expo-router"
+import React from 'react'
+import { Pressable, StyleSheet, Text, View } from "react-native"
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import Documents from '../../Documents'
+import Upload from '../Upload'
 
 const NonEmptyStats: React.FC<{ documents: MedicalDocument[] }> = ({ documents }) => {
     const router = useRouter()

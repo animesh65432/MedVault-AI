@@ -34,7 +34,7 @@ const formatETA = (remainingBytes: number, bytesPerSec: number): string => {
 }
 
 const DownloadModel = () => {
-    const { OnChangeModel } = useContext(DownloadContext)
+    const { OnChangeModel, addModelPath } = useContext(DownloadContext)
     const [dlState, setDlState] = useState<DownloadState>('idle')
     const [progress, setProgress] = useState(0)
     const [speedLabel, setSpeedLabel] = useState('')
@@ -62,16 +62,14 @@ const DownloadModel = () => {
 
             try {
                 const info = await FileSystem.getInfoAsync(modelUri)
-
-                console.log('Model file info:', info)
-
                 if (info.exists) {
                     progressAnim.setValue(1)
                     setProgress(1)
                     setDlState('complete')
+                    addModelPath(modelUri)
                     OnChangeModel(true)
                 }
-            } catch { /* ignore */ }
+            } catch { }
         })()
 
         return () => {
@@ -79,7 +77,7 @@ const DownloadModel = () => {
         }
     }, [])
 
-    // ── Spinner ──
+
     useEffect(() => {
         if (dlState === 'downloading') {
             Animated.loop(
@@ -164,6 +162,8 @@ const DownloadModel = () => {
 
             animateProgressTo(1)
             setProgress(1)
+            addModelPath(modelUri)
+            OnChangeModel(true)
             setTimeout(() => setDlState('complete'), 400)
 
         } catch (err: any) {
@@ -184,8 +184,6 @@ const DownloadModel = () => {
     })
 
     const pct = Math.round(progress * 100)
-
-    console.log(`Render DownloadModel - state: ${modelUri}, progress: ${pct}%, speedLabel: ${speedLabel}, errorMsg: ${errorMsg}`)
 
     return (
         <View style={styles.container}>
@@ -310,7 +308,11 @@ const DownloadModel = () => {
                 </TouchableOpacity>
 
                 {(dlState === 'idle' || dlState === 'error') && (
-                    <TouchableOpacity style={styles.btnSecondary} activeOpacity={0.7}>
+                    <TouchableOpacity
+                        style={styles.btnSecondary}
+                        activeOpacity={0.7}
+                        onPress={() => OnChangeModel(false)}
+                    >
                         <Text style={styles.btnSecondaryText}>Maybe later</Text>
                     </TouchableOpacity>
                 )}

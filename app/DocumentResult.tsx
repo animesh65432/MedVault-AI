@@ -1,80 +1,46 @@
-import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, Platform } from "react-native";
-import { useLocalSearchParams } from 'expo-router';
-import { GenrateDoc } from "@/api/docs"
-import { Toast } from "toastify-react-native";
-// import { User } from "@/context/User";
-import { DocumentMetadata } from "@/types"
-import { token } from "@/utils/token"
 import DocumentScaning from "@/components/DocumentScaning";
-import { isLoading } from "expo-font";
-import { first } from "@/utils/first"
+import { DocumentMetadata } from "@/types";
+import { first } from "@/utils/first";
+import { useLocalSearchParams } from 'expo-router';
+import React, { useCallback, useEffect, useState } from "react";
+import { Toast } from "toastify-react-native";
 
 const DocumentResult: React.FC = () => {
-    // const { token } = useContext(User)
-    const [DocumentData, setDocumentData] = useState<DocumentMetadata | null>(null);
-    const [IsLoading, setIsLoading] = useState(false);
+    const [documentData, setDocumentData] = useState<DocumentMetadata | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
     const { fileUri, fileName, fileType } = useLocalSearchParams();
 
-    async function processDocument() {
+    const processDocument = useCallback(async () => {
+        if (!fileUri || !fileName || !fileType) {
+            Toast.error('Missing file parameters');
+            return;
+        }
         setIsLoading(true);
         try {
-            if (!fileUri || !fileName || !fileType) {
-                Toast.error('Missing file parameters');
-                return;
-            }
-
-            const formData = new FormData();
-
-            formData.append("file", {
-                uri:
-                    Platform.OS === "android"
-                        ? (fileUri as string)
-                        : (fileUri as string).replace("file://", ""),
-                name: fileName as string,
-                type: fileType as string,
-            } as any);
-
-            const response = await GenrateDoc(token, formData) as DocumentMetadata;
-
-            setDocumentData(response);
-        }
-        catch (error) {
-            console.log('Error processing document:', error);
-        }
-        finally {
+        } catch (error) {
+            console.error('OCR error:', error);
+            Toast.error('Failed to extract text');
+        } finally {
             setIsLoading(false);
         }
-    }
+    }, [fileUri, fileName, fileType]);
 
     useEffect(() => {
-
         processDocument();
+        return () => setDocumentData(null);
+    }, [processDocument]);
 
-        return () => {
-            processDocument();
-            setDocumentData(null);
-        }
-
-    }, [fileName, fileType, fileUri]);
+    console.log('DocumentResult params:', { fileUri });
 
     if (true) {
-        return <DocumentScaning
-            fileUri={first(fileUri)}
-            fileName={first(fileName)}
-            fileType={first(fileType)}
-        />
+        return (
+            <DocumentScaning
+                fileUri={first(fileUri)}
+                fileName={first(fileName)}
+                fileType={first(fileType)}
+            />
+        );
     }
-
-    return (
-        <View style={styles.container}>
-
-        </View>
-    );
 };
-
-const styles = StyleSheet.create({
-    container: {}
-})
 
 export default DocumentResult;

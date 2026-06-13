@@ -1,16 +1,15 @@
-import { scale } from '@/utils/scale'
-import * as DocumentPicker from 'expo-document-picker';
-import { vScale } from '@/utils/vScale'
-import React from 'react'
-import { useRouter } from "expo-router"
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { Text, StyleSheet, TouchableOpacity } from "react-native"
+import { scale } from '@/utils/scale';
+import { vScale } from '@/utils/vScale';
+import { useRouter } from "expo-router";
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const UpLoad = () => {
     const router = useRouter();
 
     const pickAndUpload = () => {
-        router.push('/UploadModal')
+        router.push("/UploadModal");
     };
 
     return (

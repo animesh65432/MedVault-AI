@@ -4,7 +4,7 @@ import DowLoadProvidder, { DownloadContext } from "@/context/DownloadModel";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { migrateDbIfNeeded } from "@/db/database";
 import { useFonts } from "expo-font";
-import { Stack } from 'expo-router';
+import { Stack } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import { SQLiteProvider } from "expo-sqlite";
 import { StatusBar } from 'expo-status-bar';
@@ -28,7 +28,7 @@ function RootLayoutContent() {
     );
   }
 
-  if (true) {
+  if (!IsDownload) {
     return <Download />;
   }
 

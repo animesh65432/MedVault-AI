@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(20),
         paddingTop: vScale(40),
         paddingBottom: vScale(32),
-        gap: vScale(24),
+        gap: vScale(10),
     }
 })
 

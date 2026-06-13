@@ -14,7 +14,6 @@ const ThreeWelcome: React.FC<Props> = ({ handlePageChange }) => {
     return (
         <View style={styles.container}>
 
-            {/* Progress dots */}
             <View style={styles.dotsContainer}>
                 <View style={styles.dot} />
                 <View style={styles.dot} />
@@ -38,10 +37,24 @@ const ThreeWelcome: React.FC<Props> = ({ handlePageChange }) => {
             />
             <View style={styles.trustContainer}>
                 <Text style={styles.trustTitle}>🔒 Private by Design</Text>
-                <Text style={styles.trustText}>
-                    Works offline. No login required.
-                </Text>
+                <View style={styles.trustRow}>
+                    <View style={styles.trustItem}>
+                        <Text style={styles.trustIcon}>📴</Text>
+                        <Text style={styles.trustText}>Mostly offline</Text>
+                    </View>
+                    <View style={styles.trustDivider} />
+                    <View style={styles.trustItem}>
+                        <Text style={styles.trustIcon}>📡</Text>
+                        <Text style={styles.trustText}>OCR needs internet</Text>
+                    </View>
+                    <View style={styles.trustDivider} />
+                    <View style={styles.trustItem}>
+                        <Text style={styles.trustIcon}>🔑</Text>
+                        <Text style={styles.trustText}>No login</Text>
+                    </View>
+                </View>
             </View>
+
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => handlePageChange(3)}
@@ -142,19 +155,35 @@ const styles = StyleSheet.create({
     trustContainer: {
         alignItems: 'center',
         marginBottom: vScale(16),
+        gap: vScale(10),
     },
-
     trustTitle: {
         fontSize: fs(14),
         fontFamily: 'Aeonik-Bold',
         color: '#23423B',
     },
-
+    trustRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(8),
+    },
+    trustItem: {
+        alignItems: 'center',
+        gap: vScale(2),
+    },
+    trustIcon: {
+        fontSize: fs(16),
+    },
     trustText: {
-        fontSize: fs(12),
+        fontSize: fs(11),
         fontFamily: 'Aeonik-Regular',
         color: '#6B6B6B',
-        marginTop: vScale(4),
+        textAlign: 'center',
+    },
+    trustDivider: {
+        width: 1,
+        height: vScale(28),
+        backgroundColor: '#C8DDD5',
     },
 })
 

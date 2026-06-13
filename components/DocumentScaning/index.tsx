@@ -1,18 +1,17 @@
+import { scale } from '@/utils/scale';
+import { vScale } from '@/utils/vScale';
+import { useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
     Animated,
-    SafeAreaView,
     Easing,
-    Image
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    View
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useRouter } from 'expo-router';
-import { scale } from '@/utils/scale';
 import DocumentImage from './DocumentImage';
-import { vScale } from '@/utils/vScale';
 
 const STEPS = [
     { label: 'Uploading image...', delay: 0 },
