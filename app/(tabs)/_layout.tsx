@@ -5,7 +5,6 @@ import { Tabs, useRouter } from 'expo-router';
 import React from 'react';
 import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-
 const COLORS = {
   background: '#23423B',
   border: '#2D534A',

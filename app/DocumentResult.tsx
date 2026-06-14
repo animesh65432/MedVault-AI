@@ -2,11 +2,10 @@ import DocumentScaning from "@/components/DocumentScaning";
 import { API_KEY_SCANIMAGEURL, ScanImageUrl } from "@/config";
 import { DocumentMetadata } from "@/types";
 import { first } from "@/utils/first";
-import * as FileSystem from 'expo-file-system/legacy';
+import { extractText, isAvailable } from 'expo-pdf-text-extract';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
-import { convert } from 'react-native-pdf-to-image';
 import { Toast } from "toastify-react-native";
 
 const scanImage = async (uri: string, type: string, name: string): Promise<string> => {
@@ -20,8 +19,6 @@ const scanImage = async (uri: string, type: string, name: string): Promise<strin
         body: formData,
     })
 
-    console.log('scanImage status:', response.status)
-
     if (!response.ok) {
         const body = await response.text()
         console.error('scanImage error body:', body)
@@ -29,7 +26,6 @@ const scanImage = async (uri: string, type: string, name: string): Promise<strin
     }
 
     const result = await response.json()
-    console.log('scanImage result:', result)
     return result.text ?? ''
 }
 
@@ -56,16 +52,15 @@ const DocumentResult: React.FC = () => {
             let fullText = ''
 
             if (type === 'application/pdf') {
-                const dest = `${FileSystem.documentDirectory}temp.pdf`;
 
-                await FileSystem.copyAsync({
-                    from: uri,
-                    to: dest,
-                });
+                const available = isAvailable();
 
-                console.log('Copied PDF:', dest);
-
-                const result = await convert(dest);;
+                if (available) {
+                    const text = await extractText(uri);
+                    fullText = text ?? '';
+                } else {
+                    Toast.error('PDF text extraction is not available on this device.')
+                }
 
             } else {
                 fullText = await scanImage(uri, type, name)
@@ -100,9 +95,9 @@ const DocumentResult: React.FC = () => {
         )
     }
 
-    console.log('Extracted Text:', extractedText)
+    console.log('DocumentResult extractedText:', extractedText)
 
-    return <View />
+    return <View></View>
 }
 
-export default DocumentResult
+export default DocumentResult;

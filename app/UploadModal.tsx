@@ -1,20 +1,20 @@
-import React from 'react';
-import { Toast } from 'toastify-react-native';
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableOpacity,
-    Pressable,
-    Animated
-} from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import * as DocumentPicker from 'expo-document-picker';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useRouter } from 'expo-router';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
+import * as DocumentPicker from 'expo-document-picker';
+import * as ImagePicker from 'expo-image-picker';
+import { useRouter } from 'expo-router';
+import React from 'react';
+import {
+    Animated,
+    Pressable,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Toast } from 'toastify-react-native';
 
 
 const UploadModal: React.FC = () => {
@@ -70,12 +70,26 @@ const UploadModal: React.FC = () => {
             copyToCacheDirectory: true,
         });
 
+        console.log(
+            'DocumentPicker result:',
+            JSON.stringify(result, null, 2)
+        );
+
         if (!result.canceled) {
+            const asset = result.assets[0];
+
+            console.log('Selected PDF:', {
+                uri: asset.uri,
+                name: asset.name,
+                size: asset.size,
+                mimeType: asset.mimeType,
+            });
+
             router.push({
                 pathname: '/ShowDocument',
                 params: {
-                    fileUri: result.assets[0].uri,
-                    fileName: result.assets[0].name,
+                    fileUri: asset.uri,
+                    fileName: asset.name,
                     fileType: 'application/pdf',
                 },
             });

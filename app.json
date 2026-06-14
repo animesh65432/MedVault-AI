@@ -1,19 +1,19 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "MedVault AI",
+    "slug": "MedVault-AI",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "frontend",
+    "scheme": "MedVaultAI",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dutta12.frontend"
+      "bundleIdentifier": "com.dutta12.MedVaultAI"
     },
     "android": {
-      "package": "com.dutta12.frontend",
+      "package": "com.dutta12.MedVaultAI",
       "adaptiveIcon": {
         "backgroundColor": "#23423B",
         "foregroundImage": "./assets/images/icon.png",
@@ -21,10 +21,6 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
-    },
-    "web": {
-      "output": "static",
-      "favicon": "./assets/images/icon.png"
     },
     "plugins": [
       "expo-router",
