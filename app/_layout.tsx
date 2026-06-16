@@ -1,6 +1,7 @@
 import { Onboarding } from "@/components";
 import { DocumentsProvider } from "@/context/Documents";
 import DowLoadProvidder, { DownloadContext } from "@/context/DownloadModel";
+import { LlamaProvider, useLlama } from "@/context/llm/LlamaProvider";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { migrateDbIfNeeded } from "@/db/database";
 import { useFonts } from "expo-font";
@@ -20,6 +21,7 @@ export const unstable_settings = {
 
 function RootLayoutContent() {
   const { IsDownload } = useContext(DownloadContext);
+  const { context } = useLlama();
   const { IsonboardingComplete } = useContext(OnboardingContext);
 
   if (!IsonboardingComplete) {
@@ -32,7 +34,7 @@ function RootLayoutContent() {
     return <Download />;
   }
 
-  console.log(IsDownload);
+  console.log("RootLayoutContent context:", context);
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
@@ -62,7 +64,6 @@ export default function RootLayout() {
     'Aeonik-Black': require('../assets/fonts/aeonik/Aeonik-Black.ttf'),
   });
 
-
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();
@@ -78,14 +79,18 @@ export default function RootLayout() {
       databaseName="my-database.db"
       onInit={migrateDbIfNeeded}
     >
+
       <DowLoadProvidder>
-        <OnboardingProvider>
-          <DocumentsProvider  >
-            <RootLayoutContent />
-            <StatusBar style="auto" />
-          </DocumentsProvider>
-        </OnboardingProvider>
+        <LlamaProvider>
+          <OnboardingProvider>
+            <DocumentsProvider  >
+              <RootLayoutContent />
+              <StatusBar style="auto" />
+            </DocumentsProvider>
+          </OnboardingProvider>
+        </LlamaProvider>
       </DowLoadProvidder>
+
     </SQLiteProvider>
   );
 }

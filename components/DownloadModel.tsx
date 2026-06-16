@@ -29,7 +29,7 @@ const formatETA = (remaining: number, bps: number) => {
 }
 
 const DownloadModel = () => {
-    const { OnChangeModel, addModelPath } = useContext(DownloadContext)
+    const { OnChangeModel, addModelPath, addVisionModelPath } = useContext(DownloadContext)
     const [dlState, setDlState] = useState<DownloadState>('idle')
     const [phase, setPhase] = useState<1 | 2>(1)
     const [progress, setProgress] = useState(0)
@@ -64,6 +64,7 @@ const DownloadModel = () => {
                     setOverallProgress(1)
                     setDlState('complete')
                     addModelPath(llmUri)
+                    addVisionModelPath(mmprojUri)
                     OnChangeModel(true)
                 }
             } catch { }
@@ -153,6 +154,7 @@ const DownloadModel = () => {
             animateProgressTo(1)
             setProgress(1); setOverallProgress(1)
             addModelPath(llmUri)
+            addVisionModelPath(mmprojUri)
             OnChangeModel(true)
             setTimeout(() => setDlState('complete'), 400)
         } catch (err: any) {
