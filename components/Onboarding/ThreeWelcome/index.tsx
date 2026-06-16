@@ -37,22 +37,6 @@ const ThreeWelcome: React.FC<Props> = ({ handlePageChange }) => {
             />
             <View style={styles.trustContainer}>
                 <Text style={styles.trustTitle}>🔒 Private by Design</Text>
-                <View style={styles.trustRow}>
-                    <View style={styles.trustItem}>
-                        <Text style={styles.trustIcon}>📴</Text>
-                        <Text style={styles.trustText}>Mostly offline</Text>
-                    </View>
-                    <View style={styles.trustDivider} />
-                    <View style={styles.trustItem}>
-                        <Text style={styles.trustIcon}>📡</Text>
-                        <Text style={styles.trustText}>OCR needs internet</Text>
-                    </View>
-                    <View style={styles.trustDivider} />
-                    <View style={styles.trustItem}>
-                        <Text style={styles.trustIcon}>🔑</Text>
-                        <Text style={styles.trustText}>No login</Text>
-                    </View>
-                </View>
             </View>
 
             <TouchableOpacity

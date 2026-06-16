@@ -1,31 +1,15 @@
 import DocumentScaning from "@/components/DocumentScaning";
-import { API_KEY_SCANIMAGEURL, ScanImageUrl } from "@/config";
 import { DocumentMetadata } from "@/types";
 import { first } from "@/utils/first";
+import TextRecognition from '@react-native-ml-kit/text-recognition';
 import { extractText, isAvailable } from 'expo-pdf-text-extract';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
 import { Toast } from "toastify-react-native";
 
-const scanImage = async (uri: string, type: string, name: string): Promise<string> => {
-    console.log('scanImage →', { uri, type, name })
-    const formData = new FormData()
-    formData.append('image', { uri, name, type } as any)
-
-    const response = await fetch(ScanImageUrl, {
-        method: 'POST',
-        headers: { 'X-API-Key': API_KEY_SCANIMAGEURL },
-        body: formData,
-    })
-
-    if (!response.ok) {
-        const body = await response.text()
-        console.error('scanImage error body:', body)
-        throw new Error(`Worker error: ${response.status} – ${body}`)
-    }
-
-    const result = await response.json()
+const scanImage = async (uri: string): Promise<string> => {
+    const result = await TextRecognition.recognize(uri);
     return result.text ?? ''
 }
 
@@ -46,7 +30,6 @@ const DocumentResult: React.FC = () => {
 
         try {
             const uri = first(fileUri)
-            const name = first(fileName) ?? 'file'
             const type = first(fileType) ?? 'image/jpeg'
 
             let fullText = ''
@@ -63,7 +46,7 @@ const DocumentResult: React.FC = () => {
                 }
 
             } else {
-                fullText = await scanImage(uri, type, name)
+                fullText = await scanImage(uri)
             }
 
             setExtractedText(fullText)

@@ -1,42 +1,39 @@
-import { QwenModelDowloadUrl } from '@/config'
+import { QwenLanguageModelUrl, QwenVisionModelUrl } from '@/config'
 import { DownloadContext } from "@/context/DownloadModel"
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import * as FileSystem from 'expo-file-system/legacy'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import {
-    Animated,
-    Easing,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+    Animated, Easing, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 type DownloadState = 'idle' | 'downloading' | 'complete' | 'error'
 
-const MODEL_SIZE_MB = 1100
-const MODEL_FILE_NAME = 'qwen2.5-1.5b.gguf'
+const LLM_FILE = 'qwen2-vl-2b-q4_k_m.gguf'
+const MMPROJ_FILE = 'mmproj-qwen2-vl-2b-f16.gguf'
 
-const formatSpeed = (bytesPerSec: number): string => {
-    if (bytesPerSec >= 1_048_576) return `${(bytesPerSec / 1_048_576).toFixed(1)} MB/s`
-    if (bytesPerSec >= 1024) return `${(bytesPerSec / 1024).toFixed(0)} KB/s`
-    return `${bytesPerSec.toFixed(0)} B/s`
+const formatSpeed = (bps: number) => {
+    if (bps >= 1_048_576) return `${(bps / 1_048_576).toFixed(1)} MB/s`
+    if (bps >= 1024) return `${(bps / 1024).toFixed(0)} KB/s`
+    return `${bps.toFixed(0)} B/s`
 }
 
-const formatETA = (remainingBytes: number, bytesPerSec: number): string => {
-    if (bytesPerSec <= 0) return ''
-    const secs = remainingBytes / bytesPerSec
-    if (secs < 60) return `${Math.ceil(secs)}s remaining`
-    if (secs < 3600) return `${Math.ceil(secs / 60)} min remaining`
-    return `${(secs / 3600).toFixed(1)} hr remaining`
+const formatETA = (remaining: number, bps: number) => {
+    if (bps <= 0) return ''
+    const s = remaining / bps
+    if (s < 60) return `${Math.ceil(s)}s remaining`
+    if (s < 3600) return `${Math.ceil(s / 60)} min remaining`
+    return `${(s / 3600).toFixed(1)} hr remaining`
 }
 
 const DownloadModel = () => {
     const { OnChangeModel, addModelPath } = useContext(DownloadContext)
     const [dlState, setDlState] = useState<DownloadState>('idle')
+    const [phase, setPhase] = useState<1 | 2>(1)
     const [progress, setProgress] = useState(0)
+    const [overallProgress, setOverallProgress] = useState(0)
     const [speedLabel, setSpeedLabel] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
     const [availableGB, setAvailableGB] = useState<string | null>(null)
@@ -44,128 +41,120 @@ const DownloadModel = () => {
     const progressAnim = useRef(new Animated.Value(0)).current
     const spinAnim = useRef(new Animated.Value(0)).current
     const checkScale = useRef(new Animated.Value(0)).current
-
     const lastSnapshot = useRef<{ bytes: number; time: number } | null>(null)
     const downloadResumableRef = useRef<FileSystem.DownloadResumable | null>(null)
-
-    const modelUri = FileSystem.documentDirectory + MODEL_FILE_NAME
+    const llmUri = FileSystem.documentDirectory + LLM_FILE
+    const mmprojUri = FileSystem.documentDirectory + MMPROJ_FILE
 
     useEffect(() => {
         ; (async () => {
             try {
                 const free = await FileSystem.getFreeDiskStorageAsync()
                 setAvailableGB(`${(free / 1_073_741_824).toFixed(1)} GB`)
-
-            } catch {
-                setAvailableGB('Unknown')
-            }
+            } catch { setAvailableGB('Unknown') }
 
             try {
-                const info = await FileSystem.getInfoAsync(modelUri)
-                if (info.exists) {
+                const [llm, mmproj] = await Promise.all([
+                    FileSystem.getInfoAsync(llmUri),
+                    FileSystem.getInfoAsync(mmprojUri),
+                ])
+                if (llm.exists && mmproj.exists) {
                     progressAnim.setValue(1)
                     setProgress(1)
+                    setOverallProgress(1)
                     setDlState('complete')
-                    addModelPath(modelUri)
+                    addModelPath(llmUri)
                     OnChangeModel(true)
                 }
             } catch { }
         })()
-
-        return () => {
-            downloadResumableRef.current?.pauseAsync().catch(() => { })
-        }
+        return () => { downloadResumableRef.current?.pauseAsync().catch(() => { }) }
     }, [])
-
 
     useEffect(() => {
         if (dlState === 'downloading') {
-            Animated.loop(
-                Animated.timing(spinAnim, {
-                    toValue: 1,
-                    duration: 900,
-                    easing: Easing.linear,
-                    useNativeDriver: true,
-                })
-            ).start()
+            Animated.loop(Animated.timing(spinAnim, {
+                toValue: 1, duration: 900,
+                easing: Easing.linear, useNativeDriver: true,
+            })).start()
         } else {
-            spinAnim.stopAnimation()
-            spinAnim.setValue(0)
+            spinAnim.stopAnimation(); spinAnim.setValue(0)
         }
     }, [dlState])
 
     useEffect(() => {
         if (dlState === 'complete') {
             Animated.spring(checkScale, {
-                toValue: 1,
-                friction: 5,
-                tension: 120,
-                useNativeDriver: true,
+                toValue: 1, friction: 5, tension: 120, useNativeDriver: true,
             }).start()
         }
     }, [dlState])
 
     const animateProgressTo = (value: number) => {
         Animated.timing(progressAnim, {
-            toValue: value,
-            duration: 250,
-            easing: Easing.out(Easing.quad),
-            useNativeDriver: false,
+            toValue: value, duration: 250,
+            easing: Easing.out(Easing.quad), useNativeDriver: false,
         }).start()
     }
 
-    const startDownload = async () => {
-        if (dlState !== 'idle' && dlState !== 'error') return
-
-        setDlState('downloading')
-        setProgress(0)
-        setErrorMsg('')
-        setSpeedLabel('')
-        progressAnim.setValue(0)
-        checkScale.setValue(0)
+    const downloadFile = (
+        url: string,
+        dest: string,
+        phaseNum: 1 | 2,
+    ): Promise<void> => new Promise((resolve, reject) => {
         lastSnapshot.current = null
+        setPhase(phaseNum)
+        const phaseOffset = phaseNum === 1 ? 0 : 0.46
+        const phaseScale = phaseNum === 1 ? 0.46 : 0.54
 
-        try {
-            const resumable = FileSystem.createDownloadResumable(
-                QwenModelDowloadUrl,
-                modelUri,
-                {},
-                ({ totalBytesWritten, totalBytesExpectedToWrite }) => {
-                    const ratio = totalBytesExpectedToWrite > 0
-                        ? totalBytesWritten / totalBytesExpectedToWrite
-                        : 0
+        const resumable = FileSystem.createDownloadResumable(
+            url, dest, {},
+            ({ totalBytesWritten, totalBytesExpectedToWrite }) => {
+                const ratio = totalBytesExpectedToWrite > 0
+                    ? totalBytesWritten / totalBytesExpectedToWrite : 0
+                const overall = phaseOffset + ratio * phaseScale
 
-                    setProgress(ratio)
-                    animateProgressTo(ratio)
+                setProgress(ratio)
+                setOverallProgress(overall)
+                animateProgressTo(overall)
 
-                    const now = Date.now()
-                    if (lastSnapshot.current) {
-                        const dt = (now - lastSnapshot.current.time) / 1000
-                        const db = totalBytesWritten - lastSnapshot.current.bytes
-                        if (dt > 0.5) {
-                            const bps = db / dt
-                            const remaining = totalBytesExpectedToWrite - totalBytesWritten
-                            setSpeedLabel(`${formatSpeed(bps)} · ${formatETA(remaining, bps)}`)
-                            lastSnapshot.current = { bytes: totalBytesWritten, time: now }
-                        }
-                    } else {
+                const now = Date.now()
+                if (lastSnapshot.current) {
+                    const dt = (now - lastSnapshot.current.time) / 1000
+                    const db = totalBytesWritten - lastSnapshot.current.bytes
+                    if (dt > 0.5) {
+                        const bps = db / dt
+                        const remaining = totalBytesExpectedToWrite - totalBytesWritten
+                        setSpeedLabel(`${formatSpeed(bps)} · ${formatETA(remaining, bps)}`)
                         lastSnapshot.current = { bytes: totalBytesWritten, time: now }
                     }
+                } else {
+                    lastSnapshot.current = { bytes: totalBytesWritten, time: now }
                 }
-            )
+            }
+        )
+        downloadResumableRef.current = resumable
+        resumable.downloadAsync()
+            .then(result => result ? resolve() : reject(new Error('No result')))
+            .catch(reject)
+    })
 
-            downloadResumableRef.current = resumable
+    const startDownload = async () => {
+        if (dlState !== 'idle' && dlState !== 'error') return
+        setDlState('downloading')
+        setProgress(0); setOverallProgress(0)
+        setErrorMsg(''); setSpeedLabel('')
+        progressAnim.setValue(0); checkScale.setValue(0)
 
-            const result = await resumable.downloadAsync()
-            if (!result) throw new Error('Download returned no result')
-
+        try {
+            await downloadFile(QwenLanguageModelUrl, llmUri, 1)
+            await downloadFile(QwenVisionModelUrl, mmprojUri, 2)
 
             animateProgressTo(1)
-            setProgress(1)
-            addModelPath(modelUri)
+            setProgress(1); setOverallProgress(1)
+            addModelPath(llmUri)
             OnChangeModel(true)
             setTimeout(() => setDlState('complete'), 400)
-
         } catch (err: any) {
             if (err?.message?.includes('paused')) return
             setDlState('error')
@@ -174,21 +163,19 @@ const DownloadModel = () => {
     }
 
     const progressWidth = progressAnim.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0%', '100%'],
+        inputRange: [0, 1], outputRange: ['0%', '100%'],
     })
-
     const spinRotate = spinAnim.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0deg', '360deg'],
+        inputRange: [0, 1], outputRange: ['0deg', '360deg'],
     })
+    const pct = Math.round(overallProgress * 100)
 
-    const pct = Math.round(progress * 100)
+    const phaseLabel = phase === 1
+        ? 'Downloading language model (1/2)…'
+        : 'Downloading vision encoder (2/2)…'
 
     return (
         <View style={styles.container}>
-
-            {/* ── Header ── */}
             <View style={styles.titleContainer}>
                 <View style={styles.titleRow}>
                     <Icon name="lock-outline" size={scale(24)} color="#234338" />
@@ -199,15 +186,14 @@ const DownloadModel = () => {
                 </Text>
             </View>
 
-            {/* ── Model card ── */}
             <View style={styles.modelCard}>
                 <View style={styles.modelHeader}>
                     <View style={styles.modelIconWrap}>
                         <Icon name="robot-outline" size={scale(22)} color="#0F6E56" />
                     </View>
                     <View style={styles.modelInfo}>
-                        <Text style={styles.modelName}>Qwen 2.5 · 1.5B</Text>
-                        <Text style={styles.modelMeta}>Offline AI · Fully private</Text>
+                        <Text style={styles.modelName}>Qwen2-VL · 2B</Text>
+                        <Text style={styles.modelMeta}>Vision + Language · Fully private</Text>
                     </View>
                 </View>
 
@@ -221,7 +207,7 @@ const DownloadModel = () => {
                         <Text style={[styles.badgeText, styles.badgeTextGreen]}>Works offline</Text>
                     </View>
                     <View style={[styles.badge, styles.badgeGray]}>
-                        <Text style={[styles.badgeText, styles.badgeTextGray]}>~{MODEL_SIZE_MB} MB</Text>
+                        <Text style={[styles.badgeText, styles.badgeTextGray]}>~2.3 GB</Text>
                     </View>
                 </View>
 
@@ -229,16 +215,25 @@ const DownloadModel = () => {
                     <View style={styles.progressArea}>
                         <View style={styles.progressLabelRow}>
                             <Text style={styles.progressStatus}>
-                                {dlState === 'complete' ? 'Download complete' : 'Downloading…'}
+                                {dlState === 'complete' ? 'Download complete' : phaseLabel}
                             </Text>
                             <Text style={styles.progressPct}>{pct}%</Text>
                         </View>
                         <View style={styles.progressTrack}>
                             <Animated.View style={[styles.progressFill, { width: progressWidth }]} />
                         </View>
-                        <Text style={styles.speedLabel}>
-                            {dlState === 'complete' ? 'Model ready to use offline' : speedLabel}
-                        </Text>
+                        {/* Phase indicators */}
+                        {dlState === 'downloading' && (
+                            <View style={styles.phaseRow}>
+                                <View style={[styles.phaseDot, phase >= 1 && styles.phaseDotActive]} />
+                                <View style={styles.phaseLine} />
+                                <View style={[styles.phaseDot, phase >= 2 && styles.phaseDotActive]} />
+                                <Text style={styles.speedLabel}>{speedLabel}</Text>
+                            </View>
+                        )}
+                        {dlState === 'complete' && (
+                            <Text style={styles.speedLabel}>Model ready to use offline</Text>
+                        )}
                     </View>
                 )}
 
@@ -250,11 +245,10 @@ const DownloadModel = () => {
                 )}
             </View>
 
-            {/* ── Stats ── */}
             <View style={styles.statsRow}>
                 <View style={styles.statCard}>
                     <Text style={styles.statLabel}>Storage required</Text>
-                    <Text style={styles.statValue}>~{MODEL_SIZE_MB} MB</Text>
+                    <Text style={styles.statValue}>~2.3 GB</Text>
                 </View>
                 <View style={styles.statCard}>
                     <Text style={styles.statLabel}>Available</Text>
@@ -262,7 +256,6 @@ const DownloadModel = () => {
                 </View>
             </View>
 
-            {/* ── Privacy note ── */}
             <View style={styles.infoNote}>
                 <Icon name="information-outline" size={scale(16)} color="#0F6E56" style={styles.infoIcon} />
                 <Text style={styles.infoText}>
@@ -270,7 +263,6 @@ const DownloadModel = () => {
                 </Text>
             </View>
 
-            {/* ── CTA ── */}
             <View style={styles.buttonGroup}>
                 <TouchableOpacity
                     style={[
@@ -297,27 +289,19 @@ const DownloadModel = () => {
                         <Icon name="download-outline" size={scale(18)} color="#fff" />
                     )}
                     <Text style={styles.btnPrimaryText}>
-                        {dlState === 'idle'
-                            ? 'Download model'
-                            : dlState === 'downloading'
-                                ? 'Downloading…'
-                                : dlState === 'error'
-                                    ? 'Retry download'
+                        {dlState === 'idle' ? 'Download model'
+                            : dlState === 'downloading' ? 'Downloading…'
+                                : dlState === 'error' ? 'Retry download'
                                     : 'Model ready'}
                     </Text>
                 </TouchableOpacity>
 
                 {(dlState === 'idle' || dlState === 'error') && (
-                    <TouchableOpacity
-                        style={styles.btnSecondary}
-                        activeOpacity={0.7}
-                        onPress={() => OnChangeModel(true)}
-                    >
+                    <TouchableOpacity style={styles.btnSecondary} activeOpacity={0.7} onPress={() => OnChangeModel(true)}>
                         <Text style={styles.btnSecondaryText}>Maybe later</Text>
                     </TouchableOpacity>
                 )}
             </View>
-
         </View>
     )
 }
@@ -451,6 +435,25 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     btnSecondaryText: { fontSize: scale(15), fontFamily: 'Aeonik-Regular', color: '#888' },
+    phaseRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(6),
+    },
+    phaseDot: {
+        width: scale(8),
+        height: scale(8),
+        borderRadius: scale(4),
+        backgroundColor: '#D3D1C7',
+    },
+    phaseDotActive: {
+        backgroundColor: '#1D9E75',
+    },
+    phaseLine: {
+        width: scale(20),
+        height: 1,
+        backgroundColor: '#D3D1C7',
+    }
 })
 
 export default DownloadModel
