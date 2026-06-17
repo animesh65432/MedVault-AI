@@ -29,8 +29,6 @@ export const LlamaProvider = ({
         const loadModel = async () => {
             if (!IsDownload || context || ModelPath.length === 0 || VisionModelPath.length === 0) return;
 
-            console.log("Loading model with paths:", ModelPath, VisionModelPath);
-
             const result = await initModel(
                 ModelPath,
                 VisionModelPath

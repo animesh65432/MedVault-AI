@@ -1,4 +1,5 @@
 import { initLlama, LlamaContext } from "llama.rn";
+import { getDynamicModelParams } from "./modelBudget";
 
 type InitModelResponse = {
     context: LlamaContext;
@@ -9,19 +10,36 @@ export const initModel = async (
     modelPath: string,
     mmprojPath: string
 ): Promise<InitModelResponse> => {
-    const context = await initLlama({
-        model: modelPath,
-        n_ctx: 4096,
-        n_gpu_layers: 99,
-    });
+    try {
+        const { n_ctx, n_gpu_layers } = await getDynamicModelParams();
 
-    const multimodalReady = await context.initMultimodal({
-        path: mmprojPath,
-        use_gpu: true,
-    });
+        const context = await initLlama({
+            model: modelPath,
+            n_ctx: n_ctx,
+            n_gpu_layers: n_gpu_layers,
+            ctx_shift: false,
+        });
 
-    return {
-        context,
-        multimodalReady,
-    };
+
+        const isGpuSupported = n_gpu_layers > 0;
+
+        const multimodalReady = await context.initMultimodal({
+            path: mmprojPath,
+            use_gpu: isGpuSupported,
+        });
+
+
+        if (!multimodalReady) {
+            throw new Error("Failed to initialize multimodal projector");
+        }
+
+        return {
+            context,
+            multimodalReady,
+        };
+
+    } catch (error) {
+        console.error("MODEL INITIALIZATION ERROR:", error);
+        throw error;
+    }
 };

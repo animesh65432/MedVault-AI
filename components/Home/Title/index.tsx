@@ -4,18 +4,13 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 type Props = {
-    userName: string
     ShowStats: boolean
 }
 
-const Title: React.FC<Props> = ({ userName, ShowStats }) => {
-    const formattedName = userName
-        .trim()
-        .replace(/\b\w/g, char => char.toUpperCase())
+const Title: React.FC<Props> = ({ ShowStats }) => {
 
     const getGreeting = () => {
         const hour = new Date().getHours()
-
         if (hour < 12) return 'Good Morning'
         if (hour < 17) return 'Good Afternoon'
         return 'Good Evening'
@@ -25,10 +20,6 @@ const Title: React.FC<Props> = ({ userName, ShowStats }) => {
         <View style={styles.container}>
             <Text style={styles.greeting}>
                 {ShowStats ? `${getGreeting()} 👋` : 'Welcome 👋'}
-            </Text>
-
-            <Text style={styles.name}>
-                {formattedName}
             </Text>
         </View>
     )
@@ -40,15 +31,10 @@ const styles = StyleSheet.create({
         paddingTop: vScale(3),
     },
     greeting: {
-        fontSize: scale(16),
+        fontSize: scale(18),
         fontFamily: 'Aeonik-Medium',
         color: '#23423B',
         marginBottom: vScale(4),
-    },
-    name: {
-        fontSize: scale(28),
-        fontFamily: 'Aeonik-Medium',
-        color: '#23423B',
     },
 })
 

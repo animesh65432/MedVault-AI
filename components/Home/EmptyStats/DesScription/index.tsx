@@ -1,7 +1,7 @@
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import React from 'react'
-import { View, StyleSheet, Text } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 
 const Description = () => {
     return (

@@ -10,7 +10,8 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dutta12.MedVaultAI"
+      "bundleIdentifier": "com.dutta12.MedVaultAI",
+      "newArchEnabled": true
     },
     "android": {
       "package": "com.dutta12.MedVaultAI",
@@ -20,7 +21,8 @@
         "monochromeImage": "./assets/images/icon.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "newArchEnabled": true
     },
     "plugins": [
       "expo-router",
@@ -37,7 +39,8 @@
       "expo-font",
       "expo-sqlite",
       "onnxruntime-react-native",
-      "expo-build-properties"
+      "expo-build-properties",
+      "llama.rn"
     ],
     "experiments": {
       "typedRoutes": true,

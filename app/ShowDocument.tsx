@@ -15,7 +15,6 @@ import MaterialIcons from 'react-native-vector-icons/AntDesign';
 
 const ShowDocument = () => {
     const { fileUri, fileName, fileType } = useLocalSearchParams();
-
     const router = useRouter();
 
     const isPdf = first(fileType) === 'application/pdf';

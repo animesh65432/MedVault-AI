@@ -14,7 +14,7 @@ const COLORS = {
   uploadIcon: '#23423B',
 };
 
-const BUTTON_SIZE = 46;
+const BUTTON_SIZE = vScale(60);
 
 function UploadTabButton({ onPress }: { onPress: () => void }) {
   return (
@@ -118,7 +118,7 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: Platform.OS === 'ios' ? 84 : 64,
+    height: Platform.OS === 'ios' ? 104 : vScale(130),
     paddingTop: vScale(10),
     paddingBottom: Platform.OS === 'ios' ? vScale(100) : vScale(60),
     overflow: 'visible',
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -(BUTTON_SIZE / 2),
+    marginTop: -(BUTTON_SIZE / 1),
   },
   uploadButton: {
     width: BUTTON_SIZE,

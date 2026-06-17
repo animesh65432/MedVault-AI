@@ -1,10 +1,9 @@
-import React from 'react'
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
-import Description from './DesScription'
+import React from 'react'
+import { Image, StyleSheet, View } from "react-native"
 import UpLoad from '../Upload'
-import { View, StyleSheet } from "react-native"
-import { Image } from 'react-native'
+import Description from './DesScription'
 import Steps from './Steps'
 
 const EmptyStats = () => {

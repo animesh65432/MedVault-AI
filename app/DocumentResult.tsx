@@ -1,19 +1,17 @@
 import DocumentScaning from "@/components/DocumentScaning";
+import { useLlama } from "@/context/llm/LlamaProvider";
 import { DocumentMetadata } from "@/types";
 import { first } from "@/utils/first";
-import TextRecognition from '@react-native-ml-kit/text-recognition';
+import { extractTextFromImage } from "@/utils/image_extract";
 import { extractText, isAvailable } from 'expo-pdf-text-extract';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
 import { Toast } from "toastify-react-native";
 
-const scanImage = async (uri: string): Promise<string> => {
-    const result = await TextRecognition.recognize(uri);
-    return result.text ?? ''
-}
 
 const DocumentResult: React.FC = () => {
+    const { context } = useLlama();
     const [documentData, setDocumentData] = useState<DocumentMetadata | null>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [extractedText, setExtractedText] = useState<string | null>(null)
@@ -39,14 +37,22 @@ const DocumentResult: React.FC = () => {
                 const available = isAvailable();
 
                 if (available) {
+
                     const text = await extractText(uri);
+
                     fullText = text ?? '';
+
                 } else {
-                    Toast.error('PDF text extraction is not available on this device.')
+
+                    Toast.error('Sorry, PDF text extraction is not available on this platform.')
+
                 }
 
             } else {
-                fullText = await scanImage(uri)
+                if (context) {
+                    console.warn('Text extraction for images is not implemented yet.')
+                    fullText = await extractTextFromImage(context, uri)
+                }
             }
 
             setExtractedText(fullText)
@@ -78,7 +84,7 @@ const DocumentResult: React.FC = () => {
         )
     }
 
-    console.log('DocumentResult extractedText:', extractedText)
+    console.log('Extracted text:', extractedText)
 
     return <View></View>
 }

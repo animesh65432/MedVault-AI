@@ -1,7 +1,7 @@
 import { Onboarding } from "@/components";
 import { DocumentsProvider } from "@/context/Documents";
 import DowLoadProvidder, { DownloadContext } from "@/context/DownloadModel";
-import { LlamaProvider, useLlama } from "@/context/llm/LlamaProvider";
+import { LlamaProvider } from "@/context/llm/LlamaProvider";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { migrateDbIfNeeded } from "@/db/database";
 import { useFonts } from "expo-font";
@@ -21,7 +21,6 @@ export const unstable_settings = {
 
 function RootLayoutContent() {
   const { IsDownload } = useContext(DownloadContext);
-  const { context } = useLlama();
   const { IsonboardingComplete } = useContext(OnboardingContext);
 
   if (!IsonboardingComplete) {
@@ -33,8 +32,6 @@ function RootLayoutContent() {
   if (!IsDownload) {
     return <Download />;
   }
-
-  console.log("RootLayoutContent context:", context);
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
