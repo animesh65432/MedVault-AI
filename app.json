@@ -38,13 +38,12 @@
       ],
       "expo-font",
       "expo-sqlite",
-      "onnxruntime-react-native",
       "expo-build-properties",
       "llama.rn"
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
+      "reactCompiler": false
     }
   }
 }

@@ -50,8 +50,7 @@ const DocumentResult: React.FC = () => {
 
             } else {
                 if (context) {
-                    console.warn('Text extraction for images is not implemented yet.')
-                    fullText = await extractTextFromImage(context, uri)
+                    fullText = await extractTextFromImage(context)
                 }
             }
 

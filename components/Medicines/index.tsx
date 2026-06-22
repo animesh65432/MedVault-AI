@@ -1,15 +1,14 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import { View, Text, StyleSheet, FlatList, Animated, Dimensions } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { GetMedicineList } from '@/api/medicine'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
+import { Ionicons } from '@expo/vector-icons'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { Animated, Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 // import { User } from '@/context/User'
-import { token } from "@/utils/token"
-import { MedicineRecord } from '@/types'
 import Error from '@/components/Error'
-import { ScreenHeader, EmptyState, BackButton } from '@/components/ui/component'
+import { BackButton, EmptyState, ScreenHeader } from '@/components/ui/component'
+import { MedicineRecord } from '@/types'
+import { token } from "@/utils/token"
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window')
 
@@ -143,8 +142,6 @@ const Medicines = () => {
         setIsLoading(true)
         setHasError(false)
         try {
-            const response = await GetMedicineList(token) as MedicineRecord[]
-            setMedicineList(response)
         } catch (error) {
             console.error('Error fetching medicine list:', error)
             setHasError(true)

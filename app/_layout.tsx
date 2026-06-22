@@ -20,7 +20,7 @@ export const unstable_settings = {
 };
 
 function RootLayoutContent() {
-  const { IsDownload } = useContext(DownloadContext);
+  const { IsDownload, } = useContext(DownloadContext);
   const { IsonboardingComplete } = useContext(OnboardingContext);
 
   if (!IsonboardingComplete) {
@@ -32,6 +32,7 @@ function RootLayoutContent() {
   if (!IsDownload) {
     return <Download />;
   }
+
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
@@ -76,7 +77,6 @@ export default function RootLayout() {
       databaseName="my-database.db"
       onInit={migrateDbIfNeeded}
     >
-
       <DowLoadProvidder>
         <LlamaProvider>
           <OnboardingProvider>

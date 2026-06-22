@@ -1,5 +1,5 @@
-import React from 'react'
 import SearchComponent from '@/components/Search'
+import React from 'react'
 
 const Search: React.FC = () => {
     return (

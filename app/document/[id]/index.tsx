@@ -1,4 +1,3 @@
-import { GetDocById } from '@/api/docs';
 import {
     BillingTable,
     DetailSkeleton,
@@ -13,7 +12,6 @@ import Error from '@/components/Error';
 import { DocumentType, MedicalDocument } from '@/types';
 import { formatDate } from '@/utils/formatDate';
 import { scale } from '@/utils/scale';
-import { token } from '@/utils/token';
 import { vScale } from '@/utils/vScale';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -64,8 +62,6 @@ export default function DocumentDetailScreen() {
         setIsLoading(true);
         setHasError(false);
         try {
-            const response = await GetDocById(token, id as string) as MedicalDocument;
-            setDoc(response);
             Animated.timing(fadeAnim, { toValue: 1, duration: 340, useNativeDriver: true }).start();
         } catch (error) {
             console.error('Error fetching document:', error);
