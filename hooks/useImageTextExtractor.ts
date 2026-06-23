@@ -1,7 +1,5 @@
-import { ScanImageUrl } from "@/config";
+import { ScanImageUrl, ImageTextExtractor_API_KEY } from "@/config";
 import { useState } from "react";
-
-const API_KEY = "medvault-secret-123";
 
 export const useImageTextExtractor = () => {
     const [extractedText, setExtractedText] = useState("");
@@ -10,8 +8,8 @@ export const useImageTextExtractor = () => {
     const extractTextFromImageUri = async (uri: string, mimeType = "image/jpeg") => {
         setError(null);
         try {
-
             const formData = new FormData();
+
             formData.append("image", {
                 uri,
                 type: mimeType,
@@ -21,7 +19,7 @@ export const useImageTextExtractor = () => {
             const res = await fetch(ScanImageUrl, {
                 method: "POST",
                 headers: {
-                    "X-API-Key": API_KEY,
+                    "X-API-Key": ImageTextExtractor_API_KEY,
                 },
                 body: formData,
             });
@@ -33,6 +31,7 @@ export const useImageTextExtractor = () => {
             setExtractedText(data.text);
 
             return data.text as string;
+
         } catch (err: any) {
 
             setError(err.message);
