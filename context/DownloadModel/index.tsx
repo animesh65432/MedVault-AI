@@ -6,8 +6,6 @@ type DownloadContextType = {
     OnChangeModel: (value: boolean) => Promise<void>,
     ModelPath: string,
     addModelPath: (path: string) => Promise<void>,
-    VisionModelPath: string,
-    addVisionModelPath: (path: string) => Promise<void>,
 }
 
 export const DownloadContext = createContext<DownloadContextType>({
@@ -15,8 +13,6 @@ export const DownloadContext = createContext<DownloadContextType>({
     OnChangeModel: async (value: boolean) => { },
     ModelPath: "",
     addModelPath: async (path: string) => { },
-    VisionModelPath: "",
-    addVisionModelPath: async (path: string) => { },
 })
 
 type Props = {
@@ -26,7 +22,6 @@ type Props = {
 const DownloadProvider: React.FC<Props> = ({ children }) => {
     const [IsDownload, setIsDownload] = useState(false)
     const [ModelPath, setModelPath] = useState("")
-    const [VisionModelPath, setVisionModelPath] = useState("")
 
     const OnChangeModel = async (value: boolean) => {
         await AsyncStorage.setItem("IsDownload", JSON.stringify(value));
@@ -41,9 +36,6 @@ const DownloadProvider: React.FC<Props> = ({ children }) => {
             if (modelPath !== null) {
                 setModelPath(modelPath);
             }
-            if (visionModelPath !== null) {
-                setVisionModelPath(visionModelPath);
-            }
             if (value !== null) {
                 setIsDownload(JSON.parse(value));
             }
@@ -55,20 +47,12 @@ const DownloadProvider: React.FC<Props> = ({ children }) => {
         setModelPath(path);
         await AsyncStorage.setItem("ModelPath", path);
     }
-
-    const addVisionModelPath = async (path: string) => {
-        setVisionModelPath(path);
-        await AsyncStorage.setItem("VisionModelPath", path);
-    }
-
     return <DownloadContext.Provider
         value={{
             IsDownload,
             OnChangeModel,
             ModelPath,
             addModelPath,
-            VisionModelPath,
-            addVisionModelPath
         }}
     >
         {children}

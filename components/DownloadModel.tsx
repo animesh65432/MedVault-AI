@@ -1,4 +1,4 @@
-import { QwenLanguageModelUrl, QwenVisionModelUrl } from '@/config'
+import { QwenLanguageModelUrl } from '@/config'
 import { DownloadContext } from "@/context/DownloadModel"
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
@@ -12,7 +12,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 type DownloadState = 'idle' | 'downloading' | 'complete' | 'error'
 
 const LLM_FILE = 'qwen2-vl-2b-q4_k_m.gguf'
-const MMPROJ_FILE = 'mmproj-qwen2-vl-2b-f16.gguf'
 
 const formatSpeed = (bps: number) => {
     if (bps >= 1_048_576) return `${(bps / 1_048_576).toFixed(1)} MB/s`
@@ -29,11 +28,9 @@ const formatETA = (remaining: number, bps: number) => {
 }
 
 const DownloadModel = () => {
-    const { OnChangeModel, addModelPath, addVisionModelPath } = useContext(DownloadContext)
+    const { OnChangeModel, addModelPath } = useContext(DownloadContext)
     const [dlState, setDlState] = useState<DownloadState>('idle')
-    const [phase, setPhase] = useState<1 | 2>(1)
     const [progress, setProgress] = useState(0)
-    const [overallProgress, setOverallProgress] = useState(0)
     const [speedLabel, setSpeedLabel] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
     const [availableGB, setAvailableGB] = useState<string | null>(null)
@@ -44,7 +41,6 @@ const DownloadModel = () => {
     const lastSnapshot = useRef<{ bytes: number; time: number } | null>(null)
     const downloadResumableRef = useRef<FileSystem.DownloadResumable | null>(null)
     const llmUri = FileSystem.documentDirectory + LLM_FILE
-    const mmprojUri = FileSystem.documentDirectory + MMPROJ_FILE
 
     useEffect(() => {
         ; (async () => {
@@ -54,17 +50,12 @@ const DownloadModel = () => {
             } catch { setAvailableGB('Unknown') }
 
             try {
-                const [llm, mmproj] = await Promise.all([
-                    FileSystem.getInfoAsync(llmUri),
-                    FileSystem.getInfoAsync(mmprojUri),
-                ])
-                if (llm.exists && mmproj.exists) {
+                const llm = await FileSystem.getInfoAsync(llmUri)
+                if (llm.exists) {
                     progressAnim.setValue(1)
                     setProgress(1)
-                    setOverallProgress(1)
                     setDlState('complete')
                     addModelPath(llmUri)
-                    addVisionModelPath(mmprojUri)
                     OnChangeModel(true)
                 }
             } catch { }
@@ -101,23 +92,17 @@ const DownloadModel = () => {
     const downloadFile = (
         url: string,
         dest: string,
-        phaseNum: 1 | 2,
     ): Promise<void> => new Promise((resolve, reject) => {
         lastSnapshot.current = null
-        setPhase(phaseNum)
-        const phaseOffset = phaseNum === 1 ? 0 : 0.46
-        const phaseScale = phaseNum === 1 ? 0.46 : 0.54
 
         const resumable = FileSystem.createDownloadResumable(
             url, dest, {},
             ({ totalBytesWritten, totalBytesExpectedToWrite }) => {
                 const ratio = totalBytesExpectedToWrite > 0
                     ? totalBytesWritten / totalBytesExpectedToWrite : 0
-                const overall = phaseOffset + ratio * phaseScale
 
                 setProgress(ratio)
-                setOverallProgress(overall)
-                animateProgressTo(overall)
+                animateProgressTo(ratio)
 
                 const now = Date.now()
                 if (lastSnapshot.current) {
@@ -142,19 +127,18 @@ const DownloadModel = () => {
 
     const startDownload = async () => {
         if (dlState !== 'idle' && dlState !== 'error') return
+
         setDlState('downloading')
-        setProgress(0); setOverallProgress(0)
+        setProgress(0)
         setErrorMsg(''); setSpeedLabel('')
+
         progressAnim.setValue(0); checkScale.setValue(0)
 
         try {
-            await downloadFile(QwenLanguageModelUrl, llmUri, 1)
-            await downloadFile(QwenVisionModelUrl, mmprojUri, 2)
-
+            await downloadFile(QwenLanguageModelUrl, llmUri)
             animateProgressTo(1)
-            setProgress(1); setOverallProgress(1)
+            setProgress(1)
             addModelPath(llmUri)
-            addVisionModelPath(mmprojUri)
             OnChangeModel(true)
             setTimeout(() => setDlState('complete'), 400)
         } catch (err: any) {
@@ -170,11 +154,7 @@ const DownloadModel = () => {
     const spinRotate = spinAnim.interpolate({
         inputRange: [0, 1], outputRange: ['0deg', '360deg'],
     })
-    const pct = Math.round(overallProgress * 100)
-
-    const phaseLabel = phase === 1
-        ? 'Downloading language model (1/2)…'
-        : 'Downloading vision encoder (2/2)…'
+    const pct = Math.round(progress * 100)
 
     return (
         <View style={styles.container}>
@@ -209,7 +189,7 @@ const DownloadModel = () => {
                         <Text style={[styles.badgeText, styles.badgeTextGreen]}>Works offline</Text>
                     </View>
                     <View style={[styles.badge, styles.badgeGray]}>
-                        <Text style={[styles.badgeText, styles.badgeTextGray]}>~2.3 GB</Text>
+                        <Text style={[styles.badgeText, styles.badgeTextGray]}>~1.2GB</Text>
                     </View>
                 </View>
 
@@ -217,25 +197,16 @@ const DownloadModel = () => {
                     <View style={styles.progressArea}>
                         <View style={styles.progressLabelRow}>
                             <Text style={styles.progressStatus}>
-                                {dlState === 'complete' ? 'Download complete' : phaseLabel}
+                                {dlState === 'complete' ? 'Download complete' : 'Downloading model…'}
                             </Text>
                             <Text style={styles.progressPct}>{pct}%</Text>
                         </View>
                         <View style={styles.progressTrack}>
                             <Animated.View style={[styles.progressFill, { width: progressWidth }]} />
                         </View>
-                        {/* Phase indicators */}
-                        {dlState === 'downloading' && (
-                            <View style={styles.phaseRow}>
-                                <View style={[styles.phaseDot, phase >= 1 && styles.phaseDotActive]} />
-                                <View style={styles.phaseLine} />
-                                <View style={[styles.phaseDot, phase >= 2 && styles.phaseDotActive]} />
-                                <Text style={styles.speedLabel}>{speedLabel}</Text>
-                            </View>
-                        )}
-                        {dlState === 'complete' && (
-                            <Text style={styles.speedLabel}>Model ready to use offline</Text>
-                        )}
+                        <Text style={styles.speedLabel}>
+                            {dlState === 'complete' ? 'Model ready to use offline' : speedLabel}
+                        </Text>
                     </View>
                 )}
 
@@ -250,7 +221,7 @@ const DownloadModel = () => {
             <View style={styles.statsRow}>
                 <View style={styles.statCard}>
                     <Text style={styles.statLabel}>Storage required</Text>
-                    <Text style={styles.statValue}>~2.3 GB</Text>
+                    <Text style={styles.statValue}>~1.2GB</Text>
                 </View>
                 <View style={styles.statCard}>
                     <Text style={styles.statLabel}>Available</Text>
@@ -437,25 +408,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     btnSecondaryText: { fontSize: scale(15), fontFamily: 'Aeonik-Regular', color: '#888' },
-    phaseRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: scale(6),
-    },
-    phaseDot: {
-        width: scale(8),
-        height: scale(8),
-        borderRadius: scale(4),
-        backgroundColor: '#D3D1C7',
-    },
-    phaseDotActive: {
-        backgroundColor: '#1D9E75',
-    },
-    phaseLine: {
-        width: scale(20),
-        height: 1,
-        backgroundColor: '#D3D1C7',
-    }
 })
 
 export default DownloadModel

@@ -18,7 +18,7 @@ export const LlamaProvider = ({
 }: {
     children: React.ReactNode;
 }) => {
-    const { ModelPath, VisionModelPath, IsDownload } =
+    const { ModelPath, IsDownload } =
         useContext(DownloadContext);
     const [context, setContext] = useState<LlamaContext | null>(null);
     const [loading, setLoading] = useState(true);
@@ -27,11 +27,10 @@ export const LlamaProvider = ({
         let mounted = true;
 
         const loadModel = async () => {
-            if (!IsDownload || context || ModelPath.length === 0 || VisionModelPath.length === 0) return;
+            if (!IsDownload || context || ModelPath.length === 0) return;
 
             const result = await initModel(
-                ModelPath,
-                VisionModelPath
+                ModelPath
             );
 
             if (mounted) {
