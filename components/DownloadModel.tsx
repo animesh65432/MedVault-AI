@@ -1,160 +1,171 @@
-import { QwenLanguageModelUrl } from '@/config'
-import { DownloadContext } from "@/context/DownloadModel"
-import { scale } from '@/utils/scale'
-import { vScale } from '@/utils/vScale'
-import * as FileSystem from 'expo-file-system/legacy'
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import {
-    Animated, Easing, StyleSheet, Text, TouchableOpacity, View,
-} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { useLLMContext } from "@/context/llm/LLMProvider";
+import { Model } from "@/services/model";
+import { scale } from '@/utils/scale';
+import { vScale } from '@/utils/vScale';
+import NetInfo from '@react-native-community/netinfo';
+import * as FileSystem from 'expo-file-system/legacy';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ResourceFetcher } from "react-native-executorch";
+import Toast from "react-native-toast-message";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-type DownloadState = 'idle' | 'downloading' | 'complete' | 'error'
+type DownloadState = 'idle' | 'downloading' | 'complete' | 'error';
 
-const LLM_FILE = 'qwen2-vl-2b-q4_k_m.gguf'
-
-const formatSpeed = (bps: number) => {
-    if (bps >= 1_048_576) return `${(bps / 1_048_576).toFixed(1)} MB/s`
-    if (bps >= 1024) return `${(bps / 1024).toFixed(0)} KB/s`
-    return `${bps.toFixed(0)} B/s`
-}
-
-const formatETA = (remaining: number, bps: number) => {
-    if (bps <= 0) return ''
-    const s = remaining / bps
-    if (s < 60) return `${Math.ceil(s)}s remaining`
-    if (s < 3600) return `${Math.ceil(s / 60)} min remaining`
-    return `${(s / 3600).toFixed(1)} hr remaining`
-}
+const MS_PER_FRAME = 1000 / 60;
 
 const DownloadModel = () => {
-    const { OnChangeModel, addModelPath } = useContext(DownloadContext)
-    const [dlState, setDlState] = useState<DownloadState>('idle')
-    const [progress, setProgress] = useState(0)
-    const [speedLabel, setSpeedLabel] = useState('')
-    const [errorMsg, setErrorMsg] = useState('')
-    const [availableGB, setAvailableGB] = useState<string | null>(null)
+    const { setModelReady } = useLLMContext();
 
-    const progressAnim = useRef(new Animated.Value(0)).current
-    const spinAnim = useRef(new Animated.Value(0)).current
-    const checkScale = useRef(new Animated.Value(0)).current
-    const lastSnapshot = useRef<{ bytes: number; time: number } | null>(null)
-    const downloadResumableRef = useRef<FileSystem.DownloadResumable | null>(null)
-    const llmUri = FileSystem.documentDirectory + LLM_FILE
+    const [downloadState, setDownloadState] = useState<DownloadState>('idle');
+    const [progress, setProgress] = useState(0);
+    const [availableGB, setAvailableGB] = useState<string | null>(null);
 
-    useEffect(() => {
-        ; (async () => {
-            try {
-                const free = await FileSystem.getFreeDiskStorageAsync()
-                setAvailableGB(`${(free / 1_073_741_824).toFixed(1)} GB`)
-            } catch { setAvailableGB('Unknown') }
+    const progressAnim = useRef(new Animated.Value(0)).current;
+    const spinAnim = useRef(new Animated.Value(0)).current;
+    const checkScale = useRef(new Animated.Value(0)).current;
+    const spinLoop = useRef<Animated.CompositeAnimation | null>(null);
 
-            try {
-                const llm = await FileSystem.getInfoAsync(llmUri)
-                if (llm.exists) {
-                    progressAnim.setValue(1)
-                    setProgress(1)
-                    setDlState('complete')
-                    addModelPath(llmUri)
-                    OnChangeModel(true)
-                }
-            } catch { }
-        })()
-        return () => { downloadResumableRef.current?.pauseAsync().catch(() => { }) }
-    }, [])
+    const lastReportedPercent = useRef(-1);
+    const lastReportTime = useRef(Date.now());
+    const downloadDone = useRef(false);
 
     useEffect(() => {
-        if (dlState === 'downloading') {
-            Animated.loop(Animated.timing(spinAnim, {
-                toValue: 1, duration: 900,
-                easing: Easing.linear, useNativeDriver: true,
-            })).start()
-        } else {
-            spinAnim.stopAnimation(); spinAnim.setValue(0)
-        }
-    }, [dlState])
+        FileSystem.getFreeDiskStorageAsync()
+            .then(free => setAvailableGB(`${(free / 1_073_741_824).toFixed(1)} GB`))
+            .catch(() => setAvailableGB('Unknown'));
+    }, []);
 
     useEffect(() => {
-        if (dlState === 'complete') {
-            Animated.spring(checkScale, {
-                toValue: 1, friction: 5, tension: 120, useNativeDriver: true,
-            }).start()
-        }
-    }, [dlState])
-
-    const animateProgressTo = (value: number) => {
         Animated.timing(progressAnim, {
-            toValue: value, duration: 250,
-            easing: Easing.out(Easing.quad), useNativeDriver: false,
-        }).start()
-    }
+            toValue: progress,
+            duration: 300,
+            easing: Easing.out(Easing.quad),
+            useNativeDriver: false,
+        }).start();
+    }, [progress]);
 
-    const downloadFile = (
-        url: string,
-        dest: string,
-    ): Promise<void> => new Promise((resolve, reject) => {
-        lastSnapshot.current = null
+    useEffect(() => {
+        if (downloadState === 'downloading') {
+            spinLoop.current = Animated.loop(
+                Animated.timing(spinAnim, {
+                    toValue: 1,
+                    duration: 900,
+                    easing: Easing.linear,
+                    useNativeDriver: true,
+                })
+            );
+            spinLoop.current.start();
+        } else {
+            spinLoop.current?.stop();
+            spinAnim.setValue(0);
+        }
+    }, [downloadState]);
 
-        const resumable = FileSystem.createDownloadResumable(
-            url, dest, {},
-            ({ totalBytesWritten, totalBytesExpectedToWrite }) => {
-                const ratio = totalBytesExpectedToWrite > 0
-                    ? totalBytesWritten / totalBytesExpectedToWrite : 0
-
-                setProgress(ratio)
-                animateProgressTo(ratio)
-
-                const now = Date.now()
-                if (lastSnapshot.current) {
-                    const dt = (now - lastSnapshot.current.time) / 1000
-                    const db = totalBytesWritten - lastSnapshot.current.bytes
-                    if (dt > 0.5) {
-                        const bps = db / dt
-                        const remaining = totalBytesExpectedToWrite - totalBytesWritten
-                        setSpeedLabel(`${formatSpeed(bps)} · ${formatETA(remaining, bps)}`)
-                        lastSnapshot.current = { bytes: totalBytesWritten, time: now }
-                    }
-                } else {
-                    lastSnapshot.current = { bytes: totalBytesWritten, time: now }
-                }
-            }
-        )
-        downloadResumableRef.current = resumable
-        resumable.downloadAsync()
-            .then(result => result ? resolve() : reject(new Error('No result')))
-            .catch(reject)
-    })
+    useEffect(() => {
+        if (downloadState === 'complete') {
+            Animated.spring(checkScale, {
+                toValue: 1,
+                friction: 5,
+                tension: 120,
+                useNativeDriver: true,
+            }).start();
+        }
+    }, [downloadState]);
 
     const startDownload = async () => {
-        if (dlState !== 'idle' && dlState !== 'error') return
+        const net = await NetInfo.fetch();
 
-        setDlState('downloading')
-        setProgress(0)
-        setErrorMsg(''); setSpeedLabel('')
+        if (!net.isConnected) {
+            Toast.show({
+                type: 'defaultToast',
+                text1: 'No internet connection.',
+                text2: 'Connect to the internet and try again.',
+            });
+            return;
+        }
 
-        progressAnim.setValue(0); checkScale.setValue(0)
+        if (net.type !== 'wifi') {
+            Toast.show({
+                type: 'defaultToast',
+                text1: 'Not on WiFi',
+                text2: 'This download is ~1 GB. Mobile data charges may apply.',
+            });
+        }
+
+        lastReportedPercent.current = -1;
+        lastReportTime.current = Date.now();
+        downloadDone.current = false;
+
+        setDownloadState('downloading');
+        setProgress(0);
 
         try {
-            await downloadFile(QwenLanguageModelUrl, llmUri)
-            animateProgressTo(1)
-            setProgress(1)
-            addModelPath(llmUri)
-            OnChangeModel(true)
-            setTimeout(() => setDlState('complete'), 400)
-        } catch (err: any) {
-            if (err?.message?.includes('paused')) return
-            setDlState('error')
-            setErrorMsg(err?.message ?? 'Download failed. Tap to retry.')
+            const result = await ResourceFetcher.fetch(
+                (p: number) => {
+                    const currentPercent = Math.floor(p * 100);
+                    if (
+                        !downloadDone.current &&
+                        currentPercent !== lastReportedPercent.current &&
+                        lastReportTime.current + MS_PER_FRAME < Date.now()
+                    ) {
+                        lastReportedPercent.current = currentPercent;
+                        lastReportTime.current = Date.now();
+                        setProgress(p);
+                    }
+                },
+                Model.modelPath,
+                Model.tokenizerPath,
+                Model.tokenizerConfigPath,
+            );
+
+            if (result === null) return;
+
+            downloadDone.current = true;
+            setProgress(1);
+            setDownloadState('complete');
+            setModelReady(true);
+        } catch (err) {
+            console.error('Model download failed:', err);
+            downloadDone.current = true;
+            setDownloadState('error');
+            Toast.show({
+                type: 'error',
+                text1: 'Download failed',
+                text2: 'Something went wrong. Please try again.',
+            });
         }
-    }
+    };
+
+    const isIdle = downloadState === 'idle';
+    const isDownloading = downloadState === 'downloading';
+    const isComplete = downloadState === 'complete';
+    const isError = downloadState === 'error';
+    const pct = Math.round(progress * 100);
 
     const progressWidth = progressAnim.interpolate({
-        inputRange: [0, 1], outputRange: ['0%', '100%'],
-    })
+        inputRange: [0, 1],
+        outputRange: ['0%', '100%'],
+    });
     const spinRotate = spinAnim.interpolate({
-        inputRange: [0, 1], outputRange: ['0deg', '360deg'],
-    })
-    const pct = Math.round(progress * 100)
+        inputRange: [0, 1],
+        outputRange: ['0deg', '360deg'],
+    });
+
+    const btnLabel = isDownloading
+        ? `Downloading… ${pct}%`
+        : isComplete
+            ? 'Model ready'
+            : isError
+                ? 'Retry download'
+                : 'Download model';
+
+    const btnStyle = [
+        styles.btnPrimary,
+        isDownloading && styles.btnDisabled,
+        isComplete && styles.btnSuccess,
+        isError && styles.btnError,
+    ];
 
     return (
         <View style={styles.container}>
@@ -174,8 +185,8 @@ const DownloadModel = () => {
                         <Icon name="robot-outline" size={scale(22)} color="#0F6E56" />
                     </View>
                     <View style={styles.modelInfo}>
-                        <Text style={styles.modelName}>Qwen2-VL · 2B</Text>
-                        <Text style={styles.modelMeta}>Vision + Language · Fully private</Text>
+                        <Text style={styles.modelName}>Qwen3 · 1.7B</Text>
+                        <Text style={styles.modelMeta}>Language · Fully private</Text>
                     </View>
                 </View>
 
@@ -189,31 +200,33 @@ const DownloadModel = () => {
                         <Text style={[styles.badgeText, styles.badgeTextGreen]}>Works offline</Text>
                     </View>
                     <View style={[styles.badge, styles.badgeGray]}>
-                        <Text style={[styles.badgeText, styles.badgeTextGray]}>~1.2GB</Text>
+                        <Text style={[styles.badgeText, styles.badgeTextGray]}>~1 GB</Text>
                     </View>
                 </View>
 
-                {(dlState === 'downloading' || dlState === 'complete') && (
+                {(isDownloading || isComplete) && (
                     <View style={styles.progressArea}>
                         <View style={styles.progressLabelRow}>
                             <Text style={styles.progressStatus}>
-                                {dlState === 'complete' ? 'Download complete' : 'Downloading model…'}
+                                {isComplete ? 'Download complete' : 'Downloading model…'}
                             </Text>
                             <Text style={styles.progressPct}>{pct}%</Text>
                         </View>
                         <View style={styles.progressTrack}>
                             <Animated.View style={[styles.progressFill, { width: progressWidth }]} />
                         </View>
-                        <Text style={styles.speedLabel}>
-                            {dlState === 'complete' ? 'Model ready to use offline' : speedLabel}
-                        </Text>
+                        {isComplete && (
+                            <Text style={styles.speedLabel}>Model ready to use offline</Text>
+                        )}
                     </View>
                 )}
 
-                {dlState === 'error' && (
+                {isError && (
                     <View style={styles.errorRow}>
                         <Icon name="alert-circle-outline" size={scale(14)} color="#A32D2D" />
-                        <Text style={styles.errorText}>{errorMsg || 'Download failed. Tap to retry.'}</Text>
+                        <Text style={styles.errorText}>
+                            Download failed. Check your connection and try again.
+                        </Text>
                     </View>
                 )}
             </View>
@@ -221,7 +234,7 @@ const DownloadModel = () => {
             <View style={styles.statsRow}>
                 <View style={styles.statCard}>
                     <Text style={styles.statLabel}>Storage required</Text>
-                    <Text style={styles.statValue}>~1.2GB</Text>
+                    <Text style={styles.statValue}>~1 GB</Text>
                 </View>
                 <View style={styles.statCard}>
                     <Text style={styles.statLabel}>Available</Text>
@@ -238,46 +251,38 @@ const DownloadModel = () => {
 
             <View style={styles.buttonGroup}>
                 <TouchableOpacity
-                    style={[
-                        styles.btnPrimary,
-                        dlState === 'downloading' && styles.btnDisabled,
-                        dlState === 'complete' && styles.btnSuccess,
-                        dlState === 'error' && styles.btnError,
-                    ]}
+                    style={btnStyle}
                     onPress={startDownload}
                     activeOpacity={0.85}
-                    disabled={dlState === 'downloading'}
+                    disabled={isDownloading || isComplete}
                 >
-                    {dlState === 'downloading' ? (
+                    {isDownloading ? (
                         <Animated.View style={{ transform: [{ rotate: spinRotate }] }}>
                             <Icon name="loading" size={scale(18)} color="#fff" />
                         </Animated.View>
-                    ) : dlState === 'complete' ? (
+                    ) : isComplete ? (
                         <Animated.View style={{ transform: [{ scale: checkScale }] }}>
                             <Icon name="check" size={scale(18)} color="#fff" />
                         </Animated.View>
-                    ) : dlState === 'error' ? (
-                        <Icon name="refresh" size={scale(18)} color="#fff" />
                     ) : (
-                        <Icon name="download-outline" size={scale(18)} color="#fff" />
+                        <Icon
+                            name={isError ? 'refresh' : 'download-outline'}
+                            size={scale(18)}
+                            color="#fff"
+                        />
                     )}
-                    <Text style={styles.btnPrimaryText}>
-                        {dlState === 'idle' ? 'Download model'
-                            : dlState === 'downloading' ? 'Downloading…'
-                                : dlState === 'error' ? 'Retry download'
-                                    : 'Model ready'}
-                    </Text>
+                    <Text style={styles.btnPrimaryText}>{btnLabel}</Text>
                 </TouchableOpacity>
 
-                {(dlState === 'idle' || dlState === 'error') && (
-                    <TouchableOpacity style={styles.btnSecondary} activeOpacity={0.7} onPress={() => OnChangeModel(true)}>
+                {(isIdle || isError) && (
+                    <TouchableOpacity style={styles.btnSecondary} activeOpacity={0.7}>
                         <Text style={styles.btnSecondaryText}>Maybe later</Text>
                     </TouchableOpacity>
                 )}
             </View>
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -408,6 +413,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     btnSecondaryText: { fontSize: scale(15), fontFamily: 'Aeonik-Regular', color: '#888' },
-})
+});
 
-export default DownloadModel
+export default DownloadModel;

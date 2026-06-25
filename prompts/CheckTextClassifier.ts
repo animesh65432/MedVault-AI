@@ -1,14 +1,6 @@
-
 export function GetPrompt(text: string) {
-
-    return `You are a strict medical text classifier.
-
-Determine whether the following text is medically related.
-
-Return ONLY:
-True
-or
-False
-
-Text : ${text}`
+    return `Return ONLY True or False.
+Is the text related to healthcare or medicine?
+Text:
+${text}`
 }

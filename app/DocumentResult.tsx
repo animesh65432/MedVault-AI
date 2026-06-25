@@ -1,25 +1,27 @@
 import DocumentScaning from "@/components/DocumentScaning";
-import { useLlama } from "@/context/llm/LlamaProvider";
+import { CheckMedicalClassification } from "@/hooks/checkMedicalClassification";
+import { useImageTextExtractor } from "@/hooks/useImageTextExtractor";
 import { DocumentMetadata } from "@/types";
 import { first } from "@/utils/first";
-import { extractTextFromImage } from "@/utils/image_extract";
 import { extractText, isAvailable } from 'expo-pdf-text-extract';
-import { useLocalSearchParams } from 'expo-router';
-import React, { useCallback, useEffect, useState } from "react";
+import { router, useLocalSearchParams } from 'expo-router';
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { View } from "react-native";
-import { Toast } from "toastify-react-native";
+import { QWEN3_0_6B_QUANTIZED, useLLM } from "react-native-executorch";
 
 
 const DocumentResult: React.FC = () => {
-    const { context } = useLlama();
+    const ran = useRef(false)
     const [documentData, setDocumentData] = useState<DocumentMetadata | null>(null)
     const [isLoading, setIsLoading] = useState(true)
-    const [extractedText, setExtractedText] = useState<string | null>(null)
     const { fileUri, fileName, fileType } = useLocalSearchParams()
+    const { extractTextFromImageUri } = useImageTextExtractor();
+    const llm = useLLM({
+        model: QWEN3_0_6B_QUANTIZED,
+    })
 
     const processDocument = useCallback(async () => {
         if (!fileUri || !fileName || !fileType) {
-            Toast.error('Missing file parameters')
             setIsLoading(false)
             return
         }
@@ -40,38 +42,60 @@ const DocumentResult: React.FC = () => {
 
                     const text = await extractText(uri);
 
-                    fullText = text ?? '';
+                    // const CheckIfMedicalOrNot = await CheckMedicalClassification(context, text)
+
+                    // if (!CheckIfMedicalOrNot) {
+                    //     Toast.error('The uploaded document is not a medical document. Please upload a valid medical document.')
+                    //     router.back()
+                    //     return;
+                    // }
+
+                    // const MedicalDocument = await MakeMedicalDocuments(context, text)
+
+                    // setDocumentData(MedicalDocument)
+
+                    // fullText = text ?? '';
 
                 } else {
 
-                    Toast.error('Sorry, PDF text extraction is not available on this platform.')
+                    ('Sorry, PDF text extraction is not available on this platform.')
 
                 }
 
             } else {
-                if (context) {
-                    fullText = await extractTextFromImage(context)
+
+                fullText = await extractTextFromImageUri(uri) || ""
+
+                const CheckIfMedicalOrNot = await CheckMedicalClassification(llm, fullText)
+
+                console.log("CheckIfMedicalOrNot", CheckIfMedicalOrNot, fullText)
+
+                if (!CheckIfMedicalOrNot) {
+                    // Toast.error('The uploaded document is not a medical document. Please upload a valid medical document.')
+                    router.back()
+                    return;
                 }
+
+                console.log(CheckIfMedicalOrNot, "CheckIfMedicalOrNot", fullText)
+
+                // const MedicalDocument = await MakeMedicalDocuments(context, fullText)
+
+                // setDocumentData(MedicalDocument)
+
             }
-
-            setExtractedText(fullText)
-
         } catch (error) {
             const message = error instanceof Error ? error.message : String(error)
             console.error('processDocument failed:', message, error)
-            Toast.error(`Failed to scan document: ${message}`)
         } finally {
             setIsLoading(false)
         }
-    }, [fileUri, fileName, fileType])
+    }, [fileUri])
 
     useEffect(() => {
-        processDocument()
-        return () => {
-            setDocumentData(null)
-            setExtractedText(null)
-        }
-    }, [processDocument])
+        if (ran.current) return;
+        ran.current = true;
+        processDocument();
+    }, []);
 
     if (isLoading) {
         return (
@@ -82,9 +106,6 @@ const DocumentResult: React.FC = () => {
             />
         )
     }
-
-    console.log('Extracted text:', extractedText)
-
     return <View></View>
 }
 

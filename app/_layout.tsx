@@ -1,7 +1,6 @@
 import { Onboarding } from "@/components";
 import { DocumentsProvider } from "@/context/Documents";
-import DowLoadProvidder, { DownloadContext } from "@/context/DownloadModel";
-import { LlamaProvider } from "@/context/llm/LlamaProvider";
+import { LLMProvider, useLLMContext } from "@/context/llm/LLMProvider";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { migrateDbIfNeeded } from "@/db/database";
 import { useFonts } from "expo-font";
@@ -10,8 +9,14 @@ import * as SplashScreen from 'expo-splash-screen';
 import { SQLiteProvider } from "expo-sqlite";
 import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect } from 'react';
+import { initExecutorch } from "react-native-executorch";
+import { ExpoResourceFetcher } from "react-native-executorch-expo-resource-fetcher";
 import 'react-native-reanimated';
 import Download from "./Dowload";
+
+initExecutorch({
+  resourceFetcher: ExpoResourceFetcher,
+});
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,8 +25,8 @@ export const unstable_settings = {
 };
 
 function RootLayoutContent() {
-  const { IsDownload, } = useContext(DownloadContext);
   const { IsonboardingComplete } = useContext(OnboardingContext);
+  const { modelReady } = useLLMContext();
 
   if (!IsonboardingComplete) {
     return (
@@ -29,10 +34,9 @@ function RootLayoutContent() {
     );
   }
 
-  if (!IsDownload) {
+  if (!modelReady) {
     return <Download />;
   }
-
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
@@ -77,17 +81,14 @@ export default function RootLayout() {
       databaseName="my-database.db"
       onInit={migrateDbIfNeeded}
     >
-      <DowLoadProvidder>
-        <LlamaProvider>
-          <OnboardingProvider>
-            <DocumentsProvider  >
-              <RootLayoutContent />
-              <StatusBar style="auto" />
-            </DocumentsProvider>
-          </OnboardingProvider>
-        </LlamaProvider>
-      </DowLoadProvidder>
-
+      <OnboardingProvider>
+        <DocumentsProvider  >
+          <LLMProvider>
+            <RootLayoutContent />
+            <StatusBar style="auto" />
+          </LLMProvider>
+        </DocumentsProvider>
+      </OnboardingProvider>
     </SQLiteProvider>
   );
 }

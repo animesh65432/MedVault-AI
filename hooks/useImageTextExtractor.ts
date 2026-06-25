@@ -2,7 +2,6 @@ import { ScanImageUrl, ImageTextExtractor_API_KEY } from "@/config";
 import { useState } from "react";
 
 export const useImageTextExtractor = () => {
-    const [extractedText, setExtractedText] = useState("");
     const [error, setError] = useState<string | null>(null);
 
     const extractTextFromImageUri = async (uri: string, mimeType = "image/jpeg") => {
@@ -27,12 +26,11 @@ export const useImageTextExtractor = () => {
             const data = await res.json();
 
             if (!data.success) throw new Error(data.error ?? "Unknown error");
-
-            setExtractedText(data.text);
-
             return data.text as string;
 
         } catch (err: any) {
+
+            console.error("Error extracting text from image:", err);
 
             setError(err.message);
 
@@ -40,5 +38,5 @@ export const useImageTextExtractor = () => {
         }
     };
 
-    return { extractedText, error, extractTextFromImageUri };
+    return { error, extractTextFromImageUri };
 };

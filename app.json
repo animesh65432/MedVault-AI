@@ -38,8 +38,7 @@
       ],
       "expo-font",
       "expo-sqlite",
-      "expo-build-properties",
-      "llama.rn"
+      "expo-build-properties"
     ],
     "experiments": {
       "typedRoutes": true,

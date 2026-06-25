@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Toast } from 'toastify-react-native';
 
 
 const UploadModal: React.FC = () => {
@@ -43,7 +42,6 @@ const UploadModal: React.FC = () => {
         const permission = await ImagePicker.requestCameraPermissionsAsync();
 
         if (!permission.granted) {
-            Toast.error('Camera permission is required to take photos.');
             return;
         }
 
