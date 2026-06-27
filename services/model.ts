@@ -1,14 +1,14 @@
-import { QWEN3_0_6B_QUANTIZED } from "react-native-executorch"
+import { QWEN3_1_7B_QUANTIZED } from "react-native-executorch"
 
 export const Model = {
-    modelName: 'Qwen 3 - 0.6B',
+    modelName: 'Qwen 3 - 1.7B',
     family: 'Qwen 3',
-    tokenizerPath: QWEN3_0_6B_QUANTIZED.tokenizerSource,
-    modelPath: QWEN3_0_6B_QUANTIZED.modelSource,
-    tokenizerConfigPath: QWEN3_0_6B_QUANTIZED.tokenizerConfigSource,
+    tokenizerPath: QWEN3_1_7B_QUANTIZED.tokenizerSource,
+    modelPath: QWEN3_1_7B_QUANTIZED.modelSource,
+    tokenizerConfigPath: QWEN3_1_7B_QUANTIZED.tokenizerConfigSource,
     source: 'remote',
-    parameters: 0.75,
-    modelSize: 0.94,
+    parameters: 2.03,
+    modelSize: 2.16,
     featured: true,
     thinking: true,
     labels: ['Fast', 'Reasoning'],

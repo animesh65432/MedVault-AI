@@ -1,4 +1,3 @@
-import { useLLMContext } from "@/context/llm/LLMProvider";
 import { Model } from "@/services/model";
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
@@ -15,8 +14,6 @@ type DownloadState = 'idle' | 'downloading' | 'complete' | 'error';
 const MS_PER_FRAME = 1000 / 60;
 
 const DownloadModel = () => {
-    const { setModelReady } = useLLMContext();
-
     const [downloadState, setDownloadState] = useState<DownloadState>('idle');
     const [progress, setProgress] = useState(0);
     const [availableGB, setAvailableGB] = useState<string | null>(null);
@@ -124,7 +121,6 @@ const DownloadModel = () => {
             downloadDone.current = true;
             setProgress(1);
             setDownloadState('complete');
-            setModelReady(true);
         } catch (err) {
             console.error('Model download failed:', err);
             downloadDone.current = true;

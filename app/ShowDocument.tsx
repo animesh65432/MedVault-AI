@@ -1,8 +1,11 @@
+import DocumentScanning from '@/components/DocumentScaning';
+import { useImageTextExtractor } from '@/hooks/useImageTextExtractor';
+import { useLLMStore } from "@/store/llm";
 import { first } from '@/utils/first';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Image,
     SafeAreaView,
@@ -14,25 +17,54 @@ import {
 import MaterialIcons from 'react-native-vector-icons/AntDesign';
 
 const ShowDocument = () => {
+    const [IsProcessing, setIsProcessing] = useState(false);
+    const { generate, loadModel, IsModelLoaded } = useLLMStore()
     const { fileUri, fileName, fileType } = useLocalSearchParams();
     const router = useRouter();
+    const { extractTextFromImageUri } = useImageTextExtractor()
 
     const isPdf = first(fileType) === 'application/pdf';
 
-    const handleUpload = () => {
-        router.push({
-            pathname: "/DocumentResult",
-            params: {
-                fileUri: first(fileUri),
-                fileName: first(fileName),
-                fileType: first(fileType),
-            },
-        });
+    const handleUpload = async () => {
+
+        setIsProcessing(true);
+
+        try {
+            await loadModel()
+
+            if (!isPdf) {
+                // const result = await extractTextFromImageUri(first(fileUri) as string)
+                const result1 = await generate([{
+                    role: "system",
+                    content: "be best friend"
+                },
+                {
+                    role: "user",
+                    content: "i want to die"
+                }
+                ])
+
+                console.log('Extracted Text:', result1);
+            }
+        }
+        catch (error) {
+            console.error('Error extracting text:', error);
+        } finally {
+            setIsProcessing(false);
+        }
     };
 
     const handleRetake = () => {
         router.back();
     };
+
+    if (IsProcessing) {
+        return <DocumentScanning
+            fileUri={first(fileUri) as string}
+            fileName={first(fileName) as string}
+            fileType={first(fileType) as string}
+        />
+    }
 
     return (
         <SafeAreaView style={styles.safeArea}>

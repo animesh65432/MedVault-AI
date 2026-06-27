@@ -1,14 +1,11 @@
-import React, { useContext } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { vScale } from "@/utils/vScale"
-import SearchInput from '../SearchInput'
 import { scale } from '@/utils/scale'
-import Documents from '../Documents'
-import { DocumentsContext } from "@/context/Documents"
+import { vScale } from "@/utils/vScale"
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import SearchInput from '../SearchInput'
 import Empty from './Empty'
 
 const Search: React.FC = () => {
-    const { Documents: documentsList } = useContext(DocumentsContext)
 
     return (
         <View style={styles.container}>

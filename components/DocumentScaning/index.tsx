@@ -75,7 +75,7 @@ const DocumentScanning: React.FC<Props> = ({ fileUri, fileName, fileType }) => {
 
         const navTimeout = setTimeout(() => {
             router.replace({
-                pathname: '/DocumentResult',
+                pathname: '/Dowload',
                 params: { fileUri, fileName, fileType },
             });
         }, 12000);

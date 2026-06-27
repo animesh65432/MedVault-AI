@@ -1,17 +1,14 @@
-import { DocumentsContext } from "@/context/Documents"
 import { StatsInformation } from "@/types"
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View } from "react-native"
 import EmptyStats from './EmptyStats'
-import NonEmptyStats from './NonEmptyStats'
 import { DocumentListSkeleton, StatsSkeleton } from './Skeleton'
 import Stats from './Stats'
 import Title from './Title'
 
 const HomeLayOut = () => {
-    const { Documents, SetDocuments } = useContext(DocumentsContext);
     const [isLoading, setIsLoading] = useState(false);
     const [statsInformation, setStatsInformation] = useState<StatsInformation | null>(null);
 
@@ -38,7 +35,7 @@ const HomeLayOut = () => {
                             <Stats
                                 statsInformation={statsInformation}
                             />
-                            <NonEmptyStats documents={Documents} />
+                            {/* <NonEmptyStats documents={Documents} /> */}
                         </>
                     )}
                     {!showStats && <EmptyStats />}

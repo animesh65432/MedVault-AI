@@ -122,3 +122,36 @@ export interface MedicineRecord {
     name: string,
     duration: string,
 }
+
+export interface Model {
+    id: number;
+    modelName: string;
+    source: 'local' | 'remote' | 'built-in';
+    isDownloaded: boolean;
+    modelPath: string;
+    tokenizerPath: string;
+    tokenizerConfigPath: string;
+    family?: string;
+    featured?: boolean;
+    experimental?: boolean;
+    thinking?: boolean;
+    vision?: boolean;
+    labels?: string[];
+    parameters?: number;
+    modelSize?: number;
+    systemPrompt?: string | null;
+
+}
+
+export type Message = {
+    id: number;
+    chatId: number;
+    modelName?: string;
+    role: 'user' | 'assistant' | 'system' | 'event';
+    content: string;
+    imagePath?: string;
+    documentName?: string;
+    tokensPerSecond?: number;
+    timeToFirstToken?: number;
+    timestamp: number;
+};

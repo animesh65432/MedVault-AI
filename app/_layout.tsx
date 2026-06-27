@@ -1,8 +1,8 @@
 import { Onboarding } from "@/components";
-import { DocumentsProvider } from "@/context/Documents";
-import { LLMProvider, useLLMContext } from "@/context/llm/LLMProvider";
+import DowloadProvider, { IsDownloadContext } from "@/context/IsDownload";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { migrateDbIfNeeded } from "@/db/database";
+import { CheckAlreadyAiModelExist } from "@/utils/checkalreadyexsit";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
@@ -19,6 +19,7 @@ initExecutorch({
 });
 
 SplashScreen.preventAutoHideAsync();
+SplashScreen.setOptions({ fade: false, duration: 0 });
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -26,16 +27,25 @@ export const unstable_settings = {
 
 function RootLayoutContent() {
   const { IsonboardingComplete } = useContext(OnboardingContext);
-  const { modelReady } = useLLMContext();
+  const { setIsDownload, IsDownload } = useContext(IsDownloadContext)
 
-  if (!IsonboardingComplete) {
-    return (
-      <Onboarding />
-    );
+  async function checkModelExistence() {
+    const modelExist = await CheckAlreadyAiModelExist();
+    setIsDownload(modelExist);
   }
 
-  if (!modelReady) {
-    return <Download />;
+  useEffect(() => {
+    checkModelExistence()
+  }, [])
+
+  if (!IsonboardingComplete) {
+    return <Onboarding />;
+  }
+
+  console.log('IsDownload:', IsDownload);
+
+  if (!IsDownload) {
+    return <Download />
   }
 
   return (
@@ -82,12 +92,10 @@ export default function RootLayout() {
       onInit={migrateDbIfNeeded}
     >
       <OnboardingProvider>
-        <DocumentsProvider  >
-          <LLMProvider>
-            <RootLayoutContent />
-            <StatusBar style="auto" />
-          </LLMProvider>
-        </DocumentsProvider>
+        <DowloadProvider>
+          <RootLayoutContent />
+          <StatusBar style="auto" />
+        </DowloadProvider>
       </OnboardingProvider>
     </SQLiteProvider>
   );
