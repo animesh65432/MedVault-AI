@@ -18,7 +18,7 @@ import MaterialIcons from 'react-native-vector-icons/AntDesign';
 
 const ShowDocument = () => {
     const [IsProcessing, setIsProcessing] = useState(false);
-    const { generate, loadModel, IsModelLoaded } = useLLMStore()
+    const { MakeMedicalDataJson, loadModel, Medicalclassfication, isGenerating } = useLLMStore()
     const { fileUri, fileName, fileType } = useLocalSearchParams();
     const router = useRouter();
     const { extractTextFromImageUri } = useImageTextExtractor()
@@ -27,24 +27,27 @@ const ShowDocument = () => {
 
     const handleUpload = async () => {
 
+        if (isGenerating) {
+            console.warn('Generation already in progress');
+            return;
+        }
+
         setIsProcessing(true);
 
         try {
             await loadModel()
 
             if (!isPdf) {
-                // const result = await extractTextFromImageUri(first(fileUri) as string)
-                const result1 = await generate([{
-                    role: "system",
-                    content: "be best friend"
-                },
-                {
-                    role: "user",
-                    content: "i want to die"
-                }
-                ])
+                const extractedText = await extractTextFromImageUri(first(fileUri) as string) || ""
+                const CheckIsMedicalRelated = await Medicalclassfication(extractedText)
+                const answer = CheckIsMedicalRelated?.replace(/<think>[\s\S]*?<\/think>/g, "")
+                    .trim();
 
-                console.log('Extracted Text:', result1);
+                const Medicaldata = await MakeMedicalDataJson(extractedText)
+
+                console.log('Is Medical Related:', answer);
+
+                console.log('Medical Data JSON:', Medicaldata);
             }
         }
         catch (error) {

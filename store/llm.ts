@@ -1,3 +1,6 @@
+import { finalMedicalclassficationPrompt } from '@/utils/finalMedicalclassficationPrompt';
+import { makeClassifyMedicalPrompt } from "@/utils/makeClassifyMedicalPrompt";
+
 import {
     LLMModule,
     QWEN3_1_7B_QUANTIZED,
@@ -18,6 +21,8 @@ interface LLMStore {
     generate: (messages: ExecutorchMessage[]) => Promise<string | null>;
     interrupt: () => void;
     IsModelLoaded: boolean;
+    Medicalclassfication: (messages: string) => Promise<string | null>;
+    MakeMedicalDataJson: (messages: string) => Promise<string | null>;
 }
 
 
@@ -114,11 +119,6 @@ export const useLLMStore = create<LLMStore>((set, get) => ({
             return null;
         }
 
-        if (isGenerating) {
-            console.warn('Generation already in progress');
-            return null;
-        }
-
         set({
             isGenerating: true,
             isProcessingPrompt: true,
@@ -152,5 +152,20 @@ export const useLLMStore = create<LLMStore>((set, get) => ({
     interrupt: () => {
         llmInstance?.interrupt();
         set({ isGenerating: false, isProcessingPrompt: false });
+    },
+    Medicalclassfication: async (content: string) => {
+        const { generate } = get()
+        const finalMedicalclassficatioPrompt = await finalMedicalclassficationPrompt(content)
+        const res = await generate(finalMedicalclassficatioPrompt)
+        return res
+    },
+    MakeMedicalDataJson: async (content: string) => {
+        const { generate } = get()
+        const prompt = await makeClassifyMedicalPrompt(content)
+        const res = await generate(prompt)
+        return res
+    },
+    makeClassifyMedical: async (content: string) => {
+        const { generate } = get()
     }
 }));

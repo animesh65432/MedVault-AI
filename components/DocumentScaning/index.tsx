@@ -73,16 +73,8 @@ const DocumentScanning: React.FC<Props> = ({ fileUri, fileName, fileType }) => {
             setTipIndex(prev => (prev + 1) % TIPS.length);
         }, 4000);
 
-        const navTimeout = setTimeout(() => {
-            router.replace({
-                pathname: '/Dowload',
-                params: { fileUri, fileName, fileType },
-            });
-        }, 12000);
-
         return () => {
             clearInterval(tipInterval);
-            clearTimeout(navTimeout);
         };
     }, []);
 
