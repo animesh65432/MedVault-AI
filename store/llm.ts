@@ -1,9 +1,10 @@
 import { finalMedicalclassficationPrompt } from '@/utils/finalMedicalclassficationPrompt';
 import { makeClassifyMedicalPrompt } from "@/utils/makeClassifyMedicalPrompt";
+import { MakeMedicalDataJsonPrompt } from "@/utils/MakeMedicalDataJsonPrompt";
 
 import {
     LLMModule,
-    QWEN3_1_7B_QUANTIZED,
+    QWEN2_5_3B_QUANTIZED,
     type Message as ExecutorchMessage
 } from 'react-native-executorch';
 import { create } from 'zustand';
@@ -62,9 +63,9 @@ export const useLLMStore = create<LLMStore>((set, get) => ({
                         modelName: 'custom' as Parameters<
                             typeof LLMModule.fromModelName
                         >[0]['modelName'],
-                        modelSource: QWEN3_1_7B_QUANTIZED.modelSource,
-                        tokenizerSource: QWEN3_1_7B_QUANTIZED.tokenizerSource,
-                        tokenizerConfigSource: QWEN3_1_7B_QUANTIZED.tokenizerConfigSource,
+                        modelSource: QWEN2_5_3B_QUANTIZED.modelSource,
+                        tokenizerSource: QWEN2_5_3B_QUANTIZED.tokenizerSource,
+                        tokenizerConfigSource: QWEN2_5_3B_QUANTIZED.tokenizerConfigSource,
                         capabilities: undefined,
                     },
                     () => { },
@@ -91,10 +92,13 @@ export const useLLMStore = create<LLMStore>((set, get) => ({
                     }
                 );
 
-                const generationConfig = QWEN3_1_7B_QUANTIZED.generationConfig;
-                if (generationConfig) {
-                    llmInstance.configure({ generationConfig });
-                }
+                llmInstance.configure({
+                    generationConfig: {
+                        temperature: 0.1,
+                        repetitionPenalty: 1.3,
+                    },
+                    toolsConfig: undefined
+                });
 
                 set({ isLoading: false });
                 set({ IsModelLoaded: true });
@@ -111,8 +115,6 @@ export const useLLMStore = create<LLMStore>((set, get) => ({
     },
     generate: async (messages) => {
         const instance = llmInstance;
-
-        const { isGenerating } = get();
 
         if (!instance) {
             console.warn('Model not loaded');
@@ -160,12 +162,17 @@ export const useLLMStore = create<LLMStore>((set, get) => ({
         return res
     },
     MakeMedicalDataJson: async (content: string) => {
-        const { generate } = get()
-        const prompt = await makeClassifyMedicalPrompt(content)
-        const res = await generate(prompt)
-        return res
-    },
-    makeClassifyMedical: async (content: string) => {
-        const { generate } = get()
+        const { generate } = get();
+        const classifyPrompt = await makeClassifyMedicalPrompt(content);
+        const docType = (await generate(classifyPrompt))?.trim() ?? "Other";
+
+        console.log("Document Type:", docType);
+
+        const extractPrompt = await MakeMedicalDataJsonPrompt(content, docType);
+        const medicalDataJson = await generate(extractPrompt);
+
+        console.log("Extracted Medical Data JSON:", medicalDataJson);
+
+        return medicalDataJson;
     }
 }));

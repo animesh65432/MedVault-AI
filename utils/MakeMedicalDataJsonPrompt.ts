@@ -1,166 +1,170 @@
-import { type Message as ExecutorchMessage } from "react-native-executorch";
+import { getStructuredOutputPrompt, Message } from 'react-native-executorch';
+import * as z from 'zod/v4';
 
+const MedicineSchema = z.object({
+  name: z.string(),
+  dosage: z.string(),
+  frequency: z.string(),
+  duration: z.string(),
+  timing: z.string(),
+});
 
-const SCHEMAS: Record<string, string> = {
-  Prescription: `{
-  "patient_name": "",
-  "doctor_name": "",
-  "clinic_name": "",
-  "date": "",
-  "medicines": [{ "name": "", "dosage": "", "frequency": "", "duration": "", "timing": "" }],
-  "important_notes": [],
-  "tags": []
-}`,
+const TestSchema = z.object({
+  name: z.string(),
+  value: z.string(),
+  unit: z.string(),
+  normal_range: z.string(),
+  status: z.string(),
+});
 
-  "Prescription Receipt": `{
-  "patient_name": "",
-  "pharmacy_name": "",
-  "date": "",
-  "medicines": [{ "name": "", "dosage": "", "frequency": "", "duration": "", "timing": "" }],
-  "billing_items": [{ "name": "", "price": "" }],
-  "total_amount": "",
-  "important_notes": [],
-  "tags": []
-}`,
+const BillingItemSchema = z.object({
+  name: z.string(),
+  price: z.string(),
+});
 
-  "Lab Report": `{
-  "patient_name": "",
-  "lab_name": "",
-  "referred_by": "",
-  "date": "",
-  "tests": [{ "name": "", "value": "", "unit": "", "normal_range": "", "status": "" }],
-  "important_notes": [],
-  "tags": []
-}`,
-
-  "Radiology Report": `{
-  "patient_name": "",
-  "referred_by": "",
-  "center_name": "",
-  "date": "",
-  "modality": "",
-  "body_part": "",
-  "findings": "",
-  "impression": "",
-  "important_notes": [],
-  "tags": []
-}`,
-
-  "Medical Bill": `{
-  "patient_name": "",
-  "hospital_name": "",
-  "date": "",
-  "billing_items": [{ "name": "", "price": "" }],
-  "subtotal": "",
-  "discount": "",
-  "total_amount": "",
-  "important_notes": [],
-  "tags": []
-}`,
-
-  "Discharge Summary": `{
-  "patient_name": "",
-  "hospital_name": "",
-  "admission_date": "",
-  "discharge_date": "",
-  "diagnosis": "",
-  "procedures": [],
-  "medicines": [{ "name": "", "dosage": "", "frequency": "", "duration": "", "timing": "" }],
-  "tests": [{ "name": "", "value": "", "unit": "", "normal_range": "", "status": "" }],
-  "follow_up": "",
-  "important_notes": [],
-  "tags": []
-}`,
-
-  "Referral Letter": `{
-  "patient_name": "",
-  "referring_doctor": "",
-  "referred_to": "",
-  "date": "",
-  "reason_for_referral": "",
-  "medicines": [{ "name": "", "dosage": "", "frequency": "", "duration": "", "timing": "" }],
-  "important_notes": [],
-  "tags": []
-}`,
-
-  "Insurance Document": `{
-  "patient_name": "",
-  "insurance_provider": "",
-  "policy_number": "",
-  "valid_from": "",
-  "valid_to": "",
-  "coverage_details": [],
-  "billing_items": [{ "name": "", "price": "" }],
-  "claim_amount": "",
-  "important_notes": [],
-  "tags": []
-}`,
-
-  "Consent Form": `{
-  "patient_name": "",
-  "doctor_name": "",
-  "hospital_name": "",
-  "date": "",
-  "procedure": "",
-  "consent_given": "",
-  "important_notes": [],
-  "tags": []
-}`,
-
-  "Medical History Record": `{
-  "patient_name": "",
-  "date_of_birth": "",
-  "blood_group": "",
-  "allergies": [],
-  "chronic_conditions": [],
-  "past_surgeries": [],
-  "medicines": [{ "name": "", "dosage": "", "frequency": "", "duration": "", "timing": "" }],
-  "past_tests": [{ "name": "", "value": "", "unit": "", "normal_range": "", "status": "" }],
-  "important_notes": [],
-  "tags": []
-}`,
-
-  Other: `{
-  "patient_name": "",
-  "date": "",
-  "medicines": [{ "name": "", "dosage": "", "frequency": "", "duration": "", "timing": "" }],
-  "tests": [{ "name": "", "value": "", "unit": "", "normal_range": "", "status": "" }],
-  "billing_items": [{ "name": "", "price": "" }],
-  "important_notes": [],
-  "tags": []
-}`,
+const BASE = {
+  title: z.string(),
+  doc_type: z.string(),
 };
+
+const SCHEMAS = {
+  Prescription: z.object({
+    ...BASE,
+    document_metadata: z.object({
+      patient_name: z.string(),
+      doctor_name: z.string(),
+      clinic_name: z.string(),
+      date: z.string(),
+      medicines: z.array(MedicineSchema),
+      important_notes: z.array(z.string()),
+      tags: z.array(z.string()),
+    }),
+  }),
+
+  "Lab Report": z.object({
+    ...BASE,
+    document_metadata: z.object({
+      patient_name: z.string(),
+      lab_name: z.string(),
+      referred_by: z.string(),
+      date: z.string(),
+      tests: z.array(TestSchema),
+      important_notes: z.array(z.string()),
+      tags: z.array(z.string()),
+    }),
+  }),
+
+  "Radiology Report": z.object({
+    ...BASE,
+    document_metadata: z.object({
+      patient_name: z.string(),
+      referred_by: z.string(),
+      center_name: z.string(),
+      date: z.string(),
+      modality: z.string(),
+      body_part: z.string(),
+      findings: z.string(),
+      impression: z.string(),
+      important_notes: z.array(z.string()),
+      tags: z.array(z.string()),
+    }),
+  }),
+
+  "Medical Bill": z.object({
+    ...BASE,
+    document_metadata: z.object({
+      patient_name: z.string(),
+      hospital_name: z.string(),
+      date: z.string(),
+      billing_items: z.array(BillingItemSchema),
+      subtotal: z.string(),
+      discount: z.string(),
+      total_amount: z.string(),
+      important_notes: z.array(z.string()),
+      tags: z.array(z.string()),
+    }),
+  }),
+
+  "Prescription Receipt": z.object({
+    ...BASE,
+    document_metadata: z.object({
+      patient_name: z.string(),
+      pharmacy_name: z.string(),
+      date: z.string(),
+      medicines: z.array(MedicineSchema),
+      billing_items: z.array(BillingItemSchema),
+      total_amount: z.string(),
+      important_notes: z.array(z.string()),
+      tags: z.array(z.string()),
+    }),
+  }),
+
+  "Discharge Summary": z.object({
+    ...BASE,
+    document_metadata: z.object({
+      patient_name: z.string(),
+      hospital_name: z.string(),
+      admission_date: z.string(),
+      discharge_date: z.string(),
+      diagnosis: z.string(),
+      procedures: z.array(z.string()),
+      medicines: z.array(MedicineSchema),
+      tests: z.array(TestSchema),
+      follow_up: z.string(),
+      important_notes: z.array(z.string()),
+      tags: z.array(z.string()),
+    }),
+  }),
+
+  "Referral Letter": z.object({
+    ...BASE,
+    document_metadata: z.object({
+      patient_name: z.string(),
+      referring_doctor: z.string(),
+      referred_to: z.string(),
+      date: z.string(),
+      reason_for_referral: z.string(),
+      medicines: z.array(MedicineSchema),
+      important_notes: z.array(z.string()),
+      tags: z.array(z.string()),
+    }),
+  }),
+
+  Other: z.object({
+    ...BASE,
+    document_metadata: z.object({
+      patient_name: z.string(),
+      date: z.string(),
+      medicines: z.array(MedicineSchema),
+      important_notes: z.array(z.string()),
+      tags: z.array(z.string()),
+    }),
+  }),
+};
+
+export type DocType = keyof typeof SCHEMAS;
+
+export function getMedicalSchema(docType: string) {
+  return SCHEMAS[docType as DocType] ?? SCHEMAS["Other"];
+}
 
 export async function MakeMedicalDataJsonPrompt(
   ocrText: string,
   docType: string
-): Promise<ExecutorchMessage[]> {
-  const schema = SCHEMAS[docType] ?? SCHEMAS["Other"];
-
+): Promise<Message[]> {
+  const schema = getMedicalSchema(docType);
+  const structuredOutputPrompt = getStructuredOutputPrompt(schema);
   return [
     {
       role: "system",
-      content: `You are a medical document data extractor.
-Extract data from the document and return ONLY valid JSON matching this exact shape:
-{
-  "title": "",
-  "doc_type": "${docType}",
-  "document_metadata": ${schema}
-}
-
-RULES:
-- Return ONLY the JSON object. No markdown, no explanation, no extra text.
-- "" for missing text fields. [] for missing list fields.
-- Preserve all medical values exactly as written.
-- Do NOT hallucinate any field.
-- Dates must be in DD-MM-YYYY format. "" if missing.
-- title: short human-readable summary under 10 words. Include patient name and date if available.
-- Frequency: OD / BD / TDS / QID / SOS / 1-0-1 / 1-1-1 / 0-0-1 etc — use as-is.
-- If duration like "x 7d" or "x 15d" appears anywhere, apply to all medicines.`,
-    },
-    {
-      role: "user",
-      content: `Medical Document Text: ${ocrText}`,
-    },
+      content: `/no_think 
+      You are a medical data extractor. 
+      Extract data into JSON. Dates: DD-MM-YYYY. 
+      Empty string for missing fields.\n\n
+      ${structuredOutputPrompt}
+      Type: ${docType}
+      Text:${ocrText}
+      `,
+    }
   ];
 }

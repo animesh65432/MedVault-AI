@@ -1,4 +1,4 @@
-import { ScanImageUrl, ImageTextExtractor_API_KEY } from "@/config";
+import { ImageTextExtractor_API_KEY, ScanImageUrl } from "@/config";
 import { useState } from "react";
 
 export const useImageTextExtractor = () => {
@@ -24,7 +24,6 @@ export const useImageTextExtractor = () => {
             });
 
             const data = await res.json();
-
             if (!data.success) throw new Error(data.error ?? "Unknown error");
             return data.text as string;
 

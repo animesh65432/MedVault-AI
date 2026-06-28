@@ -12,6 +12,7 @@ import { useContext, useEffect } from 'react';
 import { initExecutorch } from "react-native-executorch";
 import { ExpoResourceFetcher } from "react-native-executorch-expo-resource-fetcher";
 import 'react-native-reanimated';
+import Toast from "react-native-toast-message";
 import Download from "./Dowload";
 
 initExecutorch({
@@ -94,6 +95,7 @@ export default function RootLayout() {
       <OnboardingProvider>
         <DowloadProvider>
           <RootLayoutContent />
+          <Toast />
           <StatusBar style="auto" />
         </DowloadProvider>
       </OnboardingProvider>

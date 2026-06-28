@@ -2,6 +2,7 @@ import DocumentScanning from '@/components/DocumentScaning';
 import { useImageTextExtractor } from '@/hooks/useImageTextExtractor';
 import { useLLMStore } from "@/store/llm";
 import { first } from '@/utils/first';
+import { removeThinkLlmResponse } from "@/utils/removethink";
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -14,6 +15,7 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import MaterialIcons from 'react-native-vector-icons/AntDesign';
 
 const ShowDocument = () => {
@@ -39,15 +41,20 @@ const ShowDocument = () => {
 
             if (!isPdf) {
                 const extractedText = await extractTextFromImageUri(first(fileUri) as string) || ""
-                const CheckIsMedicalRelated = await Medicalclassfication(extractedText)
-                const answer = CheckIsMedicalRelated?.replace(/<think>[\s\S]*?<\/think>/g, "")
-                    .trim();
-
-                const Medicaldata = await MakeMedicalDataJson(extractedText)
-
-                console.log('Is Medical Related:', answer);
-
-                console.log('Medical Data JSON:', Medicaldata);
+                console.log("extractedText", extractedText)
+                const CheckIsMedicalRelated = removeThinkLlmResponse(await Medicalclassfication(extractedText) || "")
+                console.log("CheckIsMedicalRelated", CheckIsMedicalRelated)
+                if (CheckIsMedicalRelated === "False") {
+                    Toast.show({
+                        text1: 'Not a medical document',
+                        text2: 'Please upload a valid medical document.',
+                        type: 'error',
+                        position: "top",
+                        visibilityTime: 4000,
+                    })
+                    return;
+                }
+                console.log(await MakeMedicalDataJson(extractedText))
             }
         }
         catch (error) {

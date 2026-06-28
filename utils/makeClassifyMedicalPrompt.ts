@@ -6,8 +6,7 @@ export async function makeClassifyMedicalPrompt(
     return [
         {
             role: "system",
-            content: `You are a medical document classifier.
-Read the document and return ONLY one of these exact strings — nothing else:
+            content: `/no_think Classify the medical document. Reply with ONLY one of:
 Prescription
 Prescription Receipt
 Lab Report
@@ -18,20 +17,15 @@ Referral Letter
 Insurance Document
 Consent Form
 Medical History Record
-Other
-
-RULES:
-- Return exactly one string from the list above.
-- No punctuation, no explanation, no extra text.
-- A document with "H/o" (History of) and medicines + doctor name = Prescription, NOT Medical History Record.
-- If unsure, return Other.
--/no think
-
-`,
+Other`,
         },
         {
             role: "user",
-            content: `Medical Document Text: ${ocrText}`,
+            content: `DOCUMENT:\n${ocrText}`,
+        },
+        {
+            role: "assistant",
+            content: ``,
         },
     ];
 }
