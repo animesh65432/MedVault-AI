@@ -1,12 +1,13 @@
 import DocumentScanning from '@/components/DocumentScaning';
+import { useCheckIsMedicalRelated } from "@/hooks/useCheckIsMedicalRelated";
 import { useImageTextExtractor } from '@/hooks/useImageTextExtractor';
-import { useLLMStore } from "@/store/llm";
+import { usemakeclassifymedical } from "@/hooks/usemakeclassifymedical";
+import { useMakeMedicalDataJson } from "@/hooks/useMakeMedicalDataJson";
 import { first } from '@/utils/first';
-import { removeThinkLlmResponse } from "@/utils/removethink";
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
     Image,
     SafeAreaView,
@@ -20,41 +21,34 @@ import MaterialIcons from 'react-native-vector-icons/AntDesign';
 
 const ShowDocument = () => {
     const [IsProcessing, setIsProcessing] = useState(false);
-    const { MakeMedicalDataJson, loadModel, Medicalclassfication, isGenerating } = useLLMStore()
     const { fileUri, fileName, fileType } = useLocalSearchParams();
     const router = useRouter();
     const { extractTextFromImageUri } = useImageTextExtractor()
+    const { CheckIsMedicalOrNot } = useCheckIsMedicalRelated()
+    const { makeclassifymedical } = usemakeclassifymedical()
+    const { makeMedicalDataJson } = useMakeMedicalDataJson()
 
     const isPdf = first(fileType) === 'application/pdf';
 
     const handleUpload = async () => {
-
-        if (isGenerating) {
-            console.warn('Generation already in progress');
-            return;
-        }
-
         setIsProcessing(true);
-
         try {
-            await loadModel()
-
             if (!isPdf) {
                 const extractedText = await extractTextFromImageUri(first(fileUri) as string) || ""
-                console.log("extractedText", extractedText)
-                const CheckIsMedicalRelated = removeThinkLlmResponse(await Medicalclassfication(extractedText) || "")
-                console.log("CheckIsMedicalRelated", CheckIsMedicalRelated)
-                if (CheckIsMedicalRelated === "False") {
+                const IsMedicalOrNot = await CheckIsMedicalOrNot(extractedText)
+
+                console.log("IsMedicalOrNot:", IsMedicalOrNot)
+
+                if (IsMedicalOrNot === "False") {
                     Toast.show({
-                        text1: 'Not a medical document',
-                        text2: 'Please upload a valid medical document.',
-                        type: 'error',
-                        position: "top",
-                        visibilityTime: 4000,
+                        type: "info",
+                        text1: "This document is not related to medical field. Please upload a valid medical document."
                     })
                     return;
                 }
-                console.log(await MakeMedicalDataJson(extractedText))
+                const medicalCategory = await makeclassifymedical(extractedText)
+                const medicalDataJson = await makeMedicalDataJson(extractedText, medicalCategory!)
+                console.log("Medical Data JSON:", medicalDataJson)
             }
         }
         catch (error) {

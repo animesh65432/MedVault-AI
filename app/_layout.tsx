@@ -1,26 +1,14 @@
 import { Onboarding } from "@/components";
-import DowloadProvider, { IsDownloadContext } from "@/context/IsDownload";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { migrateDbIfNeeded } from "@/db/database";
-import { CheckAlreadyAiModelExist } from "@/utils/checkalreadyexsit";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import { SQLiteProvider } from "expo-sqlite";
 import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect } from 'react';
-import { initExecutorch } from "react-native-executorch";
-import { ExpoResourceFetcher } from "react-native-executorch-expo-resource-fetcher";
 import 'react-native-reanimated';
 import Toast from "react-native-toast-message";
-import Download from "./Dowload";
-
-initExecutorch({
-  resourceFetcher: ExpoResourceFetcher,
-});
-
-SplashScreen.preventAutoHideAsync();
-SplashScreen.setOptions({ fade: false, duration: 0 });
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -28,25 +16,9 @@ export const unstable_settings = {
 
 function RootLayoutContent() {
   const { IsonboardingComplete } = useContext(OnboardingContext);
-  const { setIsDownload, IsDownload } = useContext(IsDownloadContext)
-
-  async function checkModelExistence() {
-    const modelExist = await CheckAlreadyAiModelExist();
-    setIsDownload(modelExist);
-  }
-
-  useEffect(() => {
-    checkModelExistence()
-  }, [])
 
   if (!IsonboardingComplete) {
     return <Onboarding />;
-  }
-
-  console.log('IsDownload:', IsDownload);
-
-  if (!IsDownload) {
-    return <Download />
   }
 
   return (
@@ -93,11 +65,9 @@ export default function RootLayout() {
       onInit={migrateDbIfNeeded}
     >
       <OnboardingProvider>
-        <DowloadProvider>
-          <RootLayoutContent />
-          <Toast />
-          <StatusBar style="auto" />
-        </DowloadProvider>
+        <RootLayoutContent />
+        <Toast />
+        <StatusBar style="auto" />
       </OnboardingProvider>
     </SQLiteProvider>
   );

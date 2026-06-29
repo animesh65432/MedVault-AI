@@ -1,4 +1,4 @@
-import { ImageTextExtractor_API_KEY, ScanImageUrl } from "@/config";
+import { API_KEY, ScanImageUrl } from "@/config";
 import { useState } from "react";
 
 export const useImageTextExtractor = () => {
@@ -18,7 +18,7 @@ export const useImageTextExtractor = () => {
             const res = await fetch(ScanImageUrl, {
                 method: "POST",
                 headers: {
-                    "X-API-Key": ImageTextExtractor_API_KEY,
+                    "X-API-Key": API_KEY,
                 },
                 body: formData,
             });
