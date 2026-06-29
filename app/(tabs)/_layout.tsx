@@ -2,7 +2,6 @@ import { HapticTab } from '@/components/haptic-tab';
 import { vScale } from '@/utils/vScale';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs, useRouter } from 'expo-router';
-import React from 'react';
 import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const COLORS = {
