@@ -1,11 +1,14 @@
+import DocumentResult from '@/components/DocumentResult';
 import DocumentScanning from '@/components/DocumentScaning';
 import { useCheckIsMedicalRelated } from "@/hooks/useCheckIsMedicalRelated";
 import { useImageTextExtractor } from '@/hooks/useImageTextExtractor';
 import { usemakeclassifymedical } from "@/hooks/usemakeclassifymedical";
 import { useMakeMedicalDataJson } from "@/hooks/useMakeMedicalDataJson";
+import { DocumentType } from "@/types";
 import { first } from '@/utils/first';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
+import { extractText } from "expo-pdf-text-extract";
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -23,6 +26,7 @@ const ShowDocument = () => {
     const [IsProcessing, setIsProcessing] = useState(false);
     const { fileUri, fileName, fileType } = useLocalSearchParams();
     const router = useRouter();
+    const [Document, SetDocument] = useState<DocumentType | null>(null)
     const { extractTextFromImageUri } = useImageTextExtractor()
     const { CheckIsMedicalOrNot } = useCheckIsMedicalRelated()
     const { makeclassifymedical } = usemakeclassifymedical()
@@ -36,9 +40,6 @@ const ShowDocument = () => {
             if (!isPdf) {
                 const extractedText = await extractTextFromImageUri(first(fileUri) as string) || ""
                 const IsMedicalOrNot = await CheckIsMedicalOrNot(extractedText)
-
-                console.log("IsMedicalOrNot:", IsMedicalOrNot)
-
                 if (IsMedicalOrNot === "False") {
                     Toast.show({
                         type: "info",
@@ -47,11 +48,29 @@ const ShowDocument = () => {
                     return;
                 }
                 const medicalCategory = await makeclassifymedical(extractedText)
-                const medicalDataJson = await makeMedicalDataJson(extractedText, medicalCategory!)
-                console.log("Medical Data JSON:", medicalDataJson)
+                const MedicalData = await makeMedicalDataJson(extractedText, medicalCategory!) as DocumentType
+                SetDocument(MedicalData)
+            }
+            else {
+                const extractedText = await extractText(first(fileUri) as string)
+                const IsMedicalOrNot = await CheckIsMedicalOrNot(extractedText)
+                if (IsMedicalOrNot === "False") {
+                    Toast.show({
+                        type: "info",
+                        text1: "This document is not related to medical field. Please upload a valid medical document."
+                    })
+                    return;
+                }
+                const medicalCategory = await makeclassifymedical(extractedText)
+                const MedicalData = await makeMedicalDataJson(extractedText, medicalCategory!) as DocumentType
+                SetDocument(MedicalData)
             }
         }
         catch (error) {
+            Toast.show({
+                type: "error",
+                text1: "Error extracting text from the document. Please try again."
+            })
             console.error('Error extracting text:', error);
         } finally {
             setIsProcessing(false);
@@ -68,6 +87,12 @@ const ShowDocument = () => {
             fileName={first(fileName) as string}
             fileType={first(fileType) as string}
         />
+    }
+
+    if (Document && !IsProcessing) {
+        return <DocumentResult
+            Document={Document}
+        />;
     }
 
     return (

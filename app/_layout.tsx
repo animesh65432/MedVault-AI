@@ -7,6 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { SQLiteProvider } from "expo-sqlite";
 import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect } from 'react';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import 'react-native-reanimated';
 import Toast from "react-native-toast-message";
 
@@ -65,9 +66,11 @@ export default function RootLayout() {
       onInit={migrateDbIfNeeded}
     >
       <OnboardingProvider>
-        <RootLayoutContent />
-        <Toast />
-        <StatusBar style="auto" />
+        <KeyboardProvider>
+          <RootLayoutContent />
+          <Toast />
+          <StatusBar style="auto" />
+        </KeyboardProvider>
       </OnboardingProvider>
     </SQLiteProvider>
   );

@@ -1,4 +1,5 @@
 import { API_KEY, MakeMedicalDataJsonUrl } from "@/config";
+import { DocumentType } from "@/types";
 import { useState } from "react";
 
 export const useMakeMedicalDataJson = () => {
@@ -23,7 +24,7 @@ export const useMakeMedicalDataJson = () => {
                 throw new Error(reponsePrased.error ?? "Unknown error");
             }
 
-            return reponsePrased.data
+            return reponsePrased.data as DocumentType
         }
         catch (err: any) {
             setError(err.message);
