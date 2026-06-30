@@ -1,7 +1,8 @@
 import { DocumentType, Medicine } from "@/types";
 import { scale } from "@/utils/scale";
 import React, { useCallback, useMemo, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
+import Below from "./Below";
 import DischargeSummary from "./DischargeSummary";
 import Generic from "./Generic";
 import LabReport from "./LabReport";
@@ -101,12 +102,15 @@ const DocumentResult: React.FC<Props> = ({ document, onReminderToggled }) => {
         }
     }, [document, activeReminders, handleToggleReminder]);
 
-    return <View
-        style={styles.container}
-    >
+    return <View style={{ flex: 1 }}>
         <Navbar />
-        {content}
-    </View>;
+        <ScrollView
+            contentContainerStyle={{ paddingBottom: 60 }}
+        >
+            {content}
+        </ScrollView>
+        <Below />
+    </View>
 };
 
 const styles = StyleSheet.create({
