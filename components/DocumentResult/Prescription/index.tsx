@@ -1,54 +1,72 @@
-import { PrescriptionDocument } from "@/types";
+import { Medicine, PrescriptionDocument } from "@/types";
 import { scale } from "@/utils/scale";
-import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import MediCines from "../Medicines";
+import React from "react";
+import { ScrollView, View } from "react-native";
+import FieldRows from "../FieldRows";
+import Medicines from "../Medicines";
+import NotesAndTags from "../NotesandTags";
 import Title from "../Title";
-import Information from "./Information";
-;
 
 type Props = {
-    Document: PrescriptionDocument
-}
+    document: PrescriptionDocument;
+    activeReminders: Set<number>;
+    onToggleReminder: (index: number, medicine: Medicine) => void;
+};
 
-const Prescription: React.FC<Props> = ({ Document }) => {
+const Prescription: React.FC<Props> = ({
+    document,
+    activeReminders,
+    onToggleReminder,
+}) => {
+    const meta = document.document_metadata;
+
     return (
-        <ScrollView style={styles.container}>
-            <Title
-                doc_type={Document.doc_type}
-                title={Document.title}
-            />
-            <Information
-                date={Document.document_metadata.date}
-                patient_name={Document.document_metadata.patient_name}
-                clinic_name={Document.document_metadata.clinic_name}
-                doctor_name={Document.document_metadata.doctor_name}
-            />
-            <MediCines
-                medicines={Document.document_metadata.medicines}
-            />
-        </ScrollView>
-    )
-}
+        <ScrollView
+            style={styles.scroll}
+            contentContainerStyle={styles.content}
+            showsVerticalScrollIndicator={false}
+        >
+            <View
+                style={styles.div}
+            >
+                <Title title={document.title} doc_type={document.doc_type} />
 
-const styles = StyleSheet.create({
-    container: {
+                <FieldRows
+                    items={[
+                        { icon: "user", label: "Patient", value: meta.patient_name },
+                        { icon: "activity", label: "Doctor", value: meta.doctor_name },
+                        { icon: "home", label: "Clinic", value: meta.clinic_name },
+                        { icon: "calendar", label: "Date", value: meta.date },
+                    ]}
+                />
+            </View>
+            <Medicines
+                medicines={meta.medicines}
+                activeReminders={activeReminders}
+                onToggleReminder={onToggleReminder}
+            />
+
+            <NotesAndTags notes={meta.important_notes} tags={meta.tags} />
+        </ScrollView>
+    );
+};
+
+const styles = {
+    scroll: {
         flex: 1,
-        padding: scale(20),
-        marginTop: scale(30),
-        gap: scale(15)
     },
-    Description: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: scale(10),
-        justifyContent: "space-between"
+    content: {
+        gap: scale(20),
+        paddingHorizontal: scale(16),
+        paddingVertical: scale(16),
+        paddingBottom: scale(40),
     },
-    DescriptionDiv: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        gap: scale(10),
-    }
-})
-export default Prescription
+    div: {
+        backgroundColor: "#234338",
+        borderRadius: scale(16),
+        padding: scale(16),
+        gap: scale(10)
+    },
+};
+
+export default Prescription;

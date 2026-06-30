@@ -91,7 +91,7 @@ const ShowDocument = () => {
 
     if (Document && !IsProcessing) {
         return <DocumentResult
-            Document={Document}
+            document={Document}
         />;
     }
 

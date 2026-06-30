@@ -1,63 +1,120 @@
-import { DocumentType } from "@/types"
-import React from 'react'
-import { StyleSheet, View } from "react-native"
-import DischargeSummary from "./DischargeSummary"
-import Generic from "./Generic"
-import LabRePort from "./LabReport"
-import MedicalBill from "./MedicalBill"
-import Prescription from "./Prescription"
-import PrescriptionReceipt from "./PrescriptionReceipt"
-import RadiologyReport from "./RadiologyReport"
-import ReferralLetter from "./ReferralLetter"
+import { DocumentType, Medicine } from "@/types";
+import { scale } from "@/utils/scale";
+import React, { useCallback, useMemo, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import DischargeSummary from "./DischargeSummary";
+import Generic from "./Generic";
+import LabReport from "./LabReport";
+import MedicalBill from "./MedicalBill";
+import Navbar from "./Navbar";
+import Prescription from "./Prescription";
+import PrescriptionReceipt from "./PrescriptionReceipt";
+import RadiologyReport from "./RadiologyReport";
+import ReferralLetter from "./ReferralLetter";
 
 type Props = {
-    Document: DocumentType
-}
+    document: DocumentType;
+    onReminderToggled?: (
+        index: number,
+        medicine: Medicine,
+        isNowActive: boolean
+    ) => void;
+};
 
-const DocumentResult: React.FC<Props> = ({ Document }) => {
-    return (
-        <View style={styles.container}>
-            {Document.doc_type === "Prescription" &&
-                <Prescription Document={Document} />
+const DocumentResult: React.FC<Props> = ({ document, onReminderToggled }) => {
+    const [activeReminders, setActiveReminders] = useState<Set<number>>(
+        () => new Set()
+    );
+
+    const handleToggleReminder = useCallback(
+        (index: number, medicine: Medicine) => {
+            setActiveReminders((prev) => {
+                const next = new Set(prev);
+                const willBeActive = !next.has(index);
+                if (willBeActive) {
+                    next.add(index);
+                } else {
+                    next.delete(index);
+                }
+                onReminderToggled?.(index, medicine, willBeActive);
+                return next;
+            });
+        },
+        [onReminderToggled]
+    );
+
+    const content = useMemo(() => {
+        switch (document.doc_type) {
+            case "Prescription":
+                return (
+                    <Prescription
+                        document={document}
+                        activeReminders={activeReminders}
+                        onToggleReminder={handleToggleReminder}
+                    />
+                );
+            case "Prescription Receipt":
+                return (
+                    <PrescriptionReceipt
+                        document={document}
+                        activeReminders={activeReminders}
+                        onToggleReminder={handleToggleReminder}
+                    />
+                );
+            case "Lab Report":
+                return <LabReport document={document} />;
+            case "Radiology Report":
+                return <RadiologyReport document={document} />;
+            case "Medical Bill":
+                return <MedicalBill document={document} />;
+            case "Discharge Summary":
+                return (
+                    <DischargeSummary
+                        document={document}
+                        activeReminders={activeReminders}
+                        onToggleReminder={handleToggleReminder}
+                    />
+                );
+            case "Referral Letter":
+                return (
+                    <ReferralLetter
+                        document={document}
+                        activeReminders={activeReminders}
+                        onToggleReminder={handleToggleReminder}
+                    />
+                );
+            case "Insurance Document":
+            case "Consent Form":
+            case "Medical History Record":
+            case "Other":
+                return (
+                    <Generic
+                        document={document}
+                        activeReminders={activeReminders}
+                        onToggleReminder={handleToggleReminder}
+                    />
+                );
+            default: {
+                const _exhaustive: never = document;
+                return null;
             }
-            {Document.doc_type === "Prescription Receipt" &&
-                <PrescriptionReceipt />
-            }
-            {Document.doc_type === "Lab Report" &&
-                <LabRePort />
-            }
-            {Document.doc_type === "Radiology Report" &&
-                <RadiologyReport />
-            }
-            {Document.doc_type === "Medical Bill" &&
-                <MedicalBill />
-            }
-            {Document.doc_type === "Discharge Summary" &&
-                <DischargeSummary />
-            }
-            {Document.doc_type === "Referral Letter" &&
-                <ReferralLetter />
-            }
-            {Document.doc_type === "Insurance Document" &&
-                <Generic />
-            }
-            {Document.doc_type === "Consent Form"
-                && <Generic />
-            }
-            {Document.doc_type === "Medical History Record"
-                && <Generic />
-            }
-            {Document.doc_type === "Other"
-                && <Generic />
-            }
-        </View>
-    )
-}
+        }
+    }, [document, activeReminders, handleToggleReminder]);
+
+    return <View
+        style={styles.container}
+    >
+        <Navbar />
+        {content}
+    </View>;
+};
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        marginTop: scale(40),
+        marginBottom: scale(50)
     }
 })
 
-export default DocumentResult
+export default DocumentResult;

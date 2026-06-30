@@ -715,3 +715,5 @@ Sees new reminder in list
 
 │ 🏠 🔍 ➕ 🔔² 👤 │
 │ ■Home Search Upload Alert You│ ← Blue underline/bold
+
+[{"dosage": "10 mg", "duration": "", "frequency": "", "name": "Epanest", "timing": ""}, {"dosage": "10 mg", "duration": "", "frequency": "", "name": "Pantop", "timing": ""}, {"dosage": "10 mg", "duration": "", "frequency": "", "name": "Ambroxol", "timing": ""}, {"dosage": "10 mg", "duration": "", "frequency": "", "name": "Clavamox", "timing": ""}, {"dosage": "40 mg", "duration": "", "frequency": "", "name": "Rantac", "timing": ""}, {"dosage": "", "duration": "", "frequency": "", "name": "Ecosprin", "timing": ""}, {"dosage": "10 mg", "duration": "", "frequency": "", "name": "Pantol D", "timing": ""}, {"dosage": "10 mg", "duration": "", "frequency": "Twice a day", "name": "Recycless", "timing": ""}]

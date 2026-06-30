@@ -2,40 +2,24 @@ import { Medicine as MedicineType } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Octicons from "@expo/vector-icons/Octicons";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
     medicines: MedicineType[];
-    onReminderToggled?: (
-        index: number,
-        medicine: MedicineType,
-        isNowActive: boolean
-    ) => void;
+    activeReminders: Set<number>;
+    onToggleReminder: (index: number, medicine: MedicineType) => void;
 };
 
-const Medicines: React.FC<Props> = ({ medicines, onReminderToggled }) => {
-    const [activeReminders, setActiveReminders] = useState<Set<number>>(
-        () => new Set()
-    );
-
+const Medicines: React.FC<Props> = ({
+    medicines,
+    activeReminders,
+    onToggleReminder,
+}) => {
     if (medicines.length === 0) return null;
 
-    const handleToggle = (index: number, medicine: MedicineType) => {
-        setActiveReminders((prev) => {
-            const next = new Set(prev);
-            const willBeActive = !next.has(index);
-            if (willBeActive) {
-                next.add(index);
-            } else {
-                next.delete(index);
-            }
-            onReminderToggled?.(index, medicine, willBeActive);
-            return next;
-        });
-    };
+    console.log(medicines)
 
-    console.log(medicines);
     return (
         <View style={styles.container}>
             <View style={styles.titleRow}>
@@ -59,7 +43,7 @@ const Medicines: React.FC<Props> = ({ medicines, onReminderToggled }) => {
                                 </Text>
                                 <TouchableOpacity
                                     style={[styles.chip, isActive && styles.chipActive]}
-                                    onPress={() => handleToggle(index, med)}
+                                    onPress={() => onToggleReminder(index, med)}
                                     hitSlop={8}
                                 >
                                     <Octicons

@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         fontSize: fs(22),
         lineHeight: fs(22) * 1.3,
         fontFamily: 'Aeonik-Medium',
-        color: '#0D1F1C',
+        color: 'white',
     }
 })
 

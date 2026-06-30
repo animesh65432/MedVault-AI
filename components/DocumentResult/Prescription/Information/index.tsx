@@ -36,6 +36,7 @@ const Information: React.FC<Props> = ({ date, patient_name, clinic_name, doctor_
 const styles = StyleSheet.create({
     description: {
         gap: scale(8),
+        marginTop: scale(10),
     },
     row: {
         flexDirection: 'row',
