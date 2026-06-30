@@ -1,9 +1,11 @@
 import { PrescriptionDocument } from "@/types";
 import { scale } from "@/utils/scale";
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
+import MediCines from "../Medicines";
 import Title from "../Title";
+import Information from "./Information";
+;
 
 type Props = {
     Document: PrescriptionDocument
@@ -11,25 +13,21 @@ type Props = {
 
 const Prescription: React.FC<Props> = ({ Document }) => {
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Title
                 doc_type={Document.doc_type}
                 title={Document.title}
             />
-            <View style={styles.Description}>
-                <View>
-                    <FontAwesome5
-                        name="user"
-                        size={scale(20)}
-                        color="#234338"
-                    />
-                    <Text>{Document.document_metadata.patient_name}</Text>
-                </View>
-                <View>
-                    <Text>{Document.document_metadata.clinic_name.toLocaleLowerCase()}</Text>
-                </View>
-            </View>
-        </View>
+            <Information
+                date={Document.document_metadata.date}
+                patient_name={Document.document_metadata.patient_name}
+                clinic_name={Document.document_metadata.clinic_name}
+                doctor_name={Document.document_metadata.doctor_name}
+            />
+            <MediCines
+                medicines={Document.document_metadata.medicines}
+            />
+        </ScrollView>
     )
 }
 
@@ -38,11 +36,18 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: scale(20),
         marginTop: scale(30),
-        gap: scale(15),
+        gap: scale(15)
     },
     Description: {
         flexDirection: 'row',
         alignItems: 'center',
+        gap: scale(10),
+        justifyContent: "space-between"
+    },
+    DescriptionDiv: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
         gap: scale(10),
     }
 })
