@@ -1,5 +1,5 @@
 export function GetPrompt(text: string) {
-    return `
+  return `
     You are an advanced medical document parser.
 Analyze the provided medical document text carefully.
 
@@ -351,14 +351,14 @@ RULES:
 - Always return a single flat JSON object. No extra keys, no extra text.
 
 MISSING FIELDS RULE (important):
-- If a document clearly matches a known doc_type but is missing one or two fields,
-  still use that doc_type and leave the missing fields as "" or [].
+- If a document clearly matches a knowntpye but is missing one or two fields,
+  still use thattpye and leave the missing fields as "" or [].
 - Do NOT downgrade to "Other" just because some fields are absent.
 - Example: A Prescription without a clinic_name is still a "Prescription".
-  Return doc_type "Prescription" and set clinic_name to "".
+  Returntpye "Prescription" and set clinic_name to "".
 
 WHEN TO USE "Other":
-- Only use doc_type "Other" when the document does not resemble any of the
+- Only usetpye "Other" when the document does not resemble any of the
   known types at all — e.g. a general letter, unknown form, or unrecognizable content.
 - If the document has even partial resemblance to a known type, prefer that type.
 

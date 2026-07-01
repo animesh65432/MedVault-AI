@@ -2,12 +2,14 @@ import { DocumentType, Medicine } from "@/types";
 import { scale } from "@/utils/scale";
 import React, { useCallback, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
+import ImageView from "react-native-image-viewing";
 import Below from "./Below";
 import DischargeSummary from "./DischargeSummary";
 import Generic from "./Generic";
 import LabReport from "./LabReport";
 import MedicalBill from "./MedicalBill";
 import Navbar from "./Navbar";
+import PDFViewer from "./PDFViewer";
 import Prescription from "./Prescription";
 import PrescriptionReceipt from "./PrescriptionReceipt";
 import RadiologyReport from "./RadiologyReport";
@@ -20,9 +22,13 @@ type Props = {
         medicine: Medicine,
         isNowActive: boolean
     ) => void;
+    isPdf: boolean,
+    fileUri: string
+    fileName: string
 };
 
-const DocumentResult: React.FC<Props> = ({ document, onReminderToggled }) => {
+const DocumentResult: React.FC<Props> = ({ fileUri, fileName, isPdf, document, onReminderToggled }) => {
+    const [ShowDocumentViewVisible, setShowDocmentViewVisible] = useState(false);
     const [activeReminders, setActiveReminders] = useState<Set<number>>(
         () => new Set()
     );
@@ -45,7 +51,7 @@ const DocumentResult: React.FC<Props> = ({ document, onReminderToggled }) => {
     );
 
     const content = useMemo(() => {
-        switch (document.doc_type) {
+        switch (document.type) {
             case "Prescription":
                 return (
                     <Prescription
@@ -102,14 +108,43 @@ const DocumentResult: React.FC<Props> = ({ document, onReminderToggled }) => {
         }
     }, [document, activeReminders, handleToggleReminder]);
 
+    const handleViewOriginalPress = useCallback(() => {
+        setShowDocmentViewVisible(true);
+    }, []);
+
+    const handleCloseDocumentView = useCallback(() => {
+        setShowDocmentViewVisible(false);
+    }, []);
+
+    console.log(document)
+
     return <View style={{ flex: 1 }}>
         <Navbar />
         <ScrollView
-            contentContainerStyle={{ paddingBottom: 60 }}
+            contentContainerStyle={{ paddingBottom: scale(80) }}
         >
             {content}
         </ScrollView>
-        <Below />
+        <Below
+            onViewOriginalPress={handleViewOriginalPress}
+        />
+        {!isPdf &&
+            <ImageView
+                images={[{
+                    uri: fileUri,
+                }]}
+                visible={ShowDocumentViewVisible}
+                onRequestClose={() => setShowDocmentViewVisible(false)}
+                imageIndex={0}
+            />
+        }
+        {isPdf &&
+            <PDFViewer
+                visible={ShowDocumentViewVisible}
+                uri={fileUri}
+                Onclose={handleCloseDocumentView}
+            />
+        }
     </View>
 };
 

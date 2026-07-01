@@ -30,7 +30,7 @@ const ReferralLetter: React.FC<Props> = ({
             <View
                 style={styles.div}
             >
-                <Title title={document.title} doc_type={document.doc_type} />
+                <Title title={document.title} tpye={document.doc_type} />
 
                 <FieldRows
                     items={[

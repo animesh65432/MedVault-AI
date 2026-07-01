@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: scale(16),
         gap: scale(8),
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginTop: vScale(40),
     },
     backButton: {
         flexDirection: 'row',

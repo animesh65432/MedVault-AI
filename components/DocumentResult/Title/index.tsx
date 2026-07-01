@@ -6,16 +6,16 @@ import { StyleSheet, Text, View } from 'react-native';
 
 type Props = {
     title: string,
-    doc_type: string
+    type: string
 }
 
-const Title: React.FC<Props> = ({ title, doc_type }) => {
+const Title: React.FC<Props> = ({ title, type }) => {
     return (
         <View style={styles.container}>
             <View style={styles.docContainer}>
                 <Octicons name="dot-fill" size={fs(10)} color="#234338" />
                 <Text style={styles.docTypeText}>
-                    {doc_type}
+                    {type}
                 </Text>
             </View>
             <Text style={styles.title}>{title}</Text>

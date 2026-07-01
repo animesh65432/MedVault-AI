@@ -34,12 +34,12 @@ export interface BillingItem {
 
 export interface BaseDocument {
     title: string;
-    doc_type: TypeOfDocumenet;
+    type: TypeOfDocumenet;
 }
 
 
 export interface PrescriptionDocument extends BaseDocument {
-    doc_type: "Prescription";
+    type: "Prescription";
     document_metadata: {
         patient_name: string;
         doctor_name: string;
@@ -53,7 +53,7 @@ export interface PrescriptionDocument extends BaseDocument {
 
 
 export interface PrescriptionReceiptDocument extends BaseDocument {
-    doc_type: "Prescription Receipt";
+    type: "Prescription Receipt";
     document_metadata: {
         patient_name: string;
         pharmacy_name: string;
@@ -67,7 +67,7 @@ export interface PrescriptionReceiptDocument extends BaseDocument {
 }
 
 export interface LabReportDocument extends BaseDocument {
-    doc_type: "Lab Report";
+    type: "Lab Report";
     document_metadata: {
         patient_name: string;
         lab_name: string;
@@ -81,7 +81,7 @@ export interface LabReportDocument extends BaseDocument {
 
 
 export interface RadiologyReportDocument extends BaseDocument {
-    doc_type: "Radiology Report";
+    type: "Radiology Report";
     document_metadata: {
         patient_name: string;
         referred_by: string;
@@ -98,7 +98,7 @@ export interface RadiologyReportDocument extends BaseDocument {
 
 
 export interface MedicalBillDocument extends BaseDocument {
-    doc_type: "Medical Bill";
+    type: "Medical Bill";
     document_metadata: {
         patient_name: string;
         hospital_name: string;
@@ -113,7 +113,7 @@ export interface MedicalBillDocument extends BaseDocument {
 }
 
 export interface DischargeSummaryDocument extends BaseDocument {
-    doc_type: "Discharge Summary";
+    type: "Discharge Summary";
     document_metadata: {
         patient_name: string;
         hospital_name: string;
@@ -131,7 +131,7 @@ export interface DischargeSummaryDocument extends BaseDocument {
 
 
 export interface ReferralLetterDocument extends BaseDocument {
-    doc_type: "Referral Letter";
+    type: "Referral Letter";
     document_metadata: {
         patient_name: string;
         referring_doctor: string;
@@ -146,7 +146,7 @@ export interface ReferralLetterDocument extends BaseDocument {
 
 
 export interface GenericDocument extends BaseDocument {
-    doc_type:
+    type:
     | "Insurance Document"
     | "Consent Form"
     | "Medical History Record"

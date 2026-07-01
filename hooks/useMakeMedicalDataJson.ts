@@ -14,7 +14,7 @@ export const useMakeMedicalDataJson = () => {
                 },
                 body: JSON.stringify({
                     textOcr,
-                    docType
+                    doc_type: docType
                 }),
             })
 
@@ -27,7 +27,7 @@ export const useMakeMedicalDataJson = () => {
             return reponsePrased.data as DocumentType
         }
         catch (err: any) {
-            setError(err.message);
+            setError(err);
             console.log("Error in makeMedicalDataJson:", err);
         }
     }

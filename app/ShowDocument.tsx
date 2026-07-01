@@ -64,6 +64,7 @@ const ShowDocument = () => {
                 const medicalCategory = await makeclassifymedical(extractedText)
                 const MedicalData = await makeMedicalDataJson(extractedText, medicalCategory!) as DocumentType
                 SetDocument(MedicalData)
+                console.log("Medical Data:", MedicalData);
             }
         }
         catch (error) {
@@ -92,6 +93,9 @@ const ShowDocument = () => {
     if (Document && !IsProcessing) {
         return <DocumentResult
             document={Document}
+            isPdf={isPdf}
+            fileUri={first(fileUri) as string}
+            fileName={first(fileName) as string}
         />;
     }
 
