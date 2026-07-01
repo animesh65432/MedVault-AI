@@ -22,6 +22,8 @@ import {
 import Toast from 'react-native-toast-message';
 import MaterialIcons from 'react-native-vector-icons/AntDesign';
 
+
+
 const ShowDocument = () => {
     const [IsProcessing, setIsProcessing] = useState(false);
     const { fileUri, fileName, fileType } = useLocalSearchParams();
@@ -34,45 +36,63 @@ const ShowDocument = () => {
 
     const isPdf = first(fileType) === 'application/pdf';
 
+    const MAX_INPUT_TOKENS = 4000;
+
+    const isTextTooLarge = (text: string) => {
+        const estimatedTokens = Math.ceil(text.length / 4);
+        return estimatedTokens > MAX_INPUT_TOKENS;
+    };
+
     const handleUpload = async () => {
         setIsProcessing(true);
+
         try {
-            if (!isPdf) {
-                const extractedText = await extractTextFromImageUri(first(fileUri) as string) || ""
-                const IsMedicalOrNot = await CheckIsMedicalOrNot(extractedText)
-                if (IsMedicalOrNot === "False") {
-                    Toast.show({
-                        type: "info",
-                        text1: "This document is not related to medical field. Please upload a valid medical document."
-                    })
-                    return;
-                }
-                const medicalCategory = await makeclassifymedical(extractedText)
-                const MedicalData = await makeMedicalDataJson(extractedText, medicalCategory!) as DocumentType
-                SetDocument(MedicalData)
+
+            const extractedText = !isPdf
+                ? (await extractTextFromImageUri(first(fileUri) as string)) || ""
+                : await extractText(first(fileUri) as string);
+
+
+            if (isTextTooLarge(extractedText)) {
+                Toast.show({
+                    type: "error",
+                    text1: "Document is too large",
+                    text2: "Please upload a smaller document or split the PDF into multiple files.",
+                });
+                return;
             }
-            else {
-                const extractedText = await extractText(first(fileUri) as string)
-                const IsMedicalOrNot = await CheckIsMedicalOrNot(extractedText)
-                if (IsMedicalOrNot === "False") {
-                    Toast.show({
-                        type: "info",
-                        text1: "This document is not related to medical field. Please upload a valid medical document."
-                    })
-                    return;
-                }
-                const medicalCategory = await makeclassifymedical(extractedText)
-                const MedicalData = await makeMedicalDataJson(extractedText, medicalCategory!) as DocumentType
-                SetDocument(MedicalData)
-                console.log("Medical Data:", MedicalData);
+
+
+            const isMedical = await CheckIsMedicalOrNot(extractedText);
+
+            if (isMedical === "False") {
+                Toast.show({
+                    type: "info",
+                    text1: "This document is not related to the medical field.",
+                    text2: "Please upload a valid medical document.",
+                });
+                return;
             }
-        }
-        catch (error) {
+
+
+            const medicalCategory = await makeclassifymedical(extractedText);
+
+            const medicalData = await makeMedicalDataJson(
+                extractedText,
+                medicalCategory!
+            ) as DocumentType;
+
+            SetDocument(medicalData);
+
+            console.log("Medical Data:", medicalData);
+        } catch (error) {
+            console.error(error);
+
             Toast.show({
                 type: "error",
-                text1: "Error extracting text from the document. Please try again."
-            })
-            console.error('Error extracting text:', error);
+                text1: "Failed to process document.",
+                text2: "Please try again.",
+            });
         } finally {
             setIsProcessing(false);
         }

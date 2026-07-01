@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Modal, StyleSheet, View } from 'react-native';
 import Pdf from 'react-native-pdf';
 
 type Props = {
@@ -7,27 +7,29 @@ type Props = {
     Onclose: () => void;
 };
 
+
 const PDFViewer = ({ uri, visible, Onclose }: Props) => {
-    if (!visible) {
-        return null
-    }
     return (
-        <View style={styles.container}>
-            <Pdf
-                source={{ uri, cache: true }}
-                style={styles.pdf}
-                onLoadComplete={(numberOfPages) => {
-                    console.log(`Loaded ${numberOfPages} pages`);
-                }}
-                onError={(error) => {
-                    console.error(error);
-                    Onclose()
-                }}
-            />
-        </View>
+        <Modal
+            visible={visible}
+            animationType="slide"
+            onRequestClose={Onclose}
+        >
+            <View style={styles.container}>
+                <Pdf
+                    source={{ uri }}
+                    style={styles.pdf}
+                    onLoadComplete={(pages) => {
+                        console.log("Pages:", pages);
+                    }}
+                    onError={(e) => {
+                        console.log(e);
+                    }}
+                />
+            </View>
+        </Modal>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

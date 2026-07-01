@@ -18,13 +18,17 @@ export const useMakeMedicalDataJson = () => {
                 }),
             })
 
-            const reponsePrased = await response.json()
+            const data = await response.json();
 
-            if (!reponsePrased.success) {
-                throw new Error(reponsePrased.error ?? "Unknown error");
+            if (!response.ok) {
+                throw new Error(data.error || `HTTP ${response.status}`);
             }
 
-            return reponsePrased.data as DocumentType
+            if (!data.success) {
+                throw new Error(data.error || "Unknown error");
+            }
+
+            return data.data as DocumentType
         }
         catch (err: any) {
             setError(err);
