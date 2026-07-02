@@ -13,7 +13,6 @@ type Props = {
 };
 
 const Title: React.FC<Props> = ({ title, type, isEditable, onTitleChange, onTypeChange }) => {
-    console.log('Title component rendered with isEditable:', isEditable);
     return (
         <View style={styles.container}>
             <View style={styles.docContainer}>

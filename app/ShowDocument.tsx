@@ -46,52 +46,74 @@ const ShowDocument = () => {
     const handleUpload = async () => {
         setIsProcessing(true);
 
-        try {
+        let extractedText = "";
 
-            const extractedText = !isPdf
+        try {
+            extractedText = !isPdf
                 ? (await extractTextFromImageUri(first(fileUri) as string)) || ""
                 : await extractText(first(fileUri) as string);
+        } catch (error) {
+            console.error(error);
+            Toast.show({
+                type: "error",
+                text1: "Couldn't read this document",
+                text2: error instanceof Error ? error.message : "Please try a clearer photo or a different file.",
+            });
+            setIsProcessing(false);
+            return;
+        }
 
+        if (isTextTooLarge(extractedText)) {
+            Toast.show({
+                type: "error",
+                text1: "Document is too large",
+                text2: "Please upload a smaller document or split the PDF into multiple files.",
+            });
+            setIsProcessing(false);
+            return;
+        }
 
-            if (isTextTooLarge(extractedText)) {
-                Toast.show({
-                    type: "error",
-                    text1: "Document is too large",
-                    text2: "Please upload a smaller document or split the PDF into multiple files.",
-                });
-                return;
-            }
+        let isMedical = false;
 
+        try {
+            isMedical = await CheckIsMedicalOrNot(extractedText);
+        } catch (error) {
+            Toast.show({
+                type: "error",
+                text1: "Couldn't verify this document",
+                text2: error instanceof Error ? error.message : "Please check your connection and try again.",
+            });
+            setIsProcessing(false);
+            return;
+        }
 
-            const isMedical = await CheckIsMedicalOrNot(extractedText);
+        if (!isMedical) {
+            Toast.show({
+                type: "info",
+                text1: "This doesn't look like a medical document",
+                text2: "Try a prescription, lab report, or hospital discharge summary instead.",
+            });
+            setIsProcessing(false);
+            return;
+        }
 
-            if (isMedical === "False") {
-                Toast.show({
-                    type: "info",
-                    text1: "This document is not related to the medical field.",
-                    text2: "Please upload a valid medical document.",
-                });
-                return;
-            }
-
-
+        try {
             const medicalCategory = await makeclassifymedical(extractedText);
 
-            const medicalData = await makeMedicalDataJson(
+            const medicalData = (await makeMedicalDataJson(
                 extractedText,
                 medicalCategory!
-            ) as DocumentType;
+            )) as DocumentType;
 
             SetDocument(medicalData);
 
             console.log("Medical Data:", medicalData);
         } catch (error) {
             console.error(error);
-
             Toast.show({
                 type: "error",
-                text1: "Failed to process document.",
-                text2: "Please try again.",
+                text1: "Couldn't extract document details",
+                text2: error instanceof Error ? error.message : "Please try again.",
             });
         } finally {
             setIsProcessing(false);
