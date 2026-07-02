@@ -1,32 +1,47 @@
 import { Medicine as MedicineType } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
+import Feather from "@expo/vector-icons/Feather";
 import Octicons from "@expo/vector-icons/Octicons";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 type Props = {
     medicines: MedicineType[];
     activeReminders: Set<number>;
     onToggleReminder: (index: number, medicine: MedicineType) => void;
+    isEditable: boolean;
+    onUpdateMedicine?: (index: number, field: keyof MedicineType, value: string) => void;
+    onRemoveMedicine?: (index: number) => void;
+    onAddMedicine?: () => void;
 };
 
 const Medicines: React.FC<Props> = ({
     medicines,
     activeReminders,
     onToggleReminder,
+    isEditable,
+    onUpdateMedicine,
+    onRemoveMedicine,
+    onAddMedicine,
 }) => {
-    if (medicines.length === 0) return null;
-
-    console.log(medicines)
+    if (medicines.length === 0 && !isEditable) return null;
 
     return (
         <View style={styles.container}>
             <View style={styles.titleRow}>
-                <Text style={styles.title}>Medicines</Text>
-                <View style={styles.countBadge}>
-                    <Text style={styles.countText}>{medicines.length}</Text>
+                <View style={styles.titleLeft}>
+                    <Text style={styles.title}>Medicines</Text>
+                    <View style={styles.countBadge}>
+                        <Text style={styles.countText}>{medicines.length}</Text>
+                    </View>
                 </View>
+                {isEditable && (
+                    <TouchableOpacity style={styles.addButton} onPress={onAddMedicine} hitSlop={8}>
+                        <Feather name="plus" size={fs(13)} color="#234338" />
+                        <Text style={styles.addButtonText}>Add</Text>
+                    </TouchableOpacity>
+                )}
             </View>
 
             <View style={styles.list}>
@@ -38,37 +53,83 @@ const Medicines: React.FC<Props> = ({
                     return (
                         <View key={`${med.name}-${index}`} style={styles.card}>
                             <View style={styles.cardTop}>
-                                <Text style={styles.medName} numberOfLines={2}>
-                                    {med.name || "Unnamed medicine"}
-                                </Text>
-                                <TouchableOpacity
-                                    style={[styles.chip, isActive && styles.chipActive]}
-                                    onPress={() => onToggleReminder(index, med)}
-                                    hitSlop={8}
-                                >
-                                    <Octicons
-                                        name={isActive ? "bell-fill" : "bell"}
-                                        size={fs(11)}
-                                        color={isActive ? "#EEF6A2" : "#5F5E5A"}
+                                {isEditable ? (
+                                    <TextInput
+                                        value={med.name}
+                                        onChangeText={(text) => onUpdateMedicine?.(index, "name", text)}
+                                        style={styles.medNameInput}
+                                        placeholder="Medicine name"
+                                        placeholderTextColor="#B4B2A9"
                                     />
-                                    <Text
-                                        style={[
-                                            styles.chipText,
-                                            isActive && styles.chipTextActive,
-                                        ]}
-                                    >
-                                        {isActive ? "Set" : "Remind"}
+                                ) : (
+                                    <Text style={styles.medName} numberOfLines={2}>
+                                        {med.name || "Unnamed medicine"}
                                     </Text>
-                                </TouchableOpacity>
+                                )}
+
+                                {isEditable ? (
+                                    <TouchableOpacity
+                                        style={styles.removeChip}
+                                        onPress={() => onRemoveMedicine?.(index)}
+                                        hitSlop={8}
+                                    >
+                                        <Feather name="trash-2" size={fs(13)} color="#B3261E" />
+                                    </TouchableOpacity>
+                                ) : (
+                                    <TouchableOpacity
+                                        style={[styles.chip, isActive && styles.chipActive]}
+                                        onPress={() => onToggleReminder(index, med)}
+                                        hitSlop={8}
+                                    >
+                                        <Octicons
+                                            name={isActive ? "bell-fill" : "bell"}
+                                            size={fs(11)}
+                                            color={isActive ? "#EEF6A2" : "#5F5E5A"}
+                                        />
+                                        <Text
+                                            style={[
+                                                styles.chipText,
+                                                isActive && styles.chipTextActive,
+                                            ]}
+                                        >
+                                            {isActive ? "Set" : "Remind"}
+                                        </Text>
+                                    </TouchableOpacity>
+                                )}
                             </View>
 
-                            {!!hasDetails && (
+                            {isEditable ? (
                                 <View style={styles.pillRow}>
-                                    {!!med.dosage && <Pill text={med.dosage} />}
-                                    {!!med.frequency && <Pill text={med.frequency} />}
-                                    {!!med.duration && <Pill text={med.duration} />}
-                                    {!!med.timing && <Pill text={med.timing} />}
+                                    <PillInput
+                                        value={med.dosage}
+                                        placeholder="Dosage"
+                                        onChangeText={(text) => onUpdateMedicine?.(index, "dosage", text)}
+                                    />
+                                    <PillInput
+                                        value={med.frequency}
+                                        placeholder="Frequency"
+                                        onChangeText={(text) => onUpdateMedicine?.(index, "frequency", text)}
+                                    />
+                                    <PillInput
+                                        value={med.duration}
+                                        placeholder="Duration"
+                                        onChangeText={(text) => onUpdateMedicine?.(index, "duration", text)}
+                                    />
+                                    <PillInput
+                                        value={med.timing}
+                                        placeholder="Timing"
+                                        onChangeText={(text) => onUpdateMedicine?.(index, "timing", text)}
+                                    />
                                 </View>
+                            ) : (
+                                !!hasDetails && (
+                                    <View style={styles.pillRow}>
+                                        {!!med.dosage && <Pill text={med.dosage} />}
+                                        {!!med.frequency && <Pill text={med.frequency} />}
+                                        {!!med.duration && <Pill text={med.duration} />}
+                                        {!!med.timing && <Pill text={med.timing} />}
+                                    </View>
+                                )
                             )}
                         </View>
                     );
@@ -84,6 +145,26 @@ const Pill = ({ text }: { text: string }) => (
     </View>
 );
 
+const PillInput = ({
+    value,
+    placeholder,
+    onChangeText,
+}: {
+    value?: string;
+    placeholder: string;
+    onChangeText: (text: string) => void;
+}) => (
+    <View style={styles.pillInputWrap}>
+        <TextInput
+            value={value ?? ""}
+            onChangeText={onChangeText}
+            placeholder={placeholder}
+            placeholderTextColor="#B4B2A9"
+            style={styles.pillInput}
+        />
+    </View>
+);
+
 const styles = StyleSheet.create({
     container: {
         gap: scale(10),
@@ -92,6 +173,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+    },
+    titleLeft: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(8),
     },
     title: {
         fontSize: fs(12),
@@ -107,6 +193,21 @@ const styles = StyleSheet.create({
         paddingVertical: scale(2),
     },
     countText: {
+        fontSize: fs(11),
+        fontFamily: "Aeonik-Medium",
+        color: "#234338",
+    },
+    addButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(4),
+        borderWidth: 1,
+        borderColor: "#234338",
+        borderRadius: scale(20),
+        paddingHorizontal: scale(10),
+        paddingVertical: scale(4),
+    },
+    addButtonText: {
         fontSize: fs(11),
         fontFamily: "Aeonik-Medium",
         color: "#234338",
@@ -134,6 +235,13 @@ const styles = StyleSheet.create({
         color: "#0D1F1C",
         flex: 1,
     },
+    medNameInput: {
+        fontSize: fs(13.5),
+        fontFamily: "Aeonik-Medium",
+        color: "#0D1F1C",
+        flex: 1,
+        padding: 0,
+    },
     chip: {
         flexDirection: "row",
         alignItems: "center",
@@ -157,6 +265,14 @@ const styles = StyleSheet.create({
     chipTextActive: {
         color: "#EEF6A2",
     },
+    removeChip: {
+        borderWidth: 1,
+        borderColor: "#F0C9C5",
+        backgroundColor: "#FBEEED",
+        borderRadius: scale(20),
+        padding: scale(6),
+        flexShrink: 0,
+    },
     pillRow: {
         flexDirection: "row",
         flexWrap: "wrap",
@@ -172,6 +288,19 @@ const styles = StyleSheet.create({
         fontSize: fs(11),
         fontFamily: "Aeonik-Medium",
         color: "#5F5E5A",
+    },
+    pillInputWrap: {
+        backgroundColor: "#F1EFE8",
+        borderRadius: scale(8),
+        paddingHorizontal: scale(8),
+        paddingVertical: scale(3),
+        minWidth: scale(64),
+    },
+    pillInput: {
+        fontSize: fs(11),
+        fontFamily: "Aeonik-Medium",
+        color: "#5F5E5A",
+        padding: 0,
     },
 });
 

@@ -1,20 +1,34 @@
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 type Props = {
     label: string;
     text?: string;
+    isEditable: boolean;
+    onChangeText?: (value: string) => void;
 };
 
-const ProseBlock: React.FC<Props> = ({ label, text }) => {
-    if (!text || text.trim().length === 0) return null;
+const ProseBlock: React.FC<Props> = ({ label, text, isEditable, onChangeText }) => {
+    if ((!text || text.trim().length === 0) && !isEditable) return null;
 
     return (
         <View style={styles.container}>
             <Text style={styles.label}>{label}</Text>
-            <Text style={styles.text}>{text}</Text>
+            {isEditable ? (
+                <TextInput
+                    value={text ?? ""}
+                    onChangeText={onChangeText}
+                    style={styles.textInput}
+                    placeholder={`Add ${label.toLowerCase()}`}
+                    placeholderTextColor="#B4B2A9"
+                    multiline
+                    textAlignVertical="top"
+                />
+            ) : (
+                <Text style={styles.text}>{text}</Text>
+            )}
         </View>
     );
 };
@@ -40,6 +54,18 @@ const styles = StyleSheet.create({
         borderColor: "#E5E4DD",
         borderRadius: scale(10),
         padding: scale(12),
+    },
+    textInput: {
+        fontSize: fs(13.5),
+        fontFamily: "Aeonik-Regular",
+        color: "#0D1F1C",
+        lineHeight: fs(13.5) * 1.6,
+        backgroundColor: "#FAFAF8",
+        borderWidth: 1,
+        borderColor: "#E5E4DD",
+        borderRadius: scale(10),
+        padding: scale(12),
+        minHeight: scale(80),
     },
 });
 

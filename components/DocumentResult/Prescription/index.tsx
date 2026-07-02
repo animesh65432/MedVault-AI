@@ -8,6 +8,7 @@ import NotesAndTags from "../NotesandTags";
 import Title from "../Title";
 
 type Props = {
+    isEditable: boolean
     document: PrescriptionDocument;
     activeReminders: Set<number>;
     onToggleReminder: (index: number, medicine: Medicine) => void;
@@ -17,6 +18,7 @@ const Prescription: React.FC<Props> = ({
     document,
     activeReminders,
     onToggleReminder,
+    isEditable
 }) => {
     const meta = document.document_metadata;
 
@@ -30,6 +32,7 @@ const Prescription: React.FC<Props> = ({
                 style={styles.div}
             >
                 <Title
+                    isEditable={isEditable}
                     title={document.title}
                     type={document.type}
                 />
@@ -41,15 +44,20 @@ const Prescription: React.FC<Props> = ({
                         { icon: "home", label: "Clinic", value: meta.clinic_name },
                         { icon: "calendar", label: "Date", value: meta.date },
                     ]}
+                    isEditable={isEditable}
                 />
             </View>
             <Medicines
                 medicines={meta.medicines}
                 activeReminders={activeReminders}
                 onToggleReminder={onToggleReminder}
+                isEditable={isEditable}
             />
-
-            <NotesAndTags notes={meta.important_notes} tags={meta.tags} />
+            <NotesAndTags
+                notes={meta.important_notes}
+                tags={meta.tags}
+                isEditable={isEditable}
+            />
         </ScrollView>
     );
 };

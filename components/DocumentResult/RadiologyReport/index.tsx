@@ -9,9 +9,10 @@ import Title from "../Title";
 
 type Props = {
     document: RadiologyReportDocument;
+    isEditable: boolean
 };
 
-const RadiologyReport: React.FC<Props> = ({ document }) => {
+const RadiologyReport: React.FC<Props> = ({ isEditable, document }) => {
     const meta = document.document_metadata;
 
     return (
@@ -26,6 +27,7 @@ const RadiologyReport: React.FC<Props> = ({ document }) => {
                 <Title
                     title={document.title}
                     type={document.type}
+                    isEditable={isEditable}
                 />
 
                 <FieldRows
@@ -37,13 +39,26 @@ const RadiologyReport: React.FC<Props> = ({ document }) => {
                         { icon: "aperture", label: "Modality", value: meta.modality },
                         { icon: "crosshair", label: "Body part", value: meta.body_part },
                     ]}
+                    isEditable={isEditable}
                 />
             </View>
 
-            <ProseBlock label="Findings" text={meta.findings} />
-            <ProseBlock label="Impression" text={meta.impression} />
+            <ProseBlock
+                label="Findings"
+                text={meta.findings}
+                isEditable={isEditable}
+            />
+            <ProseBlock
+                label="Impression"
+                text={meta.impression}
+                isEditable={isEditable}
+            />
 
-            <NotesAndTags notes={meta.important_notes} tags={meta.tags} />
+            <NotesAndTags
+                notes={meta.important_notes}
+                tags={meta.tags}
+                isEditable={isEditable}
+            />
         </ScrollView>
     );
 };

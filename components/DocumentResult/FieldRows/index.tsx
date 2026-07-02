@@ -2,7 +2,7 @@ import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import { Feather } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 export type FieldRowItem = {
     icon: keyof typeof Feather.glyphMap;
@@ -12,12 +12,14 @@ export type FieldRowItem = {
 
 type Props = {
     items: FieldRowItem[];
+    isEditable: boolean;
+    onValueChange?: (label: string, value: string) => void;
 };
 
-const FieldRows: React.FC<Props> = ({ items }) => {
-    const visible = items.filter(
-        (item) => item.value && item.value.trim().length > 0
-    );
+const FieldRows: React.FC<Props> = ({ items, isEditable, onValueChange }) => {
+    const visible = isEditable
+        ? items
+        : items.filter((item) => item.value && item.value.trim().length > 0);
 
     if (visible.length === 0) return null;
 
@@ -30,9 +32,20 @@ const FieldRows: React.FC<Props> = ({ items }) => {
                     </View>
                     <View style={styles.textWrap}>
                         <Text style={styles.label}>{item.label}</Text>
-                        <Text style={styles.value} numberOfLines={2}>
-                            {item.value}
-                        </Text>
+                        {isEditable ? (
+                            <TextInput
+                                value={item.value ?? ""}
+                                onChangeText={(text) => onValueChange?.(item.label, text)}
+                                style={styles.valueInput}
+                                placeholder={`Add ${item.label.toLowerCase()}`}
+                                placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                                multiline
+                            />
+                        ) : (
+                            <Text style={styles.value} numberOfLines={2}>
+                                {item.value}
+                            </Text>
+                        )}
                     </View>
                 </View>
             ))}
@@ -71,6 +84,12 @@ const styles = StyleSheet.create({
         fontSize: fs(13.5),
         fontFamily: "Aeonik-Medium",
         color: "white",
+    },
+    valueInput: {
+        fontSize: fs(13.5),
+        fontFamily: "Aeonik-Medium",
+        color: "white",
+        padding: 0,
     },
 });
 

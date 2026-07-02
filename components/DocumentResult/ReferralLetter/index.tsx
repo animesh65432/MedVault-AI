@@ -10,6 +10,7 @@ import Title from "../Title";
 
 type Props = {
     document: ReferralLetterDocument;
+    isEditable: boolean;
     activeReminders: Set<number>;
     onToggleReminder: (index: number, medicine: Medicine) => void;
 };
@@ -18,6 +19,7 @@ const ReferralLetter: React.FC<Props> = ({
     document,
     activeReminders,
     onToggleReminder,
+    isEditable
 }) => {
     const meta = document.document_metadata;
 
@@ -31,6 +33,7 @@ const ReferralLetter: React.FC<Props> = ({
                 style={styles.div}
             >
                 <Title
+                    isEditable={isEditable}
                     title={document.title}
                     type={document.type}
                 />
@@ -42,18 +45,28 @@ const ReferralLetter: React.FC<Props> = ({
                         { icon: "user-check", label: "Referred to", value: meta.referred_to },
                         { icon: "calendar", label: "Date", value: meta.date },
                     ]}
+                    isEditable={isEditable}
                 />
             </View>
 
-            <ProseBlock label="Reason for referral" text={meta.reason_for_referral} />
+            <ProseBlock
+                label="Reason for referral"
+                text={meta.reason_for_referral}
+                isEditable={isEditable}
+            />
 
             <Medicines
                 medicines={meta.medicines}
                 activeReminders={activeReminders}
                 onToggleReminder={onToggleReminder}
+                isEditable={isEditable}
             />
 
-            <NotesAndTags notes={meta.important_notes} tags={meta.tags} />
+            <NotesAndTags
+                notes={meta.important_notes}
+                tags={meta.tags}
+                isEditable={isEditable}
+            />
         </ScrollView>
     );
 };

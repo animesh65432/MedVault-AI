@@ -8,30 +8,34 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = {
-    onEditPress?: () => void;
+    onEditPress: () => void;
     onViewOriginalPress: () => void;
+    onEditClosePress: () => void;
+    isEditable: boolean;
 };
 
-const Below: React.FC<Props> = ({ onEditPress, onViewOriginalPress }) => {
+const Below: React.FC<Props> = ({ onEditClosePress, isEditable, onEditPress, onViewOriginalPress }) => {
     const insets = useSafeAreaInsets();
 
     return (
         <View style={[styles.container, { paddingBottom: insets.bottom || vScale(12) }]}>
             <Pressable
-                onPress={onEditPress}
+                onPress={isEditable ? onEditClosePress : onEditPress}
                 style={({ pressed }) => [styles.button, styles.editButton, pressed && styles.pressed]}
             >
-                <Feather name="edit-2" size={scale(16)} color="#234338" />
-                <Text style={styles.editText}>Edit document</Text>
+                <Feather name={isEditable ? "check" : "edit-2"} size={scale(16)} color="#234338" />
+                <Text style={styles.editText}>{isEditable ? "Done editing" : "Edit document"}</Text>
             </Pressable>
 
-            <Pressable
-                onPress={onViewOriginalPress}
-                style={({ pressed }) => [styles.button, styles.viewButton, pressed && styles.pressed]}
-            >
-                <MaterialIcons name="image-search" size={scale(18)} color="#EEF6A2" />
-                <Text style={styles.viewText}>View original</Text>
-            </Pressable>
+            {!isEditable && (
+                <Pressable
+                    onPress={onViewOriginalPress}
+                    style={({ pressed }) => [styles.button, styles.viewButton, pressed && styles.pressed]}
+                >
+                    <MaterialIcons name="image-search" size={scale(18)} color="#EEF6A2" />
+                    <Text style={styles.viewText}>View original</Text>
+                </Pressable>
+            )}
         </View>
     );
 };

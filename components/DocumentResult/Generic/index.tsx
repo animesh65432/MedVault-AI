@@ -8,6 +8,7 @@ import NotesAndTags from "../NotesandTags";
 import Title from "../Title";
 
 type Props = {
+    isEditable: boolean;
     document: GenericDocument;
     activeReminders: Set<number>;
     onToggleReminder: (index: number, medicine: Medicine) => void;
@@ -17,6 +18,7 @@ const Generic: React.FC<Props> = ({
     document,
     activeReminders,
     onToggleReminder,
+    isEditable
 }) => {
     const meta = document.document_metadata;
 
@@ -27,13 +29,18 @@ const Generic: React.FC<Props> = ({
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.div}>
-                <Title title={document.title} type={document.type} />
+                <Title
+                    title={document.title}
+                    type={document.type}
+                    isEditable={isEditable}
+                />
 
                 <FieldRows
                     items={[
                         { icon: "user", label: "Patient", value: meta.patient_name },
                         { icon: "calendar", label: "Date", value: meta.date },
                     ]}
+                    isEditable={isEditable}
                 />
             </View>
 
@@ -41,9 +48,14 @@ const Generic: React.FC<Props> = ({
                 medicines={meta.medicines}
                 activeReminders={activeReminders}
                 onToggleReminder={onToggleReminder}
+                isEditable={isEditable}
             />
 
-            <NotesAndTags notes={meta.important_notes} tags={meta.tags} />
+            <NotesAndTags
+                notes={meta.important_notes}
+                tags={meta.tags}
+                isEditable={isEditable}
+            />
         </ScrollView>
     );
 };

@@ -29,6 +29,7 @@ type Props = {
 
 const DocumentResult: React.FC<Props> = ({ fileUri, fileName, isPdf, document, onReminderToggled }) => {
     const [ShowDocumentViewVisible, setShowDocmentViewVisible] = useState(false);
+    const [isEditable, setIsEditable] = useState(false);
     const [activeReminders, setActiveReminders] = useState<Set<number>>(
         () => new Set()
     );
@@ -55,6 +56,7 @@ const DocumentResult: React.FC<Props> = ({ fileUri, fileName, isPdf, document, o
             case "Prescription":
                 return (
                     <Prescription
+                        isEditable={isEditable}
                         document={document}
                         activeReminders={activeReminders}
                         onToggleReminder={handleToggleReminder}
@@ -63,20 +65,31 @@ const DocumentResult: React.FC<Props> = ({ fileUri, fileName, isPdf, document, o
             case "Prescription Receipt":
                 return (
                     <PrescriptionReceipt
+                        isEditable={isEditable}
                         document={document}
                         activeReminders={activeReminders}
                         onToggleReminder={handleToggleReminder}
                     />
                 );
             case "Lab Report":
-                return <LabReport document={document} />;
+                return <LabReport
+                    document={document}
+                    isEditable={isEditable}
+                />;
             case "Radiology Report":
-                return <RadiologyReport document={document} />;
+                return <RadiologyReport
+                    document={document}
+                    isEditable={isEditable}
+                />;
             case "Medical Bill":
-                return <MedicalBill document={document} />;
+                return <MedicalBill
+                    document={document}
+                    isEditable={isEditable}
+                />;
             case "Discharge Summary":
                 return (
                     <DischargeSummary
+                        isEditable={isEditable}
                         document={document}
                         activeReminders={activeReminders}
                         onToggleReminder={handleToggleReminder}
@@ -85,6 +98,7 @@ const DocumentResult: React.FC<Props> = ({ fileUri, fileName, isPdf, document, o
             case "Referral Letter":
                 return (
                     <ReferralLetter
+                        isEditable={isEditable}
                         document={document}
                         activeReminders={activeReminders}
                         onToggleReminder={handleToggleReminder}
@@ -96,6 +110,7 @@ const DocumentResult: React.FC<Props> = ({ fileUri, fileName, isPdf, document, o
             case "Other":
                 return (
                     <Generic
+                        isEditable={isEditable}
                         document={document}
                         activeReminders={activeReminders}
                         onToggleReminder={handleToggleReminder}
@@ -106,7 +121,7 @@ const DocumentResult: React.FC<Props> = ({ fileUri, fileName, isPdf, document, o
                 return null;
             }
         }
-    }, [document, activeReminders, handleToggleReminder]);
+    }, [document, activeReminders, handleToggleReminder, isEditable]);
 
     const handleViewOriginalPress = useCallback(() => {
         setShowDocmentViewVisible(true);
@@ -115,6 +130,14 @@ const DocumentResult: React.FC<Props> = ({ fileUri, fileName, isPdf, document, o
     const handleCloseDocumentView = useCallback(() => {
         setShowDocmentViewVisible(false);
     }, []);
+
+    const handleOpenEdit = () => {
+        setIsEditable(true);
+    }
+
+    const handleCloseEdit = () => {
+        setIsEditable(false);
+    }
 
     return <View style={{ flex: 1 }}>
         <Navbar />
@@ -125,6 +148,9 @@ const DocumentResult: React.FC<Props> = ({ fileUri, fileName, isPdf, document, o
         </ScrollView>
         <Below
             onViewOriginalPress={handleViewOriginalPress}
+            onEditPress={handleOpenEdit}
+            onEditClosePress={handleCloseEdit}
+            isEditable={isEditable}
         />
         {!isPdf &&
             <ImageView

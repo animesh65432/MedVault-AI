@@ -1,56 +1,142 @@
 import { BillingItem } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
+import Feather from "@expo/vector-icons/Feather";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 type Props = {
     items: BillingItem[];
     subtotal?: string;
     discount?: string;
     total?: string;
+    isEditable: boolean;
+    onUpdateItem?: (index: number, field: keyof BillingItem, value: string) => void;
+    onRemoveItem?: (index: number) => void;
+    onAddItem?: () => void;
+    onUpdateSubtotal?: (value: string) => void;
+    onUpdateDiscount?: (value: string) => void;
+    onUpdateTotal?: (value: string) => void;
 };
 
-const Billing: React.FC<Props> = ({ items, subtotal, discount, total }) => {
-    if (items.length === 0 && !total) return null;
+const Billing: React.FC<Props> = ({
+    isEditable,
+    items,
+    subtotal,
+    discount,
+    total,
+    onUpdateItem,
+    onRemoveItem,
+    onAddItem,
+    onUpdateSubtotal,
+    onUpdateDiscount,
+    onUpdateTotal,
+}) => {
+    if (items.length === 0 && !total && !isEditable) return null;
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Billing</Text>
+            <View style={styles.titleRow}>
+                <Text style={styles.title}>Billing</Text>
+                {isEditable && (
+                    <TouchableOpacity onPress={onAddItem} hitSlop={8} style={styles.addRow}>
+                        <Feather name="plus" size={fs(12)} color="#234338" />
+                        <Text style={styles.addRowText}>Add item</Text>
+                    </TouchableOpacity>
+                )}
+            </View>
 
-            {items.length > 0 && (
+            {(items.length > 0 || isEditable) && (
                 <View style={styles.list}>
                     {items.map((item, index) => (
                         <View key={`${item.name}-${index}`} style={styles.row}>
-                            <Text style={styles.itemName} numberOfLines={2}>
-                                {item.name || "Item"}
-                            </Text>
-                            <Text style={styles.itemPrice}>{item.price}</Text>
+                            {isEditable ? (
+                                <>
+                                    <TextInput
+                                        value={item.name}
+                                        onChangeText={(text) => onUpdateItem?.(index, "name", text)}
+                                        style={styles.itemNameInput}
+                                        placeholder="Item"
+                                        placeholderTextColor="#B4B2A9"
+                                    />
+                                    <TextInput
+                                        value={item.price}
+                                        onChangeText={(text) => onUpdateItem?.(index, "price", text)}
+                                        style={styles.itemPriceInput}
+                                        placeholder="0.00"
+                                        placeholderTextColor="#B4B2A9"
+                                        keyboardType="numbers-and-punctuation"
+                                    />
+                                    <TouchableOpacity onPress={() => onRemoveItem?.(index)} hitSlop={8}>
+                                        <Feather name="x" size={fs(14)} color="#B3261E" />
+                                    </TouchableOpacity>
+                                </>
+                            ) : (
+                                <>
+                                    <Text style={styles.itemName} numberOfLines={2}>
+                                        {item.name || "Item"}
+                                    </Text>
+                                    <Text style={styles.itemPrice}>{item.price}</Text>
+                                </>
+                            )}
                         </View>
                     ))}
                 </View>
             )}
 
-            {(subtotal || discount || total) && (
+            {(subtotal || discount || total || isEditable) && (
                 <View style={styles.summary}>
-                    {!!subtotal && (
+                    {(!!subtotal || isEditable) && (
                         <View style={styles.summaryRow}>
                             <Text style={styles.summaryLabel}>Subtotal</Text>
-                            <Text style={styles.summaryValue}>{subtotal}</Text>
+                            {isEditable ? (
+                                <TextInput
+                                    value={subtotal ?? ""}
+                                    onChangeText={onUpdateSubtotal}
+                                    style={styles.summaryValueInput}
+                                    placeholder="0.00"
+                                    placeholderTextColor="#B4B2A9"
+                                    keyboardType="numbers-and-punctuation"
+                                />
+                            ) : (
+                                <Text style={styles.summaryValue}>{subtotal}</Text>
+                            )}
                         </View>
                     )}
-                    {!!discount && (
+                    {(!!discount || isEditable) && (
                         <View style={styles.summaryRow}>
                             <Text style={styles.summaryLabel}>Discount</Text>
-                            <Text style={[styles.summaryValue, styles.discountValue]}>
-                                -{discount}
-                            </Text>
+                            {isEditable ? (
+                                <TextInput
+                                    value={discount ?? ""}
+                                    onChangeText={onUpdateDiscount}
+                                    style={[styles.summaryValueInput, styles.discountValue]}
+                                    placeholder="0.00"
+                                    placeholderTextColor="#B4B2A9"
+                                    keyboardType="numbers-and-punctuation"
+                                />
+                            ) : (
+                                <Text style={[styles.summaryValue, styles.discountValue]}>
+                                    -{discount}
+                                </Text>
+                            )}
                         </View>
                     )}
-                    {!!total && (
+                    {(!!total || isEditable) && (
                         <View style={[styles.summaryRow, styles.totalRow]}>
                             <Text style={styles.totalLabel}>Total</Text>
-                            <Text style={styles.totalValue}>{total}</Text>
+                            {isEditable ? (
+                                <TextInput
+                                    value={total ?? ""}
+                                    onChangeText={onUpdateTotal}
+                                    style={styles.totalValueInput}
+                                    placeholder="0.00"
+                                    placeholderTextColor="#B4B2A9"
+                                    keyboardType="numbers-and-punctuation"
+                                />
+                            ) : (
+                                <Text style={styles.totalValue}>{total}</Text>
+                            )}
                         </View>
                     )}
                 </View>
@@ -63,6 +149,11 @@ const styles = StyleSheet.create({
     container: {
         gap: scale(10),
     },
+    titleRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
     title: {
         fontSize: fs(12),
         fontFamily: "Aeonik-Medium",
@@ -70,12 +161,23 @@ const styles = StyleSheet.create({
         letterSpacing: 0.5,
         color: "#5F5E5A",
     },
+    addRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(4),
+    },
+    addRowText: {
+        fontSize: fs(11),
+        fontFamily: "Aeonik-Medium",
+        color: "#234338",
+    },
     list: {
         gap: scale(6),
     },
     row: {
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center",
         gap: scale(8),
     },
     itemName: {
@@ -84,10 +186,25 @@ const styles = StyleSheet.create({
         color: "#444441",
         flex: 1,
     },
+    itemNameInput: {
+        fontSize: fs(13),
+        fontFamily: "Aeonik-Regular",
+        color: "#444441",
+        flex: 1,
+        padding: 0,
+    },
     itemPrice: {
         fontSize: fs(13),
         fontFamily: "Aeonik-Medium",
         color: "#0D1F1C",
+    },
+    itemPriceInput: {
+        fontSize: fs(13),
+        fontFamily: "Aeonik-Medium",
+        color: "#0D1F1C",
+        padding: 0,
+        minWidth: scale(50),
+        textAlign: "right",
     },
     summary: {
         borderTopWidth: 1,
@@ -98,6 +215,7 @@ const styles = StyleSheet.create({
     summaryRow: {
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center",
     },
     summaryLabel: {
         fontSize: fs(12),
@@ -108,6 +226,14 @@ const styles = StyleSheet.create({
         fontSize: fs(12),
         fontFamily: "Aeonik-Medium",
         color: "#444441",
+    },
+    summaryValueInput: {
+        fontSize: fs(12),
+        fontFamily: "Aeonik-Medium",
+        color: "#444441",
+        padding: 0,
+        minWidth: scale(50),
+        textAlign: "right",
     },
     discountValue: {
         color: "#A32D2D",
@@ -124,6 +250,14 @@ const styles = StyleSheet.create({
         fontSize: fs(16),
         fontFamily: "Aeonik-Medium",
         color: "#23423B",
+    },
+    totalValueInput: {
+        fontSize: fs(16),
+        fontFamily: "Aeonik-Medium",
+        color: "#23423B",
+        padding: 0,
+        minWidth: scale(60),
+        textAlign: "right",
     },
 });
 

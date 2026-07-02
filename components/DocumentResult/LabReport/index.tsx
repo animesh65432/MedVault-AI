@@ -9,9 +9,10 @@ import Title from "../Title";
 
 type Props = {
     document: LabReportDocument;
+    isEditable: boolean
 };
 
-const LabReport: React.FC<Props> = ({ document }) => {
+const LabReport: React.FC<Props> = ({ document, isEditable }) => {
     const meta = document.document_metadata;
 
     return (
@@ -21,7 +22,11 @@ const LabReport: React.FC<Props> = ({ document }) => {
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.div}>
-                <Title title={document.title} type={document.type} />
+                <Title
+                    title={document.title}
+                    type={document.type}
+                    isEditable={isEditable}
+                />
 
                 <FieldRows
                     items={[
@@ -30,12 +35,20 @@ const LabReport: React.FC<Props> = ({ document }) => {
                         { icon: "activity", label: "Referred by", value: meta.referred_by },
                         { icon: "calendar", label: "Date", value: meta.date },
                     ]}
+                    isEditable={isEditable}
                 />
             </View>
 
-            <LabTests tests={meta.tests} />
+            <LabTests
+                tests={meta.tests}
+                isEditable={isEditable}
+            />
 
-            <NotesAndTags notes={meta.important_notes} tags={meta.tags} />
+            <NotesAndTags
+                notes={meta.important_notes}
+                tags={meta.tags}
+                isEditable={isEditable}
+            />
         </ScrollView>
     );
 };

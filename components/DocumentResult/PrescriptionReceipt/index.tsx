@@ -9,6 +9,7 @@ import NotesAndTags from "../NotesandTags";
 import Title from "../Title";
 
 type Props = {
+    isEditable: boolean
     document: PrescriptionReceiptDocument;
     activeReminders: Set<number>;
     onToggleReminder: (index: number, medicine: Medicine) => void;
@@ -18,6 +19,7 @@ const PrescriptionReceipt: React.FC<Props> = ({
     document,
     activeReminders,
     onToggleReminder,
+    isEditable
 }) => {
     const meta = document.document_metadata;
 
@@ -30,7 +32,11 @@ const PrescriptionReceipt: React.FC<Props> = ({
             <View
                 style={styles.div}
             >
-                <Title title={document.title} type={document.type} />
+                <Title
+                    title={document.title}
+                    type={document.type}
+                    isEditable={isEditable}
+                />
 
                 <FieldRows
                     items={[
@@ -38,6 +44,7 @@ const PrescriptionReceipt: React.FC<Props> = ({
                         { icon: "shopping-bag", label: "Pharmacy", value: meta.pharmacy_name },
                         { icon: "calendar", label: "Date", value: meta.date },
                     ]}
+                    isEditable={isEditable}
                 />
             </View>
 
@@ -45,11 +52,18 @@ const PrescriptionReceipt: React.FC<Props> = ({
                 medicines={meta.medicines}
                 activeReminders={activeReminders}
                 onToggleReminder={onToggleReminder}
+                isEditable={isEditable}
             />
-
-            <Billing items={meta.billing_items} total={meta.total_amount} />
-
-            <NotesAndTags notes={meta.important_notes} tags={meta.tags} />
+            <Billing
+                items={meta.billing_items}
+                total={meta.total_amount}
+                isEditable={isEditable}
+            />
+            <NotesAndTags
+                notes={meta.important_notes}
+                tags={meta.tags}
+                isEditable={isEditable}
+            />
         </ScrollView>
     );
 };

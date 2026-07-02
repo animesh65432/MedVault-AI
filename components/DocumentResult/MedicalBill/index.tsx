@@ -9,9 +9,10 @@ import Title from "../Title";
 
 type Props = {
     document: MedicalBillDocument;
+    isEditable: boolean
 };
 
-const MedicalBill: React.FC<Props> = ({ document }) => {
+const MedicalBill: React.FC<Props> = ({ document, isEditable }) => {
     const meta = document.document_metadata;
 
     return (
@@ -23,7 +24,11 @@ const MedicalBill: React.FC<Props> = ({ document }) => {
             <View
                 style={styles.div}
             >
-                <Title title={document.title} type={document.type} />
+                <Title
+                    title={document.title}
+                    type={document.type}
+                    isEditable={isEditable}
+                />
 
                 <FieldRows
                     items={[
@@ -31,6 +36,7 @@ const MedicalBill: React.FC<Props> = ({ document }) => {
                         { icon: "home", label: "Hospital", value: meta.hospital_name },
                         { icon: "calendar", label: "Date", value: meta.date },
                     ]}
+                    isEditable={isEditable}
                 />
             </View>
 
@@ -39,9 +45,14 @@ const MedicalBill: React.FC<Props> = ({ document }) => {
                 subtotal={meta.subtotal}
                 discount={meta.discount}
                 total={meta.total_amount}
+                isEditable={isEditable}
             />
 
-            <NotesAndTags notes={meta.important_notes} tags={meta.tags} />
+            <NotesAndTags
+                notes={meta.important_notes}
+                tags={meta.tags}
+                isEditable={isEditable}
+            />
         </ScrollView>
     );
 };

@@ -2,26 +2,50 @@ import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import Octicons from '@expo/vector-icons/Octicons';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 type Props = {
-    title: string,
-    type: string
-}
+    title: string;
+    type: string;
+    isEditable: boolean;
+    onTitleChange?: (value: string) => void;
+    onTypeChange?: (value: string) => void;
+};
 
-const Title: React.FC<Props> = ({ title, type }) => {
+const Title: React.FC<Props> = ({ title, type, isEditable, onTitleChange, onTypeChange }) => {
+    console.log('Title component rendered with isEditable:', isEditable);
     return (
         <View style={styles.container}>
             <View style={styles.docContainer}>
                 <Octicons name="dot-fill" size={fs(10)} color="#234338" />
-                <Text style={styles.docTypeText}>
-                    {type}
-                </Text>
+                {isEditable ? (
+                    <TextInput
+                        value={type}
+                        onChangeText={onTypeChange}
+                        style={styles.docTypeInput}
+                        placeholder="Document type"
+                        placeholderTextColor="rgba(35, 67, 56, 0.4)"
+                    />
+                ) : (
+                    <Text style={styles.docTypeText}>{type}</Text>
+                )}
             </View>
-            <Text style={styles.title}>{title}</Text>
+
+            {isEditable ? (
+                <TextInput
+                    value={title}
+                    onChangeText={onTitleChange}
+                    style={styles.titleInput}
+                    placeholder="Document title"
+                    placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                    multiline
+                />
+            ) : (
+                <Text style={styles.title}>{title}</Text>
+            )}
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -45,12 +69,28 @@ const styles = StyleSheet.create({
         lineHeight: fs(12) * 1.4,
         fontFamily: 'Aeonik-Medium',
     },
+    docTypeInput: {
+        color: '#234338',
+        fontSize: fs(12),
+        lineHeight: fs(12) * 1.4,
+        fontFamily: 'Aeonik-Medium',
+        padding: 0,
+        minWidth: scale(60),
+    },
     title: {
         fontSize: fs(22),
         lineHeight: fs(22) * 1.3,
         fontFamily: 'Aeonik-Medium',
         color: 'white',
-    }
-})
+    },
+    titleInput: {
+        fontSize: fs(22),
+        lineHeight: fs(22) * 1.3,
+        fontFamily: 'Aeonik-Medium',
+        color: 'white',
+        padding: 0,
+        alignSelf: 'stretch',
+    },
+});
 
-export default Title
+export default Title;
