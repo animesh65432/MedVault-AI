@@ -1,7 +1,8 @@
 import { Medicine, ReferralLetterDocument } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import FieldRows from "../FieldRows";
 import Medicines from "../Medicines";
 import NotesAndTags from "../NotesandTags";
@@ -13,21 +14,38 @@ type Props = {
     isEditable: boolean;
     activeReminders: Set<number>;
     onToggleReminder: (index: number, medicine: Medicine) => void;
+    onChangeTitle: (value: string) => void;
+    onFieldValueChange: (label: string, value: string) => void;
+    onUpdateNote: (index: number, value: string) => void;
+    onRemoveNote: (index: number) => void;
+    onAddNote: () => void;
+    onUpdateTag: (index: number, value: string) => void;
+    onRemoveTag: (index: number) => void;
+    onAddTag: (value: string) => void;
 };
 
 const ReferralLetter: React.FC<Props> = ({
     document,
     activeReminders,
     onToggleReminder,
-    isEditable
+    isEditable,
+    onChangeTitle,
+    onFieldValueChange,
+    onUpdateNote,
+    onRemoveNote,
+    onAddNote,
+    onUpdateTag,
+    onRemoveTag,
+    onAddTag
 }) => {
     const meta = document.document_metadata;
 
     return (
-        <ScrollView
+        <KeyboardAwareScrollView
             style={styles.scroll}
             contentContainerStyle={styles.content}
             showsVerticalScrollIndicator={false}
+            bottomOffset={scale(80)}
         >
             <View
                 style={styles.div}
@@ -36,16 +54,18 @@ const ReferralLetter: React.FC<Props> = ({
                     isEditable={isEditable}
                     title={document.title}
                     type={document.type}
+                    onTitleChange={onChangeTitle}
                 />
 
                 <FieldRows
                     items={[
-                        { icon: "user", label: "Patient", value: meta.patient_name },
-                        { icon: "send", label: "Referring doctor", value: meta.referring_doctor },
-                        { icon: "user-check", label: "Referred to", value: meta.referred_to },
-                        { icon: "calendar", label: "Date", value: meta.date },
+                        { icon: "user", label: "Patient", value: meta.patient_name, key: "patient_name" },
+                        { icon: "send", label: "Referring doctor", value: meta.referring_doctor, key: "referring_doctor" },
+                        { icon: "user-check", label: "Referred to", value: meta.referred_to, key: "referred_to" },
+                        { icon: "calendar", label: "Date", value: meta.date, key: "date" },
                     ]}
                     isEditable={isEditable}
+                    onValueChange={onFieldValueChange}
                 />
             </View>
 
@@ -66,8 +86,14 @@ const ReferralLetter: React.FC<Props> = ({
                 notes={meta.important_notes}
                 tags={meta.tags}
                 isEditable={isEditable}
+                onUpdateNote={onUpdateNote}
+                onRemoveNote={onRemoveNote}
+                onUpdateTag={onUpdateTag}
+                onRemoveTag={onRemoveTag}
+                onAddTag={onAddTag}
+                onAddNote={onAddNote}
             />
-        </ScrollView>
+        </KeyboardAwareScrollView>
     );
 };
 

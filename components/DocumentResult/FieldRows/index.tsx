@@ -8,12 +8,13 @@ export type FieldRowItem = {
     icon: keyof typeof Feather.glyphMap;
     label: string;
     value?: string;
+    key: string
 };
 
 type Props = {
     items: FieldRowItem[];
     isEditable: boolean;
-    onValueChange?: (label: string, value: string) => void;
+    onValueChange: (label: string, value: string) => void;
 };
 
 const FieldRows: React.FC<Props> = ({ items, isEditable, onValueChange }) => {
@@ -35,7 +36,7 @@ const FieldRows: React.FC<Props> = ({ items, isEditable, onValueChange }) => {
                         {isEditable ? (
                             <TextInput
                                 value={item.value ?? ""}
-                                onChangeText={(text) => onValueChange?.(item.label, text)}
+                                onChangeText={(text) => onValueChange(item.key, text)}
                                 style={styles.valueInput}
                                 placeholder={`Add ${item.label.toLowerCase()}`}
                                 placeholderTextColor="rgba(255, 255, 255, 0.4)"

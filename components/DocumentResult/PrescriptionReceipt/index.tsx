@@ -1,7 +1,8 @@
 import { Medicine, PrescriptionReceiptDocument } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import Billing from "../Billing";
 import FieldRows from "../FieldRows";
 import Medicines from "../Medicines";
@@ -13,21 +14,38 @@ type Props = {
     document: PrescriptionReceiptDocument;
     activeReminders: Set<number>;
     onToggleReminder: (index: number, medicine: Medicine) => void;
+    onChangeTitle: (value: string) => void;
+    onFieldValueChange: (label: string, value: string) => void;
+    onUpdateNote: (index: number, value: string) => void;
+    onRemoveNote: (index: number) => void;
+    onAddNote: () => void;
+    onUpdateTag: (index: number, value: string) => void;
+    onRemoveTag: (index: number) => void;
+    onAddTag: (value: string) => void;
 };
 
 const PrescriptionReceipt: React.FC<Props> = ({
     document,
     activeReminders,
     onToggleReminder,
-    isEditable
+    isEditable,
+    onChangeTitle,
+    onFieldValueChange,
+    onUpdateNote,
+    onRemoveNote,
+    onUpdateTag,
+    onRemoveTag,
+    onAddTag,
+    onAddNote
 }) => {
     const meta = document.document_metadata;
 
     return (
-        <ScrollView
+        <KeyboardAwareScrollView
             style={styles.scroll}
             contentContainerStyle={styles.content}
             showsVerticalScrollIndicator={false}
+            bottomOffset={scale(80)}
         >
             <View
                 style={styles.div}
@@ -36,15 +54,16 @@ const PrescriptionReceipt: React.FC<Props> = ({
                     title={document.title}
                     type={document.type}
                     isEditable={isEditable}
+                    onTitleChange={onChangeTitle}
                 />
 
                 <FieldRows
                     items={[
-                        { icon: "user", label: "Patient", value: meta.patient_name },
-                        { icon: "shopping-bag", label: "Pharmacy", value: meta.pharmacy_name },
-                        { icon: "calendar", label: "Date", value: meta.date },
+                        { icon: "user", label: "Patient", value: meta.patient_name, key: "patient_name" },
+                        { icon: "calendar", label: "Date", value: meta.date, key: "date" },
                     ]}
                     isEditable={isEditable}
+                    onValueChange={onFieldValueChange}
                 />
             </View>
 
@@ -63,8 +82,14 @@ const PrescriptionReceipt: React.FC<Props> = ({
                 notes={meta.important_notes}
                 tags={meta.tags}
                 isEditable={isEditable}
+                onUpdateNote={onUpdateNote}
+                onRemoveNote={onRemoveNote}
+                onUpdateTag={onUpdateTag}
+                onRemoveTag={onRemoveTag}
+                onAddTag={onAddTag}
+                onAddNote={onAddNote}
             />
-        </ScrollView>
+        </KeyboardAwareScrollView>
     );
 };
 

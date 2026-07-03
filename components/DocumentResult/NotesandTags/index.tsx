@@ -8,12 +8,12 @@ type Props = {
     notes: string[];
     tags: string[];
     isEditable: boolean;
-    onUpdateNote?: (index: number, value: string) => void;
-    onRemoveNote?: (index: number) => void;
-    onAddNote?: () => void;
-    onUpdateTag?: (index: number, value: string) => void;
-    onRemoveTag?: (index: number) => void;
-    onAddTag?: (value: string) => void;
+    onUpdateNote: (index: number, value: string) => void;
+    onRemoveNote: (index: number) => void;
+    onAddNote: () => void;
+    onUpdateTag: (index: number, value: string) => void;
+    onRemoveTag: (index: number) => void;
+    onAddTag: (value: string) => void;
 };
 
 const NotesAndTags: React.FC<Props> = ({
@@ -37,7 +37,7 @@ const NotesAndTags: React.FC<Props> = ({
     const submitNewTag = () => {
         const trimmed = newTag.trim();
         if (trimmed) {
-            onAddTag?.(trimmed);
+            onAddTag(trimmed);
             setNewTag("");
         }
     };

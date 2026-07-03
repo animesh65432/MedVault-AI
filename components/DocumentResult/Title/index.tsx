@@ -8,26 +8,15 @@ type Props = {
     title: string;
     type: string;
     isEditable: boolean;
-    onTitleChange?: (value: string) => void;
-    onTypeChange?: (value: string) => void;
+    onTitleChange: (value: string) => void;
 };
 
-const Title: React.FC<Props> = ({ title, type, isEditable, onTitleChange, onTypeChange }) => {
+const Title: React.FC<Props> = ({ title, type, isEditable, onTitleChange }) => {
     return (
         <View style={styles.container}>
             <View style={styles.docContainer}>
                 <Octicons name="dot-fill" size={fs(10)} color="#234338" />
-                {isEditable ? (
-                    <TextInput
-                        value={type}
-                        onChangeText={onTypeChange}
-                        style={styles.docTypeInput}
-                        placeholder="Document type"
-                        placeholderTextColor="rgba(35, 67, 56, 0.4)"
-                    />
-                ) : (
-                    <Text style={styles.docTypeText}>{type}</Text>
-                )}
+                <Text style={styles.docTypeText}>{type}</Text>
             </View>
 
             {isEditable ? (

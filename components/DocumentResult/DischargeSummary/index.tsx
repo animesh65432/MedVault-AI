@@ -3,7 +3,8 @@ import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
 import React from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import BulletList from "../Bulletlist";
 import FieldRows from "../FieldRows";
 import LabTests from "../LabTests";
@@ -16,37 +17,56 @@ type Props = {
     document: DischargeSummaryDocument;
     activeReminders: Set<number>;
     onToggleReminder: (index: number, medicine: Medicine) => void;
-    isEditable: boolean
+    isEditable: boolean;
+    onChangeTitle: (value: string) => void;
+    onFieldValueChange: (label: string, value: string) => void;
+    onUpdateNote: (index: number, value: string) => void;
+    onRemoveNote: (index: number) => void;
+    onAddNote: () => void;
+    onUpdateTag: (index: number, value: string) => void;
+    onRemoveTag: (index: number) => void;
+    onAddTag: (value: string) => void;
 };
 
 const DischargeSummary: React.FC<Props> = ({
     document,
     activeReminders,
     onToggleReminder,
-    isEditable
+    isEditable,
+    onChangeTitle,
+    onFieldValueChange,
+    onUpdateNote,
+    onRemoveNote,
+    onAddNote,
+    onUpdateTag,
+    onRemoveTag,
+    onAddTag
 }) => {
     const meta = document.document_metadata;
     const hasStayDates = meta.admission_date || meta.discharge_date;
 
     return (
-        <ScrollView
+        <KeyboardAwareScrollView
             style={styles.scroll}
             contentContainerStyle={styles.content}
             showsVerticalScrollIndicator={false}
+            bottomOffset={scale(80)}
         >
             <View style={styles.div}>
                 <Title
                     title={document.title}
                     type={document.type}
                     isEditable={isEditable}
+                    onTitleChange={onChangeTitle}
                 />
 
                 <FieldRows
                     items={[
-                        { icon: "user", label: "Patient", value: meta.patient_name },
-                        { icon: "home", label: "Hospital", value: meta.hospital_name },
+                        { icon: "user", label: "Patient", value: meta.patient_name, key: "patient_name" },
+                        { icon: "home", label: "Hospital", value: meta.hospital_name, key: "hospital_name" },
                     ]}
                     isEditable={isEditable}
+                    onValueChange={onFieldValueChange}
                 />
             </View>
 
@@ -119,8 +139,14 @@ const DischargeSummary: React.FC<Props> = ({
                 notes={meta.important_notes}
                 tags={meta.tags}
                 isEditable={isEditable}
+                onUpdateNote={onUpdateNote}
+                onRemoveNote={onRemoveNote}
+                onUpdateTag={onUpdateTag}
+                onRemoveTag={onRemoveTag}
+                onAddTag={onAddTag}
+                onAddNote={onAddNote}
             />
-        </ScrollView>
+        </KeyboardAwareScrollView>
     );
 };
 

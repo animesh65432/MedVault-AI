@@ -3,8 +3,9 @@ import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
 import Octicons from "@expo/vector-icons/Octicons";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import AddMedicineModal from "../AddMedicineModel";
 
 type Props = {
     medicines: MedicineType[];
@@ -13,7 +14,6 @@ type Props = {
     isEditable: boolean;
     onUpdateMedicine?: (index: number, field: keyof MedicineType, value: string) => void;
     onRemoveMedicine?: (index: number) => void;
-    onAddMedicine?: () => void;
 };
 
 const Medicines: React.FC<Props> = ({
@@ -23,9 +23,14 @@ const Medicines: React.FC<Props> = ({
     isEditable,
     onUpdateMedicine,
     onRemoveMedicine,
-    onAddMedicine,
 }) => {
+    const [isAddMedicineModalVisible, setAddMedicineModalVisible] = useState(false);
+
     if (medicines.length === 0 && !isEditable) return null;
+
+    const onAddMedicine = () => {
+        setAddMedicineModalVisible(true);
+    }
 
     return (
         <View style={styles.container}>
@@ -37,7 +42,11 @@ const Medicines: React.FC<Props> = ({
                     </View>
                 </View>
                 {isEditable && (
-                    <TouchableOpacity style={styles.addButton} onPress={onAddMedicine} hitSlop={8}>
+                    <TouchableOpacity
+                        style={styles.addButton}
+                        onPress={onAddMedicine}
+                        hitSlop={8}
+                    >
                         <Feather name="plus" size={fs(13)} color="#234338" />
                         <Text style={styles.addButtonText}>Add</Text>
                     </TouchableOpacity>
@@ -135,6 +144,13 @@ const Medicines: React.FC<Props> = ({
                     );
                 })}
             </View>
+            {isAddMedicineModalVisible
+                &&
+                <AddMedicineModal
+                    isMedicineModalVisible={isAddMedicineModalVisible}
+                    setMedicineModalIsVisible={setAddMedicineModalVisible}
+                />
+            }
         </View>
     );
 };

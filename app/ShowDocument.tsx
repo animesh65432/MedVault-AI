@@ -138,6 +138,8 @@ const ShowDocument = () => {
             isPdf={isPdf}
             fileUri={first(fileUri) as string}
             fileName={first(fileName) as string}
+            Document={Document}
+            SetDocument={SetDocument}
         />;
     }
 
