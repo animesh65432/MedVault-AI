@@ -6,25 +6,23 @@ import Octicons from "@expo/vector-icons/Octicons";
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import AddMedicineModal from "../AddMedicineModel";
+import AddReminderModel from "../AddReminderModel";
 
 type Props = {
     medicines: MedicineType[];
-    activeReminders: Set<number>;
-    onToggleReminder: (index: number, medicine: MedicineType) => void;
     isEditable: boolean;
-    onUpdateMedicine?: (index: number, field: keyof MedicineType, value: string) => void;
-    onRemoveMedicine?: (index: number) => void;
+    onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
+    onRemoveMedicine: (index: number) => void;
 };
 
 const Medicines: React.FC<Props> = ({
     medicines,
-    activeReminders,
-    onToggleReminder,
     isEditable,
     onUpdateMedicine,
     onRemoveMedicine,
 }) => {
     const [isAddMedicineModalVisible, setAddMedicineModalVisible] = useState(false);
+    const [isAddReminderModalVisible, setAddReminderModalVisible] = useState(false);
 
     if (medicines.length === 0 && !isEditable) return null;
 
@@ -57,10 +55,10 @@ const Medicines: React.FC<Props> = ({
                 {medicines.map((med, index) => {
                     const hasDetails =
                         med.dosage || med.frequency || med.duration || med.timing;
-                    const isActive = activeReminders.has(index);
+                    const isActive = false;
 
                     return (
-                        <View key={`${med.name}-${index}`} style={styles.card}>
+                        <View key={index} style={styles.card}>
                             <View style={styles.cardTop}>
                                 {isEditable ? (
                                     <TextInput
@@ -87,7 +85,7 @@ const Medicines: React.FC<Props> = ({
                                 ) : (
                                     <TouchableOpacity
                                         style={[styles.chip, isActive && styles.chipActive]}
-                                        onPress={() => onToggleReminder(index, med)}
+                                        onPress={() => setAddReminderModalVisible(true)}
                                         hitSlop={8}
                                     >
                                         <Octicons
@@ -101,7 +99,7 @@ const Medicines: React.FC<Props> = ({
                                                 isActive && styles.chipTextActive,
                                             ]}
                                         >
-                                            {isActive ? "Set" : "Remind"}
+                                            Set
                                         </Text>
                                     </TouchableOpacity>
                                 )}
@@ -151,6 +149,18 @@ const Medicines: React.FC<Props> = ({
                     setMedicineModalIsVisible={setAddMedicineModalVisible}
                 />
             }
+            {isAddReminderModalVisible
+                &&
+                <AddReminderModel
+                    visible={isAddReminderModalVisible}
+                    onClose={() => setAddReminderModalVisible(false)}
+                    onAdd={(reminder) => {
+                        // Handle adding reminder logic here
+                        setAddReminderModalVisible(false);
+                    }}
+                />
+            }
+
         </View>
     );
 };

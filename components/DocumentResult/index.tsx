@@ -144,6 +144,51 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
         } as typeof prev));
     };
 
+    const handleOpenEdit = () => {
+        setIsEditable(true);
+    }
+
+    const handleCloseEdit = () => {
+        setIsEditable(false);
+    }
+
+    const onUpdateMedicine = (index: number, field: keyof Medicine, value: string) => {
+        SetDocument(prev => {
+            if (!("medicines" in prev.document_metadata)) return prev;
+            const medicines = prev.document_metadata.medicines;
+            if (!medicines?.[index]) return prev;
+
+            const updated = [...medicines];
+            updated[index] = { ...updated[index], [field]: value };
+
+            return {
+                ...prev,
+                document_metadata: {
+                    ...prev.document_metadata,
+                    medicines: updated,
+                },
+            } as DocumentType;
+        });
+    };
+
+    const onRemoveMedicine = (index: number) => {
+        SetDocument(prev => {
+            if (!("medicines" in prev.document_metadata)) return prev;
+            const medicines = prev.document_metadata.medicines;
+            if (!medicines?.[index]) return prev;
+
+            const updated = medicines.filter((_, i) => i !== index);
+
+            return {
+                ...prev,
+                document_metadata: {
+                    ...prev.document_metadata,
+                    medicines: updated,
+                },
+            } as DocumentType;
+        });
+    }
+
     const content = useMemo(() => {
         switch (document.type) {
             case "Prescription":
@@ -153,14 +198,14 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onFieldValueChange={onFieldValueChange}
                         isEditable={isEditable}
                         document={document}
-                        activeReminders={activeReminders}
-                        onToggleReminder={handleToggleReminder}
                         onUpdateNote={onUpdateNote}
                         onRemoveNote={onRemoveNote}
                         onUpdateTag={onUpdateTag}
                         onRemoveTag={onRemoveTag}
                         onAddTag={onAddTag}
                         onAddNote={onAddNote}
+                        onUpdateMedicine={onUpdateMedicine}
+                        onRemoveMedicine={onRemoveMedicine}
                     />
                 );
             case "Prescription Receipt":
@@ -170,14 +215,14 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onChangeTitle={onChangeTitle}
                         isEditable={isEditable}
                         document={document}
-                        activeReminders={activeReminders}
-                        onToggleReminder={handleToggleReminder}
                         onUpdateNote={onUpdateNote}
                         onRemoveNote={onRemoveNote}
                         onUpdateTag={onUpdateTag}
                         onRemoveTag={onRemoveTag}
                         onAddTag={onAddTag}
                         onAddNote={onAddNote}
+                        onUpdateMedicine={onUpdateMedicine}
+                        onRemoveMedicine={onRemoveMedicine}
                     />
                 );
             case "Lab Report":
@@ -226,14 +271,14 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onChangeTitle={onChangeTitle}
                         isEditable={isEditable}
                         document={document}
-                        activeReminders={activeReminders}
-                        onToggleReminder={handleToggleReminder}
                         onUpdateNote={onUpdateNote}
                         onRemoveNote={onRemoveNote}
                         onUpdateTag={onUpdateTag}
                         onRemoveTag={onRemoveTag}
                         onAddTag={onAddTag}
                         onAddNote={onAddNote}
+                        onRemoveMedicine={onRemoveMedicine}
+                        onUpdateMedicine={onUpdateMedicine}
                     />
                 );
             case "Referral Letter":
@@ -243,14 +288,14 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onChangeTitle={onChangeTitle}
                         isEditable={isEditable}
                         document={document}
-                        activeReminders={activeReminders}
-                        onToggleReminder={handleToggleReminder}
                         onUpdateNote={onUpdateNote}
                         onRemoveNote={onRemoveNote}
                         onUpdateTag={onUpdateTag}
                         onRemoveTag={onRemoveTag}
                         onAddTag={onAddTag}
                         onAddNote={onAddNote}
+                        onRemoveMedicine={onRemoveMedicine}
+                        onUpdateMedicine={onUpdateMedicine}
                     />
                 );
             case "Insurance Document":
@@ -263,14 +308,14 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onChangeTitle={onChangeTitle}
                         isEditable={isEditable}
                         document={document}
-                        activeReminders={activeReminders}
-                        onToggleReminder={handleToggleReminder}
                         onUpdateNote={onUpdateNote}
                         onRemoveNote={onRemoveNote}
                         onUpdateTag={onUpdateTag}
                         onRemoveTag={onRemoveTag}
                         onAddTag={onAddTag}
                         onAddNote={onAddNote}
+                        onRemoveMedicine={onRemoveMedicine}
+                        onUpdateMedicine={onUpdateMedicine}
                     />
                 );
             default: {
@@ -287,13 +332,6 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
         setShowDocmentViewVisible(false);
     }, []);
 
-    const handleOpenEdit = () => {
-        setIsEditable(true);
-    }
-
-    const handleCloseEdit = () => {
-        setIsEditable(false);
-    }
 
     return <View style={{ flex: 1 }}>
         <Navbar />

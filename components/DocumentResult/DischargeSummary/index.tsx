@@ -1,4 +1,4 @@
-import { DischargeSummaryDocument, Medicine } from "@/types";
+import { DischargeSummaryDocument, Medicine as MedicineType } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
@@ -15,8 +15,6 @@ import Title from "../Title";
 
 type Props = {
     document: DischargeSummaryDocument;
-    activeReminders: Set<number>;
-    onToggleReminder: (index: number, medicine: Medicine) => void;
     isEditable: boolean;
     onChangeTitle: (value: string) => void;
     onFieldValueChange: (label: string, value: string) => void;
@@ -26,12 +24,12 @@ type Props = {
     onUpdateTag: (index: number, value: string) => void;
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
+    onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
+    onRemoveMedicine: (index: number) => void;
 };
 
 const DischargeSummary: React.FC<Props> = ({
     document,
-    activeReminders,
-    onToggleReminder,
     isEditable,
     onChangeTitle,
     onFieldValueChange,
@@ -40,7 +38,9 @@ const DischargeSummary: React.FC<Props> = ({
     onAddNote,
     onUpdateTag,
     onRemoveTag,
-    onAddTag
+    onAddTag,
+    onUpdateMedicine,
+    onRemoveMedicine
 }) => {
     const meta = document.document_metadata;
     const hasStayDates = meta.admission_date || meta.discharge_date;
@@ -119,9 +119,9 @@ const DischargeSummary: React.FC<Props> = ({
 
             <Medicines
                 medicines={meta.medicines}
-                activeReminders={activeReminders}
-                onToggleReminder={onToggleReminder}
                 isEditable={isEditable}
+                onRemoveMedicine={onRemoveMedicine}
+                onUpdateMedicine={onUpdateMedicine}
             />
 
             <LabTests

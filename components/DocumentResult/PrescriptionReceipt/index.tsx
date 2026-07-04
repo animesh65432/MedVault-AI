@@ -1,4 +1,4 @@
-import { Medicine, PrescriptionReceiptDocument } from "@/types";
+import { Medicine as MedicineType, PrescriptionReceiptDocument } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
 import { View } from "react-native";
@@ -12,8 +12,6 @@ import Title from "../Title";
 type Props = {
     isEditable: boolean
     document: PrescriptionReceiptDocument;
-    activeReminders: Set<number>;
-    onToggleReminder: (index: number, medicine: Medicine) => void;
     onChangeTitle: (value: string) => void;
     onFieldValueChange: (label: string, value: string) => void;
     onUpdateNote: (index: number, value: string) => void;
@@ -22,12 +20,12 @@ type Props = {
     onUpdateTag: (index: number, value: string) => void;
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
+    onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
+    onRemoveMedicine: (index: number) => void;
 };
 
 const PrescriptionReceipt: React.FC<Props> = ({
     document,
-    activeReminders,
-    onToggleReminder,
     isEditable,
     onChangeTitle,
     onFieldValueChange,
@@ -36,7 +34,9 @@ const PrescriptionReceipt: React.FC<Props> = ({
     onUpdateTag,
     onRemoveTag,
     onAddTag,
-    onAddNote
+    onAddNote,
+    onUpdateMedicine,
+    onRemoveMedicine,
 }) => {
     const meta = document.document_metadata;
 
@@ -69,9 +69,9 @@ const PrescriptionReceipt: React.FC<Props> = ({
 
             <Medicines
                 medicines={meta.medicines}
-                activeReminders={activeReminders}
-                onToggleReminder={onToggleReminder}
                 isEditable={isEditable}
+                onUpdateMedicine={onUpdateMedicine}
+                onRemoveMedicine={onRemoveMedicine}
             />
             <Billing
                 items={meta.billing_items}

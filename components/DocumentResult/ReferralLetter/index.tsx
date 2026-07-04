@@ -1,4 +1,4 @@
-import { Medicine, ReferralLetterDocument } from "@/types";
+import { Medicine as MedicineType, ReferralLetterDocument } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
 import { View } from "react-native";
@@ -12,8 +12,8 @@ import Title from "../Title";
 type Props = {
     document: ReferralLetterDocument;
     isEditable: boolean;
-    activeReminders: Set<number>;
-    onToggleReminder: (index: number, medicine: Medicine) => void;
+    onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
+    onRemoveMedicine: (index: number) => void;
     onChangeTitle: (value: string) => void;
     onFieldValueChange: (label: string, value: string) => void;
     onUpdateNote: (index: number, value: string) => void;
@@ -26,8 +26,6 @@ type Props = {
 
 const ReferralLetter: React.FC<Props> = ({
     document,
-    activeReminders,
-    onToggleReminder,
     isEditable,
     onChangeTitle,
     onFieldValueChange,
@@ -36,7 +34,9 @@ const ReferralLetter: React.FC<Props> = ({
     onAddNote,
     onUpdateTag,
     onRemoveTag,
-    onAddTag
+    onAddTag,
+    onRemoveMedicine,
+    onUpdateMedicine
 }) => {
     const meta = document.document_metadata;
 
@@ -77,9 +77,9 @@ const ReferralLetter: React.FC<Props> = ({
 
             <Medicines
                 medicines={meta.medicines}
-                activeReminders={activeReminders}
-                onToggleReminder={onToggleReminder}
                 isEditable={isEditable}
+                onRemoveMedicine={onRemoveMedicine}
+                onUpdateMedicine={onUpdateMedicine}
             />
 
             <NotesAndTags

@@ -3,6 +3,7 @@ import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import AddNoteModel from "../AddNoteModel";
 
 type Props = {
     notes: string[];
@@ -28,7 +29,7 @@ const NotesAndTags: React.FC<Props> = ({
     onAddTag,
 }) => {
     const [newTag, setNewTag] = useState("");
-
+    const [ShowNoteModel, SetShowNoteModel] = useState<boolean>(false)
     const hasNotes = notes && notes.length > 0;
     const hasTags = tags && tags.length > 0;
 
@@ -49,7 +50,7 @@ const NotesAndTags: React.FC<Props> = ({
                     <View style={styles.labelRow}>
                         <Text style={styles.label}>Important notes</Text>
                         {isEditable && (
-                            <TouchableOpacity onPress={onAddNote} hitSlop={8} style={styles.addRow}>
+                            <TouchableOpacity onPress={() => SetShowNoteModel(true)} hitSlop={8} style={styles.addRow}>
                                 <Feather name="plus" size={fs(12)} color="#234338" />
                                 <Text style={styles.addRowText}>Add</Text>
                             </TouchableOpacity>
@@ -121,6 +122,14 @@ const NotesAndTags: React.FC<Props> = ({
                     </View>
                 </View>
             )}
+            <AddNoteModel
+                visible={ShowNoteModel}
+                onClose={() => SetShowNoteModel(false)}
+                onAdd={(note) => {
+                    onAddNote();
+                    SetShowNoteModel(false);
+                }}
+            />
         </View>
     );
 };

@@ -1,4 +1,4 @@
-import { GenericDocument, Medicine } from "@/types";
+import { GenericDocument, Medicine as MedicineType } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
 import { View } from "react-native";
@@ -11,8 +11,6 @@ import Title from "../Title";
 type Props = {
     isEditable: boolean;
     document: GenericDocument;
-    activeReminders: Set<number>;
-    onToggleReminder: (index: number, medicine: Medicine) => void;
     onChangeTitle: (value: string) => void;
     onFieldValueChange: (label: string, value: string) => void;
     onUpdateNote: (index: number, value: string) => void;
@@ -21,12 +19,12 @@ type Props = {
     onUpdateTag: (index: number, value: string) => void;
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
+    onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
+    onRemoveMedicine: (index: number) => void;
 };
 
 const Generic: React.FC<Props> = ({
     document,
-    activeReminders,
-    onToggleReminder,
     isEditable,
     onChangeTitle,
     onFieldValueChange,
@@ -35,10 +33,11 @@ const Generic: React.FC<Props> = ({
     onAddNote,
     onUpdateTag,
     onRemoveTag,
-    onAddTag
+    onAddTag,
+    onRemoveMedicine,
+    onUpdateMedicine
 }) => {
     const meta = document.document_metadata;
-
     return (
         <KeyboardAwareScrollView
             style={styles.scroll}
@@ -65,11 +64,10 @@ const Generic: React.FC<Props> = ({
             </View>
             <Medicines
                 medicines={meta.medicines}
-                activeReminders={activeReminders}
-                onToggleReminder={onToggleReminder}
                 isEditable={isEditable}
+                onRemoveMedicine={onRemoveMedicine}
+                onUpdateMedicine={onUpdateMedicine}
             />
-
             <NotesAndTags
                 notes={meta.important_notes}
                 tags={meta.tags}

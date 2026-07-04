@@ -18,7 +18,6 @@ const Title: React.FC<Props> = ({ title, type, isEditable, onTitleChange }) => {
                 <Octicons name="dot-fill" size={fs(10)} color="#234338" />
                 <Text style={styles.docTypeText}>{type}</Text>
             </View>
-
             {isEditable ? (
                 <TextInput
                     value={title}
