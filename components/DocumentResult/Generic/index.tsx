@@ -15,12 +15,13 @@ type Props = {
     onFieldValueChange: (label: string, value: string) => void;
     onUpdateNote: (index: number, value: string) => void;
     onRemoveNote: (index: number) => void;
-    onAddNote: () => void;
+    onAddNote: (note: string) => void;
     onUpdateTag: (index: number, value: string) => void;
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
     onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
     onRemoveMedicine: (index: number) => void;
+    onAddMedicine: (medicine: MedicineType) => void;
 };
 
 const Generic: React.FC<Props> = ({
@@ -35,7 +36,8 @@ const Generic: React.FC<Props> = ({
     onRemoveTag,
     onAddTag,
     onRemoveMedicine,
-    onUpdateMedicine
+    onUpdateMedicine,
+    onAddMedicine
 }) => {
     const meta = document.document_metadata;
     return (
@@ -67,6 +69,7 @@ const Generic: React.FC<Props> = ({
                 isEditable={isEditable}
                 onRemoveMedicine={onRemoveMedicine}
                 onUpdateMedicine={onUpdateMedicine}
+                onAddMedicine={onAddMedicine}
             />
             <NotesAndTags
                 notes={meta.important_notes}

@@ -18,10 +18,11 @@ type Props = {
     onFieldValueChange: (label: string, value: string) => void;
     onUpdateNote: (index: number, value: string) => void;
     onRemoveNote: (index: number) => void;
-    onAddNote: () => void;
+    onAddNote: (note: string) => void;
     onUpdateTag: (index: number, value: string) => void;
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
+    onAddMedicine: (medicine: MedicineType) => void;
 };
 
 const ReferralLetter: React.FC<Props> = ({
@@ -36,7 +37,8 @@ const ReferralLetter: React.FC<Props> = ({
     onRemoveTag,
     onAddTag,
     onRemoveMedicine,
-    onUpdateMedicine
+    onUpdateMedicine,
+    onAddMedicine
 }) => {
     const meta = document.document_metadata;
 
@@ -80,6 +82,7 @@ const ReferralLetter: React.FC<Props> = ({
                 isEditable={isEditable}
                 onRemoveMedicine={onRemoveMedicine}
                 onUpdateMedicine={onUpdateMedicine}
+                onAddMedicine={onAddMedicine}
             />
 
             <NotesAndTags

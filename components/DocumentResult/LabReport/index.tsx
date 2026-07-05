@@ -1,4 +1,4 @@
-import { LabReportDocument } from "@/types";
+import { LabReportDocument, LabTest } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
 import { View } from "react-native";
@@ -15,13 +15,16 @@ type Props = {
     onFieldValueChange: (label: string, value: string) => void;
     onUpdateNote: (index: number, value: string) => void;
     onRemoveNote: (index: number) => void;
-    onAddNote: () => void;
+    onAddNote: (note: string) => void;
     onUpdateTag: (index: number, value: string) => void;
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
+    onChangeTest: (index: number, patch: Partial<LabTest>) => void;
+    onRemoveTest: (index: number) => void;
+    onAddTest: (test: LabTest) => void;
 };
 
-const LabReport: React.FC<Props> = ({ onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, document, isEditable }) => {
+const LabReport: React.FC<Props> = ({ onAddTest, onRemoveTest, onChangeTest, onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, document, isEditable }) => {
     const meta = document.document_metadata;
 
     return (
@@ -54,6 +57,9 @@ const LabReport: React.FC<Props> = ({ onUpdateNote, onRemoveNote, onUpdateTag, o
             <LabTests
                 tests={meta.tests}
                 isEditable={isEditable}
+                onAddTest={onAddTest}
+                onChangeTest={onChangeTest}
+                onRemoveTest={onRemoveTest}
             />
 
             <NotesAndTags

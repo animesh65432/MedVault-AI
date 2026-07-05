@@ -14,9 +14,10 @@ export type TypeOfDocumenet =
 export interface Medicine {
     name: string;
     dosage: string;
-    frequency: string;
+    frequency: "once_daily" | "twice_daily" | "thrice_daily" | "weekly" | "as_needed";
     duration: string;
-    timing: string;
+    timing: [];
+    reminderTimes: string[]
 }
 
 export interface LabTest {

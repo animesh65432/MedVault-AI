@@ -1,9 +1,11 @@
 import { BillingItem } from "@/types";
 import { fs } from "@/utils/fs";
+import { formatAmount, parseAmount } from "@/utils/parseAmount";
 import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import AddBillingModel from "../AddBillingModel";
 
 type Props = {
     items: BillingItem[];
@@ -11,17 +13,17 @@ type Props = {
     discount?: string;
     total?: string;
     isEditable: boolean;
-    onUpdateItem?: (index: number, field: keyof BillingItem, value: string) => void;
-    onRemoveItem?: (index: number) => void;
-    onAddItem?: () => void;
-    onUpdateSubtotal?: (value: string) => void;
-    onUpdateDiscount?: (value: string) => void;
-    onUpdateTotal?: (value: string) => void;
+    onUpdateItem: (index: number, field: keyof BillingItem, value: string) => void;
+    onRemoveItem: (index: number) => void;
+    onAddItem: (item: BillingItem) => void;
+    onUpdateSubtotal: (value: string) => void;
+    onUpdateDiscount: (value: string) => void;
+    onUpdateTotal: (value: string) => void;
 };
 
 const Billing: React.FC<Props> = ({
     isEditable,
-    items,
+    items = [],
     subtotal,
     discount,
     total,
@@ -29,9 +31,17 @@ const Billing: React.FC<Props> = ({
     onRemoveItem,
     onAddItem,
     onUpdateSubtotal,
-    onUpdateDiscount,
-    onUpdateTotal,
+    onUpdateDiscount
 }) => {
+    const [showAddBillingModel, setShowAddBillingModel] = useState(false);
+    const computedTotal = useMemo(() => {
+        const itemsSum = items.reduce((sum, item) => sum + parseAmount(item.price), 0);
+        const discountValue = parseAmount(discount);
+        return itemsSum - discountValue;
+    }, [items, discount]);
+
+    const computedTotalDisplay = formatAmount(computedTotal);
+
     if (items.length === 0 && !total && !isEditable) return null;
 
     return (
@@ -39,7 +49,7 @@ const Billing: React.FC<Props> = ({
             <View style={styles.titleRow}>
                 <Text style={styles.title}>Billing</Text>
                 {isEditable && (
-                    <TouchableOpacity onPress={onAddItem} hitSlop={8} style={styles.addRow}>
+                    <TouchableOpacity onPress={() => setShowAddBillingModel(true)} hitSlop={8} style={styles.addRow}>
                         <Feather name="plus" size={fs(12)} color="#234338" />
                         <Text style={styles.addRowText}>Add item</Text>
                     </TouchableOpacity>
@@ -125,22 +135,18 @@ const Billing: React.FC<Props> = ({
                     {(!!total || isEditable) && (
                         <View style={[styles.summaryRow, styles.totalRow]}>
                             <Text style={styles.totalLabel}>Total</Text>
-                            {isEditable ? (
-                                <TextInput
-                                    value={total ?? ""}
-                                    onChangeText={onUpdateTotal}
-                                    style={styles.totalValueInput}
-                                    placeholder="0.00"
-                                    placeholderTextColor="#B4B2A9"
-                                    keyboardType="numbers-and-punctuation"
-                                />
-                            ) : (
-                                <Text style={styles.totalValue}>{total}</Text>
-                            )}
+                            <Text style={styles.totalValue}>{computedTotalDisplay}</Text>
                         </View>
                     )}
                 </View>
             )}
+            {showAddBillingModel &&
+                <AddBillingModel
+                    isBillingModalVisible={showAddBillingModel}
+                    setBillingModalVisible={setShowAddBillingModel}
+                    onAddItem={onAddItem}
+                />
+            }
         </View>
     );
 };
@@ -258,6 +264,24 @@ const styles = StyleSheet.create({
         padding: 0,
         minWidth: scale(60),
         textAlign: "right",
+    },
+    mismatchRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(6),
+        marginTop: scale(2),
+    },
+    mismatchText: {
+        fontSize: fs(11),
+        fontFamily: "Aeonik-Regular",
+        color: "#A3762D",
+        flex: 1,
+    },
+    mismatchAction: {
+        fontSize: fs(11),
+        fontFamily: "Aeonik-Medium",
+        color: "#234338",
+        textDecorationLine: "underline",
     },
 });
 

@@ -11,7 +11,7 @@ type Props = {
     isEditable: boolean;
     onUpdateNote: (index: number, value: string) => void;
     onRemoveNote: (index: number) => void;
-    onAddNote: () => void;
+    onAddNote: (note: string) => void;
     onUpdateTag: (index: number, value: string) => void;
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
@@ -126,7 +126,7 @@ const NotesAndTags: React.FC<Props> = ({
                 visible={ShowNoteModel}
                 onClose={() => SetShowNoteModel(false)}
                 onAdd={(note) => {
-                    onAddNote();
+                    onAddNote(note);
                     SetShowNoteModel(false);
                 }}
             />

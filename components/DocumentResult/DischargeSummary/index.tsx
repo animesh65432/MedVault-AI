@@ -20,12 +20,13 @@ type Props = {
     onFieldValueChange: (label: string, value: string) => void;
     onUpdateNote: (index: number, value: string) => void;
     onRemoveNote: (index: number) => void;
-    onAddNote: () => void;
+    onAddNote: (note: string) => void;
     onUpdateTag: (index: number, value: string) => void;
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
     onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
     onRemoveMedicine: (index: number) => void;
+    onAddMedicine: (medicine: MedicineType) => void;
 };
 
 const DischargeSummary: React.FC<Props> = ({
@@ -40,7 +41,8 @@ const DischargeSummary: React.FC<Props> = ({
     onRemoveTag,
     onAddTag,
     onUpdateMedicine,
-    onRemoveMedicine
+    onRemoveMedicine,
+    onAddMedicine
 }) => {
     const meta = document.document_metadata;
     const hasStayDates = meta.admission_date || meta.discharge_date;
@@ -122,6 +124,7 @@ const DischargeSummary: React.FC<Props> = ({
                 isEditable={isEditable}
                 onRemoveMedicine={onRemoveMedicine}
                 onUpdateMedicine={onUpdateMedicine}
+                onAddMedicine={onAddMedicine}
             />
 
             <LabTests

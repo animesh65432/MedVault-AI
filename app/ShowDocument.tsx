@@ -134,7 +134,6 @@ const ShowDocument = () => {
 
     if (Document && !IsProcessing) {
         return <DocumentResult
-            document={Document}
             isPdf={isPdf}
             fileUri={first(fileUri) as string}
             fileName={first(fileName) as string}

@@ -1,10 +1,12 @@
 import { Medicine as MedicineType } from "@/types";
+import { FrequencyOptions } from "@/utils/frequencyOptions";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
 import Octicons from "@expo/vector-icons/Octicons";
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 import AddMedicineModal from "../AddMedicineModel";
 import AddReminderModel from "../AddReminderModel";
 
@@ -13,6 +15,7 @@ type Props = {
     isEditable: boolean;
     onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
     onRemoveMedicine: (index: number) => void;
+    onAddMedicine: (medicine: MedicineType) => void;
 };
 
 const Medicines: React.FC<Props> = ({
@@ -20,13 +23,15 @@ const Medicines: React.FC<Props> = ({
     isEditable,
     onUpdateMedicine,
     onRemoveMedicine,
+    onAddMedicine
 }) => {
+    const [isFrequencyFocus, setIsFrequencyFocus] = useState(false);
     const [isAddMedicineModalVisible, setAddMedicineModalVisible] = useState(false);
     const [isAddReminderModalVisible, setAddReminderModalVisible] = useState(false);
 
     if (medicines.length === 0 && !isEditable) return null;
 
-    const onAddMedicine = () => {
+    const onToogleAddMedicine = () => {
         setAddMedicineModalVisible(true);
     }
 
@@ -42,7 +47,7 @@ const Medicines: React.FC<Props> = ({
                 {isEditable && (
                     <TouchableOpacity
                         style={styles.addButton}
-                        onPress={onAddMedicine}
+                        onPress={onToogleAddMedicine}
                         hitSlop={8}
                     >
                         <Feather name="plus" size={fs(13)} color="#234338" />
@@ -112,21 +117,40 @@ const Medicines: React.FC<Props> = ({
                                         placeholder="Dosage"
                                         onChangeText={(text) => onUpdateMedicine?.(index, "dosage", text)}
                                     />
-                                    <PillInput
+                                    <Dropdown
+                                        style={[
+                                            styles.dropdown,
+                                            isFrequencyFocus && styles.dropdownFocused,
+                                        ]}
+                                        placeholderStyle={styles.dropdownPlaceholder}
+                                        selectedTextStyle={styles.dropdownSelectedText}
+                                        itemTextStyle={styles.pickerItemText}
+                                        containerStyle={styles.dropdownContainer}
+                                        data={FrequencyOptions as unknown as { label: string; value: string }[]}
+                                        maxHeight={220}
+                                        labelField="label"
+                                        valueField="value"
+                                        placeholder="Select"
                                         value={med.frequency}
-                                        placeholder="Frequency"
-                                        onChangeText={(text) => onUpdateMedicine?.(index, "frequency", text)}
+                                        onFocus={() => setIsFrequencyFocus(true)}
+                                        onBlur={() => setIsFrequencyFocus(false)}
+                                        onChange={(item) => {
+                                            onUpdateMedicine?.(index, "dosage", item.value)
+                                            setIsFrequencyFocus(false);
+                                        }}
                                     />
                                     <PillInput
                                         value={med.duration}
                                         placeholder="Duration"
                                         onChangeText={(text) => onUpdateMedicine?.(index, "duration", text)}
                                     />
-                                    <PillInput
-                                        value={med.timing}
-                                        placeholder="Timing"
-                                        onChangeText={(text) => onUpdateMedicine?.(index, "timing", text)}
-                                    />
+                                    {medicines.length > 0 && (
+                                        <PillInput
+                                            value={med.timing.join(", ")}
+                                            placeholder="Timing"
+                                            onChangeText={(text) => onUpdateMedicine?.(index, "timing", text)}
+                                        />
+                                    )}
                                 </View>
                             ) : (
                                 !!hasDetails && (
@@ -134,7 +158,7 @@ const Medicines: React.FC<Props> = ({
                                         {!!med.dosage && <Pill text={med.dosage} />}
                                         {!!med.frequency && <Pill text={med.frequency} />}
                                         {!!med.duration && <Pill text={med.duration} />}
-                                        {!!med.timing && <Pill text={med.timing} />}
+                                        {!!med.timing && med.timing.length > 0 && <Pill text={med.timing.join(", ")} />}
                                     </View>
                                 )
                             )}
@@ -145,8 +169,9 @@ const Medicines: React.FC<Props> = ({
             {isAddMedicineModalVisible
                 &&
                 <AddMedicineModal
+                    onAddMedicine={onAddMedicine}
                     isMedicineModalVisible={isAddMedicineModalVisible}
-                    setMedicineModalIsVisible={setAddMedicineModalVisible}
+                    setMedicineModalIsVisible={setAddMedicineModalVisible} setAddMedicineModalVisible={setAddMedicineModalVisible}
                 />
             }
             {isAddReminderModalVisible
@@ -155,12 +180,10 @@ const Medicines: React.FC<Props> = ({
                     visible={isAddReminderModalVisible}
                     onClose={() => setAddReminderModalVisible(false)}
                     onAdd={(reminder) => {
-                        // Handle adding reminder logic here
                         setAddReminderModalVisible(false);
                     }}
                 />
             }
-
         </View>
     );
 };
@@ -327,6 +350,39 @@ const styles = StyleSheet.create({
         fontFamily: "Aeonik-Medium",
         color: "#5F5E5A",
         padding: 0,
+    },
+    dropdown: {
+        backgroundColor: "#F1EFE8",
+        borderRadius: scale(8),
+        paddingHorizontal: scale(10),
+        paddingVertical: scale(8),
+        height: scale(26),
+        justifyContent: "center",
+        minWidth: scale(110),
+    },
+    dropdownFocused: {
+        borderWidth: 1,
+        borderColor: "#234338",
+    },
+    dropdownPlaceholder: {
+        fontSize: fs(12),
+        fontFamily: "Aeonik-Medium",
+        color: "#B4B2A9",
+    },
+    dropdownSelectedText: {
+        fontSize: fs(12),
+        fontFamily: "Aeonik-Medium",
+        color: "#0D1F1C",
+    },
+    dropdownContainer: {
+        borderRadius: scale(10),
+        borderWidth: 1,
+        borderColor: "#E5E4DD",
+    },
+    pickerItemText: {
+        fontSize: fs(12),
+        fontFamily: "Aeonik-Medium",
+        color: "#0D1F1C",
     },
 });
 

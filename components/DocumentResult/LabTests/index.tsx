@@ -2,15 +2,16 @@ import { LabTest } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Octicons from "@expo/vector-icons/Octicons";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import AddLabTestModel from "../AddLabTestModel";
 
 type Props = {
     tests: LabTest[];
     isEditable: boolean;
-    onChangeTest?: (index: number, patch: Partial<LabTest>) => void;
-    onRemoveTest?: (index: number) => void;
-    onAddTest?: () => void;
+    onChangeTest: (index: number, patch: Partial<LabTest>) => void;
+    onRemoveTest: (index: number) => void;
+    onAddTest: (test: LabTest) => void;
 };
 
 const statusColor = (status?: string) => {
@@ -26,6 +27,7 @@ const statusColor = (status?: string) => {
 };
 
 const LabTests: React.FC<Props> = ({ tests, isEditable, onChangeTest, onRemoveTest, onAddTest }) => {
+    const [showLabModel, setShowLabModel] = useState(false);
     if (tests.length === 0 && !isEditable) return null;
 
     return (
@@ -38,7 +40,7 @@ const LabTests: React.FC<Props> = ({ tests, isEditable, onChangeTest, onRemoveTe
                     </View>
                 </View>
                 {isEditable && (
-                    <TouchableOpacity onPress={onAddTest} hitSlop={8}>
+                    <TouchableOpacity onPress={() => setShowLabModel(true)} hitSlop={8}>
                         <Octicons name="plus-circle" size={fs(14)} color="#234338" />
                     </TouchableOpacity>
                 )}
@@ -51,7 +53,7 @@ const LabTests: React.FC<Props> = ({ tests, isEditable, onChangeTest, onRemoveTe
 
                     if (isEditable) {
                         return (
-                            <View key={`${test.name}-${index}`} style={styles.editRow}>
+                            <View key={index} style={styles.editRow}>
                                 <View style={styles.editRowTop}>
                                     <TextInput
                                         style={[styles.testName, styles.input, { flex: 1 }]}
@@ -130,6 +132,14 @@ const LabTests: React.FC<Props> = ({ tests, isEditable, onChangeTest, onRemoveTe
                     );
                 })}
             </View>
+            {
+                showLabModel &&
+                <AddLabTestModel
+                    isLabTestModalVisible={showLabModel}
+                    setLabTestModalVisible={setShowLabModel}
+                    onAddTest={onAddTest}
+                />
+            }
         </View>
     );
 };

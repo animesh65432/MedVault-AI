@@ -1,4 +1,5 @@
 import { Medicine } from "@/types";
+import { FrequencyOptions } from "@/utils/frequencyOptions";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
@@ -12,23 +13,27 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import { Dropdown } from 'react-native-element-dropdown';
 
 type Props = {
     isMedicineModalVisible: boolean;
     setMedicineModalIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    onAddMedicine?: (medicine: Medicine) => void;
+    onAddMedicine: (medicine: Medicine) => void;
+    setAddMedicineModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EMPTY: Medicine = { name: "", dosage: "", frequency: "", duration: "", timing: "" };
+const EMPTY: Medicine = { name: "", dosage: "", frequency: "as_needed", duration: "", timing: [], reminderTimes: [] };
 
 const AddMedicineModal: React.FC<Props> = ({
     isMedicineModalVisible,
     setMedicineModalIsVisible,
     onAddMedicine,
+    setAddMedicineModalVisible,
 }) => {
     const [medicine, setMedicine] = useState<Medicine>(EMPTY);
 
-    const update = (field: keyof Medicine, value: string) =>
+    const [isFrequencyFocus, setIsFrequencyFocus] = useState(false);
+    const update = (field: keyof Medicine, value: string | string[]) =>
         setMedicine((prev) => ({ ...prev, [field]: value }));
 
     const close = () => {
@@ -38,8 +43,9 @@ const AddMedicineModal: React.FC<Props> = ({
 
     const handleSave = () => {
         if (!medicine.name.trim()) return;
-        onAddMedicine?.(medicine);
+        onAddMedicine(medicine);
         setMedicine(EMPTY);
+        setAddMedicineModalVisible(false);
     };
 
     return (
@@ -68,23 +74,38 @@ const AddMedicineModal: React.FC<Props> = ({
                             value={medicine.dosage}
                             onChangeText={(t) => update("dosage", t)}
                         />
-                        <Field
-                            label="Frequency"
-                            value={medicine.frequency}
-                            onChangeText={(t) => update("frequency", t)}
-                        />
+
+                        <View style={styles.fieldWrap}>
+                            <Text style={styles.fieldLabel}>Frequency</Text>
+                            <Dropdown
+                                style={[
+                                    styles.dropdown,
+                                    isFrequencyFocus && styles.dropdownFocused,
+                                ]}
+                                placeholderStyle={styles.dropdownPlaceholder}
+                                selectedTextStyle={styles.dropdownSelectedText}
+                                itemTextStyle={styles.pickerItemText}
+                                containerStyle={styles.dropdownContainer}
+                                data={FrequencyOptions as unknown as { label: string; value: string }[]}
+                                maxHeight={220}
+                                labelField="label"
+                                valueField="value"
+                                placeholder="Select"
+                                value={medicine.frequency}
+                                onFocus={() => setIsFrequencyFocus(true)}
+                                onBlur={() => setIsFrequencyFocus(false)}
+                                onChange={(item) => {
+                                    update("frequency", item.value);
+                                    setIsFrequencyFocus(false);
+                                }}
+                            />
+                        </View>
                         <Field
                             label="Duration"
                             value={medicine.duration}
                             onChangeText={(t) => update("duration", t)}
                         />
-                        <Field
-                            label="Timing"
-                            value={medicine.timing}
-                            onChangeText={(t) => update("timing", t)}
-                        />
                     </View>
-
                     <TouchableOpacity
                         style={[styles.saveButton, !medicine.name.trim() && styles.saveButtonDisabled]}
                         onPress={handleSave}
@@ -177,6 +198,33 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(10),
         paddingVertical: scale(8),
     },
+    dropdown: {
+        backgroundColor: "#F1EFE8",
+        borderRadius: scale(8),
+        paddingHorizontal: scale(10),
+        paddingVertical: scale(8),
+        height: scale(36),
+        justifyContent: "center",
+    },
+    dropdownFocused: {
+        borderWidth: 1,
+        borderColor: "#234338",
+    },
+    dropdownPlaceholder: {
+        fontSize: fs(12),
+        fontFamily: "Aeonik-Medium",
+        color: "#B4B2A9",
+    },
+    dropdownSelectedText: {
+        fontSize: fs(12),
+        fontFamily: "Aeonik-Medium",
+        color: "#0D1F1C",
+    },
+    dropdownContainer: {
+        borderRadius: scale(10),
+        borderWidth: 1,
+        borderColor: "#E5E4DD",
+    },
     saveButton: {
         backgroundColor: "#234338",
         borderRadius: scale(20),
@@ -191,6 +239,11 @@ const styles = StyleSheet.create({
         fontSize: fs(13),
         fontFamily: "Aeonik-Medium",
         color: "#EEF6A2",
+    },
+    pickerItemText: {
+        fontSize: fs(12),
+        fontFamily: "Aeonik-Medium",
+        color: "#0D1F1C",
     },
 });
 

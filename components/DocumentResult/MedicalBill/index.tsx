@@ -1,4 +1,4 @@
-import { MedicalBillDocument } from "@/types";
+import { BillingItem, MedicalBillDocument } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
 import { View } from "react-native";
@@ -15,13 +15,19 @@ type Props = {
     onFieldValueChange: (label: string, value: string) => void;
     onUpdateNote: (index: number, value: string) => void;
     onRemoveNote: (index: number) => void;
-    onAddNote: () => void;
+    onAddNote: (note: string) => void;
     onUpdateTag: (index: number, value: string) => void;
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
+    onUpdateItem: (index: number, field: keyof BillingItem, value: string) => void;
+    onRemoveItem: (index: number) => void;
+    onAddItem: (item: BillingItem) => void;
+    onUpdateSubtotal: (value: string) => void;
+    onUpdateDiscount: (value: string) => void;
+    onUpdateTotal: (value: string) => void;
 };
 
-const MedicalBill: React.FC<Props> = ({ onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, document, isEditable }) => {
+const MedicalBill: React.FC<Props> = ({ onUpdateTotal, onUpdateSubtotal, onUpdateDiscount, onUpdateItem, onRemoveItem, onAddItem, onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, document, isEditable }) => {
     const meta = document.document_metadata;
 
     return (
@@ -51,15 +57,19 @@ const MedicalBill: React.FC<Props> = ({ onUpdateNote, onRemoveNote, onUpdateTag,
                     onValueChange={onFieldValueChange}
                 />
             </View>
-
             <Billing
                 items={meta.billing_items}
                 subtotal={meta.subtotal}
                 discount={meta.discount}
                 total={meta.total_amount}
                 isEditable={isEditable}
+                onUpdateItem={onUpdateItem}
+                onRemoveItem={onRemoveItem}
+                onAddItem={onAddItem}
+                onUpdateSubtotal={onUpdateSubtotal}
+                onUpdateDiscount={onUpdateDiscount}
+                onUpdateTotal={onUpdateTotal}
             />
-
             <NotesAndTags
                 notes={meta.important_notes}
                 tags={meta.tags}
