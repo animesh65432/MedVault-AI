@@ -1,4 +1,4 @@
-import { BillingItem, Medicine as MedicineType, PrescriptionReceiptDocument } from "@/types";
+import { BillingItem, Medicine as MedicineType, PrescriptionReceiptDocument, Reminder } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
 import { View } from "react-native";
@@ -30,6 +30,8 @@ type Props = {
     onUpdateDiscount: (value: string) => void;
     onUpdateTotal: (value: string) => void;
     initialTitle: string;
+    onAddReminder: (index: number, reminder: Reminder) => void;
+    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
 };
 
 const PrescriptionReceipt: React.FC<Props> = ({
@@ -52,7 +54,9 @@ const PrescriptionReceipt: React.FC<Props> = ({
     onUpdateSubtotal,
     onUpdateDiscount,
     onUpdateTotal,
-    initialTitle
+    initialTitle,
+    onRemoveReminder,
+    onAddReminder
 }) => {
     const meta = document.document_metadata;
 
@@ -90,6 +94,8 @@ const PrescriptionReceipt: React.FC<Props> = ({
                 onRemoveMedicine={onRemoveMedicine}
                 onAddMedicine={onAddMedicine}
                 initialTitle={initialTitle}
+                onAddReminder={onAddReminder}
+                onRemoveReminder={onRemoveReminder}
             />
             <Billing
                 items={meta.billing_items}

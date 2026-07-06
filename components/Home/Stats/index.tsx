@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react'
-import { View, Text, StyleSheet, Animated, TouchableOpacity } from "react-native"
-import { Ionicons } from '@expo/vector-icons';
-import { vScale } from "@/utils/vScale"
-import { StatsInformation } from '@/types'
+import { StatsInformation } from '@/types';
 import { scale } from '@/utils/scale';
-import { useRouter } from "expo-router"
+import { vScale } from "@/utils/vScale";
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from "expo-router";
+import React, { useEffect, useRef } from 'react';
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface StatsProps {
     statsInformation: StatsInformation;
@@ -84,7 +84,7 @@ const Stats: React.FC<StatsProps> = ({ statsInformation }) => {
     const router = useRouter();
 
     const handleRoute = (route: "/Search" | "/Medicines") => {
-        router.push(route);
+        router.push("/Alerts");
     };
 
 

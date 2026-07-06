@@ -407,6 +407,31 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
         });
     }
 
+    const onRemoveReminder = (medicineIndex: number, reminderIndex: number) => {
+        SetDocument(prev => {
+            if (!prev) return prev;
+            if (!("medicines" in prev.document_metadata)) return prev;
+            const medicines = prev.document_metadata.medicines;
+            const medicine = medicines?.[medicineIndex];
+            if (!medicine) return prev;
+
+            const reminders = medicine.reminders ?? [];
+            const updatedReminders = reminders.filter((_, i) => i !== reminderIndex);
+
+            const updatedMedicines = medicines.map((m, i) =>
+                i === medicineIndex ? { ...m, reminders: updatedReminders } : m
+            );
+
+            return {
+                ...prev,
+                document_metadata: {
+                    ...prev.document_metadata,
+                    medicines: updatedMedicines,
+                },
+            } as DocumentType;
+        });
+    }
+
     const content = useMemo(() => {
         switch (Document.type) {
             case "Prescription":
@@ -427,6 +452,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onAddMedicine={onAddMedicine}
                         initialTitle={Document.title}
                         onAddReminder={onAddReminder}
+                        onRemoveReminder={onRemoveReminder}
                     />
                 );
             case "Prescription Receipt":
@@ -452,6 +478,8 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onUpdateDiscount={onUpdateDiscount}
                         onUpdateTotal={onUpdateTotal}
                         initialTitle={Document.title}
+                        onAddReminder={onAddReminder}
+                        onRemoveReminder={onRemoveReminder}
                     />
                 );
             case "Lab Report":
@@ -522,6 +550,8 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onRemoveTest={onRemoveTest}
                         onAddTest={onAddTest}
                         initialTitle={Document.title}
+                        onAddReminder={onAddReminder}
+                        onRemoveReminder={onRemoveReminder}
                     />
                 );
             case "Referral Letter":
@@ -541,6 +571,8 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onUpdateMedicine={onUpdateMedicine}
                         onAddMedicine={onAddMedicine}
                         initialTitle={Document.title}
+                        onAddReminder={onAddReminder}
+                        onRemoveReminder={onRemoveReminder}
                     />
                 );
             case "Insurance Document":
@@ -563,6 +595,8 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onUpdateMedicine={onUpdateMedicine}
                         onAddMedicine={onAddMedicine}
                         initialTitle={Document.title}
+                        onAddReminder={onAddReminder}
+                        onRemoveReminder={onRemoveReminder}
                     />
                 );
             default: {

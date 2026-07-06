@@ -1,7 +1,7 @@
 import { StatsInformation } from "@/types"
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { StyleSheet, View } from "react-native"
 import EmptyStats from './EmptyStats'
 import { DocumentListSkeleton, StatsSkeleton } from './Skeleton'

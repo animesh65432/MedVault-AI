@@ -24,6 +24,7 @@ type Props = {
     onAddMedicine: (medicine: MedicineType) => void;
     initialTitle: string;
     onAddReminder: (index: number, reminder: Reminder) => void;
+    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
 };
 
 const Prescription: React.FC<Props> = ({
@@ -41,7 +42,8 @@ const Prescription: React.FC<Props> = ({
     onRemoveMedicine,
     onAddMedicine,
     initialTitle,
-    onAddReminder
+    onAddReminder,
+    onRemoveReminder
 }) => {
     const meta = document.document_metadata;
     return (
@@ -80,6 +82,7 @@ const Prescription: React.FC<Props> = ({
                 onRemoveMedicine={onRemoveMedicine}
                 onAddMedicine={onAddMedicine}
                 onAddReminder={onAddReminder}
+                onRemoveReminder={onRemoveReminder}
             />
             <NotesAndTags
                 notes={meta.important_notes}

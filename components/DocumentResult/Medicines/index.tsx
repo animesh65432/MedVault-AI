@@ -19,6 +19,7 @@ type Props = {
     onAddMedicine: (medicine: MedicineType) => void;
     initialTitle: string;
     onAddReminder: (index: number, reminder: Reminder) => void;
+    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
 };
 
 const Medicines: React.FC<Props> = ({
@@ -28,9 +29,10 @@ const Medicines: React.FC<Props> = ({
     onRemoveMedicine,
     onAddMedicine,
     initialTitle,
-    onAddReminder
+    onAddReminder,
+    onRemoveReminder
 }) => {
-    const [MedicinIndexForReminder, setMedicineIndexForReminder] = useState<number | null>(null);
+    const [MedicineIndexForReminder, setMedicineIndexForReminder] = useState<number | null>(null);
     const [isFrequencyFocus, setIsFrequencyFocus] = useState(false);
     const [isAddMedicineModalVisible, setAddMedicineModalVisible] = useState(false);
     const [isAddReminderModalVisible, setAddReminderModalVisible] = useState(false);
@@ -47,13 +49,11 @@ const Medicines: React.FC<Props> = ({
     }
 
     const onCloseReminderModal = (reminder: Reminder) => {
-        if (MedicinIndexForReminder === null) return;
-        onAddReminder(MedicinIndexForReminder, reminder)
+        if (MedicineIndexForReminder === null) return;
+        onAddReminder(MedicineIndexForReminder, reminder)
         setAddReminderModalVisible(false);
         setMedicineIndexForReminder(null);
     }
-
-    console.log(medicines[MedicinIndexForReminder ?? 0]?.reminders)
 
     return (
         <View style={styles.container}>
@@ -80,10 +80,10 @@ const Medicines: React.FC<Props> = ({
                 {medicines.length > 0 && medicines.map((med, index) => {
                     const hasDetails =
                         med.dosage || med.frequency || med.duration || med.timing;
-                    const isActive = false;
+                    const hasReminders = med?.reminders?.length > 0;
 
                     return (
-                        <View key={index} style={styles.card}>
+                        <View key={med.name ? `${med.name}-${index}` : index} style={styles.card}>
                             <View style={styles.cardTop}>
                                 {isEditable ? (
                                     <TextInput
@@ -99,35 +99,42 @@ const Medicines: React.FC<Props> = ({
                                     </Text>
                                 )}
 
-                                {isEditable ? (
+                                <View style={styles.actionsRow}>
                                     <TouchableOpacity
-                                        style={styles.removeChip}
-                                        onPress={() => onRemoveMedicine?.(index)}
-                                        hitSlop={8}
-                                    >
-                                        <Feather name="trash-2" size={fs(13)} color="#B3261E" />
-                                    </TouchableOpacity>
-                                ) : (
-                                    <TouchableOpacity
-                                        style={[styles.chip, isActive && styles.chipActive]}
+                                        style={[styles.chip, hasReminders && styles.chipActive]}
                                         onPress={() => onToogleReminderModal(index)}
                                         hitSlop={8}
                                     >
                                         <Octicons
-                                            name={isActive ? "bell-fill" : "bell"}
+                                            name={hasReminders ? "bell-fill" : "bell"}
                                             size={fs(11)}
-                                            color={isActive ? "#EEF6A2" : "#5F5E5A"}
+                                            color={hasReminders ? "#EEF6A2" : "#5F5E5A"}
                                         />
+                                        {hasReminders && (
+                                            <View style={styles.chipCountBadge}>
+                                                <Text style={styles.chipCountText}>{med.reminders.length}</Text>
+                                            </View>
+                                        )}
                                         <Text
                                             style={[
                                                 styles.chipText,
-                                                isActive && styles.chipTextActive,
+                                                hasReminders && styles.chipTextActive,
                                             ]}
                                         >
-                                            Set
+                                            {hasReminders ? "Reminders" : "Set"}
                                         </Text>
                                     </TouchableOpacity>
-                                )}
+
+                                    {isEditable && (
+                                        <TouchableOpacity
+                                            style={styles.removeChip}
+                                            onPress={() => onRemoveMedicine?.(index)}
+                                            hitSlop={8}
+                                        >
+                                            <Feather name="trash-2" size={fs(13)} color="#B3261E" />
+                                        </TouchableOpacity>
+                                    )}
+                                </View>
                             </View>
 
                             {isEditable ? (
@@ -155,7 +162,7 @@ const Medicines: React.FC<Props> = ({
                                         onFocus={() => setIsFrequencyFocus(true)}
                                         onBlur={() => setIsFrequencyFocus(false)}
                                         onChange={(item) => {
-                                            onUpdateMedicine?.(index, "dosage", item.value)
+                                            onUpdateMedicine?.(index, "frequency", item.value)
                                             setIsFrequencyFocus(false);
                                         }}
                                     />
@@ -201,7 +208,9 @@ const Medicines: React.FC<Props> = ({
                     onClose={() => setAddReminderModalVisible(false)}
                     onAdd={onCloseReminderModal}
                     initialTitle={initialTitle}
-                    initialReminders={medicines[MedicinIndexForReminder ?? 0]?.reminders || []}
+                    initialReminders={medicines[MedicineIndexForReminder ?? 0]?.reminders || []}
+                    onRemoveReminder={onRemoveReminder}
+                    MedicineIndex={MedicineIndexForReminder ?? 0}
                 />
             }
         </View>
@@ -311,6 +320,12 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 0,
     },
+    actionsRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(6),
+        flexShrink: 0,
+    },
     chip: {
         flexDirection: "row",
         alignItems: "center",
@@ -333,6 +348,18 @@ const styles = StyleSheet.create({
     },
     chipTextActive: {
         color: "#EEF6A2",
+    },
+    chipCountBadge: {
+        backgroundColor: "#EEF6A2",
+        borderRadius: scale(8),
+        paddingHorizontal: scale(5),
+        minWidth: scale(15),
+        alignItems: "center",
+    },
+    chipCountText: {
+        fontSize: fs(10),
+        fontFamily: "Aeonik-Medium",
+        color: "#23423B",
     },
     removeChip: {
         borderWidth: 1,

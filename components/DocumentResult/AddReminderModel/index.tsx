@@ -22,6 +22,8 @@ type Props = {
     onAdd: (reminder: Reminder) => void;
     initialTitle: string;
     initialReminders?: Reminder[];
+    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void;
+    MedicineIndex: number;
 };
 
 const REPEATS: { key: ReminderRepeat; label: string }[] = [
@@ -41,8 +43,11 @@ const AddReminderModel: React.FC<Props> = ({
     onAdd,
     initialTitle,
     initialReminders = [],
+    onRemoveReminder,
+    MedicineIndex
 }) => {
     const [title, setTitle] = useState(initialTitle ?? "");
+    const [time, setTime] = useState(new Date());
     const [reminders, setReminders] = useState<Reminder[]>(initialReminders);
     const [repeat, setRepeat] = useState<ReminderRepeat>("daily");
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
@@ -51,6 +56,7 @@ const AddReminderModel: React.FC<Props> = ({
         setTitle(initialTitle ?? "");
         setReminders(initialReminders.length ? initialReminders : []);
         setRepeat("daily");
+        setTime(new Date());
         setEditingIndex(null);
     };
 
@@ -62,11 +68,7 @@ const AddReminderModel: React.FC<Props> = ({
     const handleTimeChange = (index: number, selected?: Date) => {
         if (Platform.OS === "android") setEditingIndex(null);
         if (!selected) return;
-        setReminders((prev) => {
-            const next = [...prev];
-            next[index] = { ...next[index], time: selected };
-            return next;
-        });
+        setTime(selected);
     };
 
     const addTimeSlot = () => {
@@ -86,24 +88,20 @@ const AddReminderModel: React.FC<Props> = ({
 
     const removeTimeSlot = (index: number) => {
         setReminders((prev) => prev.filter((_, i) => i !== index));
+        onRemoveReminder(MedicineIndex, index);
         if (editingIndex === index) setEditingIndex(null);
     };
 
     const handleSave = () => {
         const trimmed = title.trim();
-
-        if (!trimmed || reminders.length === 0) {
+        if (!trimmed) {
             Toast.show({
                 type: "error",
                 text2: "Please provide a title and at least one time.",
             });
             return;
         }
-
-        reminders.forEach((r) => {
-            onAdd({ title: trimmed, time: r.time, repeat });
-        });
-
+        onAdd({ title: trimmed, time: time, repeat });
         close();
     };
 

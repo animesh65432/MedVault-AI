@@ -1,4 +1,4 @@
-import { DischargeSummaryDocument, LabTest, Medicine as MedicineType } from "@/types";
+import { DischargeSummaryDocument, LabTest, Medicine as MedicineType, Reminder } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
@@ -30,7 +30,9 @@ type Props = {
     onChangeTest: (index: number, patch: Partial<LabTest>) => void;
     onRemoveTest: (index: number) => void;
     onAddTest: (test: LabTest) => void;
-    initialTitle: string
+    initialTitle: string;
+    onAddReminder: (index: number, reminder: Reminder) => void;
+    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
 };
 
 const DischargeSummary: React.FC<Props> = ({
@@ -50,7 +52,9 @@ const DischargeSummary: React.FC<Props> = ({
     onChangeTest,
     onRemoveTest,
     onAddTest,
-    initialTitle
+    initialTitle,
+    onAddReminder,
+    onRemoveReminder
 }) => {
     const meta = document.document_metadata;
     const hasStayDates = meta.admission_date || meta.discharge_date;
@@ -134,6 +138,8 @@ const DischargeSummary: React.FC<Props> = ({
                 onRemoveMedicine={onRemoveMedicine}
                 onUpdateMedicine={onUpdateMedicine}
                 onAddMedicine={onAddMedicine}
+                onAddReminder={onAddReminder}
+                onRemoveReminder={onRemoveReminder}
             />
 
             <LabTests

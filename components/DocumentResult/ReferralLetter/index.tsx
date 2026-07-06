@@ -1,4 +1,4 @@
-import { Medicine as MedicineType, ReferralLetterDocument } from "@/types";
+import { Medicine as MedicineType, ReferralLetterDocument, Reminder } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
 import { View } from "react-native";
@@ -23,7 +23,9 @@ type Props = {
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
     onAddMedicine: (medicine: MedicineType) => void;
-    initialTitle: string
+    initialTitle: string;
+    onAddReminder: (index: number, reminder: Reminder) => void;
+    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
 };
 
 const ReferralLetter: React.FC<Props> = ({
@@ -40,7 +42,9 @@ const ReferralLetter: React.FC<Props> = ({
     onRemoveMedicine,
     onUpdateMedicine,
     onAddMedicine,
-    initialTitle
+    initialTitle,
+    onAddReminder,
+    onRemoveReminder
 }) => {
     const meta = document.document_metadata;
 
@@ -86,6 +90,8 @@ const ReferralLetter: React.FC<Props> = ({
                 onUpdateMedicine={onUpdateMedicine}
                 onAddMedicine={onAddMedicine}
                 initialTitle={initialTitle}
+                onAddReminder={onAddReminder}
+                onRemoveReminder={onRemoveReminder}
             />
 
             <NotesAndTags

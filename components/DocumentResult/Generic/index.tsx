@@ -1,4 +1,4 @@
-import { GenericDocument, Medicine as MedicineType } from "@/types";
+import { GenericDocument, Medicine as MedicineType, Reminder } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
 import { View } from "react-native";
@@ -22,7 +22,9 @@ type Props = {
     onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
     onRemoveMedicine: (index: number) => void;
     onAddMedicine: (medicine: MedicineType) => void;
-    initialTitle: string
+    initialTitle: string;
+    onAddReminder: (index: number, reminder: Reminder) => void;
+    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
 };
 
 const Generic: React.FC<Props> = ({
@@ -39,7 +41,9 @@ const Generic: React.FC<Props> = ({
     onRemoveMedicine,
     onUpdateMedicine,
     onAddMedicine,
-    initialTitle
+    initialTitle,
+    onAddReminder,
+    onRemoveReminder
 }) => {
     const meta = document.document_metadata;
     return (
@@ -73,6 +77,8 @@ const Generic: React.FC<Props> = ({
                 onUpdateMedicine={onUpdateMedicine}
                 onAddMedicine={onAddMedicine}
                 initialTitle={initialTitle}
+                onAddReminder={onAddReminder}
+                onRemoveReminder={onRemoveReminder}
             />
             <NotesAndTags
                 notes={meta.important_notes}
