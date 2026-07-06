@@ -1,4 +1,4 @@
-import { DischargeSummaryDocument, Medicine as MedicineType } from "@/types";
+import { DischargeSummaryDocument, LabTest, Medicine as MedicineType } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
@@ -27,6 +27,10 @@ type Props = {
     onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
     onRemoveMedicine: (index: number) => void;
     onAddMedicine: (medicine: MedicineType) => void;
+    onChangeTest: (index: number, patch: Partial<LabTest>) => void;
+    onRemoveTest: (index: number) => void;
+    onAddTest: (test: LabTest) => void;
+    initialTitle: string
 };
 
 const DischargeSummary: React.FC<Props> = ({
@@ -42,7 +46,11 @@ const DischargeSummary: React.FC<Props> = ({
     onAddTag,
     onUpdateMedicine,
     onRemoveMedicine,
-    onAddMedicine
+    onAddMedicine,
+    onChangeTest,
+    onRemoveTest,
+    onAddTest,
+    initialTitle
 }) => {
     const meta = document.document_metadata;
     const hasStayDates = meta.admission_date || meta.discharge_date;
@@ -120,6 +128,7 @@ const DischargeSummary: React.FC<Props> = ({
             />
 
             <Medicines
+                initialTitle={initialTitle}
                 medicines={meta.medicines}
                 isEditable={isEditable}
                 onRemoveMedicine={onRemoveMedicine}
@@ -130,6 +139,9 @@ const DischargeSummary: React.FC<Props> = ({
             <LabTests
                 tests={meta.tests}
                 isEditable={isEditable}
+                onChangeTest={onChangeTest}
+                onRemoveTest={onRemoveTest}
+                onAddTest={onAddTest}
             />
 
             <ProseBlock

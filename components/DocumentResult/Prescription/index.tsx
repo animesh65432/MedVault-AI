@@ -1,4 +1,4 @@
-import { Medicine as MedicineType, PrescriptionDocument } from "@/types";
+import { Medicine as MedicineType, PrescriptionDocument, Reminder } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
 import { View } from "react-native";
@@ -22,6 +22,8 @@ type Props = {
     onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
     onRemoveMedicine: (index: number) => void;
     onAddMedicine: (medicine: MedicineType) => void;
+    initialTitle: string;
+    onAddReminder: (index: number, reminder: Reminder) => void;
 };
 
 const Prescription: React.FC<Props> = ({
@@ -37,10 +39,11 @@ const Prescription: React.FC<Props> = ({
     onAddTag,
     onUpdateMedicine,
     onRemoveMedicine,
-    onAddMedicine
+    onAddMedicine,
+    initialTitle,
+    onAddReminder
 }) => {
     const meta = document.document_metadata;
-
     return (
         <KeyboardAwareScrollView
             style={styles.scroll}
@@ -70,11 +73,13 @@ const Prescription: React.FC<Props> = ({
                 />
             </View>
             <Medicines
+                initialTitle={initialTitle}
                 medicines={meta.medicines}
                 isEditable={isEditable}
                 onUpdateMedicine={onUpdateMedicine}
                 onRemoveMedicine={onRemoveMedicine}
                 onAddMedicine={onAddMedicine}
+                onAddReminder={onAddReminder}
             />
             <NotesAndTags
                 notes={meta.important_notes}

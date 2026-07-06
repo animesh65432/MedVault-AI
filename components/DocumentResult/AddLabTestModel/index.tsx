@@ -74,7 +74,7 @@ const AddLabTestModel: React.FC<Props> = ({
                         <View style={styles.headerRow}>
                             <Text style={styles.title}>Add test result</Text>
                             <TouchableOpacity onPress={onClose} hitSlop={8}>
-                                <Feather name="x" size={fs(18)} color="#5F5E5A" />
+                                <Feather name="x" size={fs(24)} color="#5F5E5A" />
                             </TouchableOpacity>
                         </View>
 

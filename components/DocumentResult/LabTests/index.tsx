@@ -41,7 +41,7 @@ const LabTests: React.FC<Props> = ({ tests, isEditable, onChangeTest, onRemoveTe
                 </View>
                 {isEditable && (
                     <TouchableOpacity onPress={() => setShowLabModel(true)} hitSlop={8}>
-                        <Octicons name="plus-circle" size={fs(14)} color="#234338" />
+                        <Octicons name="plus-circle" size={fs(18)} color="#234338" />
                     </TouchableOpacity>
                 )}
             </View>

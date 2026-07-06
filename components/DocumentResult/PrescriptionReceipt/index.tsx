@@ -29,6 +29,7 @@ type Props = {
     onUpdateSubtotal: (value: string) => void;
     onUpdateDiscount: (value: string) => void;
     onUpdateTotal: (value: string) => void;
+    initialTitle: string;
 };
 
 const PrescriptionReceipt: React.FC<Props> = ({
@@ -50,7 +51,8 @@ const PrescriptionReceipt: React.FC<Props> = ({
     onAddItem,
     onUpdateSubtotal,
     onUpdateDiscount,
-    onUpdateTotal
+    onUpdateTotal,
+    initialTitle
 }) => {
     const meta = document.document_metadata;
 
@@ -87,6 +89,7 @@ const PrescriptionReceipt: React.FC<Props> = ({
                 onUpdateMedicine={onUpdateMedicine}
                 onRemoveMedicine={onRemoveMedicine}
                 onAddMedicine={onAddMedicine}
+                initialTitle={initialTitle}
             />
             <Billing
                 items={meta.billing_items}

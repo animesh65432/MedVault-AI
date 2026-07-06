@@ -23,6 +23,7 @@ type Props = {
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
     onAddMedicine: (medicine: MedicineType) => void;
+    initialTitle: string
 };
 
 const ReferralLetter: React.FC<Props> = ({
@@ -38,7 +39,8 @@ const ReferralLetter: React.FC<Props> = ({
     onAddTag,
     onRemoveMedicine,
     onUpdateMedicine,
-    onAddMedicine
+    onAddMedicine,
+    initialTitle
 }) => {
     const meta = document.document_metadata;
 
@@ -83,6 +85,7 @@ const ReferralLetter: React.FC<Props> = ({
                 onRemoveMedicine={onRemoveMedicine}
                 onUpdateMedicine={onUpdateMedicine}
                 onAddMedicine={onAddMedicine}
+                initialTitle={initialTitle}
             />
 
             <NotesAndTags

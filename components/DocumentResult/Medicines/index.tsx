@@ -1,4 +1,4 @@
-import { Medicine as MedicineType } from "@/types";
+import { Medicine as MedicineType, Reminder } from "@/types";
 import { FrequencyOptions } from "@/utils/frequencyOptions";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
@@ -10,12 +10,15 @@ import { Dropdown } from "react-native-element-dropdown";
 import AddMedicineModal from "../AddMedicineModel";
 import AddReminderModel from "../AddReminderModel";
 
+
 type Props = {
     medicines: MedicineType[];
     isEditable: boolean;
     onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
     onRemoveMedicine: (index: number) => void;
     onAddMedicine: (medicine: MedicineType) => void;
+    initialTitle: string;
+    onAddReminder: (index: number, reminder: Reminder) => void;
 };
 
 const Medicines: React.FC<Props> = ({
@@ -23,8 +26,11 @@ const Medicines: React.FC<Props> = ({
     isEditable,
     onUpdateMedicine,
     onRemoveMedicine,
-    onAddMedicine
+    onAddMedicine,
+    initialTitle,
+    onAddReminder
 }) => {
+    const [MedicinIndexForReminder, setMedicineIndexForReminder] = useState<number | null>(null);
     const [isFrequencyFocus, setIsFrequencyFocus] = useState(false);
     const [isAddMedicineModalVisible, setAddMedicineModalVisible] = useState(false);
     const [isAddReminderModalVisible, setAddReminderModalVisible] = useState(false);
@@ -34,6 +40,20 @@ const Medicines: React.FC<Props> = ({
     const onToogleAddMedicine = () => {
         setAddMedicineModalVisible(true);
     }
+
+    const onToogleReminderModal = (index: number) => {
+        setMedicineIndexForReminder(index);
+        setAddReminderModalVisible(true);
+    }
+
+    const onCloseReminderModal = (reminder: Reminder) => {
+        if (MedicinIndexForReminder === null) return;
+        onAddReminder(MedicinIndexForReminder, reminder)
+        setAddReminderModalVisible(false);
+        setMedicineIndexForReminder(null);
+    }
+
+    console.log(medicines[MedicinIndexForReminder ?? 0]?.reminders)
 
     return (
         <View style={styles.container}>
@@ -57,7 +77,7 @@ const Medicines: React.FC<Props> = ({
             </View>
 
             <View style={styles.list}>
-                {medicines.map((med, index) => {
+                {medicines.length > 0 && medicines.map((med, index) => {
                     const hasDetails =
                         med.dosage || med.frequency || med.duration || med.timing;
                     const isActive = false;
@@ -90,7 +110,7 @@ const Medicines: React.FC<Props> = ({
                                 ) : (
                                     <TouchableOpacity
                                         style={[styles.chip, isActive && styles.chipActive]}
-                                        onPress={() => setAddReminderModalVisible(true)}
+                                        onPress={() => onToogleReminderModal(index)}
                                         hitSlop={8}
                                     >
                                         <Octicons
@@ -179,9 +199,9 @@ const Medicines: React.FC<Props> = ({
                 <AddReminderModel
                     visible={isAddReminderModalVisible}
                     onClose={() => setAddReminderModalVisible(false)}
-                    onAdd={(reminder) => {
-                        setAddReminderModalVisible(false);
-                    }}
+                    onAdd={onCloseReminderModal}
+                    initialTitle={initialTitle}
+                    initialReminders={medicines[MedicinIndexForReminder ?? 0]?.reminders || []}
                 />
             }
         </View>

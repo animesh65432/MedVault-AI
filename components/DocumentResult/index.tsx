@@ -1,4 +1,4 @@
-import { BillingItem, DocumentType, LabTest, Medicine } from "@/types";
+import { BillingItem, DocumentType, LabTest, Medicine, Reminder } from "@/types";
 import { scale } from "@/utils/scale";
 import React, { useCallback, useMemo, useState } from "react";
 import { ScrollView, View } from "react-native";
@@ -27,6 +27,7 @@ type Props = {
 const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }) => {
     const [ShowDocumentViewVisible, setShowDocmentViewVisible] = useState(false);
     const [isEditable, setIsEditable] = useState(false);
+
     const onChangeTitle = (value: string) => {
         SetDocument(prev => {
             if (!prev) return prev;
@@ -49,6 +50,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
             } as DocumentType | null;
         });
     };
+
     const onRemoveNote = (index: number) => {
         if (!Document.document_metadata.important_notes) return;
         SetDocument(prev => {
@@ -380,6 +382,30 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
         });
     }
 
+    const onAddReminder = (index: number, reminder: Reminder) => {
+        SetDocument(prev => {
+            if (!prev) return prev;
+            if (!("medicines" in prev.document_metadata)) return prev;
+            const medicines = prev.document_metadata.medicines;
+            const medicine = medicines?.[index];
+            if (!medicine) return prev;
+
+            const reminders = medicine.reminders ?? [];
+            const updated = [...reminders, reminder];
+
+            const updatedMedicines = medicines.map((m, i) =>
+                i === index ? { ...m, reminders: updated } : m
+            );
+
+            return {
+                ...prev,
+                document_metadata: {
+                    ...prev.document_metadata,
+                    medicines: updatedMedicines,
+                },
+            } as DocumentType;
+        });
+    }
 
     const content = useMemo(() => {
         switch (Document.type) {
@@ -399,6 +425,8 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onUpdateMedicine={onUpdateMedicine}
                         onRemoveMedicine={onRemoveMedicine}
                         onAddMedicine={onAddMedicine}
+                        initialTitle={Document.title}
+                        onAddReminder={onAddReminder}
                     />
                 );
             case "Prescription Receipt":
@@ -423,6 +451,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onUpdateSubtotal={onUpdateSubtotal}
                         onUpdateDiscount={onUpdateDiscount}
                         onUpdateTotal={onUpdateTotal}
+                        initialTitle={Document.title}
                     />
                 );
             case "Lab Report":
@@ -489,6 +518,10 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onRemoveMedicine={onRemoveMedicine}
                         onUpdateMedicine={onUpdateMedicine}
                         onAddMedicine={onAddMedicine}
+                        onChangeTest={onChangeTest}
+                        onRemoveTest={onRemoveTest}
+                        onAddTest={onAddTest}
+                        initialTitle={Document.title}
                     />
                 );
             case "Referral Letter":
@@ -507,6 +540,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onRemoveMedicine={onRemoveMedicine}
                         onUpdateMedicine={onUpdateMedicine}
                         onAddMedicine={onAddMedicine}
+                        initialTitle={Document.title}
                     />
                 );
             case "Insurance Document":
@@ -528,6 +562,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         onRemoveMedicine={onRemoveMedicine}
                         onUpdateMedicine={onUpdateMedicine}
                         onAddMedicine={onAddMedicine}
+                        initialTitle={Document.title}
                     />
                 );
             default: {
@@ -543,7 +578,6 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
     const handleCloseDocumentView = useCallback(() => {
         setShowDocmentViewVisible(false);
     }, []);
-
 
     return <View style={{ flex: 1 }}>
         <Navbar />

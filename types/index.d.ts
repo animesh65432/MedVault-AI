@@ -11,13 +11,21 @@ export type TypeOfDocumenet =
     | "Medical History Record"
     | "Other";
 
+export type ReminderRepeat = "once" | "daily" | "weekly";
+
+export type Reminder = {
+    title: string;
+    time: Date;
+    repeat: ReminderRepeat;
+};
+
 export interface Medicine {
     name: string;
     dosage: string;
     frequency: "once_daily" | "twice_daily" | "thrice_daily" | "weekly" | "as_needed";
     duration: string;
     timing: [];
-    reminderTimes: string[]
+    reminders: Reminder[]
 }
 
 export interface LabTest {

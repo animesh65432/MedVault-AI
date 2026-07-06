@@ -1,3 +1,4 @@
+import { Reminder, ReminderRepeat } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
@@ -13,45 +14,97 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-
-export type ReminderFrequency = "once" | "daily" | "weekly";
-
-export type Reminder = {
-    title: string;
-    time: Date;
-    frequency: ReminderFrequency;
-};
+import Toast from "react-native-toast-message";
 
 type Props = {
     visible: boolean;
     onClose: () => void;
     onAdd: (reminder: Reminder) => void;
-    initialTitle?: string;
+    initialTitle: string;
+    initialReminders?: Reminder[];
 };
 
-const FREQUENCIES: { key: ReminderFrequency; label: string }[] = [
+const REPEATS: { key: ReminderRepeat; label: string }[] = [
     { key: "once", label: "Once" },
     { key: "daily", label: "Daily" },
     { key: "weekly", label: "Weekly" },
 ];
 
-const AddReminderModel: React.FC<Props> = ({ visible, onClose, onAdd, initialTitle }) => {
+const MAX_TIMES = 6;
+
+const formatTime = (d: Date) =>
+    d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+const AddReminderModel: React.FC<Props> = ({
+    visible,
+    onClose,
+    onAdd,
+    initialTitle,
+    initialReminders = [],
+}) => {
     const [title, setTitle] = useState(initialTitle ?? "");
-    const [time, setTime] = useState(new Date());
-    const [frequency, setFrequency] = useState<ReminderFrequency>("daily");
-    const [showPicker, setShowPicker] = useState(Platform.OS === "ios");
+    const [reminders, setReminders] = useState<Reminder[]>(initialReminders);
+    const [repeat, setRepeat] = useState<ReminderRepeat>("daily");
+    const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+    const reset = () => {
+        setTitle(initialTitle ?? "");
+        setReminders(initialReminders.length ? initialReminders : []);
+        setRepeat("daily");
+        setEditingIndex(null);
+    };
 
     const close = () => {
-        setTitle(initialTitle ?? "");
-        setTime(new Date());
-        setFrequency("daily");
+        reset();
         onClose();
+    };
+
+    const handleTimeChange = (index: number, selected?: Date) => {
+        if (Platform.OS === "android") setEditingIndex(null);
+        if (!selected) return;
+        setReminders((prev) => {
+            const next = [...prev];
+            next[index] = { ...next[index], time: selected };
+            return next;
+        });
+    };
+
+    const addTimeSlot = () => {
+        if (reminders.length >= MAX_TIMES) return;
+        const last = reminders.length
+            ? reminders[reminders.length - 1].time
+            : new Date();
+        const next = new Date(last);
+        next.setHours(next.getHours() + 4);
+
+        setReminders((prev) => [
+            ...prev,
+            { title: title.trim() || initialTitle, time: next, repeat },
+        ]);
+        setEditingIndex(reminders.length);
+    };
+
+    const removeTimeSlot = (index: number) => {
+        setReminders((prev) => prev.filter((_, i) => i !== index));
+        if (editingIndex === index) setEditingIndex(null);
     };
 
     const handleSave = () => {
         const trimmed = title.trim();
-        if (!trimmed) return;
-        onAdd({ title: trimmed, time, frequency });
+
+        if (!trimmed || reminders.length === 0) {
+            Toast.show({
+                type: "error",
+                text2: "Please provide a title and at least one time.",
+            });
+            return;
+        }
+
+        reminders.forEach((r) => {
+            onAdd({ title: trimmed, time: r.time, repeat });
+        });
+
+        close();
     };
 
     return (
@@ -75,41 +128,60 @@ const AddReminderModel: React.FC<Props> = ({ visible, onClose, onAdd, initialTit
                     />
 
                     <View style={styles.fieldWrap}>
-                        <Text style={styles.fieldLabel}>Time</Text>
-                        {Platform.OS === "android" && (
-                            <TouchableOpacity
-                                style={styles.timeButton}
-                                onPress={() => setShowPicker(true)}
-                            >
-                                <Feather name="clock" size={fs(13)} color="#234338" />
-                                <Text style={styles.timeButtonText}>
-                                    {time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                                </Text>
-                            </TouchableOpacity>
-                        )}
-                        {showPicker && (
-                            <DateTimePicker
-                                value={time}
-                                mode="time"
-                                display={Platform.OS === "ios" ? "spinner" : "default"}
-                                onChange={(_, selected) => {
-                                    if (Platform.OS === "android") setShowPicker(false);
-                                    if (selected) setTime(selected);
-                                }}
-                            />
-                        )}
+                        <View style={styles.timesHeader}>
+                            <Text style={styles.fieldLabel}>Times</Text>
+                            {reminders.length < MAX_TIMES && (
+                                <TouchableOpacity onPress={addTimeSlot} hitSlop={8} style={styles.addTimeButton}>
+                                    <Feather name="plus" size={fs(12)} color="#234338" />
+                                    <Text style={styles.addTimeText}>Add time</Text>
+                                </TouchableOpacity>
+                            )}
+                        </View>
+
+                        <View style={styles.timesList}>
+                            {reminders.map((t, i) => (
+                                <View key={i} style={styles.timeRow}>
+                                    <TouchableOpacity
+                                        style={styles.timeButton}
+                                        onPress={() => setEditingIndex(i)}
+                                    >
+                                        <Feather name="clock" size={fs(13)} color="#234338" />
+                                        <Text style={styles.timeButtonText}>{formatTime(t.time)}</Text>
+                                    </TouchableOpacity>
+
+                                    {reminders.length > 1 && (
+                                        <TouchableOpacity
+                                            style={styles.removeTimeButton}
+                                            onPress={() => removeTimeSlot(i)}
+                                            hitSlop={8}
+                                        >
+                                            <Feather name="x" size={fs(12)} color="#B3261E" />
+                                        </TouchableOpacity>
+                                    )}
+
+                                    {editingIndex === i && (
+                                        <DateTimePicker
+                                            value={t.time}
+                                            mode="time"
+                                            display={Platform.OS === "ios" ? "spinner" : "default"}
+                                            onChange={(_, selected) => handleTimeChange(i, selected)}
+                                        />
+                                    )}
+                                </View>
+                            ))}
+                        </View>
                     </View>
 
                     <View style={styles.fieldWrap}>
                         <Text style={styles.fieldLabel}>Repeat</Text>
                         <View style={styles.freqRow}>
-                            {FREQUENCIES.map((f) => {
-                                const active = frequency === f.key;
+                            {REPEATS.map((r) => {
+                                const active = repeat === r.key;
                                 return (
                                     <TouchableOpacity
-                                        key={f.key}
+                                        key={r.key}
                                         style={[styles.freqChip, active && styles.freqChipActive]}
-                                        onPress={() => setFrequency(f.key)}
+                                        onPress={() => setRepeat(r.key)}
                                     >
                                         <Text
                                             style={[
@@ -117,7 +189,7 @@ const AddReminderModel: React.FC<Props> = ({ visible, onClose, onAdd, initialTit
                                                 active && styles.freqChipTextActive,
                                             ]}
                                         >
-                                            {f.label}
+                                            {r.label}
                                         </Text>
                                     </TouchableOpacity>
                                 );
@@ -130,13 +202,16 @@ const AddReminderModel: React.FC<Props> = ({ visible, onClose, onAdd, initialTit
                         onPress={handleSave}
                         disabled={!title.trim()}
                     >
-                        <Text style={styles.saveButtonText}>Add Reminder</Text>
+                        <Text style={styles.saveButtonText}>
+                            Add Reminder{reminders.length > 1 ? ` (${reminders.length} times)` : ""}
+                        </Text>
                     </TouchableOpacity>
                 </Pressable>
             </Pressable>
         </Modal>
     );
 };
+
 
 const styles = StyleSheet.create({
     backdrop: {
@@ -181,6 +256,29 @@ const styles = StyleSheet.create({
         letterSpacing: 0.4,
         color: "#5F5E5A",
     },
+    timesHeader: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    addTimeButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(4),
+    },
+    addTimeText: {
+        fontSize: fs(11),
+        fontFamily: "Aeonik-Medium",
+        color: "#234338",
+    },
+    timesList: {
+        gap: scale(8),
+    },
+    timeRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(8),
+    },
     timeButton: {
         flexDirection: "row",
         alignItems: "center",
@@ -195,6 +293,13 @@ const styles = StyleSheet.create({
         fontSize: fs(13),
         fontFamily: "Aeonik-Medium",
         color: "#234338",
+    },
+    removeTimeButton: {
+        borderWidth: 1,
+        borderColor: "#F0C9C5",
+        backgroundColor: "#FBEEED",
+        borderRadius: scale(20),
+        padding: scale(6),
     },
     freqRow: {
         flexDirection: "row",

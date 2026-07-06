@@ -22,6 +22,7 @@ type Props = {
     onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
     onRemoveMedicine: (index: number) => void;
     onAddMedicine: (medicine: MedicineType) => void;
+    initialTitle: string
 };
 
 const Generic: React.FC<Props> = ({
@@ -37,7 +38,8 @@ const Generic: React.FC<Props> = ({
     onAddTag,
     onRemoveMedicine,
     onUpdateMedicine,
-    onAddMedicine
+    onAddMedicine,
+    initialTitle
 }) => {
     const meta = document.document_metadata;
     return (
@@ -70,6 +72,7 @@ const Generic: React.FC<Props> = ({
                 onRemoveMedicine={onRemoveMedicine}
                 onUpdateMedicine={onUpdateMedicine}
                 onAddMedicine={onAddMedicine}
+                initialTitle={initialTitle}
             />
             <NotesAndTags
                 notes={meta.important_notes}
