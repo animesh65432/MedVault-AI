@@ -19,7 +19,7 @@ type Props = {
     onUpdateTag: (index: number, value: string) => void;
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
-    onChangeTextProseBlock: (type: "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
+    onChangeTextProseBlock: (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
 };
 
 const RadiologyReport: React.FC<Props> = ({ onChangeTextProseBlock, onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, isEditable, document }) => {

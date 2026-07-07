@@ -432,7 +432,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
         });
     }
 
-    const onChangeTextProseBlock = (type: "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => {
+    const onChangeTextProseBlock = (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => {
         if (type === "Radiology Report") {
             SetDocument(prev => {
                 if (!prev) return prev;
@@ -461,7 +461,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                 } as DocumentType;
             });
         }
-        else {
+        else if (type === "Referral Letter") {
             SetDocument(prev => {
                 if (!prev) return prev;
                 if (prev.type !== "Referral Letter") return prev;
@@ -474,6 +474,13 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                     },
                 } as DocumentType;
             })
+        }
+        else {
+            SetDocument(prev => {
+                if (!prev) return prev;
+                if (!("summary" in prev.document_metadata)) return prev;
+                return { ...prev, document_metadata: { ...prev.document_metadata, [label]: value } } as DocumentType;
+            });
         }
     }
     const content = useMemo(() => {
@@ -644,6 +651,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         initialTitle={Document.title}
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
+                        onChangeTextProseBlock={onChangeTextProseBlock}
                     />
                 );
             default: {
@@ -659,6 +667,8 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
     const handleCloseDocumentView = useCallback(() => {
         setShowDocmentViewVisible(false);
     }, []);
+
+    console.log(Document, "Document");
 
     return <View style={{ flex: 1 }}>
         <Navbar />

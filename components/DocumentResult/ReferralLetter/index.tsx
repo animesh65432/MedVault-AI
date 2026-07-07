@@ -26,7 +26,7 @@ type Props = {
     initialTitle: string;
     onAddReminder: (index: number, reminder: Reminder) => void;
     onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void;
-    onChangeTextProseBlock: (type: "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
+    onChangeTextProseBlock: (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
 };
 
 const ReferralLetter: React.FC<Props> = ({

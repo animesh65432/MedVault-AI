@@ -7,8 +7,8 @@ type Props = {
     label: string;
     text?: string;
     isEditable: boolean;
-    onChangeText: (type: "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
-    type: "Radiology Report" | "Discharge Summary" | "Referral Letter";
+    onChangeText: (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
+    type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter";
     fieldKey: string;
 };
 

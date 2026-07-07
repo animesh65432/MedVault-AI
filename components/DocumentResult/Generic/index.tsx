@@ -6,6 +6,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import FieldRows from "../FieldRows";
 import Medicines from "../Medicines";
 import NotesAndTags from "../NotesandTags";
+import ProseBlock from "../ProseBlock";
 import Title from "../Title";
 
 type Props = {
@@ -25,6 +26,7 @@ type Props = {
     initialTitle: string;
     onAddReminder: (index: number, reminder: Reminder) => void;
     onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
+    onChangeTextProseBlock: (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
 };
 
 const Generic: React.FC<Props> = ({
@@ -70,6 +72,14 @@ const Generic: React.FC<Props> = ({
                     onValueChange={onFieldValueChange}
                 />
             </View>
+            <ProseBlock
+                onChangeText={onFieldValueChange}
+                label="Summary"
+                text={meta.summary}
+                isEditable={isEditable}
+                type="Generic"
+                fieldKey="summary"
+            />
             <Medicines
                 medicines={meta.medicines}
                 isEditable={isEditable}

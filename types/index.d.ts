@@ -166,6 +166,8 @@ export interface GenericDocument extends BaseDocument {
         medicines: Medicine[];
         important_notes: string[];
         tags: string[];
+        summary: string;
+        key_points: string[];
     };
 }
 
