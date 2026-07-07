@@ -25,7 +25,8 @@ type Props = {
     onAddMedicine: (medicine: MedicineType) => void;
     initialTitle: string;
     onAddReminder: (index: number, reminder: Reminder) => void;
-    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
+    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void;
+    onChangeTextProseBlock: (type: "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
 };
 
 const ReferralLetter: React.FC<Props> = ({
@@ -44,7 +45,8 @@ const ReferralLetter: React.FC<Props> = ({
     onAddMedicine,
     initialTitle,
     onAddReminder,
-    onRemoveReminder
+    onRemoveReminder,
+    onChangeTextProseBlock
 }) => {
     const meta = document.document_metadata;
 
@@ -81,6 +83,9 @@ const ReferralLetter: React.FC<Props> = ({
                 label="Reason for referral"
                 text={meta.reason_for_referral}
                 isEditable={isEditable}
+                type="Referral Letter"
+                onChangeText={onChangeTextProseBlock}
+                fieldKey="reason_for_referral"
             />
 
             <Medicines

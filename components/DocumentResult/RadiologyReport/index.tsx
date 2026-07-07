@@ -19,9 +19,10 @@ type Props = {
     onUpdateTag: (index: number, value: string) => void;
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
+    onChangeTextProseBlock: (type: "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
 };
 
-const RadiologyReport: React.FC<Props> = ({ onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, isEditable, document }) => {
+const RadiologyReport: React.FC<Props> = ({ onChangeTextProseBlock, onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, isEditable, document }) => {
     const meta = document.document_metadata;
 
     return (
@@ -56,14 +57,20 @@ const RadiologyReport: React.FC<Props> = ({ onUpdateNote, onRemoveNote, onUpdate
             </View>
 
             <ProseBlock
+                onChangeText={onChangeTextProseBlock}
                 label="Findings"
                 text={meta.findings}
                 isEditable={isEditable}
+                type="Radiology Report"
+                fieldKey="findings"
             />
             <ProseBlock
+                onChangeText={onChangeTextProseBlock}
                 label="Impression"
                 text={meta.impression}
                 isEditable={isEditable}
+                type="Radiology Report"
+                fieldKey="impression"
             />
 
             <NotesAndTags

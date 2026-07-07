@@ -7,11 +7,17 @@ type Props = {
     label: string;
     text?: string;
     isEditable: boolean;
-    onChangeText?: (value: string) => void;
+    onChangeText: (type: "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
+    type: "Radiology Report" | "Discharge Summary" | "Referral Letter";
+    fieldKey: string;
 };
 
-const ProseBlock: React.FC<Props> = ({ label, text, isEditable, onChangeText }) => {
+const ProseBlock: React.FC<Props> = ({ fieldKey, type, label, text, isEditable, onChangeText }) => {
     if ((!text || text.trim().length === 0) && !isEditable) return null;
+
+    const handleChangeText = (value: string) => {
+        onChangeText(type, fieldKey, value);
+    }
 
     return (
         <View style={styles.container}>
@@ -19,7 +25,7 @@ const ProseBlock: React.FC<Props> = ({ label, text, isEditable, onChangeText }) 
             {isEditable ? (
                 <TextInput
                     value={text ?? ""}
-                    onChangeText={onChangeText}
+                    onChangeText={handleChangeText}
                     style={styles.textInput}
                     placeholder={`Add ${label.toLowerCase()}`}
                     placeholderTextColor="#B4B2A9"

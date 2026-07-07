@@ -33,6 +33,7 @@ type Props = {
     initialTitle: string;
     onAddReminder: (index: number, reminder: Reminder) => void;
     onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
+    onChangeTextProseBlock: (type: "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
 };
 
 const DischargeSummary: React.FC<Props> = ({
@@ -54,7 +55,8 @@ const DischargeSummary: React.FC<Props> = ({
     onAddTest,
     initialTitle,
     onAddReminder,
-    onRemoveReminder
+    onRemoveReminder,
+    onChangeTextProseBlock
 }) => {
     const meta = document.document_metadata;
     const hasStayDates = meta.admission_date || meta.discharge_date;
@@ -123,6 +125,9 @@ const DischargeSummary: React.FC<Props> = ({
                 label="Diagnosis"
                 text={meta.diagnosis}
                 isEditable={isEditable}
+                type="Discharge Summary"
+                onChangeText={onChangeTextProseBlock}
+                fieldKey="diagnosis"
             />
 
             <BulletList
@@ -154,6 +159,9 @@ const DischargeSummary: React.FC<Props> = ({
                 label="Follow-up"
                 text={meta.follow_up}
                 isEditable={isEditable}
+                type="Discharge Summary"
+                onChangeText={onChangeTextProseBlock}
+                fieldKey="follow_up"
             />
 
             <NotesAndTags

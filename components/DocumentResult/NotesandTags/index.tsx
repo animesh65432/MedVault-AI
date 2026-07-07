@@ -4,6 +4,7 @@ import Feather from "@expo/vector-icons/Feather";
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import AddNoteModel from "../AddNoteModel";
+import AddTagModel from "../AddTagModel";
 
 type Props = {
     notes: string[];
@@ -20,7 +21,7 @@ type Props = {
 const NotesAndTags: React.FC<Props> = ({
     isEditable,
     notes,
-    tags,
+    tags = [],
     onUpdateNote,
     onRemoveNote,
     onAddNote,
@@ -28,20 +29,12 @@ const NotesAndTags: React.FC<Props> = ({
     onRemoveTag,
     onAddTag,
 }) => {
-    const [newTag, setNewTag] = useState("");
-    const [ShowNoteModel, SetShowNoteModel] = useState<boolean>(false)
+    const [ShowNoteModel, SetShowNoteModel] = useState<boolean>(false);
+    const [ShowTagModel, SetShowTagModel] = useState<boolean>(false);
     const hasNotes = notes && notes.length > 0;
     const hasTags = tags && tags.length > 0;
 
     if (!hasNotes && !hasTags && !isEditable) return null;
-
-    const submitNewTag = () => {
-        const trimmed = newTag.trim();
-        if (trimmed) {
-            onAddTag(trimmed);
-            setNewTag("");
-        }
-    };
 
     return (
         <View style={styles.container}>
@@ -85,7 +78,15 @@ const NotesAndTags: React.FC<Props> = ({
 
             {(hasTags || isEditable) && (
                 <View style={styles.block}>
-                    <Text style={styles.label}>Tags</Text>
+                    <View style={styles.labelRow}>
+                        <Text style={styles.label}>Tags</Text>
+                        {isEditable && (
+                            <TouchableOpacity onPress={() => SetShowTagModel(true)} hitSlop={8} style={styles.addRow}>
+                                <Feather name="plus" size={fs(12)} color="#234338" />
+                                <Text style={styles.addRowText}>Add</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
                     <View style={styles.tagsRow}>
                         {tags.map((tag, index) =>
                             isEditable ? (
@@ -105,20 +106,6 @@ const NotesAndTags: React.FC<Props> = ({
                                 </View>
                             )
                         )}
-                        {isEditable && (
-                            <View style={styles.tagAddWrap}>
-                                <TextInput
-                                    value={newTag}
-                                    onChangeText={setNewTag}
-                                    onSubmitEditing={submitNewTag}
-                                    onBlur={submitNewTag}
-                                    placeholder="+ new tag"
-                                    placeholderTextColor="#8FAFCB"
-                                    style={styles.tagAddInput}
-                                    returnKeyType="done"
-                                />
-                            </View>
-                        )}
                     </View>
                 </View>
             )}
@@ -128,6 +115,14 @@ const NotesAndTags: React.FC<Props> = ({
                 onAdd={(note) => {
                     onAddNote(note);
                     SetShowNoteModel(false);
+                }}
+            />
+            <AddTagModel
+                visible={ShowTagModel}
+                onClose={() => SetShowTagModel(false)}
+                onAdd={(tag) => {
+                    onAddTag(tag);
+                    SetShowTagModel(false);
                 }}
             />
         </View>
@@ -233,22 +228,6 @@ const styles = StyleSheet.create({
         textTransform: "lowercase",
         padding: 0,
         minWidth: scale(30),
-    },
-    tagAddWrap: {
-        backgroundColor: "#F1EFE8",
-        borderRadius: scale(20),
-        paddingHorizontal: scale(10),
-        paddingVertical: scale(4),
-        borderWidth: 1,
-        borderStyle: "dashed",
-        borderColor: "#B4B2A9",
-    },
-    tagAddInput: {
-        fontSize: fs(11),
-        fontFamily: "Aeonik-Medium",
-        color: "#5F5E5A",
-        padding: 0,
-        minWidth: scale(60),
     },
 });
 

@@ -432,6 +432,50 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
         });
     }
 
+    const onChangeTextProseBlock = (type: "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => {
+        if (type === "Radiology Report") {
+            SetDocument(prev => {
+                if (!prev) return prev;
+                if (prev.type !== "Radiology Report") return prev;
+
+                return {
+                    ...prev,
+                    document_metadata: {
+                        ...prev.document_metadata,
+                        [label]: value,
+                    },
+                } as DocumentType;
+            });
+        }
+        else if (type === "Discharge Summary") {
+            SetDocument(prev => {
+                if (!prev) return prev;
+                if (prev.type !== "Discharge Summary") return prev;
+
+                return {
+                    ...prev,
+                    document_metadata: {
+                        ...prev.document_metadata,
+                        [label]: value,
+                    },
+                } as DocumentType;
+            });
+        }
+        else {
+            SetDocument(prev => {
+                if (!prev) return prev;
+                if (prev.type !== "Referral Letter") return prev;
+
+                return {
+                    ...prev,
+                    document_metadata: {
+                        ...prev.document_metadata,
+                        [label]: value,
+                    },
+                } as DocumentType;
+            })
+        }
+    }
     const content = useMemo(() => {
         switch (Document.type) {
             case "Prescription":
@@ -510,6 +554,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                     onRemoveTag={onRemoveTag}
                     onAddTag={onAddTag}
                     onAddNote={onAddNote}
+                    onChangeTextProseBlock={onChangeTextProseBlock}
                 />;
             case "Medical Bill":
                 return <MedicalBill
@@ -552,6 +597,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         initialTitle={Document.title}
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
+                        onChangeTextProseBlock={onChangeTextProseBlock}
                     />
                 );
             case "Referral Letter":
@@ -573,6 +619,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
                         initialTitle={Document.title}
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
+                        onChangeTextProseBlock={onChangeTextProseBlock}
                     />
                 );
             case "Insurance Document":
