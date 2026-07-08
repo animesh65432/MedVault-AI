@@ -668,8 +668,6 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
         setShowDocmentViewVisible(false);
     }, []);
 
-    console.log(Document, "Document");
-
     return <View style={{ flex: 1 }}>
         <Navbar />
         <ScrollView
