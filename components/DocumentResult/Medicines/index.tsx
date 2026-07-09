@@ -145,10 +145,7 @@ const Medicines: React.FC<Props> = ({
                                         onChangeText={(text) => onUpdateMedicine?.(index, "dosage", text)}
                                     />
                                     <Dropdown
-                                        style={[
-                                            styles.dropdown,
-                                            isFrequencyFocus && styles.dropdownFocused,
-                                        ]}
+                                        style={styles.dropdown}
                                         placeholderStyle={styles.dropdownPlaceholder}
                                         selectedTextStyle={styles.dropdownSelectedText}
                                         itemTextStyle={styles.pickerItemText}

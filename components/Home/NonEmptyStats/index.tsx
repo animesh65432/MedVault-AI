@@ -1,54 +1,32 @@
-import { MedicalDocument } from '@/types'
-import { scale } from '@/utils/scale'
-import { vScale } from '@/utils/vScale'
-import { useRouter } from "expo-router"
+import { CountTypes } from "@/types"
+import { vScale } from "@/utils/vScale"
 import React from 'react'
-import { Pressable, StyleSheet, Text, View } from "react-native"
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import Documents from '../../Documents'
-import Upload from '../Upload'
+import { StyleSheet, View } from "react-native"
+import InputBox from "../InputBox"
+import RecentDocuments from "../RecentDocuments"
+import Stats from "../Stats"
+import UpLoad from "../Upload"
 
-const NonEmptyStats: React.FC<{ documents: MedicalDocument[] }> = ({ documents }) => {
-    const router = useRouter()
+const NonEmptyStats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, remindersCount }) => {
     return (
         <View style={styles.container}>
-            <Upload />
-            <Documents documents={documents} />
-            <Pressable
-                style={styles.seeAll}
-                onPress={() => router.push('/Search')}
-            >
-                <Text style={styles.text}>
-                    See All Documents
-                    <AntDesign
-                        style={{ marginLeft: scale(6) }}
-                        name="arrow-right"
-                        size={scale(16)}
-                        color="#23423B"
-                    />
-                </Text>
-            </Pressable>
+            <Stats
+                documentsCount={documentsCount}
+                medicinesCount={medicinesCount}
+                remindersCount={remindersCount}
+            />
+            <InputBox />
+            <UpLoad />
+            <RecentDocuments />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        gap: vScale(3)
-    },
-    seeAll: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: scale(6),
-        marginTop: vScale(18),
-    },
-    text: {
-        marginTop: vScale(18),
-        textAlign: 'center',
-        fontFamily: 'Aeonik-Medium',
-        fontSize: scale(16),
-        color: '#23423B',
+        flex: 1,
+        flexDirection: "column",
+        gap: vScale(20)
     }
 })
 

@@ -4,10 +4,11 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 type Props = {
-    ShowStats: boolean
+    DocumentCount: number;
 }
 
-const Title: React.FC<Props> = ({ ShowStats }) => {
+
+const Title: React.FC<Props> = ({ DocumentCount }) => {
 
     const getGreeting = () => {
         const hour = new Date().getHours()
@@ -19,7 +20,7 @@ const Title: React.FC<Props> = ({ ShowStats }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.greeting}>
-                {ShowStats ? `${getGreeting()} 👋` : 'Welcome 👋'}
+                {DocumentCount === 0 ? "Welcome 👋" : `${getGreeting()} 👋`}
             </Text>
         </View>
     )

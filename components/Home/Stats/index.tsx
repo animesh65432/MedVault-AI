@@ -1,198 +1,82 @@
-import { StatsInformation } from '@/types';
-import { scale } from '@/utils/scale';
-import { vScale } from "@/utils/vScale";
-import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from "expo-router";
-import React, { useEffect, useRef } from 'react';
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { CountTypes } from "@/types"
+import { scale } from "@/utils/scale"
+import { vScale } from "@/utils/vScale"
+import React from "react"
+import { StyleSheet, Text, View } from "react-native"
+import Entypo from 'react-native-vector-icons/Entypo'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import Fontisto from 'react-native-vector-icons/Fontisto'
 
-interface StatsProps {
-    statsInformation: StatsInformation;
-}
-
-interface StatCardProps {
-    icon: keyof typeof Ionicons.glyphMap;
-    value: number;
-    label: string;
-    delay: number;
-}
-
-const StatCard: React.FC<StatCardProps> = ({ icon, value, label, delay }) => {
-    const fadeAnim = useRef(new Animated.Value(0)).current;
-    const slideAnim = useRef(new Animated.Value(vScale(16))).current;
-    const scaleAnim = useRef(new Animated.Value(0.92)).current;
-
-    useEffect(() => {
-        Animated.parallel([
-            Animated.timing(fadeAnim, {
-                toValue: 1,
-                duration: 420,
-                delay,
-                useNativeDriver: true,
-            }),
-            Animated.spring(slideAnim, {
-                toValue: 0,
-                delay,
-                damping: 18,
-                stiffness: 140,
-                useNativeDriver: true,
-            }),
-            Animated.spring(scaleAnim, {
-                toValue: 1,
-                delay,
-                damping: 16,
-                stiffness: 120,
-                useNativeDriver: true,
-            }),
-        ]).start();
-    }, []);
-
-    return (
-        <Animated.View
-            style={[
-                styles.card,
-                {
-                    opacity: fadeAnim,
-                    transform: [
-                        { translateY: slideAnim },
-                        { scale: scaleAnim },
-                    ],
-                },
-            ]}
-        >
-            {/* Top accent bar */}
-            <View style={styles.accentBar} />
-
-            {/* Icon badge */}
-            <View style={styles.iconBadge}>
-                <Ionicons name={icon} size={scale(28)} color="#23423B" />
-            </View>
-
-            {/* Value */}
-            <Text style={styles.valueText}>{value}</Text>
-
-            {/* Divider */}
-            <View style={styles.divider} />
-
-            {/* Label */}
-            <Text style={styles.labelText}>{label}</Text>
-        </Animated.View>
-    );
-};
-
-const Stats: React.FC<StatsProps> = ({ statsInformation }) => {
-    const router = useRouter();
-
-    const handleRoute = (route: "/Search" | "/Medicines") => {
-        router.push("/Alerts");
-    };
-
-
+const Stats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, remindersCount }) => {
     return (
         <View style={styles.container}>
-            <TouchableOpacity
-                onPress={() => handleRoute("/Search")}
-                style={styles.pressable}
-            >
-                <StatCard
-                    icon="document-text-outline"
-                    value={statsInformation.total_documents}
-                    label="Documents"
-                    delay={0}
+            <View style={styles.statBox}>
+                <Fontisto
+                    name="file-1"
+                    size={scale(24)}
+                    color="#23423B"
                 />
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={() => handleRoute("/Medicines")}
-                style={styles.pressable}
-            >
-                <StatCard
-                    icon="medkit-outline"
-                    value={statsInformation.total_medicine_records}
-                    label="Medicines"
-                    delay={80}
+                <Text style={styles.count}>{documentsCount}</Text>
+                <Text style={styles.label}>Documents</Text>
+            </View>
+
+            <View style={styles.divider} />
+
+            <View style={styles.statBox}>
+                <FontAwesome5
+                    name="pills"
+                    size={scale(24)}
+                    color="#23423B"
                 />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.pressable}
-            >
-                <StatCard
-                    icon="alarm-outline"
-                    value={statsInformation.total_reminders}
-                    label="Alerts"
-                    delay={160}
+                <Text style={styles.count}>{medicinesCount}</Text>
+                <Text style={styles.label}>Meds</Text>
+            </View>
+
+            <View style={styles.divider} />
+
+            <View style={styles.statBox}>
+                <Entypo
+                    name="bell"
+                    size={scale(24)}
+                    color="#23423B"
                 />
-            </TouchableOpacity>
-        </View >
-    );
-};
+                <Text style={styles.count}>{remindersCount}</Text>
+                <Text style={styles.label}>Reminders</Text>
+            </View>
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        gap: vScale(10),
-    },
-    card: {
         alignItems: "center",
-        backgroundColor: "white",
-        borderRadius: vScale(14),
-        paddingTop: vScale(14),
-        paddingBottom: vScale(14),
-        paddingHorizontal: scale(8),
-        overflow: "hidden",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: vScale(4) },
-        shadowOpacity: 0.18,
-        shadowRadius: vScale(8),
-        elevation: 4,
-        borderWidth: 0.2,
-        borderColor: "#23423B",
+        backgroundColor: "#FAFAF8",
+        borderRadius: scale(16),
+        paddingVertical: vScale(16),
+        paddingHorizontal: scale(12),
     },
-    accentBar: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        height: vScale(3),
-        // backgroundColor: "#EEF6A2",
-        borderTopLeftRadius: vScale(14),
-        borderTopRightRadius: vScale(14),
-    },
-    iconBadge: {
-        width: scale(36),
-        height: scale(36),
-        borderRadius: scale(10),
+    statBox: {
+        flex: 1,
         alignItems: "center",
-        justifyContent: "center",
-        marginBottom: vScale(10),
-    },
-    valueText: {
-        fontSize: scale(22),
-        fontWeight: "700",
-        color: "#23423B",
-        fontFamily: "Aeonik-Medium",
-        letterSpacing: -0.5,
-        lineHeight: scale(26),
+        gap: vScale(4)
     },
     divider: {
-        width: scale(24),
-        height: 1,
-        backgroundColor: "rgba(238, 246, 162, 0.2)",
-        marginVertical: vScale(6),
+        width: 1,
+        height: vScale(36),
+        backgroundColor: "#E0E0DC",
     },
-    labelText: {
-        fontSize: scale(14),
-        fontWeight: "500",
-        color: "#23423B",
+    count: {
         fontFamily: "Aeonik-Medium",
+        fontSize: scale(18),
+        color: "#23423B",
+    },
+    label: {
+        fontFamily: "Aeonik-Regular",
+        fontSize: scale(12),
+        color: "#5A7A74",
         textAlign: "center",
-        letterSpacing: 0.3,
     },
-    pressable: {
-        flex: 1,
-    },
-    pressablePressed: {
-        opacity: 0.9,
-    },
-});
+})
 
-export default Stats;
+export default Stats

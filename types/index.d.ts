@@ -183,3 +183,44 @@ export type DocumentType =
     | DischargeSummaryDocument
     | ReferralLetterDocument
     | GenericDocument;
+
+
+export type CountTypes = {
+    documentsCount: number;
+    medicinesCount: number;
+    remindersCount: number;
+}
+
+export type DocumentRow = {
+    Id: number;
+    Hash: string;
+    SourceFilePath: string;
+    CreatedAt: string;
+    UpdatedAt: string;
+    title: string;
+    type: TypeOfDocumenet;
+    date: string | null;
+    patient_name: string | null;
+    doctor_name: string | null;
+    clinic_name: string | null;
+    pharmacy_name: string | null;
+    lab_name: string | null;
+    referred_by: string | null;
+    center_name: string | null;
+    modality: string | null;
+    body_part: string | null;
+    findings: string | null;
+    impression: string | null;
+    hospital_name: string | null;
+    admission_date: string | null;
+    discharge_date: string | null;
+    diagnosis: string | null;
+    follow_up: string | null;
+    referring_doctor: string | null;
+    referred_to: string | null;
+    reason_for_referral: string | null;
+    subtotal: string | null;
+    discount: string | null;
+    total_amount: string | null;
+    summary: string | null;
+}

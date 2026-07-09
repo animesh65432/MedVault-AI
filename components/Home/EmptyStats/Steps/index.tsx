@@ -1,16 +1,19 @@
-import { scale } from '@/utils/scale'
-import { vScale } from '@/utils/vScale'
-import React from 'react'
-import Fontisto from 'react-native-vector-icons/Fontisto'
-import Entypo from 'react-native-vector-icons/Entypo'
-import { View, StyleSheet, Text } from 'react-native'
+import { scale } from "@/utils/scale";
+import { vScale } from "@/utils/vScale";
+import { useRouter } from 'expo-router';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 
 type IconLibrary = 'Fontisto' | 'Entypo'
+
+export type DocumentCategory = 'Prescription' | 'Lab Reports' | 'Medical Records'
 
 interface StepItem {
     iconLib: IconLibrary
     iconName: string
-    title: string
+    title: DocumentCategory
     description: string
 }
 
@@ -33,12 +36,6 @@ const STEPS: StepItem[] = [
         title: 'Medical Records',
         description: 'Store your medical documents',
     },
-    {
-        iconLib: 'Fontisto',
-        iconName: 'heartbeat-alt',
-        title: 'Health Vitals',
-        description: 'Monitor your health metrics',
-    },
 ]
 
 const StepIcon: React.FC<{ iconLib: IconLibrary; iconName: string }> = ({
@@ -50,12 +47,24 @@ const StepIcon: React.FC<{ iconLib: IconLibrary; iconName: string }> = ({
 }
 
 const Steps: React.FC = () => {
+    const router = useRouter()
+
+    const handlePress = (category: DocumentCategory) => {
+    }
+
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>What can you Upload?</Text>
+            <Text style={styles.title}>
+                What can you Upload?
+            </Text>
             <View style={styles.stepContainer}>
                 {STEPS.map((step) => (
-                    <View key={step.iconName} style={styles.step}>
+                    <TouchableOpacity
+                        key={step.title}
+                        style={styles.step}
+                        activeOpacity={0.6}
+                        onPress={() => handlePress(step.title)}
+                    >
                         <View style={styles.iconWrapper}>
                             <StepIcon iconLib={step.iconLib} iconName={step.iconName} />
                         </View>
@@ -63,7 +72,7 @@ const Steps: React.FC = () => {
                             <Text style={styles.stepTitle}>{step.title}</Text>
                             <Text style={styles.stepDescription}>{step.description}</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 ))}
             </View>
         </View>
@@ -72,14 +81,21 @@ const Steps: React.FC = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         flexDirection: 'column',
         marginRight: 'auto',
         gap: vScale(16),
+        marginTop: vScale(20),
+    },
+    title: {
+        fontFamily: 'Aeonik-Medium',
+        fontSize: scale(20),
+        color: '#23423B',
+        textAlign: 'center',
+        lineHeight: vScale(26),
     },
     titleText: {
         fontFamily: 'Aeonik-Medium',
-        fontSize: scale(20),
+        fontSize: scale(40),
         color: '#23423B',
         textAlign: 'center',
         lineHeight: vScale(26),
@@ -98,12 +114,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     stepTextContainer: {
-        flex: 1,
+        flexDirection: "column"
     },
     stepTitle: {
         fontFamily: 'Aeonik-Medium',
         fontSize: scale(15),
         color: '#23423B',
+        lineHeight: vScale(20),
     },
     stepDescription: {
         fontFamily: 'Aeonik-Regular',

@@ -1,6 +1,5 @@
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
-import React from 'react'
 import { StyleSheet, Text, View } from "react-native"
 
 const Description = () => {
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
     descriptionText: {
         fontFamily: 'Aeonik-Medium',
         fontSize: scale(15),
-        color: '#888',
+        color: '#5A7A74',
         textAlign: 'center',
         lineHeight: vScale(20),
     },

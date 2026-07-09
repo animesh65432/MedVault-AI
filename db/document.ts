@@ -1,5 +1,6 @@
-import { BillingItem, DocumentType, LabTest, Medicine } from "@/types";
+import { BillingItem, DocumentRow, DocumentType, LabTest, Medicine } from "@/types";
 import { SQLiteDatabase } from "expo-sqlite";
+
 
 async function insertMedicine(db: SQLiteDatabase, documentId: number, med: Medicine) {
     const result = await db.runAsync(
@@ -190,3 +191,56 @@ export const CheckDocumentExists = async (
         return false;
     }
 };
+
+export const GetDocumentsCount = async (db: SQLiteDatabase): Promise<number> => {
+    try {
+        const result = await db.getFirstAsync<{ count: number }>(
+            `SELECT COUNT(*) as count FROM Documents`
+        );
+        return result?.count ?? 0;
+    } catch (error) {
+        console.error("Error getting documents count:", error);
+        return 0;
+    }
+};
+
+export const GetMedicinesCount = async (db: SQLiteDatabase): Promise<number> => {
+    try {
+        const result = await db.getFirstAsync<{ count: number }>(
+            `SELECT COUNT(*) as count FROM Medicines`
+        );
+        return result?.count ?? 0;
+    } catch (error) {
+        console.error("Error getting medicines count:", error);
+        return 0;
+    }
+}
+
+export const GetRemindersCount = async (db: SQLiteDatabase): Promise<number> => {
+    try {
+        const result = await db.getFirstAsync<{ count: number }>(
+            `SELECT COUNT(*) as count FROM Reminders`
+        );
+        return result?.count ?? 0;
+    } catch (error) {
+        console.error("Error getting reminders count:", error);
+        return 0;
+    }
+}
+
+export const GetDocuments = async (
+    db: SQLiteDatabase,
+    ORDER: "DESC" | "ASC",
+    LIMIT: number
+): Promise<DocumentRow[]> => {
+    try {
+        const rows = await db.getAllAsync<DocumentRow>(
+            `SELECT * FROM Documents ORDER BY date ${ORDER} LIMIT ?`,
+            [LIMIT]
+        );
+        return rows;
+    } catch (error) {
+        console.error("Error getting documents:", error);
+        return [];
+    }
+}

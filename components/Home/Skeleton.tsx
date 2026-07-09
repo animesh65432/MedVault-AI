@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import { Animated, StyleSheet, View, Dimensions } from 'react-native';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 

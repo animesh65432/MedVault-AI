@@ -5,7 +5,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const UpLoad = () => {
+const UpLoad: React.FC = () => {
     const router = useRouter();
 
     const pickAndUpload = () => {

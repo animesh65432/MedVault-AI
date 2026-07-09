@@ -1,12 +1,12 @@
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
-import React from 'react'
+import React from "react"
 import { Image, StyleSheet, View } from "react-native"
 import UpLoad from '../Upload'
 import Description from './DesScription'
 import Steps from './Steps'
 
-const EmptyStats = () => {
+const EmptyStats: React.FC = () => {
     return (
         <View
             style={styles.container}
