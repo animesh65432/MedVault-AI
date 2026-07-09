@@ -19,8 +19,8 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
         }
 
 
-        if (currentDbVersion === DATABASE_VERSION) {
-            console.log('Migrating database from version 1 to version 2...');
+        if (currentDbVersion <= DATABASE_VERSION) {
+
             await db.execAsync(`
             PRAGMA foreign_keys = ON;
 
@@ -67,13 +67,16 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 referred_to TEXT,
                 reason_for_referral TEXT,
 
+
                 -- Generic (Insurance Document / Consent Form / Medical History Record / Other)
                 summary TEXT,
 
                 CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+                UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                SourceFilePath TEXT NOT NULL,
+                Hash TEXT NOT NULL UNIQUE
             );
-
+            
             CREATE INDEX IF NOT EXISTS idx_documents_type ON Documents(type);
             CREATE INDEX IF NOT EXISTS idx_documents_date ON Documents(date);
 

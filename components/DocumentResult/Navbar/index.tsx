@@ -4,23 +4,38 @@ import { vScale } from '@/utils/vScale';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { router } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 
-const Navbar = () => {
+type Props = {
+    saveDocument: () => void;
+    isSaving: boolean;
+}
+
+const Navbar: React.FC<Props> = ({ saveDocument, isSaving = false }) => {
     return (
         <View style={styles.container}>
             <Pressable
                 hitSlop={10}
                 style={styles.backButton}
                 onPress={() => router.back()}
+                disabled={isSaving}
             >
                 <MaterialIcons name="arrow-back" size={scale(22)} color="#234338" />
                 <Text style={styles.backText}>Back</Text>
             </Pressable>
 
-            <View>
-                <Fontisto name="save" size={scale(22)} color="#234338" />
-            </View>
+            <Pressable
+                hitSlop={10}
+                onPress={saveDocument}
+                disabled={isSaving}
+            >
+                {isSaving ? (
+                    <ActivityIndicator size="small" color="#234338" />
+                ) : (
+                    <Fontisto name="save" size={scale(22)} color="#234338" />
+                )}
+            </Pressable>
         </View>
     );
 };

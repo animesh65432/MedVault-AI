@@ -135,6 +135,7 @@ export interface DischargeSummaryDocument extends BaseDocument {
         follow_up: string;
         important_notes: string[];
         tags: string[];
+        date: string;
     };
 }
 

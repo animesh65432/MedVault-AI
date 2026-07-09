@@ -1,5 +1,9 @@
+import { CheckDocumentExists, create_document } from "@/db/document";
 import { BillingItem, DocumentType, LabTest, Medicine, Reminder } from "@/types";
+import { copyPhotoToPermanentStorage } from "@/utils/copyPhotoToPermanentStorage";
 import { scale } from "@/utils/scale";
+import { usehashFile } from "@/utils/usehashfile";
+import { useSQLiteContext } from "expo-sqlite";
 import React, { useCallback, useMemo, useState } from "react";
 import { ScrollView, View } from "react-native";
 import ImageView from "react-native-image-viewing";
@@ -16,6 +20,7 @@ import PrescriptionReceipt from "./PrescriptionReceipt";
 import RadiologyReport from "./RadiologyReport";
 import ReferralLetter from "./ReferralLetter";
 
+
 type Props = {
     isPdf: boolean,
     fileUri: string
@@ -26,7 +31,9 @@ type Props = {
 
 const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }) => {
     const [ShowDocumentViewVisible, setShowDocmentViewVisible] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
     const [isEditable, setIsEditable] = useState(false);
+    const db = useSQLiteContext();
 
     const onChangeTitle = (value: string) => {
         SetDocument(prev => {
@@ -668,8 +675,45 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
         setShowDocmentViewVisible(false);
     }, []);
 
+    const saveDocument = async () => {
+        setIsSaving(true)
+        try {
+            const source_file = await copyPhotoToPermanentStorage(fileUri)
+            const hash_file = await usehashFile(source_file)
+            const IsDocumentExistsOrNot = await CheckDocumentExists(db, hash_file)
+
+            if (IsDocumentExistsOrNot) {
+                Toast.show({
+                    type: "info",
+                    text1: "Document already exists",
+                })
+                return;
+            }
+
+            await create_document(db, Document, source_file, hash_file)
+
+            Toast.show({
+                type: "success",
+                text1: "Document saved successfully"
+            })
+        } catch (error) {
+            console.error("Error saving document:", error);
+            Toast.show({
+                type: "error",
+                text1: "Error saving document",
+                text2: "Please try again later."
+            })
+        }
+        finally {
+            setIsSaving(false)
+        }
+    }
+
     return <View style={{ flex: 1 }}>
-        <Navbar />
+        <Navbar
+            saveDocument={saveDocument}
+            isSaving={isSaving}
+        />
         <ScrollView
             contentContainerStyle={{ paddingBottom: scale(80) }}
         >

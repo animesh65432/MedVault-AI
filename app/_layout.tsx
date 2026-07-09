@@ -1,4 +1,5 @@
 import { Onboarding } from "@/components";
+import { toastConfig } from "@/components/toastConfig";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { migrateDbIfNeeded } from "@/db/database";
 import { useFonts } from "expo-font";
@@ -68,7 +69,9 @@ export default function RootLayout() {
       <OnboardingProvider>
         <KeyboardProvider>
           <RootLayoutContent />
-          <Toast />
+          <Toast
+            config={toastConfig}
+          />
           <StatusBar style="auto" />
         </KeyboardProvider>
       </OnboardingProvider>
