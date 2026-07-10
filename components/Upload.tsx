@@ -1,14 +1,18 @@
-import React, { useCallback, useMemo, useRef } from 'react';
-import {
-    View, Text, StyleSheet, TouchableOpacity, Animated,
-} from 'react-native';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { scale } from '@/utils/scale';
+import { vScale } from '@/utils/vScale';
 import { Ionicons } from '@expo/vector-icons';
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
-import { scale } from '@/utils/scale';
-import { vScale } from '@/utils/vScale';
+import React, { useCallback, useMemo, useRef } from 'react';
+import {
+    Animated,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 
 
 interface UploadOptionProps {

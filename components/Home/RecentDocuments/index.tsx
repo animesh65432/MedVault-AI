@@ -1,11 +1,12 @@
-import { GetDocuments } from "@/db/document"
-import { DocumentRow } from "@/types"
-import { scale } from "@/utils/scale"
-import { useSQLiteContext } from "expo-sqlite"
-import { useEffect, useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
-import Documents from "../Documents"
-import SeeAllDocuments from "../SeeAllDocuments"
+import { GetDocuments } from "@/db/document";
+import { DocumentRow } from "@/types";
+import { scale } from "@/utils/scale";
+import { useFocusEffect } from '@react-navigation/native';
+import { useSQLiteContext } from "expo-sqlite";
+import { useCallback, useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import Documents from "../Documents";
+import SeeAllDocuments from "../SeeAllDocuments";
 
 const RecentDocuments = () => {
     const [recentDocuments, setRecentDocuments] = useState<DocumentRow[]>([])
@@ -13,8 +14,7 @@ const RecentDocuments = () => {
 
     async function fetchRecentDocuments() {
         try {
-            console.log("Fetching recent documents...")
-            const documents = await GetDocuments(db, "DESC", 2)
+            const documents = await GetDocuments(db, "DESC", 3)
             setRecentDocuments(documents)
         } catch (error) {
             console.error("Failed to fetch recent documents:", error)
@@ -24,6 +24,15 @@ const RecentDocuments = () => {
     useEffect(() => {
         fetchRecentDocuments();
     }, [])
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchRecentDocuments();
+            return () => {
+                fetchRecentDocuments();
+            };
+        }, [])
+    );
 
     return (
         <View style={style.container}>

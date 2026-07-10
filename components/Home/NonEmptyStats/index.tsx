@@ -1,3 +1,4 @@
+import UploadButtom from "@/components/UploadButtom"
 import { CountTypes } from "@/types"
 import { vScale } from "@/utils/vScale"
 import React from 'react'
@@ -5,7 +6,6 @@ import { StyleSheet, View } from "react-native"
 import InputBox from "../InputBox"
 import RecentDocuments from "../RecentDocuments"
 import Stats from "../Stats"
-import UpLoad from "../Upload"
 
 const NonEmptyStats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, remindersCount }) => {
     return (
@@ -16,7 +16,7 @@ const NonEmptyStats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, r
                 remindersCount={remindersCount}
             />
             <InputBox />
-            <UpLoad />
+            <UploadButtom />
             <RecentDocuments />
         </View>
     )

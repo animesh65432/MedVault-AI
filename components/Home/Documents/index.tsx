@@ -97,7 +97,7 @@ const Documents: React.FC<Props> = ({ documents }) => {
                                 <Text style={styles.date}>{getDate(doc)}</Text>
                             )}
                             {subtitle.length > 0 && (
-                                <Text style={styles.subtitle} numberOfLines={1}>
+                                <Text style={styles.subtitle} >
                                     {subtitle}
                                 </Text>
                             )}

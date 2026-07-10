@@ -231,13 +231,31 @@ export const GetRemindersCount = async (db: SQLiteDatabase): Promise<number> => 
 export const GetDocuments = async (
     db: SQLiteDatabase,
     ORDER: "DESC" | "ASC",
-    LIMIT: number
+    LIMIT: number,
+    searchQuery?: string
 ): Promise<DocumentRow[]> => {
     try {
+        if (searchQuery && searchQuery.trim().length > 0) {
+            const rows = await db.getAllAsync<DocumentRow>(
+                `SELECT Documents.*
+                FROM DocumentsSearch
+                JOIN Documents ON Documents.Id = DocumentsSearch.rowid
+                WHERE DocumentsSearch MATCH ?
+                ORDER BY COALESCE(Documents.date, Documents.CreatedAt) ${ORDER}
+                LIMIT ?`,
+                [searchQuery.trim() + '*', LIMIT]
+            );
+            return rows;
+        }
+
         const rows = await db.getAllAsync<DocumentRow>(
-            `SELECT * FROM Documents ORDER BY date ${ORDER} LIMIT ?`,
+            `SELECT *
+            FROM Documents
+            ORDER BY COALESCE(date, CreatedAt) ${ORDER}
+            LIMIT ?`,
             [LIMIT]
         );
+
         return rows;
     } catch (error) {
         console.error("Error getting documents:", error);

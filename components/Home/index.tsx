@@ -1,13 +1,14 @@
-import { GetDocumentsCount, GetMedicinesCount, GetRemindersCount } from "@/db/document"
-import { CountTypes } from "@/types"
-import { scale } from '@/utils/scale'
-import { vScale } from '@/utils/vScale'
-import { useSQLiteContext } from 'expo-sqlite'
-import { useEffect, useState } from 'react'
-import { StyleSheet, View } from "react-native"
-import EmptyStats from "./EmptyStats"
-import NonEmptyStats from "./NonEmptyStats"
-import Title from './Title'
+import { GetDocumentsCount, GetMedicinesCount, GetRemindersCount } from "@/db/document";
+import { CountTypes } from "@/types";
+import { scale } from '@/utils/scale';
+import { vScale } from '@/utils/vScale';
+import { useFocusEffect } from '@react-navigation/native';
+import { useSQLiteContext } from 'expo-sqlite';
+import { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, View } from "react-native";
+import EmptyStats from "./EmptyStats";
+import NonEmptyStats from "./NonEmptyStats";
+import Title from './Title';
 
 
 const HomeLayOut = () => {
@@ -38,6 +39,15 @@ const HomeLayOut = () => {
     useEffect(() => {
         fetchCounts();
     }, [])
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchCounts();
+            return () => {
+                fetchCounts();
+            };
+        }, [])
+    );
 
     return (
         <View style={styles.container}>

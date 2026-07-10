@@ -5,7 +5,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const UpLoad: React.FC = () => {
+const UploadButtom: React.FC = () => {
     const router = useRouter();
 
     const pickAndUpload = () => {
@@ -14,7 +14,7 @@ const UpLoad: React.FC = () => {
 
     return (
         <TouchableOpacity
-            style={styles.button}
+            style={styles.uploadButton}
             activeOpacity={0.85}
             onPress={pickAndUpload}
         >
@@ -22,29 +22,28 @@ const UpLoad: React.FC = () => {
                 size={scale(18)}
                 color="#EEF6A2"
             />
-            <Text style={styles.text}>Upload Document</Text>
+            <Text style={styles.uploadText}>Upload Document</Text>
         </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
-    button: {
+    uploadButton: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        gap: scale(6),
+        gap: scale(8),
         backgroundColor: "#23423B",
-        paddingVertical: vScale(16),
-        paddingHorizontal: scale(34),
-        borderRadius: scale(12),
-        alignSelf: "center",
-        width: "100%"
+        borderRadius: scale(14),
+        paddingVertical: vScale(14),
+        paddingHorizontal: scale(24),
+        width: "100%",
     },
-    text: {
+    uploadText: {
         fontFamily: "Aeonik-Medium",
         fontSize: scale(15),
         color: "#EEF6A2",
-    }
+    },
 })
 
-export default UpLoad
+export default UploadButtom

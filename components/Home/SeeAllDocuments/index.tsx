@@ -7,10 +7,16 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const SeeAllDocuments: React.FC = () => {
     const router = useRouter()
+
+    const handlePress = () => {
+        router.push('/Search')
+    }
+
     return (
         <TouchableOpacity
             style={styles.container}
             activeOpacity={0.7}
+            onPress={handlePress}
         >
             <Text style={styles.text}>See All Documents</Text>
             <AntDesign name="arrow-right" size={scale(16)} color="#23423B" />
