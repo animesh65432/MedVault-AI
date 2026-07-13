@@ -10,7 +10,6 @@ type Props = {
 }
 
 const Empty: React.FC<Props> = ({ hasQuery }) => {
-
     return (
         <View style={styles.container}>
             <View style={styles.iconWrapper}>

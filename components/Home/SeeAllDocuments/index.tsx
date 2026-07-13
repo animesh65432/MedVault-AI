@@ -19,7 +19,11 @@ const SeeAllDocuments: React.FC = () => {
             onPress={handlePress}
         >
             <Text style={styles.text}>See All Documents</Text>
-            <AntDesign name="arrow-right" size={scale(16)} color="#23423B" />
+            <AntDesign
+                name="arrow-right"
+                size={scale(16)}
+                color="#23423B"
+            />
         </TouchableOpacity>
     )
 }
@@ -30,7 +34,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         gap: scale(7),
-        paddingVertical: vScale(10),
+        paddingVertical: vScale(4),
     },
     text: {
         fontFamily: "Aeonik-Medium",

@@ -9,7 +9,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 
 type Props = {
-    documents: DocumentRow[]
+    documents: DocumentRow[],
+    IsHome?: boolean
 }
 
 type IconLib = 'Fontisto' | 'Entypo' | 'FontAwesome5'
@@ -66,7 +67,7 @@ const getDate = (doc: DocumentRow): string | null => {
     return doc.date && doc.date.trim().length > 0 ? doc.date : null
 }
 
-const Documents: React.FC<Props> = ({ documents }) => {
+const Documents: React.FC<Props> = ({ documents, IsHome = false }) => {
     const router = useRouter()
 
     if (documents.length === 0) {
@@ -78,7 +79,7 @@ const Documents: React.FC<Props> = ({ documents }) => {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { marginBottom: !IsHome ? vScale(100) : vScale(20) }]}>
             {documents.map((doc) => {
                 const subtitle = getSubtitle(doc)
                 return (
@@ -112,7 +113,7 @@ const Documents: React.FC<Props> = ({ documents }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: "column",
-        gap: vScale(12),
+        gap: vScale(12)
     },
     card: {
         flexDirection: "row",

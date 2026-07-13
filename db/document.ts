@@ -70,7 +70,6 @@ export const create_document = async (db: SQLiteDatabase, doc: DocumentType, Sou
                 await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
                 break;
             }
-
             case "Prescription Receipt": {
                 const r = await db.runAsync(
                     `INSERT INTO Documents (title, type, patient_name, pharmacy_name, total_amount, date, SourceFilePath, Hash)
@@ -83,7 +82,6 @@ export const create_document = async (db: SQLiteDatabase, doc: DocumentType, Sou
                 await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
                 break;
             }
-
             case "Lab Report": {
                 const r = await db.runAsync(
                     `INSERT INTO Documents (title, type, patient_name, lab_name, referred_by, date,SourceFilePath, Hash)
@@ -95,7 +93,6 @@ export const create_document = async (db: SQLiteDatabase, doc: DocumentType, Sou
                 await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
                 break;
             }
-
             case "Radiology Report": {
                 const r = await db.runAsync(
                     `INSERT INTO Documents (title, type, patient_name, referred_by, center_name, date, modality, body_part, findings, impression, SourceFilePath, Hash)
@@ -107,7 +104,6 @@ export const create_document = async (db: SQLiteDatabase, doc: DocumentType, Sou
                 await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
                 break;
             }
-
             case "Medical Bill": {
                 const r = await db.runAsync(
                     `INSERT INTO Documents (title, type, patient_name, hospital_name, subtotal, discount, total_amount, date, SourceFilePath, Hash)
@@ -119,12 +115,11 @@ export const create_document = async (db: SQLiteDatabase, doc: DocumentType, Sou
                 await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
                 break;
             }
-
             case "Discharge Summary": {
                 const r = await db.runAsync(
-                    `INSERT INTO Documents (title, type, patient_name, hospital_name, admission_date, discharge_date, diagnosis, follow_up, SourceFilePath, Hash)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                    [doc.title, doc.type, meta.patient_name, meta.hospital_name, meta.admission_date, meta.discharge_date, meta.diagnosis, meta.follow_up, SourceFilePath, Hash]
+                    `INSERT INTO Documents (title, type, patient_name, hospital_name, admission_date, discharge_date, diagnosis, follow_up, date, SourceFilePath, Hash)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [doc.title, doc.type, meta.patient_name, meta.hospital_name, meta.admission_date, meta.discharge_date, meta.diagnosis, meta.follow_up, meta.date, SourceFilePath, Hash]
                 );
                 documentId = r.lastInsertRowId;
                 for (const proc of meta.procedures ?? []) {
@@ -232,33 +227,81 @@ export const GetDocuments = async (
     db: SQLiteDatabase,
     ORDER: "DESC" | "ASC",
     LIMIT: number,
-    searchQuery?: string
+    searchQuery?: string,
+    CATEGORIES?: string[],
+    DATE_RANGE?: { startDate: Date | null; endDate: Date | null }
 ): Promise<DocumentRow[]> => {
     try {
-        if (searchQuery && searchQuery.trim().length > 0) {
+        const hasSearch = !!searchQuery && searchQuery.trim().length > 0
+        const hasCategories = !!CATEGORIES && CATEGORIES.length > 0
+        const hasDateRange = !!(DATE_RANGE?.startDate && DATE_RANGE?.endDate)
+
+        const conditions: string[] = []
+        const params: (string | number)[] = []
+
+
+        if (hasCategories) {
+            const placeholders = CATEGORIES!.map(() => '?').join(', ')
+            conditions.push(`Documents.type IN (${placeholders})`)
+            params.push(...CATEGORIES!)
+        }
+
+        if (hasDateRange) {
+            conditions.push(`COALESCE(Documents.date, Documents.CreatedAt) BETWEEN ? AND ?`)
+            params.push(
+                DATE_RANGE!.startDate!.toISOString(),
+                DATE_RANGE!.endDate!.toISOString()
+            )
+        }
+
+        console.log("params:", DATE_RANGE?.startDate)
+
+        if (hasSearch) {
+            conditions.unshift(`DocumentsSearch MATCH ?`)
+            params.unshift(searchQuery!.trim() + '*')
+
+            const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : ''
+
             const rows = await db.getAllAsync<DocumentRow>(
                 `SELECT Documents.*
                 FROM DocumentsSearch
                 JOIN Documents ON Documents.Id = DocumentsSearch.rowid
-                WHERE DocumentsSearch MATCH ?
+                ${whereClause}
                 ORDER BY COALESCE(Documents.date, Documents.CreatedAt) ${ORDER}
                 LIMIT ?`,
-                [searchQuery.trim() + '*', LIMIT]
-            );
-            return rows;
+                [...params, LIMIT]
+            )
+            return rows
         }
+
+        const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : ''
 
         const rows = await db.getAllAsync<DocumentRow>(
             `SELECT *
             FROM Documents
+            ${whereClause}
             ORDER BY COALESCE(date, CreatedAt) ${ORDER}
             LIMIT ?`,
-            [LIMIT]
-        );
+            [...params, LIMIT]
+        )
 
-        return rows;
+        console.log("params:", params)
+
+        return rows
     } catch (error) {
-        console.error("Error getting documents:", error);
-        return [];
+        console.error("Error getting documents:", error)
+        return []
+    }
+}
+
+export const HasAnyDocuments = async (db: SQLiteDatabase): Promise<boolean> => {
+    try {
+        const result = await db.getFirstAsync<{ count: number }>(
+            `SELECT COUNT(*) as count FROM Documents`
+        );
+        return (result?.count ?? 0) > 0;
+    } catch (error) {
+        console.error("Error checking if any documents exist:", error);
+        return false;
     }
 }

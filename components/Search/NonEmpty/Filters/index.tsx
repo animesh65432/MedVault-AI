@@ -1,6 +1,6 @@
 import { scale } from '@/utils/scale'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
-import { useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 const FILTER_OPTIONS = [
@@ -56,72 +56,77 @@ const buildPresetRanges = (documentDates: Date[] = []): DateRange[] => {
 const formatShort = (date: Date) =>
     date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
 
-type FiltersProps = {
-    documentDates?: Date[]
-    onFilterChange?: (selected: string[]) => void
-    onDateRangeChange?: (range: DateRange | null) => void
+type SelectedDateRange = {
+    startDate: Date | null
+    endDate: Date | null
 }
 
-const Filters = ({ documentDates, onFilterChange, onDateRangeChange }: FiltersProps) => {
-    const [selectedFilters, setSelectedFilters] = useState<string[]>([])
-    const [selectedRangeId, setSelectedRangeId] = useState<string | null>(null)
-    const [customRange, setCustomRange] = useState<{ start: Date; end: Date } | null>(null)
+type Props = {
+    SelectedCategories: string[]
+    setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>
+    SelectedDate: SelectedDateRange
+    setSelectedDate: React.Dispatch<React.SetStateAction<SelectedDateRange>>
+}
 
-    const [pickerStep, setPickerStep] = useState<'start' | 'end'>('start')
-    const [draftStart, setDraftStart] = useState<Date>(new Date())
-    const [draftEnd, setDraftEnd] = useState<Date>(new Date())
+const Filters: React.FC<Props> = ({
+    SelectedCategories,
+    SelectedDate,
+    setSelectedDate,
+    setSelectedCategories
+}) => {
     const [androidPickerOpen, setAndroidPickerOpen] = useState(false)
+    const [selectedRangeId, setSelectedRangeId] = useState<string | null>(null)
+    const [customRange, setCustomRange] = useState<Date>()
 
-    const presetRanges = useMemo(() => buildPresetRanges(documentDates), [documentDates])
+    const presetRanges = buildPresetRanges([])
 
     const toggleFilter = (filter: string) => {
-        setSelectedFilters((prev) => {
+        setSelectedCategories((prev) => {
             const next = prev.includes(filter)
                 ? prev.filter((f) => f !== filter)
                 : [...prev, filter]
-            onFilterChange?.(next)
             return next
         })
     }
 
     const applyRange = (range: DateRange | null) => {
         setSelectedRangeId(range?.id ?? null)
-        onDateRangeChange?.(range)
+        setSelectedDate({
+            startDate: range?.start ?? null,
+            endDate: range?.end ?? null,
+        })
     }
 
     const selectPreset = (range: DateRange) => {
         const isDeselecting = selectedRangeId === range.id
-        setCustomRange(null)
         applyRange(isDeselecting ? null : range)
     }
 
     const openCustomPicker = () => {
-        const baseStart = customRange?.start ?? new Date()
-        const baseEnd = customRange?.end ?? new Date()
-        setDraftStart(baseStart)
-        setDraftEnd(baseEnd)
-        setPickerStep('start')
         setAndroidPickerOpen(true)
     }
 
     const handleAndroidChange = (event: DateTimePickerEvent, date?: Date) => {
         setAndroidPickerOpen(false)
         if (event.type !== 'set' || !date) return
-
-        if (pickerStep === 'start') {
-            setDraftStart(date)
-            setPickerStep('end')
-            setAndroidPickerOpen(true)
-        } else {
-            const finalRange = { start: draftStart, end: date }
-            setCustomRange(finalRange)
-            applyRange({ id: CUSTOM_ID, label: `${formatShort(finalRange.start)} – ${formatShort(finalRange.end)}`, ...finalRange })
-        }
+        setCustomRange(date)
     }
 
     const customLabel = customRange
-        ? `${formatShort(customRange.start)} – ${formatShort(customRange.end)}`
+        ? `${formatShort(customRange)}`
         : 'Custom'
+
+
+    useEffect(() => {
+        if (customRange) {
+            applyRange({
+                id: CUSTOM_ID,
+                label: customLabel,
+                start: customRange,
+                end: customRange,
+            })
+        }
+    }, [customRange])
 
     return (
         <View style={styles.container}>
@@ -129,7 +134,7 @@ const Filters = ({ documentDates, onFilterChange, onDateRangeChange }: FiltersPr
                 <Text style={styles.title}>Quick filters</Text>
                 <View style={styles.chipWrap}>
                     {FILTER_OPTIONS.map((filter) => {
-                        const isSelected = selectedFilters.includes(filter)
+                        const isSelected = SelectedCategories.includes(filter)
                         return (
                             <Pressable
                                 key={filter}
@@ -184,11 +189,10 @@ const Filters = ({ documentDates, onFilterChange, onDateRangeChange }: FiltersPr
 
             {androidPickerOpen && (
                 <DateTimePicker
-                    value={pickerStep === 'start' ? draftStart : draftEnd}
+                    value={SelectedDate.startDate || new Date()}
                     mode="date"
                     display="default"
                     maximumDate={new Date()}
-                    minimumDate={pickerStep === 'end' ? draftStart : undefined}
                     onChange={handleAndroidChange}
                 />
             )}
@@ -198,7 +202,8 @@ const Filters = ({ documentDates, onFilterChange, onDateRangeChange }: FiltersPr
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // no flex here — this renders inside a ScrollView's content,
+        // flex: 1 has nothing to expand against and collapses the layout
     },
     section: {
         marginBottom: scale(20),
@@ -258,70 +263,6 @@ const styles = StyleSheet.create({
         color: '#23423B',
     },
     dateTextSelected: {
-        color: '#FFFFFF',
-    },
-    modalOverlay: {
-        flex: 1,
-        backgroundColor: '#00000055',
-        justifyContent: 'flex-end',
-    },
-    modalCard: {
-        backgroundColor: '#FFFFFF',
-        borderTopLeftRadius: scale(20),
-        borderTopRightRadius: scale(20),
-        paddingTop: scale(16),
-        paddingBottom: scale(24),
-        paddingHorizontal: scale(20),
-    },
-    stepToggle: {
-        flexDirection: 'row',
-        gap: scale(12),
-        marginBottom: scale(8),
-    },
-    stepButton: {
-        flex: 1,
-        paddingVertical: scale(10),
-        borderRadius: scale(12),
-        backgroundColor: '#F2F2F2',
-        alignItems: 'center',
-    },
-    stepLabel: {
-        fontFamily: 'Aeonik-Medium',
-        fontSize: scale(12),
-        color: '#23423B99',
-        textAlign: 'center',
-        lineHeight: scale(16),
-    },
-    stepLabelActive: {
-        color: '#23423B',
-    },
-    modalActions: {
-        flexDirection: 'row',
-        gap: scale(12),
-        marginTop: scale(12),
-    },
-    modalCancelButton: {
-        flex: 1,
-        paddingVertical: scale(12),
-        borderRadius: scale(12),
-        alignItems: 'center',
-        backgroundColor: '#F2F2F2',
-    },
-    modalCancelText: {
-        fontFamily: 'Aeonik-Medium',
-        fontSize: scale(14),
-        color: '#23423B',
-    },
-    modalConfirmButton: {
-        flex: 1,
-        paddingVertical: scale(12),
-        borderRadius: scale(12),
-        alignItems: 'center',
-        backgroundColor: '#23423B',
-    },
-    modalConfirmText: {
-        fontFamily: 'Aeonik-Medium',
-        fontSize: scale(14),
         color: '#FFFFFF',
     },
 })

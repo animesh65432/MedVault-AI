@@ -678,6 +678,7 @@ const DocumentResult: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf
     const saveDocument = async () => {
         setIsSaving(true)
         try {
+            console.log(Document.document_metadata.date, "document date")
             const source_file = await copyPhotoToPermanentStorage(fileUri)
             const hash_file = await usehashFile(source_file)
             const IsDocumentExistsOrNot = await CheckDocumentExists(db, hash_file)

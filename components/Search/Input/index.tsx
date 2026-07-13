@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(8),
         paddingVertical: vScale(4),
         gap: scale(8),
+        position: "sticky"
     },
     input: {
         flex: 1,

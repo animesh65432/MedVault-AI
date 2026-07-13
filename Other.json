@@ -1,0 +1,2435 @@
+[
+  {
+    "title": "Vaccination Certificate - Rajesh Banerjee",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Rajesh Banerjee",
+      "date": "2025-10-13",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Suresh Das, MBBS, DNB",
+        "Facility: Green Valley Health Centre",
+        "Vaccine administered as per national/international immunization schedule",
+        "No immediate adverse reaction observed post-vaccination",
+        "Next due dose, if applicable, communicated to the patient/guardian",
+        "Batch number and manufacturer details recorded in the clinic register"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Sai Sharma",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Sai Sharma",
+      "date": "2026-05-12",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Anil Chatterjee, MD (Pediatrics)",
+        "Facility: Sunrise Family Clinic",
+        "Follow-up with dietician advised after 4 weeks to assess progress",
+        "Adequate hydration advised, at least 2-3 liters of water daily",
+        "Small frequent meals recommended over large infrequent meals",
+        "Patient advised to reduce intake of refined sugar and processed foods"
+      ]
+    }
+  },
+  {
+    "title": "Physiotherapy Session Notes - Pooja Mukherjee",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Pooja Mukherjee",
+      "date": "2025-07-18",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["physiotherapy", "orthopedic"],
+      "summary": "This document records the findings and progress noted during a physiotherapy session as part of the patient's ongoing rehabilitation program.",
+      "key_points": [
+        "Issued by: Dr. Kavya Choudhury, MD (Medicine)",
+        "Facility: New Life Nursing Home",
+        "Gradual improvement noted since the start of the therapy program",
+        "Next session scheduled to continue the rehabilitation plan",
+        "Therapeutic exercises demonstrated and performed under supervision",
+        "Patient advised home exercise program to continue between sessions",
+        "Range of motion and muscle strength assessed and documented"
+      ]
+    }
+  },
+  {
+    "title": "Speech Therapy Progress Note - Manoj Kulkarni",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Manoj Kulkarni",
+      "date": "2025-08-30",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation",
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["speech-therapy", "pediatric"],
+      "summary": "This document records the progress observed during ongoing speech therapy sessions as part of the patient's developmental or rehabilitative care plan.",
+      "key_points": [
+        "Issued by: Dr. Aarav Agarwal, MD (Gen. Med)",
+        "Facility: Manipal Hospital",
+        "Articulation and language comprehension assessed during the session",
+        "Noticeable improvement observed in specific target areas since last session",
+        "Home practice exercises assigned to reinforce therapy goals",
+        "Continued sessions recommended on a weekly basis"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Rajesh Mehta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Rajesh Mehta",
+      "date": "2025-08-15",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Meera Choudhury, MD (Chest)",
+        "Facility: City Care Hospital",
+        "Consultation conducted via video call due to patient's inability to visit in person",
+        "Patient advised in-person examination if symptoms do not improve within specified period",
+        "Symptoms discussed and preliminary assessment made based on patient's description",
+        "E-prescription shared separately as per telemedicine guidelines"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Suresh Sharma",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Suresh Sharma",
+      "date": "2025-11-22",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Suresh Singh, MBBS, DNB",
+        "Facility: Apollo Medical Centre",
+        "Symptoms discussed and preliminary assessment made based on patient's description",
+        "Consultation conducted via video call due to patient's inability to visit in person",
+        "E-prescription shared separately as per telemedicine guidelines",
+        "Patient advised in-person examination if symptoms do not improve within specified period"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Rajesh Verma",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Rajesh Verma",
+      "date": "2025-10-08",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Shreya Das, MBBS",
+        "Facility: Aashirwad Clinic",
+        "General physical examination and basic investigations conducted as per occupational health protocol",
+        "No condition identified that would restrict the individual from performing routine job duties",
+        "Report shared with the individual for submission to the employer as required"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Amit Gupta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Amit Gupta",
+      "date": "2025-08-26",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Krishna Joshi, MS (Ortho)",
+        "Facility: Apollo Medical Centre",
+        "No condition identified that would restrict the individual from performing routine job duties",
+        "Ergonomic and workplace safety advice provided where applicable",
+        "Report shared with the individual for submission to the employer as required"
+      ]
+    }
+  },
+  {
+    "title": "Medical Fitness Certificate - Kavya Choudhury",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kavya Choudhury",
+      "date": "2026-06-22",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document",
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["fitness-certificate", "routine-checkup"],
+      "summary": "This certificate confirms that the individual has been examined and found medically fit for the stated purpose, based on a general physical examination.",
+      "key_points": [
+        "Issued by: Dr. Nikhil Joshi, MD (Pediatrics)",
+        "Facility: Shree Ganesh Clinic",
+        "General physical examination conducted, no acute illness observed at the time of examination",
+        "Valid for the period specified unless health status changes",
+        "Vital signs recorded within normal limits",
+        "Certificate issued for employment/travel/sports participation purposes as requested"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Kabir Singh",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kabir Singh",
+      "date": "2026-01-25",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Sneha Das, MS (Ortho)",
+        "Facility: Aashirwad Clinic",
+        "Ergonomic and workplace safety advice provided where applicable",
+        "No condition identified that would restrict the individual from performing routine job duties",
+        "General physical examination and basic investigations conducted as per occupational health protocol"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Ishaan Menon",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ishaan Menon",
+      "date": "2025-08-09",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Pooja Gupta, MD (Chest)",
+        "Facility: Sunrise Family Clinic",
+        "Batch number and manufacturer details recorded in the clinic register",
+        "Vaccine administered as per national/international immunization schedule",
+        "Next due dose, if applicable, communicated to the patient/guardian"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Suresh Singh",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Suresh Singh",
+      "date": "2026-03-02",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Devika Singh, DM (Cardiology)",
+        "Facility: Care & Cure Polyclinic",
+        "General physical examination and basic investigations conducted as per occupational health protocol",
+        "Report shared with the individual for submission to the employer as required",
+        "Ergonomic and workplace safety advice provided where applicable",
+        "No condition identified that would restrict the individual from performing routine job duties"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Ananya Choudhury",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ananya Choudhury",
+      "date": "2025-08-19",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document",
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Arnav Choudhury, MD (Gen. Med)",
+        "Facility: Manipal Hospital",
+        "Lifestyle recommendations provided based on findings",
+        "Next annual check-up recommended after 12 months",
+        "Overall health status assessed as satisfactory for age and gender",
+        "Minor abnormalities noted have been flagged for follow-up as advised"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Anil Gupta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Anil Gupta",
+      "date": "2026-03-19",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Meera Joshi, MBBS, DNB",
+        "Facility: New Life Nursing Home",
+        "Patient advised in-person examination if symptoms do not improve within specified period",
+        "Symptoms discussed and preliminary assessment made based on patient's description",
+        "E-prescription shared separately as per telemedicine guidelines",
+        "Consultation conducted via video call due to patient's inability to visit in person"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Riya Iyer",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Riya Iyer",
+      "date": "2026-04-29",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Rohan Bose, MBBS, DNB",
+        "Facility: Physio Plus Rehabilitation Centre",
+        "Patient advised in-person examination if symptoms do not improve within specified period",
+        "E-prescription shared separately as per telemedicine guidelines",
+        "Symptoms discussed and preliminary assessment made based on patient's description"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Diya Pillai",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Diya Pillai",
+      "date": "2026-01-06",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Shreya Bose, DM (Cardiology)",
+        "Facility: Sunrise Family Clinic",
+        "Next annual check-up recommended after 12 months",
+        "Overall health status assessed as satisfactory for age and gender",
+        "Lifestyle recommendations provided based on findings",
+        "Minor abnormalities noted have been flagged for follow-up as advised"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Kavya Nair",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kavya Nair",
+      "date": "2026-02-22",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Geeta Mukherjee, MD (ENT)",
+        "Facility: Apollo Medical Centre",
+        "Report shared with the individual for submission to the employer as required",
+        "No condition identified that would restrict the individual from performing routine job duties",
+        "General physical examination and basic investigations conducted as per occupational health protocol",
+        "Ergonomic and workplace safety advice provided where applicable"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Priya Mukherjee",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Priya Mukherjee",
+      "date": "2026-05-13",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Rajesh Menon, MS (Ortho)",
+        "Facility: Sunrise Family Clinic",
+        "Next due dose, if applicable, communicated to the patient/guardian",
+        "Vaccine administered as per national/international immunization schedule",
+        "Batch number and manufacturer details recorded in the clinic register",
+        "No immediate adverse reaction observed post-vaccination"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Anil Sen",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Anil Sen",
+      "date": "2025-08-05",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Kavya Choudhury, MD (Chest)",
+        "Facility: Wellness Diet Clinic",
+        "Patient advised to reduce intake of refined sugar and processed foods",
+        "Adequate hydration advised, at least 2-3 liters of water daily",
+        "Increased intake of fiber-rich fruits and vegetables recommended",
+        "Small frequent meals recommended over large infrequent meals"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Priya Iyer",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Priya Iyer",
+      "date": "2025-12-30",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document",
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Sai Gupta, MD (Chest)",
+        "Facility: Aashirwad Clinic",
+        "Report shared with the individual for submission to the employer as required",
+        "Ergonomic and workplace safety advice provided where applicable",
+        "General physical examination and basic investigations conducted as per occupational health protocol",
+        "No condition identified that would restrict the individual from performing routine job duties"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Isha Sen",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Isha Sen",
+      "date": "2026-02-03",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Neha Menon, DM (Cardiology)",
+        "Facility: Sunrise Family Clinic",
+        "General physical examination and basic investigations conducted as per occupational health protocol",
+        "Ergonomic and workplace safety advice provided where applicable",
+        "Report shared with the individual for submission to the employer as required",
+        "No condition identified that would restrict the individual from performing routine job duties"
+      ]
+    }
+  },
+  {
+    "title": "Medical Fitness Certificate - Ayaan Bose",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ayaan Bose",
+      "date": "2026-05-29",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["fitness-certificate", "routine-checkup"],
+      "summary": "This certificate confirms that the individual has been examined and found medically fit for the stated purpose, based on a general physical examination.",
+      "key_points": [
+        "Issued by: Dr. Geeta Joshi, MD (Gen. Med)",
+        "Facility: City Care Hospital",
+        "Certificate issued for employment/travel/sports participation purposes as requested",
+        "Valid for the period specified unless health status changes",
+        "Vital signs recorded within normal limits"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Pooja Reddy",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Pooja Reddy",
+      "date": "2025-09-16",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Isha Pillai, MD (Pediatrics)",
+        "Facility: Wellness Diet Clinic",
+        "Minor abnormalities noted have been flagged for follow-up as advised",
+        "Lifestyle recommendations provided based on findings",
+        "Next annual check-up recommended after 12 months",
+        "Overall health status assessed as satisfactory for age and gender"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Ishaan Verma",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ishaan Verma",
+      "date": "2026-03-31",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Sai Joshi, MD (Derma)",
+        "Facility: Care & Cure Polyclinic",
+        "Symptoms discussed and preliminary assessment made based on patient's description",
+        "E-prescription shared separately as per telemedicine guidelines",
+        "Patient advised in-person examination if symptoms do not improve within specified period",
+        "Consultation conducted via video call due to patient's inability to visit in person"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Ayaan Reddy",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ayaan Reddy",
+      "date": "2025-10-14",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Vikram Nair, DM (Cardiology)",
+        "Facility: Aashirwad Clinic",
+        "Increased intake of fiber-rich fruits and vegetables recommended",
+        "Small frequent meals recommended over large infrequent meals",
+        "Follow-up with dietician advised after 4 weeks to assess progress"
+      ]
+    }
+  },
+  {
+    "title": "Medical Leave Certificate - Isha Mehta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Isha Mehta",
+      "date": "2025-10-09",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "frequency": "thrice_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["leave-certificate", "acute"],
+      "summary": "This certificate documents the recommended period of medical leave from work or school due to the patient's current illness, as assessed by the treating physician.",
+      "key_points": [
+        "Issued by: Dr. Kabir Sen, MBBS",
+        "Facility: City Care Hospital",
+        "Recommended leave period specified based on clinical assessment",
+        "Patient examined and found to require rest due to current illness",
+        "Patient advised to resume duties only after full recovery"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Geeta Das",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Geeta Das",
+      "date": "2026-02-22",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Reyansh Agarwal, MD (Gen. Med)",
+        "Facility: Physio Plus Rehabilitation Centre",
+        "Next annual check-up recommended after 12 months",
+        "Minor abnormalities noted have been flagged for follow-up as advised",
+        "Overall health status assessed as satisfactory for age and gender"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Kabir Joshi",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kabir Joshi",
+      "date": "2025-09-17",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Sunita Nair, MS (Ortho)",
+        "Facility: Aashirwad Clinic",
+        "Vaccine administered as per national/international immunization schedule",
+        "No immediate adverse reaction observed post-vaccination",
+        "Next due dose, if applicable, communicated to the patient/guardian"
+      ]
+    }
+  },
+  {
+    "title": "Medical Leave Certificate - Kavya Bose",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kavya Bose",
+      "date": "2026-05-12",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "frequency": "thrice_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["leave-certificate", "acute"],
+      "summary": "This certificate documents the recommended period of medical leave from work or school due to the patient's current illness, as assessed by the treating physician.",
+      "key_points": [
+        "Issued by: Dr. Sneha Agarwal, MD (Chest)",
+        "Facility: Sunrise Family Clinic",
+        "Patient examined and found to require rest due to current illness",
+        "Certificate issued at patient's request for submission to employer/institution",
+        "Recommended leave period specified based on clinical assessment"
+      ]
+    }
+  },
+  {
+    "title": "Second Opinion Consultation Letter - Ishaan Nair",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ishaan Nair",
+      "date": "2026-07-11",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["second-opinion", "chronic"],
+      "summary": "This document records the findings and recommendations of a second opinion consultation sought by the patient regarding a previously diagnosed condition or suggested treatment plan.",
+      "key_points": [
+        "Issued by: Dr. Aarav Nair, MD (ENT)",
+        "Facility: Wellness Diet Clinic",
+        "Consulting physician largely concurs with the original diagnosis, with minor modifications suggested",
+        "Previous diagnosis and treatment plan reviewed along with available reports",
+        "Patient advised to discuss this opinion with the original treating physician before proceeding",
+        "Alternative treatment approach discussed as an option for consideration"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Vikram Singh",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Vikram Singh",
+      "date": "2025-11-28",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Kiran Bose, MD (Derma)",
+        "Facility: Shree Ganesh Clinic",
+        "Increased intake of fiber-rich fruits and vegetables recommended",
+        "Patient advised to reduce intake of refined sugar and processed foods",
+        "Follow-up with dietician advised after 4 weeks to assess progress",
+        "Small frequent meals recommended over large infrequent meals",
+        "Adequate hydration advised, at least 2-3 liters of water daily"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Arnav Iyer",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Arnav Iyer",
+      "date": "2025-12-28",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Anil Menon, MBBS, DNB",
+        "Facility: Physio Plus Rehabilitation Centre",
+        "No condition identified that would restrict the individual from performing routine job duties",
+        "Report shared with the individual for submission to the employer as required",
+        "General physical examination and basic investigations conducted as per occupational health protocol",
+        "Ergonomic and workplace safety advice provided where applicable"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Riya Agarwal",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Riya Agarwal",
+      "date": "2026-07-08",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Sai Banerjee, DM (Cardiology)",
+        "Facility: Physio Plus Rehabilitation Centre",
+        "No condition identified that would restrict the individual from performing routine job duties",
+        "General physical examination and basic investigations conducted as per occupational health protocol",
+        "Ergonomic and workplace safety advice provided where applicable",
+        "Report shared with the individual for submission to the employer as required"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Tanvi Pillai",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Tanvi Pillai",
+      "date": "2025-12-30",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Aarav Verma, MS (Ortho)",
+        "Facility: Aashirwad Clinic",
+        "Symptoms discussed and preliminary assessment made based on patient's description",
+        "Consultation conducted via video call due to patient's inability to visit in person",
+        "Patient advised in-person examination if symptoms do not improve within specified period"
+      ]
+    }
+  },
+  {
+    "title": "Second Opinion Consultation Letter - Suresh Nair",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Suresh Nair",
+      "date": "2025-08-22",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["second-opinion", "chronic"],
+      "summary": "This document records the findings and recommendations of a second opinion consultation sought by the patient regarding a previously diagnosed condition or suggested treatment plan.",
+      "key_points": [
+        "Issued by: Dr. Sunita Agarwal, MD (Pediatrics)",
+        "Facility: Wellness Diet Clinic",
+        "Patient advised to discuss this opinion with the original treating physician before proceeding",
+        "Previous diagnosis and treatment plan reviewed along with available reports",
+        "Consulting physician largely concurs with the original diagnosis, with minor modifications suggested"
+      ]
+    }
+  },
+  {
+    "title": "Medical Leave Certificate - Meera Verma",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Meera Verma",
+      "date": "2025-10-29",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "frequency": "thrice_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["leave-certificate", "acute"],
+      "summary": "This certificate documents the recommended period of medical leave from work or school due to the patient's current illness, as assessed by the treating physician.",
+      "key_points": [
+        "Issued by: Dr. Diya Agarwal, MS (Ortho)",
+        "Facility: Aashirwad Clinic",
+        "Certificate issued at patient's request for submission to employer/institution",
+        "Patient advised to resume duties only after full recovery",
+        "Patient examined and found to require rest due to current illness"
+      ]
+    }
+  },
+  {
+    "title": "Physiotherapy Session Notes - Vivaan Verma",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Vivaan Verma",
+      "date": "2025-12-07",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["physiotherapy", "orthopedic"],
+      "summary": "This document records the findings and progress noted during a physiotherapy session as part of the patient's ongoing rehabilitation program.",
+      "key_points": [
+        "Issued by: Dr. Geeta Mukherjee, MBBS, DNB",
+        "Facility: Care & Cure Polyclinic",
+        "Therapeutic exercises demonstrated and performed under supervision",
+        "Patient advised home exercise program to continue between sessions",
+        "Next session scheduled to continue the rehabilitation plan",
+        "Range of motion and muscle strength assessed and documented"
+      ]
+    }
+  },
+  {
+    "title": "Medical Leave Certificate - Kavya Bose",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kavya Bose",
+      "date": "2026-04-18",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "frequency": "thrice_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["leave-certificate", "acute"],
+      "summary": "This certificate documents the recommended period of medical leave from work or school due to the patient's current illness, as assessed by the treating physician.",
+      "key_points": [
+        "Issued by: Dr. Ishaan Joshi, DM (Cardiology)",
+        "Facility: City Care Hospital",
+        "Patient examined and found to require rest due to current illness",
+        "Recommended leave period specified based on clinical assessment",
+        "Patient advised to resume duties only after full recovery"
+      ]
+    }
+  },
+  {
+    "title": "Medical Leave Certificate - Anil Reddy",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Anil Reddy",
+      "date": "2026-06-25",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "frequency": "thrice_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Please retain this document for personal or institutional records",
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["leave-certificate", "acute"],
+      "summary": "This certificate documents the recommended period of medical leave from work or school due to the patient's current illness, as assessed by the treating physician.",
+      "key_points": [
+        "Issued by: Dr. Kavya Pillai, MD (Pediatrics)",
+        "Facility: Wellness Diet Clinic",
+        "Certificate issued at patient's request for submission to employer/institution",
+        "Recommended leave period specified based on clinical assessment",
+        "Patient examined and found to require rest due to current illness",
+        "Patient advised to resume duties only after full recovery"
+      ]
+    }
+  },
+  {
+    "title": "Medical Fitness Certificate - Vivaan Singh",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Vivaan Singh",
+      "date": "2026-05-01",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["fitness-certificate", "routine-checkup"],
+      "summary": "This certificate confirms that the individual has been examined and found medically fit for the stated purpose, based on a general physical examination.",
+      "key_points": [
+        "Issued by: Dr. Geeta Mukherjee, MD (Gen. Med)",
+        "Facility: New Life Nursing Home",
+        "Vital signs recorded within normal limits",
+        "Certificate issued for employment/travel/sports participation purposes as requested",
+        "General physical examination conducted, no acute illness observed at the time of examination",
+        "Valid for the period specified unless health status changes"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Geeta Pillai",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Geeta Pillai",
+      "date": "2025-10-11",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Diya Joshi, MS (Ortho)",
+        "Facility: Apollo Medical Centre",
+        "Patient advised to reduce intake of refined sugar and processed foods",
+        "Small frequent meals recommended over large infrequent meals",
+        "Follow-up with dietician advised after 4 weeks to assess progress"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Tanvi Mukherjee",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Tanvi Mukherjee",
+      "date": "2025-07-13",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Ananya Bose, DM (Cardiology)",
+        "Facility: City Care Hospital",
+        "No immediate adverse reaction observed post-vaccination",
+        "Next due dose, if applicable, communicated to the patient/guardian",
+        "Batch number and manufacturer details recorded in the clinic register"
+      ]
+    }
+  },
+  {
+    "title": "Medical Fitness Certificate - Devika Banerjee",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Devika Banerjee",
+      "date": "2026-01-27",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["fitness-certificate", "routine-checkup"],
+      "summary": "This certificate confirms that the individual has been examined and found medically fit for the stated purpose, based on a general physical examination.",
+      "key_points": [
+        "Issued by: Dr. Suresh Joshi, MBBS, DNB",
+        "Facility: Green Valley Health Centre",
+        "Valid for the period specified unless health status changes",
+        "General physical examination conducted, no acute illness observed at the time of examination",
+        "Certificate issued for employment/travel/sports participation purposes as requested"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Ishaan Bose",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ishaan Bose",
+      "date": "2025-08-29",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Geeta Pillai, MD (Chest)",
+        "Facility: Wellness Diet Clinic",
+        "Adequate hydration advised, at least 2-3 liters of water daily",
+        "Patient advised to reduce intake of refined sugar and processed foods",
+        "Increased intake of fiber-rich fruits and vegetables recommended",
+        "Follow-up with dietician advised after 4 weeks to assess progress"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Rohan Menon",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Rohan Menon",
+      "date": "2025-09-21",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Vivaan Bose, MD (Derma)",
+        "Facility: Shree Ganesh Clinic",
+        "Report shared with the individual for submission to the employer as required",
+        "No condition identified that would restrict the individual from performing routine job duties",
+        "Ergonomic and workplace safety advice provided where applicable",
+        "General physical examination and basic investigations conducted as per occupational health protocol"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Arnav Mehta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Arnav Mehta",
+      "date": "2025-07-23",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Kiran Bose, MD (Medicine)",
+        "Facility: City Care Hospital",
+        "Lifestyle recommendations provided based on findings",
+        "Minor abnormalities noted have been flagged for follow-up as advised",
+        "Next annual check-up recommended after 12 months",
+        "Overall health status assessed as satisfactory for age and gender"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Deepak Iyer",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Deepak Iyer",
+      "date": "2025-11-13",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Meera Rao, MD (Pediatrics)",
+        "Facility: New Life Nursing Home",
+        "No immediate adverse reaction observed post-vaccination",
+        "Batch number and manufacturer details recorded in the clinic register",
+        "Vaccine administered as per national/international immunization schedule"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Priya Menon",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Priya Menon",
+      "date": "2026-03-02",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records",
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Manoj Mehta, MBBS",
+        "Facility: Care & Cure Polyclinic",
+        "Next due dose, if applicable, communicated to the patient/guardian",
+        "Vaccine administered as per national/international immunization schedule",
+        "Batch number and manufacturer details recorded in the clinic register"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Devika Mehta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Devika Mehta",
+      "date": "2026-06-24",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Geeta Chatterjee, MS (Ortho)",
+        "Facility: Green Valley Health Centre",
+        "Symptoms discussed and preliminary assessment made based on patient's description",
+        "Patient advised in-person examination if symptoms do not improve within specified period",
+        "E-prescription shared separately as per telemedicine guidelines",
+        "Consultation conducted via video call due to patient's inability to visit in person"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Ishaan Gupta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ishaan Gupta",
+      "date": "2026-01-29",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Tanvi Pillai, MD (Pediatrics)",
+        "Facility: New Life Nursing Home",
+        "Vaccine administered as per national/international immunization schedule",
+        "No immediate adverse reaction observed post-vaccination",
+        "Batch number and manufacturer details recorded in the clinic register",
+        "Next due dose, if applicable, communicated to the patient/guardian"
+      ]
+    }
+  },
+  {
+    "title": "Medical Leave Certificate - Shreya Sen",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Shreya Sen",
+      "date": "2026-04-30",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "frequency": "thrice_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["leave-certificate", "acute"],
+      "summary": "This certificate documents the recommended period of medical leave from work or school due to the patient's current illness, as assessed by the treating physician.",
+      "key_points": [
+        "Issued by: Dr. Ishaan Sharma, MD (Gen. Med)",
+        "Facility: Shree Ganesh Clinic",
+        "Patient advised to resume duties only after full recovery",
+        "Recommended leave period specified based on clinical assessment",
+        "Certificate issued at patient's request for submission to employer/institution"
+      ]
+    }
+  },
+  {
+    "title": "Medical Leave Certificate - Sneha Mehta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Sneha Mehta",
+      "date": "2026-07-02",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "frequency": "thrice_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["leave-certificate", "acute"],
+      "summary": "This certificate documents the recommended period of medical leave from work or school due to the patient's current illness, as assessed by the treating physician.",
+      "key_points": [
+        "Issued by: Dr. Kavya Reddy, MD (Gen. Med)",
+        "Facility: Apollo Medical Centre",
+        "Recommended leave period specified based on clinical assessment",
+        "Patient advised to resume duties only after full recovery",
+        "Patient examined and found to require rest due to current illness"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Suresh Nair",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Suresh Nair",
+      "date": "2025-07-29",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Tanvi Bose, MD (Medicine)",
+        "Facility: Green Valley Health Centre",
+        "Adequate hydration advised, at least 2-3 liters of water daily",
+        "Follow-up with dietician advised after 4 weeks to assess progress",
+        "Increased intake of fiber-rich fruits and vegetables recommended",
+        "Patient advised to reduce intake of refined sugar and processed foods"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Ramesh Gupta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ramesh Gupta",
+      "date": "2026-04-04",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Diya Joshi, MS (Ortho)",
+        "Facility: Green Valley Health Centre",
+        "Consultation conducted via video call due to patient's inability to visit in person",
+        "Patient advised in-person examination if symptoms do not improve within specified period",
+        "Symptoms discussed and preliminary assessment made based on patient's description"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Shreya Kulkarni",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Shreya Kulkarni",
+      "date": "2026-03-29",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation",
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Kavya Choudhury, MD (Gen. Med)",
+        "Facility: Wellness Diet Clinic",
+        "Batch number and manufacturer details recorded in the clinic register",
+        "No immediate adverse reaction observed post-vaccination",
+        "Vaccine administered as per national/international immunization schedule"
+      ]
+    }
+  },
+  {
+    "title": "Medical Leave Certificate - Deepak Patel",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Deepak Patel",
+      "date": "2025-10-15",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "frequency": "thrice_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["leave-certificate", "acute"],
+      "summary": "This certificate documents the recommended period of medical leave from work or school due to the patient's current illness, as assessed by the treating physician.",
+      "key_points": [
+        "Issued by: Dr. Pooja Das, MD (Gen. Med)",
+        "Facility: Wellness Diet Clinic",
+        "Certificate issued at patient's request for submission to employer/institution",
+        "Patient examined and found to require rest due to current illness",
+        "Patient advised to resume duties only after full recovery"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Lata Sen",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Lata Sen",
+      "date": "2026-05-28",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Nisha Mukherjee, MS (Ortho)",
+        "Facility: Apollo Medical Centre",
+        "Small frequent meals recommended over large infrequent meals",
+        "Patient advised to reduce intake of refined sugar and processed foods",
+        "Follow-up with dietician advised after 4 weeks to assess progress",
+        "Increased intake of fiber-rich fruits and vegetables recommended",
+        "Adequate hydration advised, at least 2-3 liters of water daily"
+      ]
+    }
+  },
+  {
+    "title": "Second Opinion Consultation Letter - Manoj Choudhury",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Manoj Choudhury",
+      "date": "2026-05-07",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["second-opinion", "chronic"],
+      "summary": "This document records the findings and recommendations of a second opinion consultation sought by the patient regarding a previously diagnosed condition or suggested treatment plan.",
+      "key_points": [
+        "Issued by: Dr. Kabir Agarwal, MD (Gen. Med)",
+        "Facility: Wellness Diet Clinic",
+        "Patient advised to discuss this opinion with the original treating physician before proceeding",
+        "Consulting physician largely concurs with the original diagnosis, with minor modifications suggested",
+        "Alternative treatment approach discussed as an option for consideration",
+        "Previous diagnosis and treatment plan reviewed along with available reports"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Sai Bose",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Sai Bose",
+      "date": "2025-07-14",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Manoj Mukherjee, MD (Gen. Med)",
+        "Facility: Manipal Hospital",
+        "Symptoms discussed and preliminary assessment made based on patient's description",
+        "Patient advised in-person examination if symptoms do not improve within specified period",
+        "E-prescription shared separately as per telemedicine guidelines"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Kabir Kulkarni",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kabir Kulkarni",
+      "date": "2026-01-27",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Rajesh Mukherjee, DM (Cardiology)",
+        "Facility: Wellness Diet Clinic",
+        "Minor abnormalities noted have been flagged for follow-up as advised",
+        "Overall health status assessed as satisfactory for age and gender",
+        "Lifestyle recommendations provided based on findings"
+      ]
+    }
+  },
+  {
+    "title": "Second Opinion Consultation Letter - Ananya Mehta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ananya Mehta",
+      "date": "2026-06-28",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["second-opinion", "chronic"],
+      "summary": "This document records the findings and recommendations of a second opinion consultation sought by the patient regarding a previously diagnosed condition or suggested treatment plan.",
+      "key_points": [
+        "Issued by: Dr. Reyansh Mukherjee, MD (Derma)",
+        "Facility: Sunrise Family Clinic",
+        "Patient advised to discuss this opinion with the original treating physician before proceeding",
+        "Consulting physician largely concurs with the original diagnosis, with minor modifications suggested",
+        "Previous diagnosis and treatment plan reviewed along with available reports",
+        "Alternative treatment approach discussed as an option for consideration"
+      ]
+    }
+  },
+  {
+    "title": "Medical Fitness Certificate - Meera Agarwal",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Meera Agarwal",
+      "date": "2026-07-06",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation",
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["fitness-certificate", "routine-checkup"],
+      "summary": "This certificate confirms that the individual has been examined and found medically fit for the stated purpose, based on a general physical examination.",
+      "key_points": [
+        "Issued by: Dr. Shreya Das, MD (Chest)",
+        "Facility: Wellness Diet Clinic",
+        "Valid for the period specified unless health status changes",
+        "General physical examination conducted, no acute illness observed at the time of examination",
+        "Vital signs recorded within normal limits"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Kabir Chatterjee",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kabir Chatterjee",
+      "date": "2025-11-30",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Sunita Chatterjee, MBBS",
+        "Facility: Green Valley Health Centre",
+        "Overall health status assessed as satisfactory for age and gender",
+        "Next annual check-up recommended after 12 months",
+        "Lifestyle recommendations provided based on findings",
+        "Minor abnormalities noted have been flagged for follow-up as advised"
+      ]
+    }
+  },
+  {
+    "title": "Speech Therapy Progress Note - Ishaan Patel",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ishaan Patel",
+      "date": "2025-10-10",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document",
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["speech-therapy", "pediatric"],
+      "summary": "This document records the progress observed during ongoing speech therapy sessions as part of the patient's developmental or rehabilitative care plan.",
+      "key_points": [
+        "Issued by: Dr. Aarav Kulkarni, MBBS, DNB",
+        "Facility: Manipal Hospital",
+        "Continued sessions recommended on a weekly basis",
+        "Home practice exercises assigned to reinforce therapy goals",
+        "Noticeable improvement observed in specific target areas since last session",
+        "Articulation and language comprehension assessed during the session"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Manoj Das",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Manoj Das",
+      "date": "2026-02-07",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Pooja Das, MD (Chest)",
+        "Facility: Sunrise Family Clinic",
+        "Batch number and manufacturer details recorded in the clinic register",
+        "No immediate adverse reaction observed post-vaccination",
+        "Next due dose, if applicable, communicated to the patient/guardian",
+        "Vaccine administered as per national/international immunization schedule"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Sneha Gupta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Sneha Gupta",
+      "date": "2025-09-23",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Suresh Mukherjee, MD (Medicine)",
+        "Facility: City Care Hospital",
+        "Patient advised to reduce intake of refined sugar and processed foods",
+        "Small frequent meals recommended over large infrequent meals",
+        "Follow-up with dietician advised after 4 weeks to assess progress"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Riya Mehta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Riya Mehta",
+      "date": "2025-07-22",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Krishna Kulkarni, MD (Gen. Med)",
+        "Facility: Care & Cure Polyclinic",
+        "Patient advised to reduce intake of refined sugar and processed foods",
+        "Follow-up with dietician advised after 4 weeks to assess progress",
+        "Small frequent meals recommended over large infrequent meals"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Vikram Gupta",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Vikram Gupta",
+      "date": "2026-02-03",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Lata Agarwal, MS (Ortho)",
+        "Facility: Physio Plus Rehabilitation Centre",
+        "Lifestyle recommendations provided based on findings",
+        "Next annual check-up recommended after 12 months",
+        "Minor abnormalities noted have been flagged for follow-up as advised"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Tanvi Kulkarni",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Tanvi Kulkarni",
+      "date": "2025-08-02",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Ramesh Joshi, MD (ENT)",
+        "Facility: Physio Plus Rehabilitation Centre",
+        "Consultation conducted via video call due to patient's inability to visit in person",
+        "Symptoms discussed and preliminary assessment made based on patient's description",
+        "Patient advised in-person examination if symptoms do not improve within specified period"
+      ]
+    }
+  },
+  {
+    "title": "Physiotherapy Session Notes - Kabir Sen",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kabir Sen",
+      "date": "2025-08-13",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["physiotherapy", "orthopedic"],
+      "summary": "This document records the findings and progress noted during a physiotherapy session as part of the patient's ongoing rehabilitation program.",
+      "key_points": [
+        "Issued by: Dr. Devika Bose, MD (Chest)",
+        "Facility: Physio Plus Rehabilitation Centre",
+        "Next session scheduled to continue the rehabilitation plan",
+        "Patient advised home exercise program to continue between sessions",
+        "Therapeutic exercises demonstrated and performed under supervision",
+        "Gradual improvement noted since the start of the therapy program"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Shreya Banerjee",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Shreya Banerjee",
+      "date": "2025-08-02",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Ishaan Sen, MS (Ortho)",
+        "Facility: Wellness Diet Clinic",
+        "Adequate hydration advised, at least 2-3 liters of water daily",
+        "Follow-up with dietician advised after 4 weeks to assess progress",
+        "Patient advised to reduce intake of refined sugar and processed foods"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Sai Iyer",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Sai Iyer",
+      "date": "2026-01-22",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation",
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Amit Rao, MS (Ortho)",
+        "Facility: Green Valley Health Centre",
+        "Consultation conducted via video call due to patient's inability to visit in person",
+        "E-prescription shared separately as per telemedicine guidelines",
+        "Patient advised in-person examination if symptoms do not improve within specified period",
+        "Symptoms discussed and preliminary assessment made based on patient's description"
+      ]
+    }
+  },
+  {
+    "title": "Second Opinion Consultation Letter - Simran Sharma",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Simran Sharma",
+      "date": "2025-10-14",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["second-opinion", "chronic"],
+      "summary": "This document records the findings and recommendations of a second opinion consultation sought by the patient regarding a previously diagnosed condition or suggested treatment plan.",
+      "key_points": [
+        "Issued by: Dr. Arjun Patel, MD (Chest)",
+        "Facility: Manipal Hospital",
+        "Patient advised to discuss this opinion with the original treating physician before proceeding",
+        "Alternative treatment approach discussed as an option for consideration",
+        "Consulting physician largely concurs with the original diagnosis, with minor modifications suggested",
+        "Previous diagnosis and treatment plan reviewed along with available reports"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Reyansh Mukherjee",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Reyansh Mukherjee",
+      "date": "2026-05-13",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Ishaan Bose, MS (Ortho)",
+        "Facility: Shree Ganesh Clinic",
+        "No immediate adverse reaction observed post-vaccination",
+        "Vaccine administered as per national/international immunization schedule",
+        "Batch number and manufacturer details recorded in the clinic register"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Anil Joshi",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Anil Joshi",
+      "date": "2025-08-26",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Ananya Banerjee, MD (Pediatrics)",
+        "Facility: New Life Nursing Home",
+        "No condition identified that would restrict the individual from performing routine job duties",
+        "General physical examination and basic investigations conducted as per occupational health protocol",
+        "Ergonomic and workplace safety advice provided where applicable",
+        "Report shared with the individual for submission to the employer as required"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Arjun Bose",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Arjun Bose",
+      "date": "2025-10-31",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Nikhil Agarwal, MD (Chest)",
+        "Facility: Sunrise Family Clinic",
+        "Patient advised to reduce intake of refined sugar and processed foods",
+        "Adequate hydration advised, at least 2-3 liters of water daily",
+        "Follow-up with dietician advised after 4 weeks to assess progress",
+        "Small frequent meals recommended over large infrequent meals"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Arnav Pillai",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Arnav Pillai",
+      "date": "2025-08-31",
+      "medicines": [],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Kabir Chatterjee, MD (Derma)",
+        "Facility: Aashirwad Clinic",
+        "Next annual check-up recommended after 12 months",
+        "Overall health status assessed as satisfactory for age and gender",
+        "Minor abnormalities noted have been flagged for follow-up as advised"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Ishaan Reddy",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ishaan Reddy",
+      "date": "2025-11-19",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Ayaan Agarwal, MD (Medicine)",
+        "Facility: City Care Hospital",
+        "No condition identified that would restrict the individual from performing routine job duties",
+        "General physical examination and basic investigations conducted as per occupational health protocol",
+        "Ergonomic and workplace safety advice provided where applicable",
+        "Report shared with the individual for submission to the employer as required"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Lata Patel",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Lata Patel",
+      "date": "2026-01-22",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Arjun Pillai, MBBS, DNB",
+        "Facility: Aashirwad Clinic",
+        "Symptoms discussed and preliminary assessment made based on patient's description",
+        "Patient advised in-person examination if symptoms do not improve within specified period",
+        "Consultation conducted via video call due to patient's inability to visit in person",
+        "E-prescription shared separately as per telemedicine guidelines"
+      ]
+    }
+  },
+  {
+    "title": "Physiotherapy Session Notes - Shreya Joshi",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Shreya Joshi",
+      "date": "2026-06-11",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["physiotherapy", "orthopedic"],
+      "summary": "This document records the findings and progress noted during a physiotherapy session as part of the patient's ongoing rehabilitation program.",
+      "key_points": [
+        "Issued by: Dr. Rohan Verma, MD (Derma)",
+        "Facility: Physio Plus Rehabilitation Centre",
+        "Patient advised home exercise program to continue between sessions",
+        "Range of motion and muscle strength assessed and documented",
+        "Therapeutic exercises demonstrated and performed under supervision"
+      ]
+    }
+  },
+  {
+    "title": "Second Opinion Consultation Letter - Vikram Rao",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Vikram Rao",
+      "date": "2025-09-14",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["second-opinion", "chronic"],
+      "summary": "This document records the findings and recommendations of a second opinion consultation sought by the patient regarding a previously diagnosed condition or suggested treatment plan.",
+      "key_points": [
+        "Issued by: Dr. Rajesh Iyer, MBBS, DNB",
+        "Facility: Wellness Diet Clinic",
+        "Alternative treatment approach discussed as an option for consideration",
+        "Consulting physician largely concurs with the original diagnosis, with minor modifications suggested",
+        "Patient advised to discuss this opinion with the original treating physician before proceeding"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Vivaan Patel",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Vivaan Patel",
+      "date": "2026-06-04",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Sneha Choudhury, MBBS",
+        "Facility: Physio Plus Rehabilitation Centre",
+        "Consultation conducted via video call due to patient's inability to visit in person",
+        "Patient advised in-person examination if symptoms do not improve within specified period",
+        "E-prescription shared separately as per telemedicine guidelines",
+        "Symptoms discussed and preliminary assessment made based on patient's description"
+      ]
+    }
+  },
+  {
+    "title": "Speech Therapy Progress Note - Krishna Joshi",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Krishna Joshi",
+      "date": "2026-05-06",
+      "medicines": [],
+      "important_notes": [
+        "Contact the clinic for any clarification regarding this document",
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["speech-therapy", "pediatric"],
+      "summary": "This document records the progress observed during ongoing speech therapy sessions as part of the patient's developmental or rehabilitative care plan.",
+      "key_points": [
+        "Issued by: Dr. Aditya Mukherjee, MD (Gen. Med)",
+        "Facility: Sunrise Family Clinic",
+        "Home practice exercises assigned to reinforce therapy goals",
+        "Noticeable improvement observed in specific target areas since last session",
+        "Continued sessions recommended on a weekly basis"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Ramesh Mukherjee",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ramesh Mukherjee",
+      "date": "2025-12-13",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Kavya Reddy, MD (Derma)",
+        "Facility: Wellness Diet Clinic",
+        "Lifestyle recommendations provided based on findings",
+        "Next annual check-up recommended after 12 months",
+        "Overall health status assessed as satisfactory for age and gender",
+        "Minor abnormalities noted have been flagged for follow-up as advised"
+      ]
+    }
+  },
+  {
+    "title": "Speech Therapy Progress Note - Kavya Nair",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kavya Nair",
+      "date": "2026-03-15",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["speech-therapy", "pediatric"],
+      "summary": "This document records the progress observed during ongoing speech therapy sessions as part of the patient's developmental or rehabilitative care plan.",
+      "key_points": [
+        "Issued by: Dr. Neha Sen, MD (Medicine)",
+        "Facility: Green Valley Health Centre",
+        "Continued sessions recommended on a weekly basis",
+        "Articulation and language comprehension assessed during the session",
+        "Home practice exercises assigned to reinforce therapy goals",
+        "Noticeable improvement observed in specific target areas since last session"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Ramesh Chatterjee",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ramesh Chatterjee",
+      "date": "2025-10-19",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Kiran Gupta, MBBS",
+        "Facility: Green Valley Health Centre",
+        "Batch number and manufacturer details recorded in the clinic register",
+        "Next due dose, if applicable, communicated to the patient/guardian",
+        "No immediate adverse reaction observed post-vaccination",
+        "Vaccine administered as per national/international immunization schedule"
+      ]
+    }
+  },
+  {
+    "title": "Telemedicine Consultation Note - Rohan Sen",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Rohan Sen",
+      "date": "2026-06-15",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Document issued at the request of the patient/guardian",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["telemedicine", "general"],
+      "summary": "This document summarizes a remote video/audio consultation conducted with the patient, including the clinical assessment made and advice provided.",
+      "key_points": [
+        "Issued by: Dr. Sneha Pillai, MD (Medicine)",
+        "Facility: Manipal Hospital",
+        "E-prescription shared separately as per telemedicine guidelines",
+        "Consultation conducted via video call due to patient's inability to visit in person",
+        "Patient advised in-person examination if symptoms do not improve within specified period"
+      ]
+    }
+  },
+  {
+    "title": "Physiotherapy Session Notes - Krishna Patel",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Krishna Patel",
+      "date": "2025-08-06",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["physiotherapy", "orthopedic"],
+      "summary": "This document records the findings and progress noted during a physiotherapy session as part of the patient's ongoing rehabilitation program.",
+      "key_points": [
+        "Issued by: Dr. Tanvi Sen, MBBS",
+        "Facility: Green Valley Health Centre",
+        "Therapeutic exercises demonstrated and performed under supervision",
+        "Gradual improvement noted since the start of the therapy program",
+        "Patient advised home exercise program to continue between sessions",
+        "Next session scheduled to continue the rehabilitation plan",
+        "Range of motion and muscle strength assessed and documented"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Isha Iyer",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Isha Iyer",
+      "date": "2026-06-15",
+      "medicines": [],
+      "important_notes": [
+        "Please retain this document for personal or institutional records",
+        "Document issued at the request of the patient/guardian"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Kiran Pillai, MD (ENT)",
+        "Facility: Manipal Hospital",
+        "Adequate hydration advised, at least 2-3 liters of water daily",
+        "Patient advised to reduce intake of refined sugar and processed foods",
+        "Increased intake of fiber-rich fruits and vegetables recommended",
+        "Follow-up with dietician advised after 4 weeks to assess progress",
+        "Small frequent meals recommended over large infrequent meals"
+      ]
+    }
+  },
+  {
+    "title": "Speech Therapy Progress Note - Kavya Sharma",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kavya Sharma",
+      "date": "2026-01-20",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["speech-therapy", "pediatric"],
+      "summary": "This document records the progress observed during ongoing speech therapy sessions as part of the patient's developmental or rehabilitative care plan.",
+      "key_points": [
+        "Issued by: Dr. Arjun Menon, MD (ENT)",
+        "Facility: Apollo Medical Centre",
+        "Noticeable improvement observed in specific target areas since last session",
+        "Home practice exercises assigned to reinforce therapy goals",
+        "Articulation and language comprehension assessed during the session",
+        "Continued sessions recommended on a weekly basis"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Manoj Agarwal",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Manoj Agarwal",
+      "date": "2025-07-21",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Kiran Agarwal, MBBS",
+        "Facility: Apollo Medical Centre",
+        "Next annual check-up recommended after 12 months",
+        "Minor abnormalities noted have been flagged for follow-up as advised",
+        "Overall health status assessed as satisfactory for age and gender"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Deepak Singh",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Deepak Singh",
+      "date": "2025-10-26",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Tanvi Choudhury, MD (Gen. Med)",
+        "Facility: Manipal Hospital",
+        "Adequate hydration advised, at least 2-3 liters of water daily",
+        "Small frequent meals recommended over large infrequent meals",
+        "Follow-up with dietician advised after 4 weeks to assess progress",
+        "Patient advised to reduce intake of refined sugar and processed foods"
+      ]
+    }
+  },
+  {
+    "title": "Dietary Advice Sheet - Kavya Singh",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Kavya Singh",
+      "date": "2025-08-22",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["diet-advice", "wellness"],
+      "summary": "This document outlines general dietary recommendations provided to the patient by the treating physician or dietician to support their current health goals.",
+      "key_points": [
+        "Issued by: Dr. Riya Menon, MD (Derma)",
+        "Facility: Green Valley Health Centre",
+        "Follow-up with dietician advised after 4 weeks to assess progress",
+        "Increased intake of fiber-rich fruits and vegetables recommended",
+        "Adequate hydration advised, at least 2-3 liters of water daily",
+        "Patient advised to reduce intake of refined sugar and processed foods",
+        "Small frequent meals recommended over large infrequent meals"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Neha Banerjee",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Neha Banerjee",
+      "date": "2026-01-03",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Please retain this document for personal or institutional records"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Neha Bose, MD (ENT)",
+        "Facility: Aashirwad Clinic",
+        "Minor abnormalities noted have been flagged for follow-up as advised",
+        "Lifestyle recommendations provided based on findings",
+        "Overall health status assessed as satisfactory for age and gender",
+        "Next annual check-up recommended after 12 months"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Certificate - Rohan Singh",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Rohan Singh",
+      "date": "2025-11-11",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["vaccination", "pediatric"],
+      "summary": "This certificate documents the administration of a scheduled vaccine to the individual, along with batch details and the date of administration.",
+      "key_points": [
+        "Issued by: Dr. Anil Iyer, DM (Cardiology)",
+        "Facility: Wellness Diet Clinic",
+        "Next due dose, if applicable, communicated to the patient/guardian",
+        "No immediate adverse reaction observed post-vaccination",
+        "Batch number and manufacturer details recorded in the clinic register"
+      ]
+    }
+  },
+  {
+    "title": "Annual Health Check-up Summary - Ayaan Kulkarni",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ayaan Kulkarni",
+      "date": "2025-08-20",
+      "medicines": [],
+      "important_notes": [
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["annual-checkup", "wellness", "routine-checkup"],
+      "summary": "This document summarizes the overall findings of the patient's annual comprehensive health check-up, combining clinical examination and investigation results.",
+      "key_points": [
+        "Issued by: Dr. Geeta Gupta, MBBS, DNB",
+        "Facility: Shree Ganesh Clinic",
+        "Overall health status assessed as satisfactory for age and gender",
+        "Next annual check-up recommended after 12 months",
+        "Lifestyle recommendations provided based on findings",
+        "Minor abnormalities noted have been flagged for follow-up as advised"
+      ]
+    }
+  },
+  {
+    "title": "Physiotherapy Session Notes - Riya Sharma",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Riya Sharma",
+      "date": "2026-06-17",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "This document is issued based on information available at the time of examination/consultation"
+      ],
+      "tags": ["physiotherapy", "orthopedic"],
+      "summary": "This document records the findings and progress noted during a physiotherapy session as part of the patient's ongoing rehabilitation program.",
+      "key_points": [
+        "Issued by: Dr. Deepak Verma, MD (Pediatrics)",
+        "Facility: Shree Ganesh Clinic",
+        "Next session scheduled to continue the rehabilitation plan",
+        "Gradual improvement noted since the start of the therapy program",
+        "Patient advised home exercise program to continue between sessions"
+      ]
+    }
+  },
+  {
+    "title": "Medical Leave Certificate - Diya Patel",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Diya Patel",
+      "date": "2025-12-07",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "frequency": "thrice_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["leave-certificate", "acute"],
+      "summary": "This certificate documents the recommended period of medical leave from work or school due to the patient's current illness, as assessed by the treating physician.",
+      "key_points": [
+        "Issued by: Dr. Sunita Kulkarni, DM (Cardiology)",
+        "Facility: Manipal Hospital",
+        "Patient advised to resume duties only after full recovery",
+        "Patient examined and found to require rest due to current illness",
+        "Certificate issued at patient's request for submission to employer/institution",
+        "Recommended leave period specified based on clinical assessment"
+      ]
+    }
+  },
+  {
+    "title": "Occupational Health Screening Report - Meera Agarwal",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Meera Agarwal",
+      "date": "2025-09-12",
+      "medicines": [],
+      "important_notes": [
+        "This is a computer-generated document and does not require a physical signature where digitally verified",
+        "Contact the clinic for any clarification regarding this document"
+      ],
+      "tags": ["occupational-health", "routine-checkup"],
+      "summary": "This document summarizes the findings of a pre-employment or periodic occupational health screening conducted as per workplace health requirements.",
+      "key_points": [
+        "Issued by: Dr. Pooja Banerjee, MD (Pediatrics)",
+        "Facility: Aashirwad Clinic",
+        "Report shared with the individual for submission to the employer as required",
+        "No condition identified that would restrict the individual from performing routine job duties",
+        "Ergonomic and workplace safety advice provided where applicable",
+        "General physical examination and basic investigations conducted as per occupational health protocol"
+      ]
+    }
+  },
+  {
+    "title": "Medical Leave Certificate - Ananya Singh",
+    "type": "Other",
+    "document_metadata": {
+      "patient_name": "Ananya Singh",
+      "date": "2026-04-08",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "frequency": "thrice_daily",
+          "duration": "5 days",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Please retain this document for personal or institutional records",
+        "This is a computer-generated document and does not require a physical signature where digitally verified"
+      ],
+      "tags": ["leave-certificate", "acute"],
+      "summary": "This certificate documents the recommended period of medical leave from work or school due to the patient's current illness, as assessed by the treating physician.",
+      "key_points": [
+        "Issued by: Dr. Isha Banerjee, MD (Gen. Med)",
+        "Facility: Shree Ganesh Clinic",
+        "Patient examined and found to require rest due to current illness",
+        "Patient advised to resume duties only after full recovery",
+        "Certificate issued at patient's request for submission to employer/institution",
+        "Recommended leave period specified based on clinical assessment"
+      ]
+    }
+  }
+]

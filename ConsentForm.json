@@ -1,0 +1,2333 @@
+[
+  {
+    "title": "Surgical Procedure Consent - Pooja Nair - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Pooja Nair",
+      "date": "2025-01-31",
+      "medicines": [],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language",
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Rohan Sen, MD (Radiology)",
+        "Hospital: Narayana Health",
+        "Patient given opportunity to ask questions and all queries addressed satisfactorily",
+        "Patient informed about possible need for blood transfusion during the procedure",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Simran Singh - City Care Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Simran Singh",
+      "date": "2026-07-09",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant",
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Nikhil Patel, MBBS, DNB",
+        "Hospital: City Care Hospital",
+        "Alternative treatment options discussed, including the option of no treatment",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them",
+        "Patient informed about possible need for blood transfusion during the procedure",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Isha Banerjee - Manipal Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Isha Banerjee",
+      "date": "2025-10-31",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Arjun Iyer, MD (Radiology)",
+        "Hospital: Manipal Hospital",
+        "Patient advised regarding fasting requirement prior to the procedure",
+        "Risks such as bleeding, perforation, and reaction to sedation explained",
+        "Procedure explained including insertion of a flexible scope through the mouth"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Suresh Choudhury - New Life Nursing Home",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Suresh Choudhury",
+      "date": "2026-04-09",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Priya Singh, MS (Surgery)",
+        "Hospital: New Life Nursing Home",
+        "Patient informed about monitoring during and after transfusion",
+        "Indication for blood transfusion explained to the patient",
+        "Risks including transfusion reactions and infection transmission discussed"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Ramesh Sharma - Max Super Speciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Ramesh Sharma",
+      "date": "2025-10-29",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Arjun Das, MS (Surgery)",
+        "Hospital: Max Super Speciality Hospital",
+        "Type of anesthesia to be administered explained to the patient (general/regional/local)",
+        "Consent obtained after clarifying all doubts raised by the patient",
+        "Risks associated with anesthesia, including rare but serious complications, explained"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Diya Agarwal - Apollo Hospitals",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Diya Agarwal",
+      "date": "2025-02-22",
+      "medicines": [],
+      "important_notes": [
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Kavya Menon, MD (Gen. Med)",
+        "Hospital: Apollo Hospitals",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed",
+        "Procedure involving catheter insertion through the wrist or groin artery explained"
+      ]
+    }
+  },
+  {
+    "title": "Discharge Against Medical Advice (DAMA) Consent - Ananya Nair - Manipal Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Ananya Nair",
+      "date": "2025-05-09",
+      "medicines": [],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "dama"],
+      "summary": "This form documents the patient's/attendant's decision to leave the hospital against the medical advice of the treating team, after being informed of the associated risks.",
+      "key_points": [
+        "Attending Physician: Dr. Ayaan Joshi, MS (Ortho)",
+        "Hospital: Manipal Hospital",
+        "Risks of leaving the hospital before completion of recommended treatment explained in detail",
+        "Patient/attendant acknowledges understanding of the risks involved",
+        "Hospital and treating team absolved of responsibility for adverse outcomes resulting from this decision",
+        "Patient advised to seek immediate medical attention if symptoms worsen"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Nikhil Kulkarni - Manipal Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Nikhil Kulkarni",
+      "date": "2026-01-31",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Kabir Nair, MBBS, DNB",
+        "Hospital: Manipal Hospital",
+        "Patient informed about post-procedure monitoring requirements",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed",
+        "Procedure involving catheter insertion through the wrist or groin artery explained",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Consent - Suresh Pillai - Lifeline Multispeciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Suresh Pillai",
+      "date": "2025-03-25",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing",
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "pediatric"],
+      "summary": "This form documents the parent/guardian's informed consent for administration of a scheduled vaccine to the patient, after an explanation of the vaccine's purpose and possible side effects.",
+      "key_points": [
+        "Attending Physician: Dr. Sunita Pillai, MD (Anesthesia)",
+        "Hospital: Lifeline Multispeciality Hospital",
+        "Purpose of the vaccine and disease it protects against explained",
+        "Parent/guardian advised to observe the child for 30 minutes post-vaccination",
+        "Common side effects such as mild fever and soreness at injection site discussed",
+        "Vaccination schedule and next due date communicated"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Krishna Menon - Manipal Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Krishna Menon",
+      "date": "2026-06-17",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing",
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Manoj Chatterjee, MD (Gen. Med)",
+        "Hospital: Manipal Hospital",
+        "Indication for blood transfusion explained to the patient",
+        "Blood group and cross-matching confirmed prior to transfusion",
+        "Patient informed about monitoring during and after transfusion"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Deepak Rao - Max Super Speciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Deepak Rao",
+      "date": "2025-10-14",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Diya Verma, MD (Radiology)",
+        "Hospital: Max Super Speciality Hospital",
+        "Patient informed about possible need for blood transfusion during the procedure",
+        "Alternative treatment options discussed, including the option of no treatment",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them"
+      ]
+    }
+  },
+  {
+    "title": "Research Study Participation Consent - Suresh Agarwal - Lifeline Multispeciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Suresh Agarwal",
+      "date": "2024-12-28",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "research"],
+      "summary": "This form documents the patient's informed and voluntary consent to participate in an approved clinical research study, after the study protocol, risks, and benefits were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Lata Reddy, MD (Gen. Med)",
+        "Hospital: Lifeline Multispeciality Hospital",
+        "Contact details of the principal investigator and ethics committee provided",
+        "Purpose, duration, and procedures of the research study explained to the participant",
+        "Confidentiality of collected data assured as per study protocol"
+      ]
+    }
+  },
+  {
+    "title": "Research Study Participation Consent - Sunita Rao - New Life Nursing Home",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sunita Rao",
+      "date": "2026-04-27",
+      "medicines": [],
+      "important_notes": [
+        "Consent obtained in the presence of a family member",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "research"],
+      "summary": "This form documents the patient's informed and voluntary consent to participate in an approved clinical research study, after the study protocol, risks, and benefits were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Krishna Choudhury, MD (Anesthesia)",
+        "Hospital: New Life Nursing Home",
+        "Confidentiality of collected data assured as per study protocol",
+        "Voluntary nature of participation and right to withdraw at any time without affecting routine care explained",
+        "Purpose, duration, and procedures of the research study explained to the participant",
+        "Contact details of the principal investigator and ethics committee provided"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Ananya Agarwal - New Life Nursing Home",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Ananya Agarwal",
+      "date": "2026-01-12",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file",
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Pooja Sharma, MD (Medicine)",
+        "Hospital: New Life Nursing Home",
+        "Indication for blood transfusion explained to the patient",
+        "Risks including transfusion reactions and infection transmission discussed",
+        "Blood group and cross-matching confirmed prior to transfusion"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Sai Chatterjee - St. Mary's Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sai Chatterjee",
+      "date": "2025-06-08",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file",
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Neha Patel, MD (Medicine)",
+        "Hospital: St. Mary's Hospital",
+        "Type of anesthesia to be administered explained to the patient (general/regional/local)",
+        "Patient's fasting status and pre-anesthesia checkup findings reviewed",
+        "Consent obtained after clarifying all doubts raised by the patient",
+        "Risks associated with anesthesia, including rare but serious complications, explained"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Kabir Singh - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Kabir Singh",
+      "date": "2026-02-14",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Manoj Patel, MD (Medicine)",
+        "Hospital: Narayana Health",
+        "Patient given opportunity to ask questions and all queries addressed satisfactorily",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them",
+        "Patient informed about possible need for blood transfusion during the procedure"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Ramesh Bose - Lifeline Multispeciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Ramesh Bose",
+      "date": "2025-03-06",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant",
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Ramesh Reddy, MD (Anesthesia)",
+        "Hospital: Lifeline Multispeciality Hospital",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed",
+        "Patient informed about post-procedure monitoring requirements",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed",
+        "Procedure involving catheter insertion through the wrist or groin artery explained"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Geeta Joshi - Columbia Asia Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Geeta Joshi",
+      "date": "2025-07-18",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing",
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Sneha Nair, MS (Ortho)",
+        "Hospital: Columbia Asia Hospital",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed",
+        "Procedure involving catheter insertion through the wrist or groin artery explained",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed",
+        "Patient informed about post-procedure monitoring requirements"
+      ]
+    }
+  },
+  {
+    "title": "Discharge Against Medical Advice (DAMA) Consent - Ishaan Mehta - Apollo Hospitals",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Ishaan Mehta",
+      "date": "2025-08-08",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "dama"],
+      "summary": "This form documents the patient's/attendant's decision to leave the hospital against the medical advice of the treating team, after being informed of the associated risks.",
+      "key_points": [
+        "Attending Physician: Dr. Priya Agarwal, MD (Anesthesia)",
+        "Hospital: Apollo Hospitals",
+        "Risks of leaving the hospital before completion of recommended treatment explained in detail",
+        "Hospital and treating team absolved of responsibility for adverse outcomes resulting from this decision",
+        "Patient/attendant acknowledges understanding of the risks involved",
+        "Patient advised to seek immediate medical attention if symptoms worsen"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Simran Menon - Lifeline Multispeciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Simran Menon",
+      "date": "2025-12-16",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Arnav Verma, MD (Anesthesia)",
+        "Hospital: Lifeline Multispeciality Hospital",
+        "Patient informed about monitoring during and after transfusion",
+        "Indication for blood transfusion explained to the patient",
+        "Blood group and cross-matching confirmed prior to transfusion",
+        "Risks including transfusion reactions and infection transmission discussed"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Devika Joshi - Apollo Hospitals",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Devika Joshi",
+      "date": "2025-08-24",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Suresh Menon, MD (Anesthesia)",
+        "Hospital: Apollo Hospitals",
+        "Indication for blood transfusion explained to the patient",
+        "Risks including transfusion reactions and infection transmission discussed",
+        "Blood group and cross-matching confirmed prior to transfusion",
+        "Patient informed about monitoring during and after transfusion"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Aditya Choudhury - Columbia Asia Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Aditya Choudhury",
+      "date": "2026-06-05",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Aarav Agarwal, MD (Gen. Med)",
+        "Hospital: Columbia Asia Hospital",
+        "Patient informed about monitoring during and after transfusion",
+        "Risks including transfusion reactions and infection transmission discussed",
+        "Indication for blood transfusion explained to the patient",
+        "Blood group and cross-matching confirmed prior to transfusion"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Tanvi Chatterjee - Apollo Hospitals",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Tanvi Chatterjee",
+      "date": "2025-12-16",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Rajesh Gupta, MD (Medicine)",
+        "Hospital: Apollo Hospitals",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff",
+        "Patient informed about possible need for blood transfusion during the procedure",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them",
+        "Patient given opportunity to ask questions and all queries addressed satisfactorily"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Sunita Nair - Manipal Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sunita Nair",
+      "date": "2024-08-24",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Consent obtained in the presence of a family member",
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Geeta Bose, MD (Gen. Med)",
+        "Hospital: Manipal Hospital",
+        "Patient advised regarding fasting requirement prior to the procedure",
+        "Risks such as bleeding, perforation, and reaction to sedation explained",
+        "Procedure explained including insertion of a flexible scope through the mouth"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Vikram Mukherjee - City Care Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Vikram Mukherjee",
+      "date": "2024-07-25",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Amit Agarwal, MD (Radiology)",
+        "Hospital: City Care Hospital",
+        "Alternative treatment options discussed, including the option of no treatment",
+        "Patient informed about possible need for blood transfusion during the procedure",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Krishna Das - St. Mary's Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Krishna Das",
+      "date": "2024-12-07",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Ananya Sen, MD (Radiology)",
+        "Hospital: St. Mary's Hospital",
+        "Risks associated with anesthesia, including rare but serious complications, explained",
+        "Consent obtained after clarifying all doubts raised by the patient",
+        "Patient's fasting status and pre-anesthesia checkup findings reviewed",
+        "Patient advised regarding post-anesthesia monitoring and recovery process"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Consent - Sneha Menon - Lifeline Multispeciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sneha Menon",
+      "date": "2026-05-19",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "pediatric"],
+      "summary": "This form documents the parent/guardian's informed consent for administration of a scheduled vaccine to the patient, after an explanation of the vaccine's purpose and possible side effects.",
+      "key_points": [
+        "Attending Physician: Dr. Simran Gupta, MD (Radiology)",
+        "Hospital: Lifeline Multispeciality Hospital",
+        "Parent/guardian advised to observe the child for 30 minutes post-vaccination",
+        "Purpose of the vaccine and disease it protects against explained",
+        "Common side effects such as mild fever and soreness at injection site discussed",
+        "Vaccination schedule and next due date communicated"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Sunita Patel - Columbia Asia Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sunita Patel",
+      "date": "2024-07-26",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Ishaan Pillai, MBBS",
+        "Hospital: Columbia Asia Hospital",
+        "Biopsy may be taken during the procedure if clinically indicated, consented separately",
+        "Patient advised regarding fasting requirement prior to the procedure",
+        "Risks such as bleeding, perforation, and reaction to sedation explained"
+      ]
+    }
+  },
+  {
+    "title": "Discharge Against Medical Advice (DAMA) Consent - Sneha Joshi - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sneha Joshi",
+      "date": "2024-07-27",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "dama"],
+      "summary": "This form documents the patient's/attendant's decision to leave the hospital against the medical advice of the treating team, after being informed of the associated risks.",
+      "key_points": [
+        "Attending Physician: Dr. Neha Sen, MD (Medicine)",
+        "Hospital: Narayana Health",
+        "Hospital and treating team absolved of responsibility for adverse outcomes resulting from this decision",
+        "Risks of leaving the hospital before completion of recommended treatment explained in detail",
+        "Patient advised to seek immediate medical attention if symptoms worsen",
+        "Patient/attendant acknowledges understanding of the risks involved"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Diya Mehta - St. Mary's Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Diya Mehta",
+      "date": "2025-02-08",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file",
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Aditya Menon, MBBS",
+        "Hospital: St. Mary's Hospital",
+        "Patient informed about monitoring during and after transfusion",
+        "Risks including transfusion reactions and infection transmission discussed",
+        "Blood group and cross-matching confirmed prior to transfusion",
+        "Indication for blood transfusion explained to the patient"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Kiran Singh - Medanta - The Medicity",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Kiran Singh",
+      "date": "2025-11-11",
+      "medicines": [],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Krishna Gupta, MBBS",
+        "Hospital: Medanta - The Medicity",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed",
+        "Patient informed about post-procedure monitoring requirements",
+        "Procedure involving catheter insertion through the wrist or groin artery explained"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Kavya Iyer - Kokilaben Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Kavya Iyer",
+      "date": "2024-10-19",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Kavya Joshi, MS (Ortho)",
+        "Hospital: Kokilaben Hospital",
+        "Procedure involving catheter insertion through the wrist or groin artery explained",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Meera Sen - Kokilaben Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Meera Sen",
+      "date": "2025-11-21",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant",
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Deepak Mukherjee, MBBS, DNB",
+        "Hospital: Kokilaben Hospital",
+        "Procedure involving catheter insertion through the wrist or groin artery explained",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed"
+      ]
+    }
+  },
+  {
+    "title": "Discharge Against Medical Advice (DAMA) Consent - Geeta Banerjee - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Geeta Banerjee",
+      "date": "2025-11-10",
+      "medicines": [],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language",
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "dama"],
+      "summary": "This form documents the patient's/attendant's decision to leave the hospital against the medical advice of the treating team, after being informed of the associated risks.",
+      "key_points": [
+        "Attending Physician: Dr. Vivaan Sen, MS (Surgery)",
+        "Hospital: Narayana Health",
+        "Patient/attendant acknowledges understanding of the risks involved",
+        "Risks of leaving the hospital before completion of recommended treatment explained in detail",
+        "Hospital and treating team absolved of responsibility for adverse outcomes resulting from this decision",
+        "Patient advised to seek immediate medical attention if symptoms worsen"
+      ]
+    }
+  },
+  {
+    "title": "Research Study Participation Consent - Sneha Reddy - Fortis Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sneha Reddy",
+      "date": "2024-10-30",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "research"],
+      "summary": "This form documents the patient's informed and voluntary consent to participate in an approved clinical research study, after the study protocol, risks, and benefits were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Manoj Iyer, MBBS, DNB",
+        "Hospital: Fortis Hospital",
+        "Voluntary nature of participation and right to withdraw at any time without affecting routine care explained",
+        "Purpose, duration, and procedures of the research study explained to the participant",
+        "Confidentiality of collected data assured as per study protocol"
+      ]
+    }
+  },
+  {
+    "title": "Research Study Participation Consent - Ayaan Agarwal - City Care Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Ayaan Agarwal",
+      "date": "2025-07-27",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "research"],
+      "summary": "This form documents the patient's informed and voluntary consent to participate in an approved clinical research study, after the study protocol, risks, and benefits were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Priya Das, MS (Surgery)",
+        "Hospital: City Care Hospital",
+        "Contact details of the principal investigator and ethics committee provided",
+        "Purpose, duration, and procedures of the research study explained to the participant",
+        "Voluntary nature of participation and right to withdraw at any time without affecting routine care explained",
+        "Confidentiality of collected data assured as per study protocol"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Rohan Nair - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Rohan Nair",
+      "date": "2026-02-05",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Manoj Nair, MD (Anesthesia)",
+        "Hospital: Narayana Health",
+        "Patient informed about possible need for blood transfusion during the procedure",
+        "Alternative treatment options discussed, including the option of no treatment",
+        "Patient given opportunity to ask questions and all queries addressed satisfactorily",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Consent - Sai Menon - Manipal Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sai Menon",
+      "date": "2026-04-28",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing",
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "pediatric"],
+      "summary": "This form documents the parent/guardian's informed consent for administration of a scheduled vaccine to the patient, after an explanation of the vaccine's purpose and possible side effects.",
+      "key_points": [
+        "Attending Physician: Dr. Aarav Chatterjee, MD (Radiology)",
+        "Hospital: Manipal Hospital",
+        "Vaccination schedule and next due date communicated",
+        "Parent/guardian advised to observe the child for 30 minutes post-vaccination",
+        "Common side effects such as mild fever and soreness at injection site discussed",
+        "Purpose of the vaccine and disease it protects against explained"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Neha Patel - St. Mary's Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Neha Patel",
+      "date": "2025-11-16",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant",
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Arjun Chatterjee, MS (Ortho)",
+        "Hospital: St. Mary's Hospital",
+        "Patient advised regarding fasting requirement prior to the procedure",
+        "Biopsy may be taken during the procedure if clinically indicated, consented separately",
+        "Risks such as bleeding, perforation, and reaction to sedation explained",
+        "Procedure explained including insertion of a flexible scope through the mouth"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Kabir Reddy - City Care Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Kabir Reddy",
+      "date": "2025-11-23",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Amit Singh, MD (Anesthesia)",
+        "Hospital: City Care Hospital",
+        "Procedure explained including insertion of a flexible scope through the mouth",
+        "Biopsy may be taken during the procedure if clinically indicated, consented separately",
+        "Patient advised regarding fasting requirement prior to the procedure",
+        "Risks such as bleeding, perforation, and reaction to sedation explained"
+      ]
+    }
+  },
+  {
+    "title": "Discharge Against Medical Advice (DAMA) Consent - Simran Nair - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Simran Nair",
+      "date": "2025-06-15",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "dama"],
+      "summary": "This form documents the patient's/attendant's decision to leave the hospital against the medical advice of the treating team, after being informed of the associated risks.",
+      "key_points": [
+        "Attending Physician: Dr. Riya Singh, MD (Anesthesia)",
+        "Hospital: Narayana Health",
+        "Risks of leaving the hospital before completion of recommended treatment explained in detail",
+        "Patient/attendant acknowledges understanding of the risks involved",
+        "Patient advised to seek immediate medical attention if symptoms worsen",
+        "Hospital and treating team absolved of responsibility for adverse outcomes resulting from this decision"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Kavya Bose - New Life Nursing Home",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Kavya Bose",
+      "date": "2026-03-05",
+      "medicines": [],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Deepak Choudhury, MBBS",
+        "Hospital: New Life Nursing Home",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed",
+        "Patient informed about post-procedure monitoring requirements",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Sunita Verma - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sunita Verma",
+      "date": "2025-01-22",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Reyansh Reddy, MD (Radiology)",
+        "Hospital: Narayana Health",
+        "Risks including transfusion reactions and infection transmission discussed",
+        "Blood group and cross-matching confirmed prior to transfusion",
+        "Patient informed about monitoring during and after transfusion",
+        "Indication for blood transfusion explained to the patient"
+      ]
+    }
+  },
+  {
+    "title": "Discharge Against Medical Advice (DAMA) Consent - Kiran Mehta - St. Mary's Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Kiran Mehta",
+      "date": "2025-01-13",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "dama"],
+      "summary": "This form documents the patient's/attendant's decision to leave the hospital against the medical advice of the treating team, after being informed of the associated risks.",
+      "key_points": [
+        "Attending Physician: Dr. Isha Mehta, MS (Ortho)",
+        "Hospital: St. Mary's Hospital",
+        "Patient/attendant acknowledges understanding of the risks involved",
+        "Patient advised to seek immediate medical attention if symptoms worsen",
+        "Hospital and treating team absolved of responsibility for adverse outcomes resulting from this decision",
+        "Risks of leaving the hospital before completion of recommended treatment explained in detail"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Kabir Agarwal - Columbia Asia Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Kabir Agarwal",
+      "date": "2026-07-03",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Reyansh Iyer, MBBS, DNB",
+        "Hospital: Columbia Asia Hospital",
+        "Procedure explained including insertion of a flexible scope through the mouth",
+        "Biopsy may be taken during the procedure if clinically indicated, consented separately",
+        "Risks such as bleeding, perforation, and reaction to sedation explained"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Amit Mehta - Columbia Asia Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Amit Mehta",
+      "date": "2026-06-18",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file",
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Ishaan Bose, MD (Anesthesia)",
+        "Hospital: Columbia Asia Hospital",
+        "Patient given opportunity to ask questions and all queries addressed satisfactorily",
+        "Patient informed about possible need for blood transfusion during the procedure",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Pooja Das - Max Super Speciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Pooja Das",
+      "date": "2025-06-19",
+      "medicines": [],
+      "important_notes": [
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Kiran Rao, MD (Radiology)",
+        "Hospital: Max Super Speciality Hospital",
+        "Patient advised regarding post-anesthesia monitoring and recovery process",
+        "Patient's fasting status and pre-anesthesia checkup findings reviewed",
+        "Risks associated with anesthesia, including rare but serious complications, explained"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Sneha Kulkarni - Manipal Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sneha Kulkarni",
+      "date": "2024-09-17",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Pooja Bose, MD (Gen. Med)",
+        "Hospital: Manipal Hospital",
+        "Risks associated with anesthesia, including rare but serious complications, explained",
+        "Type of anesthesia to be administered explained to the patient (general/regional/local)",
+        "Patient advised regarding post-anesthesia monitoring and recovery process"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Rohan Das - Lifeline Multispeciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Rohan Das",
+      "date": "2026-01-17",
+      "medicines": [],
+      "important_notes": [
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Sunita Pillai, MBBS",
+        "Hospital: Lifeline Multispeciality Hospital",
+        "Procedure involving catheter insertion through the wrist or groin artery explained",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Geeta Mukherjee - New Life Nursing Home",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Geeta Mukherjee",
+      "date": "2024-08-15",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Ayaan Choudhury, MS (Surgery)",
+        "Hospital: New Life Nursing Home",
+        "Risks such as bleeding, perforation, and reaction to sedation explained",
+        "Procedure explained including insertion of a flexible scope through the mouth",
+        "Biopsy may be taken during the procedure if clinically indicated, consented separately"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Manoj Reddy - Apollo Hospitals",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Manoj Reddy",
+      "date": "2026-06-03",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Deepak Gupta, MD (Anesthesia)",
+        "Hospital: Apollo Hospitals",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them",
+        "Patient given opportunity to ask questions and all queries addressed satisfactorily",
+        "Alternative treatment options discussed, including the option of no treatment"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Priya Mukherjee - Max Super Speciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Priya Mukherjee",
+      "date": "2025-12-26",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Ayaan Bose, MBBS",
+        "Hospital: Max Super Speciality Hospital",
+        "Blood group and cross-matching confirmed prior to transfusion",
+        "Indication for blood transfusion explained to the patient",
+        "Patient informed about monitoring during and after transfusion"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Geeta Sharma - City Care Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Geeta Sharma",
+      "date": "2025-04-22",
+      "medicines": [],
+      "important_notes": [
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Arjun Patel, MS (Surgery)",
+        "Hospital: City Care Hospital",
+        "Type of anesthesia to be administered explained to the patient (general/regional/local)",
+        "Patient advised regarding post-anesthesia monitoring and recovery process",
+        "Risks associated with anesthesia, including rare but serious complications, explained"
+      ]
+    }
+  },
+  {
+    "title": "Discharge Against Medical Advice (DAMA) Consent - Priya Iyer - St. Mary's Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Priya Iyer",
+      "date": "2025-10-30",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "dama"],
+      "summary": "This form documents the patient's/attendant's decision to leave the hospital against the medical advice of the treating team, after being informed of the associated risks.",
+      "key_points": [
+        "Attending Physician: Dr. Anil Menon, MS (Ortho)",
+        "Hospital: St. Mary's Hospital",
+        "Patient/attendant acknowledges understanding of the risks involved",
+        "Patient advised to seek immediate medical attention if symptoms worsen",
+        "Hospital and treating team absolved of responsibility for adverse outcomes resulting from this decision"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Ayaan Agarwal - Max Super Speciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Ayaan Agarwal",
+      "date": "2026-04-12",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file",
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Vivaan Nair, MD (Radiology)",
+        "Hospital: Max Super Speciality Hospital",
+        "Risks such as bleeding, perforation, and reaction to sedation explained",
+        "Biopsy may be taken during the procedure if clinically indicated, consented separately",
+        "Procedure explained including insertion of a flexible scope through the mouth",
+        "Patient advised regarding fasting requirement prior to the procedure"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Ramesh Patel - Columbia Asia Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Ramesh Patel",
+      "date": "2025-12-26",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Vivaan Menon, MBBS",
+        "Hospital: Columbia Asia Hospital",
+        "Procedure involving catheter insertion through the wrist or groin artery explained",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed",
+        "Patient informed about post-procedure monitoring requirements"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Amit Singh - Columbia Asia Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Amit Singh",
+      "date": "2026-04-10",
+      "medicines": [],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language",
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Isha Singh, MD (Radiology)",
+        "Hospital: Columbia Asia Hospital",
+        "Risks associated with anesthesia, including rare but serious complications, explained",
+        "Patient advised regarding post-anesthesia monitoring and recovery process",
+        "Type of anesthesia to be administered explained to the patient (general/regional/local)",
+        "Consent obtained after clarifying all doubts raised by the patient"
+      ]
+    }
+  },
+  {
+    "title": "Discharge Against Medical Advice (DAMA) Consent - Neha Das - City Care Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Neha Das",
+      "date": "2024-11-19",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "dama"],
+      "summary": "This form documents the patient's/attendant's decision to leave the hospital against the medical advice of the treating team, after being informed of the associated risks.",
+      "key_points": [
+        "Attending Physician: Dr. Nisha Mukherjee, MD (Gen. Med)",
+        "Hospital: City Care Hospital",
+        "Risks of leaving the hospital before completion of recommended treatment explained in detail",
+        "Patient advised to seek immediate medical attention if symptoms worsen",
+        "Patient/attendant acknowledges understanding of the risks involved"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Sunita Choudhury - St. Mary's Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sunita Choudhury",
+      "date": "2026-06-24",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Sneha Singh, MBBS",
+        "Hospital: St. Mary's Hospital",
+        "Type of anesthesia to be administered explained to the patient (general/regional/local)",
+        "Risks associated with anesthesia, including rare but serious complications, explained",
+        "Patient's fasting status and pre-anesthesia checkup findings reviewed",
+        "Consent obtained after clarifying all doubts raised by the patient"
+      ]
+    }
+  },
+  {
+    "title": "Research Study Participation Consent - Isha Joshi - Apollo Hospitals",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Isha Joshi",
+      "date": "2024-12-16",
+      "medicines": [],
+      "important_notes": [
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "research"],
+      "summary": "This form documents the patient's informed and voluntary consent to participate in an approved clinical research study, after the study protocol, risks, and benefits were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Rajesh Joshi, MD (Gen. Med)",
+        "Hospital: Apollo Hospitals",
+        "Confidentiality of collected data assured as per study protocol",
+        "Voluntary nature of participation and right to withdraw at any time without affecting routine care explained",
+        "Purpose, duration, and procedures of the research study explained to the participant"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Arjun Singh - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Arjun Singh",
+      "date": "2024-08-29",
+      "medicines": [],
+      "important_notes": [
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Rohan Agarwal, MD (Anesthesia)",
+        "Hospital: Narayana Health",
+        "Alternative treatment options discussed, including the option of no treatment",
+        "Patient informed about possible need for blood transfusion during the procedure",
+        "Patient given opportunity to ask questions and all queries addressed satisfactorily",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff"
+      ]
+    }
+  },
+  {
+    "title": "Research Study Participation Consent - Simran Patel - Max Super Speciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Simran Patel",
+      "date": "2024-11-23",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "research"],
+      "summary": "This form documents the patient's informed and voluntary consent to participate in an approved clinical research study, after the study protocol, risks, and benefits were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Sneha Joshi, MBBS, DNB",
+        "Hospital: Max Super Speciality Hospital",
+        "Voluntary nature of participation and right to withdraw at any time without affecting routine care explained",
+        "Contact details of the principal investigator and ethics committee provided",
+        "Purpose, duration, and procedures of the research study explained to the participant",
+        "Confidentiality of collected data assured as per study protocol"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Vivaan Mehta - Lifeline Multispeciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Vivaan Mehta",
+      "date": "2024-10-08",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Nisha Chatterjee, MS (Surgery)",
+        "Hospital: Lifeline Multispeciality Hospital",
+        "Indication for blood transfusion explained to the patient",
+        "Patient informed about monitoring during and after transfusion",
+        "Risks including transfusion reactions and infection transmission discussed"
+      ]
+    }
+  },
+  {
+    "title": "Research Study Participation Consent - Kabir Menon - Kokilaben Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Kabir Menon",
+      "date": "2025-06-14",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "research"],
+      "summary": "This form documents the patient's informed and voluntary consent to participate in an approved clinical research study, after the study protocol, risks, and benefits were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Aditya Gupta, MS (Surgery)",
+        "Hospital: Kokilaben Hospital",
+        "Contact details of the principal investigator and ethics committee provided",
+        "Confidentiality of collected data assured as per study protocol",
+        "Purpose, duration, and procedures of the research study explained to the participant"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Simran Singh - City Care Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Simran Singh",
+      "date": "2025-03-12",
+      "medicines": [],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language",
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Nikhil Agarwal, MD (Radiology)",
+        "Hospital: City Care Hospital",
+        "Risks including transfusion reactions and infection transmission discussed",
+        "Patient informed about monitoring during and after transfusion",
+        "Blood group and cross-matching confirmed prior to transfusion"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Nikhil Sharma - City Care Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Nikhil Sharma",
+      "date": "2026-03-25",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file",
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Isha Reddy, MBBS",
+        "Hospital: City Care Hospital",
+        "Patient advised regarding post-anesthesia monitoring and recovery process",
+        "Consent obtained after clarifying all doubts raised by the patient",
+        "Patient's fasting status and pre-anesthesia checkup findings reviewed"
+      ]
+    }
+  },
+  {
+    "title": "Discharge Against Medical Advice (DAMA) Consent - Nikhil Chatterjee - Lifeline Multispeciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Nikhil Chatterjee",
+      "date": "2025-01-10",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "dama"],
+      "summary": "This form documents the patient's/attendant's decision to leave the hospital against the medical advice of the treating team, after being informed of the associated risks.",
+      "key_points": [
+        "Attending Physician: Dr. Shreya Bose, MD (Anesthesia)",
+        "Hospital: Lifeline Multispeciality Hospital",
+        "Hospital and treating team absolved of responsibility for adverse outcomes resulting from this decision",
+        "Risks of leaving the hospital before completion of recommended treatment explained in detail",
+        "Patient/attendant acknowledges understanding of the risks involved",
+        "Patient advised to seek immediate medical attention if symptoms worsen"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Rohan Reddy - Manipal Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Rohan Reddy",
+      "date": "2024-12-21",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Manoj Verma, MD (Anesthesia)",
+        "Hospital: Manipal Hospital",
+        "Risks such as bleeding, perforation, and reaction to sedation explained",
+        "Patient advised regarding fasting requirement prior to the procedure",
+        "Biopsy may be taken during the procedure if clinically indicated, consented separately",
+        "Procedure explained including insertion of a flexible scope through the mouth"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Manoj Kulkarni - Fortis Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Manoj Kulkarni",
+      "date": "2026-05-09",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language",
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Kavya Pillai, MBBS",
+        "Hospital: Fortis Hospital",
+        "Risks such as bleeding, perforation, and reaction to sedation explained",
+        "Patient advised regarding fasting requirement prior to the procedure",
+        "Biopsy may be taken during the procedure if clinically indicated, consented separately",
+        "Procedure explained including insertion of a flexible scope through the mouth"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Sunita Chatterjee - Max Super Speciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sunita Chatterjee",
+      "date": "2025-02-01",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant",
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Ananya Pillai, MBBS, DNB",
+        "Hospital: Max Super Speciality Hospital",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff",
+        "Alternative treatment options discussed, including the option of no treatment",
+        "Patient given opportunity to ask questions and all queries addressed satisfactorily"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Arnav Verma - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Arnav Verma",
+      "date": "2025-12-27",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Rohan Sen, MD (Radiology)",
+        "Hospital: Narayana Health",
+        "Patient informed about post-procedure monitoring requirements",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed",
+        "Procedure involving catheter insertion through the wrist or groin artery explained"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Arnav Verma - Manipal Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Arnav Verma",
+      "date": "2025-03-15",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file",
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Ananya Pillai, MBBS",
+        "Hospital: Manipal Hospital",
+        "Alternative treatment options discussed, including the option of no treatment",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Arjun Gupta - St. Mary's Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Arjun Gupta",
+      "date": "2025-04-15",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Vivaan Gupta, MBBS",
+        "Hospital: St. Mary's Hospital",
+        "Procedure explained including insertion of a flexible scope through the mouth",
+        "Risks such as bleeding, perforation, and reaction to sedation explained",
+        "Patient advised regarding fasting requirement prior to the procedure",
+        "Biopsy may be taken during the procedure if clinically indicated, consented separately"
+      ]
+    }
+  },
+  {
+    "title": "Research Study Participation Consent - Nikhil Verma - Apollo Hospitals",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Nikhil Verma",
+      "date": "2026-01-13",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "research"],
+      "summary": "This form documents the patient's informed and voluntary consent to participate in an approved clinical research study, after the study protocol, risks, and benefits were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Sneha Iyer, MD (Medicine)",
+        "Hospital: Apollo Hospitals",
+        "Purpose, duration, and procedures of the research study explained to the participant",
+        "Confidentiality of collected data assured as per study protocol",
+        "Contact details of the principal investigator and ethics committee provided"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Ayaan Pillai - Max Super Speciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Ayaan Pillai",
+      "date": "2026-04-29",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Suresh Joshi, MBBS",
+        "Hospital: Max Super Speciality Hospital",
+        "Biopsy may be taken during the procedure if clinically indicated, consented separately",
+        "Risks such as bleeding, perforation, and reaction to sedation explained",
+        "Procedure explained including insertion of a flexible scope through the mouth"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Tanvi Iyer - Fortis Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Tanvi Iyer",
+      "date": "2026-06-04",
+      "medicines": [],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language",
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Nisha Verma, MD (Radiology)",
+        "Hospital: Fortis Hospital",
+        "Type of anesthesia to be administered explained to the patient (general/regional/local)",
+        "Risks associated with anesthesia, including rare but serious complications, explained",
+        "Patient's fasting status and pre-anesthesia checkup findings reviewed",
+        "Patient advised regarding post-anesthesia monitoring and recovery process"
+      ]
+    }
+  },
+  {
+    "title": "Research Study Participation Consent - Arjun Joshi - Apollo Hospitals",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Arjun Joshi",
+      "date": "2026-03-23",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "research"],
+      "summary": "This form documents the patient's informed and voluntary consent to participate in an approved clinical research study, after the study protocol, risks, and benefits were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Arnav Menon, MBBS, DNB",
+        "Hospital: Apollo Hospitals",
+        "Contact details of the principal investigator and ethics committee provided",
+        "Confidentiality of collected data assured as per study protocol",
+        "Purpose, duration, and procedures of the research study explained to the participant"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Sunita Patel - Kokilaben Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sunita Patel",
+      "date": "2025-07-08",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Priya Joshi, MS (Ortho)",
+        "Hospital: Kokilaben Hospital",
+        "Risks such as bleeding, perforation, and reaction to sedation explained",
+        "Procedure explained including insertion of a flexible scope through the mouth",
+        "Patient advised regarding fasting requirement prior to the procedure",
+        "Biopsy may be taken during the procedure if clinically indicated, consented separately"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Sneha Pillai - St. Mary's Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sneha Pillai",
+      "date": "2024-09-19",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Rajesh Mehta, MS (Ortho)",
+        "Hospital: St. Mary's Hospital",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them",
+        "Patient informed about possible need for blood transfusion during the procedure",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Lata Verma - Max Super Speciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Lata Verma",
+      "date": "2025-05-23",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Nikhil Mukherjee, MD (Radiology)",
+        "Hospital: Max Super Speciality Hospital",
+        "Type of anesthesia to be administered explained to the patient (general/regional/local)",
+        "Patient advised regarding post-anesthesia monitoring and recovery process",
+        "Consent obtained after clarifying all doubts raised by the patient",
+        "Risks associated with anesthesia, including rare but serious complications, explained"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Nisha Iyer - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Nisha Iyer",
+      "date": "2025-06-02",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Aditya Patel, MD (Radiology)",
+        "Hospital: Narayana Health",
+        "Patient informed about monitoring during and after transfusion",
+        "Blood group and cross-matching confirmed prior to transfusion",
+        "Indication for blood transfusion explained to the patient",
+        "Risks including transfusion reactions and infection transmission discussed"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Cardiac Catheterization) - Vikram Patel - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Vikram Patel",
+      "date": "2025-12-31",
+      "medicines": [],
+      "important_notes": [
+        "Consent obtained in the presence of a family member",
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "cardiac"],
+      "summary": "This form documents the patient's informed consent for undergoing a diagnostic cardiac catheterization/coronary angiography procedure.",
+      "key_points": [
+        "Attending Physician: Dr. Manoj Nair, MBBS",
+        "Hospital: Narayana Health",
+        "Patient informed about post-procedure monitoring requirements",
+        "Procedure involving catheter insertion through the wrist or groin artery explained",
+        "Possibility of proceeding directly to angioplasty/stenting if indicated during the procedure discussed",
+        "Risks including bleeding, vessel injury, and allergic reaction to contrast dye discussed"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Amit Gupta - Kokilaben Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Amit Gupta",
+      "date": "2024-10-01",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Diya Singh, MD (Gen. Med)",
+        "Hospital: Kokilaben Hospital",
+        "Patient given opportunity to ask questions and all queries addressed satisfactorily",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff",
+        "Patient informed about possible need for blood transfusion during the procedure"
+      ]
+    }
+  },
+  {
+    "title": "Research Study Participation Consent - Aarav Sen - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Aarav Sen",
+      "date": "2024-10-07",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "research"],
+      "summary": "This form documents the patient's informed and voluntary consent to participate in an approved clinical research study, after the study protocol, risks, and benefits were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Kabir Patel, MD (Gen. Med)",
+        "Hospital: Narayana Health",
+        "Purpose, duration, and procedures of the research study explained to the participant",
+        "Voluntary nature of participation and right to withdraw at any time without affecting routine care explained",
+        "Contact details of the principal investigator and ethics committee provided",
+        "Confidentiality of collected data assured as per study protocol"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Consent - Anil Mehta - Kokilaben Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Anil Mehta",
+      "date": "2025-07-17",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "pediatric"],
+      "summary": "This form documents the parent/guardian's informed consent for administration of a scheduled vaccine to the patient, after an explanation of the vaccine's purpose and possible side effects.",
+      "key_points": [
+        "Attending Physician: Dr. Anil Das, MS (Ortho)",
+        "Hospital: Kokilaben Hospital",
+        "Vaccination schedule and next due date communicated",
+        "Purpose of the vaccine and disease it protects against explained",
+        "Parent/guardian advised to observe the child for 30 minutes post-vaccination"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Meera Mehta - Kokilaben Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Meera Mehta",
+      "date": "2026-05-06",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing",
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Ananya Iyer, MD (Medicine)",
+        "Hospital: Kokilaben Hospital",
+        "Indication for blood transfusion explained to the patient",
+        "Blood group and cross-matching confirmed prior to transfusion",
+        "Patient informed about monitoring during and after transfusion"
+      ]
+    }
+  },
+  {
+    "title": "Research Study Participation Consent - Lata Bose - Kokilaben Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Lata Bose",
+      "date": "2024-12-13",
+      "medicines": [],
+      "important_notes": [
+        "Patient confirmed understanding by verbal acknowledgment before signing"
+      ],
+      "tags": ["consent", "research"],
+      "summary": "This form documents the patient's informed and voluntary consent to participate in an approved clinical research study, after the study protocol, risks, and benefits were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Rohan Kulkarni, MD (Medicine)",
+        "Hospital: Kokilaben Hospital",
+        "Purpose, duration, and procedures of the research study explained to the participant",
+        "Voluntary nature of participation and right to withdraw at any time without affecting routine care explained",
+        "Confidentiality of collected data assured as per study protocol"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Meera Verma - Fortis Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Meera Verma",
+      "date": "2026-07-02",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Aarav Mehta, MBBS",
+        "Hospital: Fortis Hospital",
+        "Blood group and cross-matching confirmed prior to transfusion",
+        "Indication for blood transfusion explained to the patient",
+        "Patient informed about monitoring during and after transfusion"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Consent - Anil Singh - Fortis Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Anil Singh",
+      "date": "2025-10-11",
+      "medicines": [],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language",
+        "Consent obtained in the presence of a family member"
+      ],
+      "tags": ["consent", "pediatric"],
+      "summary": "This form documents the parent/guardian's informed consent for administration of a scheduled vaccine to the patient, after an explanation of the vaccine's purpose and possible side effects.",
+      "key_points": [
+        "Attending Physician: Dr. Priya Agarwal, MD (Medicine)",
+        "Hospital: Fortis Hospital",
+        "Common side effects such as mild fever and soreness at injection site discussed",
+        "Purpose of the vaccine and disease it protects against explained",
+        "Parent/guardian advised to observe the child for 30 minutes post-vaccination"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Lata Nair - Kokilaben Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Lata Nair",
+      "date": "2026-02-27",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Sneha Iyer, MBBS, DNB",
+        "Hospital: Kokilaben Hospital",
+        "Patient informed about monitoring during and after transfusion",
+        "Indication for blood transfusion explained to the patient",
+        "Risks including transfusion reactions and infection transmission discussed",
+        "Blood group and cross-matching confirmed prior to transfusion"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Ramesh Chatterjee - Manipal Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Ramesh Chatterjee",
+      "date": "2025-12-23",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Nikhil Joshi, MS (Ortho)",
+        "Hospital: Manipal Hospital",
+        "Alternative treatment options discussed, including the option of no treatment",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them"
+      ]
+    }
+  },
+  {
+    "title": "Discharge Against Medical Advice (DAMA) Consent - Shreya Sen - Fortis Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Shreya Sen",
+      "date": "2025-03-16",
+      "medicines": [],
+      "important_notes": [
+        "Consent obtained in the presence of a family member",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "dama"],
+      "summary": "This form documents the patient's/attendant's decision to leave the hospital against the medical advice of the treating team, after being informed of the associated risks.",
+      "key_points": [
+        "Attending Physician: Dr. Tanvi Kulkarni, MD (Gen. Med)",
+        "Hospital: Fortis Hospital",
+        "Hospital and treating team absolved of responsibility for adverse outcomes resulting from this decision",
+        "Risks of leaving the hospital before completion of recommended treatment explained in detail",
+        "Patient advised to seek immediate medical attention if symptoms worsen"
+      ]
+    }
+  },
+  {
+    "title": "Anesthesia Consent - Diya Agarwal - Fortis Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Diya Agarwal",
+      "date": "2025-08-05",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "anesthesia"],
+      "summary": "This form documents the patient's informed consent for administration of anesthesia as part of a planned procedure, following an explanation of the type of anesthesia and associated risks by the anesthesiologist.",
+      "key_points": [
+        "Attending Physician: Dr. Aditya Sharma, MS (Ortho)",
+        "Hospital: Fortis Hospital",
+        "Consent obtained after clarifying all doubts raised by the patient",
+        "Risks associated with anesthesia, including rare but serious complications, explained",
+        "Patient's fasting status and pre-anesthesia checkup findings reviewed"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Suresh Mukherjee - New Life Nursing Home",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Suresh Mukherjee",
+      "date": "2026-03-09",
+      "medicines": [],
+      "important_notes": [
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Rajesh Sen, MS (Surgery)",
+        "Hospital: New Life Nursing Home",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them",
+        "Patient given opportunity to ask questions and all queries addressed satisfactorily",
+        "Patient informed about possible need for blood transfusion during the procedure"
+      ]
+    }
+  },
+  {
+    "title": "Diagnostic Procedure Consent (Endoscopy) - Krishna Singh - Kokilaben Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Krishna Singh",
+      "date": "2024-09-15",
+      "medicines": [
+        {
+          "name": "Midazolam",
+          "dosage": "2mg",
+          "frequency": "as_needed",
+          "duration": "once (pre-procedure sedation)",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Consent obtained in the presence of a family member",
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "gastric"],
+      "summary": "This form documents the patient's informed consent for undergoing an upper gastrointestinal endoscopy procedure, after the process, risks, and post-procedure care were explained.",
+      "key_points": [
+        "Attending Physician: Dr. Neha Nair, MD (Medicine)",
+        "Hospital: Kokilaben Hospital",
+        "Procedure explained including insertion of a flexible scope through the mouth",
+        "Patient advised regarding fasting requirement prior to the procedure",
+        "Risks such as bleeding, perforation, and reaction to sedation explained"
+      ]
+    }
+  },
+  {
+    "title": "Discharge Against Medical Advice (DAMA) Consent - Meera Verma - City Care Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Meera Verma",
+      "date": "2026-07-08",
+      "medicines": [],
+      "important_notes": [
+        "Interpreter services used to explain the form in the patient's preferred language"
+      ],
+      "tags": ["consent", "dama"],
+      "summary": "This form documents the patient's/attendant's decision to leave the hospital against the medical advice of the treating team, after being informed of the associated risks.",
+      "key_points": [
+        "Attending Physician: Dr. Shreya Singh, MBBS",
+        "Hospital: City Care Hospital",
+        "Hospital and treating team absolved of responsibility for adverse outcomes resulting from this decision",
+        "Patient advised to seek immediate medical attention if symptoms worsen",
+        "Risks of leaving the hospital before completion of recommended treatment explained in detail",
+        "Patient/attendant acknowledges understanding of the risks involved"
+      ]
+    }
+  },
+  {
+    "title": "Surgical Procedure Consent - Meera Joshi - City Care Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Meera Joshi",
+      "date": "2025-09-10",
+      "medicines": [],
+      "important_notes": [
+        "Consent obtained in the presence of a family member",
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "surgery"],
+      "summary": "This form documents the patient's informed consent for undergoing a planned surgical procedure, after the nature, risks, benefits, and alternatives were explained by the treating surgeon.",
+      "key_points": [
+        "Attending Physician: Dr. Geeta Das, MS (Surgery)",
+        "Hospital: City Care Hospital",
+        "Patient given opportunity to ask questions and all queries addressed satisfactorily",
+        "Procedure, expected benefits, and possible risks explained to the patient in a language understood by them",
+        "Consent given voluntarily without any coercion, witnessed by hospital staff",
+        "Patient informed about possible need for blood transfusion during the procedure"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Kabir Chatterjee - Narayana Health",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Kabir Chatterjee",
+      "date": "2026-04-04",
+      "medicines": [],
+      "important_notes": [
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff",
+        "Original consent form retained in the patient's medical file"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Suresh Mukherjee, MD (Anesthesia)",
+        "Hospital: Narayana Health",
+        "Blood group and cross-matching confirmed prior to transfusion",
+        "Indication for blood transfusion explained to the patient",
+        "Patient informed about monitoring during and after transfusion",
+        "Risks including transfusion reactions and infection transmission discussed"
+      ]
+    }
+  },
+  {
+    "title": "Vaccination Consent - Riya Joshi - City Care Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Riya Joshi",
+      "date": "2025-05-09",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file",
+        "A copy of the signed consent form provided to the patient/attendant"
+      ],
+      "tags": ["consent", "pediatric"],
+      "summary": "This form documents the parent/guardian's informed consent for administration of a scheduled vaccine to the patient, after an explanation of the vaccine's purpose and possible side effects.",
+      "key_points": [
+        "Attending Physician: Dr. Shreya Banerjee, MS (Ortho)",
+        "Hospital: City Care Hospital",
+        "Parent/guardian advised to observe the child for 30 minutes post-vaccination",
+        "Vaccination schedule and next due date communicated",
+        "Common side effects such as mild fever and soreness at injection site discussed"
+      ]
+    }
+  },
+  {
+    "title": "Blood Transfusion Consent - Sunita Joshi - Lifeline Multispeciality Hospital",
+    "type": "Consent Form",
+    "document_metadata": {
+      "patient_name": "Sunita Joshi",
+      "date": "2025-05-07",
+      "medicines": [],
+      "important_notes": [
+        "Original consent form retained in the patient's medical file",
+        "Consent form signed by patient/legal guardian and witnessed by hospital staff"
+      ],
+      "tags": ["consent", "blood-transfusion"],
+      "summary": "This form documents the patient's informed consent for receiving blood or blood product transfusion, after an explanation of the indication, benefits, and potential risks.",
+      "key_points": [
+        "Attending Physician: Dr. Tanvi Mukherjee, MD (Anesthesia)",
+        "Hospital: Lifeline Multispeciality Hospital",
+        "Indication for blood transfusion explained to the patient",
+        "Risks including transfusion reactions and infection transmission discussed",
+        "Blood group and cross-matching confirmed prior to transfusion"
+      ]
+    }
+  }
+]

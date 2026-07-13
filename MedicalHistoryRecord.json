@@ -1,0 +1,3000 @@
+[
+  {
+    "title": "Medical History Record - Nikhil Sharma - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Nikhil Sharma",
+      "date": "2026-05-27",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "No history of ICU admission for respiratory illness",
+        "Diagnosed with bronchial asthma at age 8, with periodic exacerbations",
+        "Last hospitalization for asthma exacerbation was 2 years ago",
+        "Uses reliever inhaler as needed and controller medication regularly",
+        "Known triggers include dust, cold weather, and seasonal changes"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Rohan Choudhury - Shree Ganesh Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Rohan Choudhury",
+      "date": "2026-04-13",
+      "medicines": [],
+      "important_notes": [
+        "No history of tobacco or alcohol use reported",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Two prior full-term normal vaginal deliveries, both uneventful",
+        "Regular menstrual cycles reported, no known gynecological disorders"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Vivaan Chatterjee - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Vivaan Chatterjee",
+      "date": "2025-10-07",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": ["No history of tobacco or alcohol use reported"],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly",
+        "On preventive therapy with periodic neurology follow-up",
+        "Family history of migraine reported in mother"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Ramesh Bose - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Ramesh Bose",
+      "date": "2025-10-06",
+      "medicines": [],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "Two prior full-term normal vaginal deliveries, both uneventful",
+        "Regular menstrual cycles reported, no known gynecological disorders",
+        "Up to date with cervical cancer screening as per guidelines",
+        "No history of gestational diabetes or hypertension in previous pregnancies"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Manoj Mukherjee - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Manoj Mukherjee",
+      "date": "2025-07-27",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": ["No history of tobacco or alcohol use reported"],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "On preventive therapy with periodic neurology follow-up",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly",
+        "Family history of migraine reported in mother"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Rajesh Agarwal - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Rajesh Agarwal",
+      "date": "2026-04-04",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "No history of tobacco or alcohol use reported"
+      ],
+      "tags": ["allergy", "chronic"],
+      "summary": "This record summarizes a history of seasonal allergic rhinitis and known drug allergy, relevant for future prescribing decisions.",
+      "key_points": [
+        "Allergic to Penicillin (skin rash)",
+        "Seasonal allergies (dust, pollen)",
+        "Known allergy to Penicillin group of antibiotics, presenting with skin rash",
+        "Uses antihistamines during symptomatic periods",
+        "History of seasonal allergic rhinitis with symptoms worsening during spring and monsoon"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Sai Singh - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Sai Singh",
+      "date": "2026-01-15",
+      "medicines": [
+        {
+          "name": "Losartan",
+          "dosage": "50mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Family history reviewed and documented for future risk assessment",
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["kidney-function", "chronic", "hypertension"],
+      "summary": "This record outlines a history of chronic kidney disease stage 3, under nephrology follow-up with periodic monitoring of renal function.",
+      "key_points": [
+        "No known drug allergies",
+        "Advised low-salt, protein-moderated diet",
+        "No history of dialysis required to date",
+        "Under regular nephrology follow-up with periodic renal function and electrolyte monitoring"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Ishaan Menon - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Ishaan Menon",
+      "date": "2025-09-24",
+      "medicines": [],
+      "important_notes": [
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "Two prior full-term normal vaginal deliveries, both uneventful",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Regular menstrual cycles reported, no known gynecological disorders"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Deepak Patel - Sunrise Family Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Deepak Patel",
+      "date": "2026-04-21",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "Last hospitalization for asthma exacerbation was 2 years ago",
+        "Known triggers include dust, cold weather, and seasonal changes",
+        "No history of ICU admission for respiratory illness",
+        "Diagnosed with bronchial asthma at age 8, with periodic exacerbations"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Priya Kulkarni - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Priya Kulkarni",
+      "date": "2025-10-16",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "No history of tobacco or alcohol use reported",
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "Uses reliever inhaler as needed and controller medication regularly",
+        "Diagnosed with bronchial asthma at age 8, with periodic exacerbations",
+        "Last hospitalization for asthma exacerbation was 2 years ago",
+        "No history of ICU admission for respiratory illness",
+        "Known triggers include dust, cold weather, and seasonal changes"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Riya Agarwal - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Riya Agarwal",
+      "date": "2025-12-09",
+      "medicines": [
+        {
+          "name": "Losartan",
+          "dosage": "50mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["kidney-function", "chronic", "hypertension"],
+      "summary": "This record outlines a history of chronic kidney disease stage 3, under nephrology follow-up with periodic monitoring of renal function.",
+      "key_points": [
+        "No known drug allergies",
+        "Advised low-salt, protein-moderated diet",
+        "Diagnosed with chronic kidney disease stage 3, secondary to long-standing hypertension",
+        "Under regular nephrology follow-up with periodic renal function and electrolyte monitoring",
+        "No history of dialysis required to date"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Ramesh Sen - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Ramesh Sen",
+      "date": "2025-10-24",
+      "medicines": [
+        {
+          "name": "Metformin",
+          "dosage": "500mg",
+          "frequency": "twice_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Amlodipine",
+          "dosage": "5mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["diabetes", "hypertension", "chronic"],
+      "summary": "This record summarizes a long-standing history of Type 2 Diabetes Mellitus and Hypertension, with regular follow-up and medication management over several years.",
+      "key_points": [
+        "No known drug allergies",
+        "Diagnosed with Hypertension 4 years ago, well controlled on regular medication",
+        "Diagnosed with Type 2 Diabetes Mellitus 6 years ago, currently on oral hypoglycemics",
+        "No history of diabetic retinopathy or nephropathy on recent screening"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Devika Sen - Shree Ganesh Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Devika Sen",
+      "date": "2026-06-04",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["allergy", "chronic"],
+      "summary": "This record summarizes a history of seasonal allergic rhinitis and known drug allergy, relevant for future prescribing decisions.",
+      "key_points": [
+        "Allergic to Penicillin (skin rash)",
+        "Seasonal allergies (dust, pollen)",
+        "Known allergy to Penicillin group of antibiotics, presenting with skin rash",
+        "History of seasonal allergic rhinitis with symptoms worsening during spring and monsoon",
+        "No history of anaphylaxis reported"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Sunita Verma - Apollo Medical Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Sunita Verma",
+      "date": "2025-08-26",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of thyroid disorder reported on the maternal side",
+        "No history of thyroid surgery or radioactive iodine therapy",
+        "On stable dose of thyroid hormone replacement with periodic TSH monitoring",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Tanvi Sharma - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Tanvi Sharma",
+      "date": "2025-07-15",
+      "medicines": [
+        {
+          "name": "Metformin",
+          "dosage": "500mg",
+          "frequency": "twice_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Amlodipine",
+          "dosage": "5mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["diabetes", "hypertension", "chronic"],
+      "summary": "This record summarizes a long-standing history of Type 2 Diabetes Mellitus and Hypertension, with regular follow-up and medication management over several years.",
+      "key_points": [
+        "No known drug allergies",
+        "Diagnosed with Hypertension 4 years ago, well controlled on regular medication",
+        "Family history of diabetes reported on the maternal side",
+        "No history of diabetic retinopathy or nephropathy on recent screening"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Krishna Mehta - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Krishna Mehta",
+      "date": "2026-05-31",
+      "medicines": [
+        {
+          "name": "Aspirin",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Clopidogrel",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Atorvastatin",
+          "dosage": "40mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["cardiac", "chronic"],
+      "summary": "This record outlines a cardiac history including a prior myocardial infarction and subsequent stent placement, with ongoing secondary prevention therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "No recurrent chest pain or exertional symptoms since the event",
+        "Echocardiography shows mildly reduced ejection fraction",
+        "On dual antiplatelet therapy and statin for secondary prevention",
+        "Family history of coronary artery disease reported in father",
+        "History of myocardial infarction 3 years ago, treated with primary angioplasty and stenting"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Vivaan Kulkarni - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Vivaan Kulkarni",
+      "date": "2025-11-27",
+      "medicines": [
+        {
+          "name": "Losartan",
+          "dosage": "50mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["kidney-function", "chronic", "hypertension"],
+      "summary": "This record outlines a history of chronic kidney disease stage 3, under nephrology follow-up with periodic monitoring of renal function.",
+      "key_points": [
+        "No known drug allergies",
+        "Advised low-salt, protein-moderated diet",
+        "Under regular nephrology follow-up with periodic renal function and electrolyte monitoring",
+        "No history of dialysis required to date"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Isha Menon - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Isha Menon",
+      "date": "2026-04-21",
+      "medicines": [
+        {
+          "name": "Losartan",
+          "dosage": "50mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["kidney-function", "chronic", "hypertension"],
+      "summary": "This record outlines a history of chronic kidney disease stage 3, under nephrology follow-up with periodic monitoring of renal function.",
+      "key_points": [
+        "No known drug allergies",
+        "Under regular nephrology follow-up with periodic renal function and electrolyte monitoring",
+        "Advised low-salt, protein-moderated diet",
+        "No history of dialysis required to date",
+        "Diagnosed with chronic kidney disease stage 3, secondary to long-standing hypertension"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Nikhil Choudhury - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Nikhil Choudhury",
+      "date": "2026-07-03",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of thyroid disorder reported on the maternal side",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup",
+        "On stable dose of thyroid hormone replacement with periodic TSH monitoring"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Aarav Iyer - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Aarav Iyer",
+      "date": "2026-05-09",
+      "medicines": [
+        {
+          "name": "Aspirin",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Clopidogrel",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Atorvastatin",
+          "dosage": "40mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Family history reviewed and documented for future risk assessment",
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["cardiac", "chronic"],
+      "summary": "This record outlines a cardiac history including a prior myocardial infarction and subsequent stent placement, with ongoing secondary prevention therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "Echocardiography shows mildly reduced ejection fraction",
+        "On dual antiplatelet therapy and statin for secondary prevention",
+        "History of myocardial infarction 3 years ago, treated with primary angioplasty and stenting",
+        "Family history of coronary artery disease reported in father",
+        "No recurrent chest pain or exertional symptoms since the event"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Riya Choudhury - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Riya Choudhury",
+      "date": "2025-10-13",
+      "medicines": [
+        {
+          "name": "Losartan",
+          "dosage": "50mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report",
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["kidney-function", "chronic", "hypertension"],
+      "summary": "This record outlines a history of chronic kidney disease stage 3, under nephrology follow-up with periodic monitoring of renal function.",
+      "key_points": [
+        "No known drug allergies",
+        "Diagnosed with chronic kidney disease stage 3, secondary to long-standing hypertension",
+        "Advised low-salt, protein-moderated diet",
+        "Under regular nephrology follow-up with periodic renal function and electrolyte monitoring"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Sneha Pillai - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Sneha Pillai",
+      "date": "2025-09-22",
+      "medicines": [
+        {
+          "name": "Losartan",
+          "dosage": "50mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["kidney-function", "chronic", "hypertension"],
+      "summary": "This record outlines a history of chronic kidney disease stage 3, under nephrology follow-up with periodic monitoring of renal function.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of dialysis required to date",
+        "Under regular nephrology follow-up with periodic renal function and electrolyte monitoring",
+        "Advised low-salt, protein-moderated diet",
+        "Diagnosed with chronic kidney disease stage 3, secondary to long-standing hypertension"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Manoj Mehta - Sunrise Family Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Manoj Mehta",
+      "date": "2026-05-11",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["allergy", "chronic"],
+      "summary": "This record summarizes a history of seasonal allergic rhinitis and known drug allergy, relevant for future prescribing decisions.",
+      "key_points": [
+        "Allergic to Penicillin (skin rash)",
+        "Seasonal allergies (dust, pollen)",
+        "Known allergy to Penicillin group of antibiotics, presenting with skin rash",
+        "No history of anaphylaxis reported",
+        "Uses antihistamines during symptomatic periods",
+        "History of seasonal allergic rhinitis with symptoms worsening during spring and monsoon"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Arnav Choudhury - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Arnav Choudhury",
+      "date": "2025-10-25",
+      "medicines": [],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "Up to date with routine health screenings for age group",
+        "No other significant past surgical history",
+        "No post-operative complications reported"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Pooja Banerjee - Sunrise Family Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Pooja Banerjee",
+      "date": "2025-08-18",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["allergy", "chronic"],
+      "summary": "This record summarizes a history of seasonal allergic rhinitis and known drug allergy, relevant for future prescribing decisions.",
+      "key_points": [
+        "Allergic to Penicillin (skin rash)",
+        "Seasonal allergies (dust, pollen)",
+        "Known allergy to Penicillin group of antibiotics, presenting with skin rash",
+        "Uses antihistamines during symptomatic periods",
+        "No history of anaphylaxis reported"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Sai Gupta - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Sai Gupta",
+      "date": "2026-01-11",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": ["No history of tobacco or alcohol use reported"],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "Diagnosed with bronchial asthma at age 8, with periodic exacerbations",
+        "Uses reliever inhaler as needed and controller medication regularly",
+        "Last hospitalization for asthma exacerbation was 2 years ago"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Kavya Choudhury - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Kavya Choudhury",
+      "date": "2025-11-27",
+      "medicines": [],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "No other significant past surgical history",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "Up to date with routine health screenings for age group"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Neha Iyer - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Neha Iyer",
+      "date": "2026-05-28",
+      "medicines": [],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "No post-operative complications reported",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "No other significant past surgical history",
+        "Up to date with routine health screenings for age group"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Nisha Sharma - Apollo Medical Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Nisha Sharma",
+      "date": "2026-05-23",
+      "medicines": [],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "No other significant past surgical history",
+        "No post-operative complications reported",
+        "Up to date with routine health screenings for age group"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Ananya Iyer - New Life Nursing Home",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Ananya Iyer",
+      "date": "2025-08-26",
+      "medicines": [],
+      "important_notes": [
+        "No history of tobacco or alcohol use reported",
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "Regular menstrual cycles reported, no known gynecological disorders",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Up to date with cervical cancer screening as per guidelines",
+        "Two prior full-term normal vaginal deliveries, both uneventful"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Ishaan Menon - Sunrise Family Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Ishaan Menon",
+      "date": "2026-02-04",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of migraine reported in mother",
+        "On preventive therapy with periodic neurology follow-up",
+        "No history of neurological deficit associated with episodes"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Kavya Mehta - Sunrise Family Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Kavya Mehta",
+      "date": "2026-04-17",
+      "medicines": [],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "No post-operative complications reported",
+        "Up to date with routine health screenings for age group",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "No other significant past surgical history"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Nikhil Gupta - Shree Ganesh Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Nikhil Gupta",
+      "date": "2026-03-18",
+      "medicines": [
+        {
+          "name": "Losartan",
+          "dosage": "50mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["kidney-function", "chronic", "hypertension"],
+      "summary": "This record outlines a history of chronic kidney disease stage 3, under nephrology follow-up with periodic monitoring of renal function.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of dialysis required to date",
+        "Under regular nephrology follow-up with periodic renal function and electrolyte monitoring",
+        "Diagnosed with chronic kidney disease stage 3, secondary to long-standing hypertension",
+        "Advised low-salt, protein-moderated diet"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Aarav Joshi - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Aarav Joshi",
+      "date": "2025-10-29",
+      "medicines": [],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "Two prior full-term normal vaginal deliveries, both uneventful",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Regular menstrual cycles reported, no known gynecological disorders",
+        "Up to date with cervical cancer screening as per guidelines"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Sunita Nair - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Sunita Nair",
+      "date": "2025-07-16",
+      "medicines": [],
+      "important_notes": [
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Up to date with cervical cancer screening as per guidelines",
+        "Regular menstrual cycles reported, no known gynecological disorders",
+        "Two prior full-term normal vaginal deliveries, both uneventful"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Sunita Reddy - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Sunita Reddy",
+      "date": "2025-11-15",
+      "medicines": [],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "Up to date with cervical cancer screening as per guidelines",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Two prior full-term normal vaginal deliveries, both uneventful",
+        "Regular menstrual cycles reported, no known gynecological disorders"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Arjun Bose - Sunrise Family Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Arjun Bose",
+      "date": "2025-10-03",
+      "medicines": [
+        {
+          "name": "Aspirin",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Clopidogrel",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Atorvastatin",
+          "dosage": "40mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["cardiac", "chronic"],
+      "summary": "This record outlines a cardiac history including a prior myocardial infarction and subsequent stent placement, with ongoing secondary prevention therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "On dual antiplatelet therapy and statin for secondary prevention",
+        "No recurrent chest pain or exertional symptoms since the event",
+        "Echocardiography shows mildly reduced ejection fraction",
+        "Family history of coronary artery disease reported in father"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Nikhil Pillai - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Nikhil Pillai",
+      "date": "2026-04-24",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["allergy", "chronic"],
+      "summary": "This record summarizes a history of seasonal allergic rhinitis and known drug allergy, relevant for future prescribing decisions.",
+      "key_points": [
+        "Allergic to Penicillin (skin rash)",
+        "Seasonal allergies (dust, pollen)",
+        "No history of anaphylaxis reported",
+        "Uses antihistamines during symptomatic periods",
+        "History of seasonal allergic rhinitis with symptoms worsening during spring and monsoon",
+        "Known allergy to Penicillin group of antibiotics, presenting with skin rash"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Kabir Reddy - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Kabir Reddy",
+      "date": "2025-07-15",
+      "medicines": [],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "No post-operative complications reported",
+        "Up to date with routine health screenings for age group",
+        "No other significant past surgical history"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Vivaan Reddy - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Vivaan Reddy",
+      "date": "2026-02-26",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "No history of tobacco or alcohol use reported",
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly",
+        "No history of neurological deficit associated with episodes",
+        "Family history of migraine reported in mother",
+        "On preventive therapy with periodic neurology follow-up"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Kiran Chatterjee - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Kiran Chatterjee",
+      "date": "2025-07-18",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses",
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "Last hospitalization for asthma exacerbation was 2 years ago",
+        "No history of ICU admission for respiratory illness",
+        "Diagnosed with bronchial asthma at age 8, with periodic exacerbations"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Aarav Verma - New Life Nursing Home",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Aarav Verma",
+      "date": "2025-10-26",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "On stable dose of thyroid hormone replacement with periodic TSH monitoring",
+        "No history of thyroid surgery or radioactive iodine therapy",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup",
+        "Family history of thyroid disorder reported on the maternal side"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Rajesh Rao - Apollo Medical Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Rajesh Rao",
+      "date": "2025-07-24",
+      "medicines": [
+        {
+          "name": "Metformin",
+          "dosage": "500mg",
+          "frequency": "twice_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Amlodipine",
+          "dosage": "5mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["diabetes", "hypertension", "chronic"],
+      "summary": "This record summarizes a long-standing history of Type 2 Diabetes Mellitus and Hypertension, with regular follow-up and medication management over several years.",
+      "key_points": [
+        "No known drug allergies",
+        "Diagnosed with Hypertension 4 years ago, well controlled on regular medication",
+        "Family history of diabetes reported on the maternal side",
+        "Diagnosed with Type 2 Diabetes Mellitus 6 years ago, currently on oral hypoglycemics",
+        "Advised annual eye and kidney function screening",
+        "No history of diabetic retinopathy or nephropathy on recent screening"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Amit Patel - New Life Nursing Home",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Amit Patel",
+      "date": "2025-10-29",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["allergy", "chronic"],
+      "summary": "This record summarizes a history of seasonal allergic rhinitis and known drug allergy, relevant for future prescribing decisions.",
+      "key_points": [
+        "Allergic to Penicillin (skin rash)",
+        "Seasonal allergies (dust, pollen)",
+        "Known allergy to Penicillin group of antibiotics, presenting with skin rash",
+        "History of seasonal allergic rhinitis with symptoms worsening during spring and monsoon",
+        "Uses antihistamines during symptomatic periods"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Ishaan Mehta - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Ishaan Mehta",
+      "date": "2026-05-28",
+      "medicines": [
+        {
+          "name": "Aspirin",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Clopidogrel",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Atorvastatin",
+          "dosage": "40mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["cardiac", "chronic"],
+      "summary": "This record outlines a cardiac history including a prior myocardial infarction and subsequent stent placement, with ongoing secondary prevention therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "History of myocardial infarction 3 years ago, treated with primary angioplasty and stenting",
+        "On dual antiplatelet therapy and statin for secondary prevention",
+        "Family history of coronary artery disease reported in father",
+        "No recurrent chest pain or exertional symptoms since the event"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Riya Gupta - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Riya Gupta",
+      "date": "2026-07-10",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of thyroid surgery or radioactive iodine therapy",
+        "Family history of thyroid disorder reported on the maternal side",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Krishna Kulkarni - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Krishna Kulkarni",
+      "date": "2026-02-06",
+      "medicines": [],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "Up to date with routine health screenings for age group",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "No other significant past surgical history",
+        "No post-operative complications reported"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Reyansh Iyer - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Reyansh Iyer",
+      "date": "2026-05-23",
+      "medicines": [],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "Up to date with cervical cancer screening as per guidelines",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Two prior full-term normal vaginal deliveries, both uneventful"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Devika Pillai - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Devika Pillai",
+      "date": "2026-04-24",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "No history of tobacco or alcohol use reported",
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly",
+        "Family history of migraine reported in mother",
+        "On preventive therapy with periodic neurology follow-up",
+        "No history of neurological deficit associated with episodes"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Rajesh Singh - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Rajesh Singh",
+      "date": "2025-09-16",
+      "medicines": [
+        {
+          "name": "Losartan",
+          "dosage": "50mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["kidney-function", "chronic", "hypertension"],
+      "summary": "This record outlines a history of chronic kidney disease stage 3, under nephrology follow-up with periodic monitoring of renal function.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of dialysis required to date",
+        "Under regular nephrology follow-up with periodic renal function and electrolyte monitoring",
+        "Diagnosed with chronic kidney disease stage 3, secondary to long-standing hypertension"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Reyansh Reddy - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Reyansh Reddy",
+      "date": "2026-07-06",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["allergy", "chronic"],
+      "summary": "This record summarizes a history of seasonal allergic rhinitis and known drug allergy, relevant for future prescribing decisions.",
+      "key_points": [
+        "Allergic to Penicillin (skin rash)",
+        "Seasonal allergies (dust, pollen)",
+        "Uses antihistamines during symptomatic periods",
+        "No history of anaphylaxis reported",
+        "History of seasonal allergic rhinitis with symptoms worsening during spring and monsoon"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Sai Joshi - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Sai Joshi",
+      "date": "2025-07-20",
+      "medicines": [],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "Up to date with routine health screenings for age group",
+        "No other significant past surgical history",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Devika Patel - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Devika Patel",
+      "date": "2026-03-16",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "On preventive therapy with periodic neurology follow-up",
+        "No history of neurological deficit associated with episodes",
+        "Family history of migraine reported in mother",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Vivaan Pillai - New Life Nursing Home",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Vivaan Pillai",
+      "date": "2026-06-08",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of thyroid surgery or radioactive iodine therapy",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup",
+        "Family history of thyroid disorder reported on the maternal side",
+        "On stable dose of thyroid hormone replacement with periodic TSH monitoring"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Aarav Nair - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Aarav Nair",
+      "date": "2026-03-16",
+      "medicines": [
+        {
+          "name": "Losartan",
+          "dosage": "50mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["kidney-function", "chronic", "hypertension"],
+      "summary": "This record outlines a history of chronic kidney disease stage 3, under nephrology follow-up with periodic monitoring of renal function.",
+      "key_points": [
+        "No known drug allergies",
+        "Under regular nephrology follow-up with periodic renal function and electrolyte monitoring",
+        "Advised low-salt, protein-moderated diet",
+        "Diagnosed with chronic kidney disease stage 3, secondary to long-standing hypertension"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Riya Pillai - Sunrise Family Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Riya Pillai",
+      "date": "2026-03-11",
+      "medicines": [],
+      "important_notes": ["No history of tobacco or alcohol use reported"],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Up to date with cervical cancer screening as per guidelines",
+        "Two prior full-term normal vaginal deliveries, both uneventful"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Manoj Kulkarni - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Manoj Kulkarni",
+      "date": "2025-10-04",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of neurological deficit associated with episodes",
+        "On preventive therapy with periodic neurology follow-up",
+        "Family history of migraine reported in mother",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Priya Gupta - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Priya Gupta",
+      "date": "2026-02-14",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": ["No history of tobacco or alcohol use reported"],
+      "tags": ["allergy", "chronic"],
+      "summary": "This record summarizes a history of seasonal allergic rhinitis and known drug allergy, relevant for future prescribing decisions.",
+      "key_points": [
+        "Allergic to Penicillin (skin rash)",
+        "Seasonal allergies (dust, pollen)",
+        "History of seasonal allergic rhinitis with symptoms worsening during spring and monsoon",
+        "No history of anaphylaxis reported",
+        "Known allergy to Penicillin group of antibiotics, presenting with skin rash"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Geeta Singh - New Life Nursing Home",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Geeta Singh",
+      "date": "2026-04-24",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of migraine reported in mother",
+        "On preventive therapy with periodic neurology follow-up",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly",
+        "No history of neurological deficit associated with episodes"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Lata Banerjee - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Lata Banerjee",
+      "date": "2026-02-11",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "No history of tobacco or alcohol use reported",
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of migraine reported in mother",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly",
+        "No history of neurological deficit associated with episodes"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Deepak Iyer - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Deepak Iyer",
+      "date": "2026-04-18",
+      "medicines": [
+        {
+          "name": "Aspirin",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Clopidogrel",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Atorvastatin",
+          "dosage": "40mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["cardiac", "chronic"],
+      "summary": "This record outlines a cardiac history including a prior myocardial infarction and subsequent stent placement, with ongoing secondary prevention therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "On dual antiplatelet therapy and statin for secondary prevention",
+        "History of myocardial infarction 3 years ago, treated with primary angioplasty and stenting",
+        "Family history of coronary artery disease reported in father",
+        "Echocardiography shows mildly reduced ejection fraction"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Meera Bose - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Meera Bose",
+      "date": "2026-02-20",
+      "medicines": [],
+      "important_notes": [
+        "Immunization history up to date as per patient report",
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "No other significant past surgical history",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "No post-operative complications reported",
+        "Up to date with routine health screenings for age group"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Nisha Bose - New Life Nursing Home",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Nisha Bose",
+      "date": "2026-02-14",
+      "medicines": [
+        {
+          "name": "Aspirin",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Clopidogrel",
+          "dosage": "75mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Atorvastatin",
+          "dosage": "40mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["cardiac", "chronic"],
+      "summary": "This record outlines a cardiac history including a prior myocardial infarction and subsequent stent placement, with ongoing secondary prevention therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of coronary artery disease reported in father",
+        "On dual antiplatelet therapy and statin for secondary prevention",
+        "No recurrent chest pain or exertional symptoms since the event",
+        "History of myocardial infarction 3 years ago, treated with primary angioplasty and stenting",
+        "Echocardiography shows mildly reduced ejection fraction"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Vikram Reddy - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Vikram Reddy",
+      "date": "2026-03-16",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses",
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "No history of ICU admission for respiratory illness",
+        "Uses reliever inhaler as needed and controller medication regularly",
+        "Last hospitalization for asthma exacerbation was 2 years ago",
+        "Diagnosed with bronchial asthma at age 8, with periodic exacerbations",
+        "Known triggers include dust, cold weather, and seasonal changes"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Meera Singh - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Meera Singh",
+      "date": "2026-02-13",
+      "medicines": [],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses",
+        "No history of tobacco or alcohol use reported"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "No post-operative complications reported",
+        "No other significant past surgical history",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "Up to date with routine health screenings for age group"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Manoj Iyer - New Life Nursing Home",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Manoj Iyer",
+      "date": "2025-08-19",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses",
+        "No history of tobacco or alcohol use reported"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "On stable dose of thyroid hormone replacement with periodic TSH monitoring",
+        "No history of thyroid surgery or radioactive iodine therapy",
+        "Family history of thyroid disorder reported on the maternal side",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Pooja Verma - Shree Ganesh Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Pooja Verma",
+      "date": "2025-08-20",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "On preventive therapy with periodic neurology follow-up",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly",
+        "Family history of migraine reported in mother",
+        "No history of neurological deficit associated with episodes"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Vikram Rao - Sunrise Family Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Vikram Rao",
+      "date": "2026-01-04",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses",
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup",
+        "No history of thyroid surgery or radioactive iodine therapy",
+        "Family history of thyroid disorder reported on the maternal side",
+        "On stable dose of thyroid hormone replacement with periodic TSH monitoring"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Priya Sharma - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Priya Sharma",
+      "date": "2026-03-13",
+      "medicines": [],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Two prior full-term normal vaginal deliveries, both uneventful",
+        "Up to date with cervical cancer screening as per guidelines"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Aarav Choudhury - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Aarav Choudhury",
+      "date": "2026-05-04",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of thyroid disorder reported on the maternal side",
+        "No history of thyroid surgery or radioactive iodine therapy",
+        "On stable dose of thyroid hormone replacement with periodic TSH monitoring",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Neha Das - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Neha Das",
+      "date": "2025-12-17",
+      "medicines": [],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "Up to date with routine health screenings for age group",
+        "No post-operative complications reported",
+        "No other significant past surgical history"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Kavya Singh - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Kavya Singh",
+      "date": "2025-11-22",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": ["No history of tobacco or alcohol use reported"],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of neurological deficit associated with episodes",
+        "On preventive therapy with periodic neurology follow-up",
+        "Family history of migraine reported in mother",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Nisha Joshi - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Nisha Joshi",
+      "date": "2026-04-30",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "No history of tobacco or alcohol use reported",
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "Last hospitalization for asthma exacerbation was 2 years ago",
+        "Known triggers include dust, cold weather, and seasonal changes",
+        "Uses reliever inhaler as needed and controller medication regularly",
+        "Diagnosed with bronchial asthma at age 8, with periodic exacerbations",
+        "No history of ICU admission for respiratory illness"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Aditya Verma - Sunrise Family Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Aditya Verma",
+      "date": "2025-11-08",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "Known triggers include dust, cold weather, and seasonal changes",
+        "Diagnosed with bronchial asthma at age 8, with periodic exacerbations",
+        "No history of ICU admission for respiratory illness"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Krishna Sharma - New Life Nursing Home",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Krishna Sharma",
+      "date": "2026-03-25",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Family history reviewed and documented for future risk assessment",
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup",
+        "No history of thyroid surgery or radioactive iodine therapy",
+        "Family history of thyroid disorder reported on the maternal side",
+        "On stable dose of thyroid hormone replacement with periodic TSH monitoring"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Arnav Kulkarni - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Arnav Kulkarni",
+      "date": "2026-02-12",
+      "medicines": [],
+      "important_notes": [
+        "Family history reviewed and documented for future risk assessment",
+        "No history of tobacco or alcohol use reported"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "No post-operative complications reported",
+        "No other significant past surgical history",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "Up to date with routine health screenings for age group"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Vikram Patel - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Vikram Patel",
+      "date": "2026-03-02",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly",
+        "On preventive therapy with periodic neurology follow-up",
+        "Family history of migraine reported in mother"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Ananya Gupta - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Ananya Gupta",
+      "date": "2025-08-28",
+      "medicines": [],
+      "important_notes": [
+        "No history of tobacco or alcohol use reported",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "No post-operative complications reported",
+        "Up to date with routine health screenings for age group",
+        "No other significant past surgical history"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Neha Sharma - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Neha Sharma",
+      "date": "2026-06-08",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "On preventive therapy with periodic neurology follow-up",
+        "Family history of migraine reported in mother",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly",
+        "No history of neurological deficit associated with episodes"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Isha Choudhury - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Isha Choudhury",
+      "date": "2025-12-17",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses",
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "No history of ICU admission for respiratory illness",
+        "Known triggers include dust, cold weather, and seasonal changes",
+        "Diagnosed with bronchial asthma at age 8, with periodic exacerbations",
+        "Uses reliever inhaler as needed and controller medication regularly"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Rohan Singh - Apollo Medical Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Rohan Singh",
+      "date": "2025-08-25",
+      "medicines": [],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Up to date with cervical cancer screening as per guidelines",
+        "Two prior full-term normal vaginal deliveries, both uneventful"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Neha Menon - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Neha Menon",
+      "date": "2026-05-24",
+      "medicines": [],
+      "important_notes": [
+        "No history of tobacco or alcohol use reported",
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "Up to date with routine health screenings for age group",
+        "No other significant past surgical history",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "No post-operative complications reported"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Arjun Menon - Manipal Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Arjun Menon",
+      "date": "2026-02-01",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report",
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of thyroid surgery or radioactive iodine therapy",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup",
+        "On stable dose of thyroid hormone replacement with periodic TSH monitoring"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Kavya Rao - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Kavya Rao",
+      "date": "2026-03-30",
+      "medicines": [],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "Regular menstrual cycles reported, no known gynecological disorders",
+        "Up to date with cervical cancer screening as per guidelines",
+        "No history of gestational diabetes or hypertension in previous pregnancies"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Devika Patel - Shree Ganesh Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Devika Patel",
+      "date": "2026-04-07",
+      "medicines": [],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "Two prior full-term normal vaginal deliveries, both uneventful",
+        "Regular menstrual cycles reported, no known gynecological disorders",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Up to date with cervical cancer screening as per guidelines"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Sneha Iyer - Apollo Medical Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Sneha Iyer",
+      "date": "2026-05-13",
+      "medicines": [
+        {
+          "name": "Metformin",
+          "dosage": "500mg",
+          "frequency": "twice_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Amlodipine",
+          "dosage": "5mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "No history of tobacco or alcohol use reported",
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["diabetes", "hypertension", "chronic"],
+      "summary": "This record summarizes a long-standing history of Type 2 Diabetes Mellitus and Hypertension, with regular follow-up and medication management over several years.",
+      "key_points": [
+        "No known drug allergies",
+        "Advised annual eye and kidney function screening",
+        "Diagnosed with Type 2 Diabetes Mellitus 6 years ago, currently on oral hypoglycemics",
+        "Family history of diabetes reported on the maternal side",
+        "No history of diabetic retinopathy or nephropathy on recent screening"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Sai Joshi - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Sai Joshi",
+      "date": "2026-02-08",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of migraine reported in mother",
+        "No history of neurological deficit associated with episodes",
+        "On preventive therapy with periodic neurology follow-up"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Shreya Das - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Shreya Das",
+      "date": "2026-04-22",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Family history reviewed and documented for future risk assessment",
+        "Patient reports occasional alcohol use, no tobacco use"
+      ],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "Last hospitalization for asthma exacerbation was 2 years ago",
+        "Known triggers include dust, cold weather, and seasonal changes",
+        "Diagnosed with bronchial asthma at age 8, with periodic exacerbations",
+        "No history of ICU admission for respiratory illness"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Aditya Rao - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Aditya Rao",
+      "date": "2025-12-18",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Family history reviewed and documented for future risk assessment",
+        "No history of tobacco or alcohol use reported"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "On preventive therapy with periodic neurology follow-up",
+        "Family history of migraine reported in mother",
+        "No history of neurological deficit associated with episodes",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Geeta Bose - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Geeta Bose",
+      "date": "2025-10-03",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup",
+        "No history of thyroid surgery or radioactive iodine therapy",
+        "Family history of thyroid disorder reported on the maternal side",
+        "On stable dose of thyroid hormone replacement with periodic TSH monitoring"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Geeta Agarwal - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Geeta Agarwal",
+      "date": "2025-10-31",
+      "medicines": [
+        {
+          "name": "Metformin",
+          "dosage": "500mg",
+          "frequency": "twice_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Amlodipine",
+          "dosage": "5mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["diabetes", "hypertension", "chronic"],
+      "summary": "This record summarizes a long-standing history of Type 2 Diabetes Mellitus and Hypertension, with regular follow-up and medication management over several years.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of diabetes reported on the maternal side",
+        "Diagnosed with Type 2 Diabetes Mellitus 6 years ago, currently on oral hypoglycemics",
+        "Diagnosed with Hypertension 4 years ago, well controlled on regular medication",
+        "No history of diabetic retinopathy or nephropathy on recent screening"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Deepak Verma - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Deepak Verma",
+      "date": "2025-10-13",
+      "medicines": [
+        {
+          "name": "Metformin",
+          "dosage": "500mg",
+          "frequency": "twice_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Amlodipine",
+          "dosage": "5mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Record compiled from patient-reported history and available medical documents",
+        "No history of tobacco or alcohol use reported"
+      ],
+      "tags": ["diabetes", "hypertension", "chronic"],
+      "summary": "This record summarizes a long-standing history of Type 2 Diabetes Mellitus and Hypertension, with regular follow-up and medication management over several years.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of diabetes reported on the maternal side",
+        "No history of diabetic retinopathy or nephropathy on recent screening",
+        "Diagnosed with Type 2 Diabetes Mellitus 6 years ago, currently on oral hypoglycemics",
+        "Diagnosed with Hypertension 4 years ago, well controlled on regular medication",
+        "Advised annual eye and kidney function screening"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Simran Menon - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Simran Menon",
+      "date": "2026-07-11",
+      "medicines": [
+        {
+          "name": "Levothyroxine",
+          "dosage": "75mcg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient reports occasional alcohol use, no tobacco use",
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["thyroid", "chronic"],
+      "summary": "This record documents a history of hypothyroidism diagnosed in adulthood, currently well controlled on thyroid hormone replacement therapy.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of thyroid disorder reported on the maternal side",
+        "On stable dose of thyroid hormone replacement with periodic TSH monitoring",
+        "Diagnosed with hypothyroidism 5 years ago during a routine health checkup"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Diya Patel - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Diya Patel",
+      "date": "2026-05-22",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses",
+        "Immunization history up to date as per patient report"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "Family history of migraine reported in mother",
+        "No history of neurological deficit associated with episodes",
+        "On preventive therapy with periodic neurology follow-up",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Sunita Nair - Sunrise Family Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Sunita Nair",
+      "date": "2026-02-06",
+      "medicines": [],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["surgery", "routine-checkup"],
+      "summary": "This record documents a surgical history including an appendectomy and a subsequent uneventful recovery, along with routine health maintenance.",
+      "key_points": [
+        "No known drug allergies",
+        "No other significant past surgical history",
+        "Up to date with routine health screenings for age group",
+        "Underwent laparoscopic appendectomy 4 years ago for acute appendicitis",
+        "No post-operative complications reported"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Simran Kulkarni - Care & Cure Polyclinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Simran Kulkarni",
+      "date": "2026-06-13",
+      "medicines": [
+        {
+          "name": "Amitriptyline",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["neurology", "chronic"],
+      "summary": "This record summarizes a history of migraine with aura, managed with abortive and preventive therapy, along with relevant family history.",
+      "key_points": [
+        "No known drug allergies",
+        "On preventive therapy with periodic neurology follow-up",
+        "History of migraine with aura since adolescence, occurring 2-3 times monthly",
+        "No history of neurological deficit associated with episodes"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Riya Mehta - Apollo Medical Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Riya Mehta",
+      "date": "2025-07-24",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses",
+        "Family history reviewed and documented for future risk assessment"
+      ],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "No history of ICU admission for respiratory illness",
+        "Last hospitalization for asthma exacerbation was 2 years ago",
+        "Known triggers include dust, cold weather, and seasonal changes"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Amit Bose - Aashirwad Clinic",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Amit Bose",
+      "date": "2026-05-11",
+      "medicines": [
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": [
+        "Patient advised to update this record at each visit with any new diagnoses"
+      ],
+      "tags": ["allergy", "chronic"],
+      "summary": "This record summarizes a history of seasonal allergic rhinitis and known drug allergy, relevant for future prescribing decisions.",
+      "key_points": [
+        "Allergic to Penicillin (skin rash)",
+        "Seasonal allergies (dust, pollen)",
+        "Known allergy to Penicillin group of antibiotics, presenting with skin rash",
+        "No history of anaphylaxis reported",
+        "History of seasonal allergic rhinitis with symptoms worsening during spring and monsoon"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Simran Rao - City Care Hospital",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Simran Rao",
+      "date": "2026-06-20",
+      "medicines": [],
+      "important_notes": [
+        "Immunization history up to date as per patient report",
+        "Record compiled from patient-reported history and available medical documents"
+      ],
+      "tags": ["maternity", "routine-checkup"],
+      "summary": "This record documents an obstetric and gynecological history including two prior pregnancies, relevant for ongoing reproductive health management.",
+      "key_points": [
+        "No known drug allergies",
+        "No history of gestational diabetes or hypertension in previous pregnancies",
+        "Two prior full-term normal vaginal deliveries, both uneventful",
+        "Regular menstrual cycles reported, no known gynecological disorders",
+        "Up to date with cervical cancer screening as per guidelines"
+      ]
+    }
+  },
+  {
+    "title": "Medical History Record - Anil Joshi - Green Valley Health Centre",
+    "type": "Medical History Record",
+    "document_metadata": {
+      "patient_name": "Anil Joshi",
+      "date": "2026-06-06",
+      "medicines": [
+        {
+          "name": "Salbutamol Inhaler",
+          "dosage": "100mcg",
+          "frequency": "as_needed",
+          "duration": "as needed",
+          "timing": [],
+          "reminders": []
+        },
+        {
+          "name": "Montelukast",
+          "dosage": "10mg",
+          "frequency": "once_daily",
+          "duration": "ongoing",
+          "timing": [],
+          "reminders": []
+        }
+      ],
+      "important_notes": ["No history of tobacco or alcohol use reported"],
+      "tags": ["respiratory", "chronic", "pediatric"],
+      "summary": "This record documents a history of bronchial asthma since childhood, with periodic exacerbations managed through inhaled medications and occasional oral steroids.",
+      "key_points": [
+        "Allergic to dust and pollen",
+        "Known triggers include dust, cold weather, and seasonal changes",
+        "Uses reliever inhaler as needed and controller medication regularly",
+        "No history of ICU admission for respiratory illness",
+        "Last hospitalization for asthma exacerbation was 2 years ago",
+        "Diagnosed with bronchial asthma at age 8, with periodic exacerbations"
+      ]
+    }
+  }
+]

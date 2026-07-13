@@ -1,0 +1,1801 @@
+[
+  {
+    "title": "MRI - Right Knee - Reyansh Agarwal - 2025-08-19",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Reyansh Agarwal",
+      "referred_by": "Dr. Kavya Pillai, MD (Gen. Med)",
+      "center_name": "Neuberg Imaging Centre",
+      "date": "2025-08-19",
+      "modality": "MRI",
+      "body_part": "Right Knee",
+      "findings": "Menisci, ligaments, and articular cartilage appear normal. No joint effusion or bone marrow edema noted.",
+      "impression": "Normal MRI study of the right knee.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["pre-employment", "follow-up"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Deepak Banerjee - 2024-08-19",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Deepak Banerjee",
+      "referred_by": "Dr. Ayaan Mehta, MBBS",
+      "center_name": "Sanjeevani Scan Centre",
+      "date": "2024-08-19",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "A calculus measuring approximately 6mm noted in the right proximal ureter with mild upstream hydronephrosis.",
+      "impression": "Right proximal ureteric calculus with mild hydronephrosis. Urology correlation advised.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["chronic"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Aditya Das - 2026-03-09",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Aditya Das",
+      "referred_by": "Dr. Anil Nair, MD (Medicine)",
+      "center_name": "Precision Scan Centre",
+      "date": "2026-03-09",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "A few chronic lacunar infarcts noted in bilateral basal ganglia region. No acute hemorrhage or mass lesion.",
+      "impression": "Chronic small vessel ischemic changes. Neurology correlation advised.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["follow-up-required"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Geeta Agarwal - 2026-01-05",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Geeta Agarwal",
+      "referred_by": "Dr. Vikram Choudhury, MD (ENT)",
+      "center_name": "St. Mary's Radiology Dept.",
+      "date": "2026-01-05",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "A calculus measuring approximately 6mm noted in the right proximal ureter with mild upstream hydronephrosis.",
+      "impression": "Right proximal ureteric calculus with mild hydronephrosis. Urology correlation advised.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["chronic", "follow-up-required"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Ananya Gupta - 2025-05-20",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ananya Gupta",
+      "referred_by": "Dr. Sai Das, MBBS",
+      "center_name": "Suburban Imaging Centre",
+      "date": "2025-05-20",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "Both kidneys are normal in size and position with no evidence of calculus, hydronephrosis, or mass lesion. Bladder appears normal.",
+      "impression": "Normal CT KUB study.",
+      "important_notes": ["Follow-up scan advised as clinically indicated"],
+      "tags": ["routine-checkup"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Pelvis - Neha Bose - 2025-04-04",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Neha Bose",
+      "referred_by": "Dr. Shreya Mukherjee, MD (Gen. Med)",
+      "center_name": "HealthWay Diagnostic Imaging",
+      "date": "2025-04-04",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Pelvis",
+      "findings": "Right ovary shows a thin-walled anechoic cystic lesion measuring approximately 3.2 cm, likely a functional/follicular cyst.",
+      "impression": "Simple right ovarian cyst, likely functional. Follow-up scan recommended after next cycle.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["acute-finding"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Pelvis - Lata Singh - 2025-08-25",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Lata Singh",
+      "referred_by": "Dr. Pooja Sharma, MD (Chest)",
+      "center_name": "Om Sai Scan Centre",
+      "date": "2025-08-25",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Pelvis",
+      "findings": "Right ovary shows a thin-walled anechoic cystic lesion measuring approximately 3.2 cm, likely a functional/follicular cyst.",
+      "impression": "Simple right ovarian cyst, likely functional. Follow-up scan recommended after next cycle.",
+      "important_notes": ["Clinical correlation is recommended"],
+      "tags": ["acute-finding", "pre-surgical"]
+    }
+  },
+  {
+    "title": "Mammography - Bilateral Breast - Rohan Bose - 2025-02-09",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Rohan Bose",
+      "referred_by": "Dr. Anil Joshi, MD (Radiology)",
+      "center_name": "Rainbow Diagnostic Imaging",
+      "date": "2025-02-09",
+      "modality": "Mammography",
+      "body_part": "Bilateral Breast",
+      "findings": "Both breasts show scattered fibroglandular densities. No suspicious mass, calcification, or architectural distortion identified.",
+      "impression": "BI-RADS Category 2 - Benign findings. Routine screening advised as per age group.",
+      "important_notes": [
+        "Patient advised to carry this report for specialist consultation",
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["routine-checkup", "follow-up"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Manoj Das - 2024-10-15",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Manoj Das",
+      "referred_by": "Dr. Sneha Singh, MD (Pediatrics)",
+      "center_name": "Fortis Imaging Centre",
+      "date": "2024-10-15",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "A few chronic lacunar infarcts noted in bilateral basal ganglia region. No acute hemorrhage or mass lesion.",
+      "impression": "Chronic small vessel ischemic changes. Neurology correlation advised.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone",
+        "Report to be reviewed by referring physician"
+      ],
+      "tags": ["follow-up-required", "acute-finding"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Pelvis - Lata Sen - 2025-03-08",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Lata Sen",
+      "referred_by": "Dr. Arnav Verma, MBBS",
+      "center_name": "Krsnaa Diagnostics",
+      "date": "2025-03-08",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Pelvis",
+      "findings": "Uterus and both ovaries appear normal in size and echotexture. No adnexal mass or free fluid seen.",
+      "impression": "Normal pelvic ultrasound.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting",
+        "Report to be reviewed by referring physician"
+      ],
+      "tags": ["follow-up", "pre-employment"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Diya Nair - 2024-12-03",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Diya Nair",
+      "referred_by": "Dr. Simran Gupta, MD (Medicine)",
+      "center_name": "Apollo Diagnostics",
+      "date": "2024-12-03",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Mild narrowing of medial joint space with osteophyte formation noted.",
+      "impression": "Findings suggestive of early osteoarthritic changes in the right knee.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["specialist-referral"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Ishaan Gupta - 2024-11-18",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ishaan Gupta",
+      "referred_by": "Dr. Priya Joshi, MBBS",
+      "center_name": "Apollo Diagnostics",
+      "date": "2024-11-18",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "A few chronic lacunar infarcts noted in bilateral basal ganglia region. No acute hemorrhage or mass lesion.",
+      "impression": "Chronic small vessel ischemic changes. Neurology correlation advised.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["acute-finding"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Whole Abdomen - Lata Gupta - 2026-07-07",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Lata Gupta",
+      "referred_by": "Dr. Tanvi Banerjee, MBBS",
+      "center_name": "Apollo Diagnostics",
+      "date": "2026-07-07",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Whole Abdomen",
+      "findings": "Mild hepatomegaly with increased echogenicity of liver parenchyma noted, suggestive of fatty infiltration.",
+      "impression": "Grade I fatty liver. Lifestyle modification and follow-up advised.",
+      "important_notes": [
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["chronic"]
+    }
+  },
+  {
+    "title": "CT Scan - Paranasal Sinuses (PNS) - Arjun Das - 2025-12-18",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Arjun Das",
+      "referred_by": "Dr. Amit Mehta, MBBS, DNB",
+      "center_name": "Nightingale Imaging",
+      "date": "2025-12-18",
+      "modality": "CT Scan",
+      "body_part": "Paranasal Sinuses (PNS)",
+      "findings": "Mucosal thickening noted in bilateral maxillary sinuses with mild osteomeatal complex narrowing.",
+      "impression": "Findings suggestive of chronic sinusitis. ENT correlation advised.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["chronic"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Deepak Agarwal - 2025-03-26",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Deepak Agarwal",
+      "referred_by": "Dr. Priya Patel, MBBS, DNB",
+      "center_name": "HealthWay Diagnostic Imaging",
+      "date": "2025-03-26",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Joint space is well maintained. No fracture or dislocation seen. Bone density is normal for age.",
+      "impression": "Normal study of the right knee joint.",
+      "important_notes": ["Follow-up scan advised as clinically indicated"],
+      "tags": ["screening"]
+    }
+  },
+  {
+    "title": "CT Scan - Paranasal Sinuses (PNS) - Rohan Patel - 2025-11-12",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Rohan Patel",
+      "referred_by": "Dr. Sunita Reddy, DM (Cardiology)",
+      "center_name": "Nightingale Imaging",
+      "date": "2025-11-12",
+      "modality": "CT Scan",
+      "body_part": "Paranasal Sinuses (PNS)",
+      "findings": "Mucosal thickening noted in bilateral maxillary sinuses with mild osteomeatal complex narrowing.",
+      "impression": "Findings suggestive of chronic sinusitis. ENT correlation advised.",
+      "important_notes": ["Clinical correlation is recommended"],
+      "tags": ["follow-up-required"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Pelvis - Suresh Iyer - 2026-06-16",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Suresh Iyer",
+      "referred_by": "Dr. Vivaan Banerjee, MD (Pediatrics)",
+      "center_name": "St. Mary's Radiology Dept.",
+      "date": "2026-06-16",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Pelvis",
+      "findings": "Uterus and both ovaries appear normal in size and echotexture. No adnexal mass or free fluid seen.",
+      "impression": "Normal pelvic ultrasound.",
+      "important_notes": [
+        "Report to be reviewed by referring physician",
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["follow-up", "pre-employment"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Thyroid - Sunita Iyer - 2025-01-31",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Sunita Iyer",
+      "referred_by": "Dr. Amit Verma, MS (Ortho)",
+      "center_name": "Vijaya Diagnostic Centre",
+      "date": "2025-01-31",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Thyroid",
+      "findings": "Both thyroid lobes are normal in size and echotexture. No focal nodule or lymphadenopathy identified.",
+      "impression": "Normal thyroid ultrasound.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["pre-employment"]
+    }
+  },
+  {
+    "title": "X-Ray - Left Wrist (AP/Lateral) - Ramesh Banerjee - 2025-11-15",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ramesh Banerjee",
+      "referred_by": "Dr. Anil Rao, MD (Radiology)",
+      "center_name": "Rainbow Diagnostic Imaging",
+      "date": "2025-11-15",
+      "modality": "X-Ray",
+      "body_part": "Left Wrist (AP/Lateral)",
+      "findings": "Transverse fracture line noted through the distal radius with mild dorsal angulation.",
+      "impression": "Distal radius fracture (Colles type). Orthopedic correlation advised.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["specialist-referral", "pre-surgical"]
+    }
+  },
+  {
+    "title": "MRI - Right Knee - Kiran Reddy - 2026-01-27",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Kiran Reddy",
+      "referred_by": "Dr. Suresh Nair, MBBS",
+      "center_name": "Metropolis Imaging",
+      "date": "2026-01-27",
+      "modality": "MRI",
+      "body_part": "Right Knee",
+      "findings": "Horizontal tear noted involving the posterior horn of the medial meniscus with mild joint effusion.",
+      "impression": "Medial meniscal tear (posterior horn). Orthopedic correlation advised.",
+      "important_notes": [
+        "Report to be reviewed by referring physician",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["follow-up-required", "chronic"]
+    }
+  },
+  {
+    "title": "X-Ray - Left Wrist (AP/Lateral) - Arjun Patel - 2025-02-16",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Arjun Patel",
+      "referred_by": "Dr. Ayaan Kulkarni, MD (Pediatrics)",
+      "center_name": "Redcliffe Imaging",
+      "date": "2025-02-16",
+      "modality": "X-Ray",
+      "body_part": "Left Wrist (AP/Lateral)",
+      "findings": "Transverse fracture line noted through the distal radius with mild dorsal angulation.",
+      "impression": "Distal radius fracture (Colles type). Orthopedic correlation advised.",
+      "important_notes": [
+        "Report to be reviewed by referring physician",
+        "Please correlate with previous imaging if available"
+      ],
+      "tags": ["specialist-referral", "pre-surgical"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Isha Singh - 2025-08-29",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Isha Singh",
+      "referred_by": "Dr. Kiran Mehta, MS (Ortho)",
+      "center_name": "Neuberg Imaging Centre",
+      "date": "2025-08-29",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Mild narrowing of medial joint space with osteophyte formation noted.",
+      "impression": "Findings suggestive of early osteoarthritic changes in the right knee.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["acute-finding", "follow-up-required"]
+    }
+  },
+  {
+    "title": "X-Ray - Left Wrist (AP/Lateral) - Rajesh Sharma - 2026-06-29",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Rajesh Sharma",
+      "referred_by": "Dr. Vikram Reddy, MBBS, DNB",
+      "center_name": "Care Radiology Centre",
+      "date": "2026-06-29",
+      "modality": "X-Ray",
+      "body_part": "Left Wrist (AP/Lateral)",
+      "findings": "Transverse fracture line noted through the distal radius with mild dorsal angulation.",
+      "impression": "Distal radius fracture (Colles type). Orthopedic correlation advised.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone",
+        "Report to be reviewed by referring physician"
+      ],
+      "tags": ["acute-finding"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Pelvis - Rajesh Bose - 2024-08-05",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Rajesh Bose",
+      "referred_by": "Dr. Ramesh Agarwal, DM (Cardiology)",
+      "center_name": "Precision Scan Centre",
+      "date": "2024-08-05",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Pelvis",
+      "findings": "Right ovary shows a thin-walled anechoic cystic lesion measuring approximately 3.2 cm, likely a functional/follicular cyst.",
+      "impression": "Simple right ovarian cyst, likely functional. Follow-up scan recommended after next cycle.",
+      "important_notes": ["Follow-up scan advised as clinically indicated"],
+      "tags": ["follow-up-required", "specialist-referral"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Suresh Pillai - 2025-07-19",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Suresh Pillai",
+      "referred_by": "Dr. Nisha Sen, DM (Cardiology)",
+      "center_name": "Nightingale Imaging",
+      "date": "2025-07-19",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Joint space is well maintained. No fracture or dislocation seen. Bone density is normal for age.",
+      "impression": "Normal study of the right knee joint.",
+      "important_notes": ["Report to be reviewed by referring physician"],
+      "tags": ["screening", "follow-up"]
+    }
+  },
+  {
+    "title": "X-Ray - Chest (PA view) - Anil Verma - 2026-03-25",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Anil Verma",
+      "referred_by": "Dr. Deepak Agarwal, DM (Cardiology)",
+      "center_name": "Fortis Imaging Centre",
+      "date": "2026-03-25",
+      "modality": "X-Ray",
+      "body_part": "Chest (PA view)",
+      "findings": "Patchy opacities noted in the right lower lobe suggestive of infective consolidation. No pleural effusion seen.",
+      "impression": "Findings consistent with right lower lobe pneumonia. Clinical correlation advised.",
+      "important_notes": [
+        "Please correlate with previous imaging if available"
+      ],
+      "tags": ["follow-up-required"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Aarav Choudhury - 2025-04-10",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Aarav Choudhury",
+      "referred_by": "Dr. Krishna Mehta, MD (Medicine)",
+      "center_name": "Nightingale Imaging",
+      "date": "2025-04-10",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "A few chronic lacunar infarcts noted in bilateral basal ganglia region. No acute hemorrhage or mass lesion.",
+      "impression": "Chronic small vessel ischemic changes. Neurology correlation advised.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "Please correlate with previous imaging if available"
+      ],
+      "tags": ["pre-surgical"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Pelvis - Ananya Banerjee - 2025-07-19",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ananya Banerjee",
+      "referred_by": "Dr. Priya Reddy, MBBS, DNB",
+      "center_name": "Precision Scan Centre",
+      "date": "2025-07-19",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Pelvis",
+      "findings": "Uterus and both ovaries appear normal in size and echotexture. No adnexal mass or free fluid seen.",
+      "impression": "Normal pelvic ultrasound.",
+      "important_notes": [
+        "Report to be reviewed by referring physician",
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["screening", "pre-employment"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Pelvis - Sneha Sen - 2025-08-20",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Sneha Sen",
+      "referred_by": "Dr. Kabir Kulkarni, MD (Chest)",
+      "center_name": "Redcliffe Imaging",
+      "date": "2025-08-20",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Pelvis",
+      "findings": "Right ovary shows a thin-walled anechoic cystic lesion measuring approximately 3.2 cm, likely a functional/follicular cyst.",
+      "impression": "Simple right ovarian cyst, likely functional. Follow-up scan recommended after next cycle.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["chronic"]
+    }
+  },
+  {
+    "title": "X-Ray - Left Wrist (AP/Lateral) - Anil Sen - 2024-08-19",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Anil Sen",
+      "referred_by": "Dr. Sneha Kulkarni, MD (Chest)",
+      "center_name": "Medall Imaging",
+      "date": "2024-08-19",
+      "modality": "X-Ray",
+      "body_part": "Left Wrist (AP/Lateral)",
+      "findings": "No fracture or dislocation identified. Bone alignment and joint spaces appear normal.",
+      "impression": "Normal radiograph of the left wrist.",
+      "important_notes": [
+        "Patient advised to carry this report for specialist consultation",
+        "Please correlate with previous imaging if available"
+      ],
+      "tags": ["screening", "routine-checkup"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Sunita Choudhury - 2025-07-23",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Sunita Choudhury",
+      "referred_by": "Dr. Suresh Bose, DM (Cardiology)",
+      "center_name": "New Life Imaging",
+      "date": "2025-07-23",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "A calculus measuring approximately 6mm noted in the right proximal ureter with mild upstream hydronephrosis.",
+      "impression": "Right proximal ureteric calculus with mild hydronephrosis. Urology correlation advised.",
+      "important_notes": ["Clinical correlation is recommended"],
+      "tags": ["specialist-referral"]
+    }
+  },
+  {
+    "title": "X-Ray - Left Wrist (AP/Lateral) - Krishna Gupta - 2024-08-29",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Krishna Gupta",
+      "referred_by": "Dr. Ishaan Reddy, MD (Pediatrics)",
+      "center_name": "HealthWay Diagnostic Imaging",
+      "date": "2024-08-29",
+      "modality": "X-Ray",
+      "body_part": "Left Wrist (AP/Lateral)",
+      "findings": "Transverse fracture line noted through the distal radius with mild dorsal angulation.",
+      "impression": "Distal radius fracture (Colles type). Orthopedic correlation advised.",
+      "important_notes": [
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["follow-up-required"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Amit Sharma - 2026-04-14",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Amit Sharma",
+      "referred_by": "Dr. Reyansh Mukherjee, MBBS",
+      "center_name": "Om Sai Scan Centre",
+      "date": "2026-04-14",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "No acute infarct, hemorrhage, mass lesion, or midline shift identified. Ventricular system is normal in size and configuration.",
+      "impression": "Normal CT study of the brain.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone",
+        "Please correlate with previous imaging if available"
+      ],
+      "tags": ["pre-employment"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Whole Abdomen - Riya Agarwal - 2025-12-17",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Riya Agarwal",
+      "referred_by": "Dr. Ananya Nair, MD (Gen. Med)",
+      "center_name": "Vijaya Diagnostic Centre",
+      "date": "2025-12-17",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Whole Abdomen",
+      "findings": "Liver, gallbladder, pancreas, spleen, and both kidneys appear normal in size, shape, and echotexture. No free fluid seen.",
+      "impression": "Normal ultrasound study of the whole abdomen.",
+      "important_notes": ["Report to be reviewed by referring physician"],
+      "tags": ["follow-up", "screening"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Arjun Nair - 2025-02-23",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Arjun Nair",
+      "referred_by": "Dr. Meera Choudhury, MD (ENT)",
+      "center_name": "Om Sai Scan Centre",
+      "date": "2025-02-23",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Mild narrowing of medial joint space with osteophyte formation noted.",
+      "impression": "Findings suggestive of early osteoarthritic changes in the right knee.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["follow-up-required"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Diya Mukherjee - 2025-11-06",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Diya Mukherjee",
+      "referred_by": "Dr. Ananya Menon, MD (Radiology)",
+      "center_name": "Medall Imaging",
+      "date": "2025-11-06",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Mild narrowing of medial joint space with osteophyte formation noted.",
+      "impression": "Findings suggestive of early osteoarthritic changes in the right knee.",
+      "important_notes": [
+        "Report to be reviewed by referring physician",
+        "Follow-up scan advised as clinically indicated"
+      ],
+      "tags": ["follow-up-required"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Ishaan Kulkarni - 2025-07-05",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ishaan Kulkarni",
+      "referred_by": "Dr. Krishna Rao, DM (Cardiology)",
+      "center_name": "Nightingale Imaging",
+      "date": "2025-07-05",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Joint space is well maintained. No fracture or dislocation seen. Bone density is normal for age.",
+      "impression": "Normal study of the right knee joint.",
+      "important_notes": [
+        "Report to be reviewed by referring physician",
+        "Please correlate with previous imaging if available"
+      ],
+      "tags": ["routine-checkup"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Sunita Rao - 2024-12-30",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Sunita Rao",
+      "referred_by": "Dr. Sneha Singh, MBBS",
+      "center_name": "Care Radiology Centre",
+      "date": "2024-12-30",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "A few chronic lacunar infarcts noted in bilateral basal ganglia region. No acute hemorrhage or mass lesion.",
+      "impression": "Chronic small vessel ischemic changes. Neurology correlation advised.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["pre-surgical"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Pelvis - Nikhil Chatterjee - 2024-11-11",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Nikhil Chatterjee",
+      "referred_by": "Dr. Tanvi Gupta, MS (Ortho)",
+      "center_name": "St. Mary's Radiology Dept.",
+      "date": "2024-11-11",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Pelvis",
+      "findings": "Uterus and both ovaries appear normal in size and echotexture. No adnexal mass or free fluid seen.",
+      "impression": "Normal pelvic ultrasound.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["pre-employment", "screening"]
+    }
+  },
+  {
+    "title": "Mammography - Bilateral Breast - Reyansh Das - 2025-09-07",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Reyansh Das",
+      "referred_by": "Dr. Sunita Rao, DM (Cardiology)",
+      "center_name": "Sanjeevani Scan Centre",
+      "date": "2025-09-07",
+      "modality": "Mammography",
+      "body_part": "Bilateral Breast",
+      "findings": "A well-circumscribed oval mass noted in the upper outer quadrant of the left breast measuring approximately 1.5 cm.",
+      "impression": "BI-RADS Category 3 - Probably benign finding. Short-interval follow-up or ultrasound correlation advised.",
+      "important_notes": [
+        "Please correlate with previous imaging if available",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["follow-up-required", "specialist-referral"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Vikram Sen - 2025-11-26",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Vikram Sen",
+      "referred_by": "Dr. Aditya Rao, MD (Chest)",
+      "center_name": "Krsnaa Diagnostics",
+      "date": "2025-11-26",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Mild narrowing of medial joint space with osteophyte formation noted.",
+      "impression": "Findings suggestive of early osteoarthritic changes in the right knee.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["specialist-referral"]
+    }
+  },
+  {
+    "title": "MRI - Lumbar Spine - Anil Sen - 2024-11-15",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Anil Sen",
+      "referred_by": "Dr. Meera Reddy, MBBS",
+      "center_name": "St. Mary's Radiology Dept.",
+      "date": "2024-11-15",
+      "modality": "MRI",
+      "body_part": "Lumbar Spine",
+      "findings": "Vertebral bodies and disc spaces appear normal in height and signal intensity. No significant disc herniation or canal stenosis seen.",
+      "impression": "Normal MRI study of the lumbar spine.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["follow-up"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Thyroid - Aarav Joshi - 2025-07-09",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Aarav Joshi",
+      "referred_by": "Dr. Devika Patel, DM (Cardiology)",
+      "center_name": "City Scan & Imaging",
+      "date": "2025-07-09",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Thyroid",
+      "findings": "A well-defined solid-cystic nodule measuring approximately 1.1 cm noted in the right lobe of thyroid.",
+      "impression": "Solitary right thyroid nodule (TIRADS 3). Endocrinology correlation and follow-up ultrasound advised.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["chronic", "follow-up-required"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Whole Abdomen - Tanvi Das - 2025-07-16",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Tanvi Das",
+      "referred_by": "Dr. Rajesh Patel, MD (Radiology)",
+      "center_name": "HealthWay Diagnostic Imaging",
+      "date": "2025-07-16",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Whole Abdomen",
+      "findings": "Mild hepatomegaly with increased echogenicity of liver parenchyma noted, suggestive of fatty infiltration.",
+      "impression": "Grade I fatty liver. Lifestyle modification and follow-up advised.",
+      "important_notes": ["Report to be reviewed by referring physician"],
+      "tags": ["follow-up-required", "pre-surgical"]
+    }
+  },
+  {
+    "title": "Mammography - Bilateral Breast - Tanvi Sharma - 2025-03-10",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Tanvi Sharma",
+      "referred_by": "Dr. Rajesh Patel, DM (Cardiology)",
+      "center_name": "City Scan & Imaging",
+      "date": "2025-03-10",
+      "modality": "Mammography",
+      "body_part": "Bilateral Breast",
+      "findings": "Both breasts show scattered fibroglandular densities. No suspicious mass, calcification, or architectural distortion identified.",
+      "impression": "BI-RADS Category 2 - Benign findings. Routine screening advised as per age group.",
+      "important_notes": [
+        "Report to be reviewed by referring physician",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["routine-checkup"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Rohan Singh - 2025-08-10",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Rohan Singh",
+      "referred_by": "Dr. Shreya Singh, DM (Cardiology)",
+      "center_name": "Sunrise Imaging Centre",
+      "date": "2025-08-10",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Joint space is well maintained. No fracture or dislocation seen. Bone density is normal for age.",
+      "impression": "Normal study of the right knee joint.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["screening"]
+    }
+  },
+  {
+    "title": "X-Ray - Chest (PA view) - Kavya Bose - 2026-01-22",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Kavya Bose",
+      "referred_by": "Dr. Priya Agarwal, MD (ENT)",
+      "center_name": "Redcliffe Imaging",
+      "date": "2026-01-22",
+      "modality": "X-Ray",
+      "body_part": "Chest (PA view)",
+      "findings": "Patchy opacities noted in the right lower lobe suggestive of infective consolidation. No pleural effusion seen.",
+      "impression": "Findings consistent with right lower lobe pneumonia. Clinical correlation advised.",
+      "important_notes": ["Report to be reviewed by referring physician"],
+      "tags": ["follow-up-required"]
+    }
+  },
+  {
+    "title": "MRI - Right Knee - Kiran Sen - 2025-06-01",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Kiran Sen",
+      "referred_by": "Dr. Deepak Mukherjee, MD (Chest)",
+      "center_name": "New Life Imaging",
+      "date": "2025-06-01",
+      "modality": "MRI",
+      "body_part": "Right Knee",
+      "findings": "Menisci, ligaments, and articular cartilage appear normal. No joint effusion or bone marrow edema noted.",
+      "impression": "Normal MRI study of the right knee.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting",
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["screening", "pre-employment"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Lata Banerjee - 2026-01-25",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Lata Banerjee",
+      "referred_by": "Dr. Ayaan Rao, MS (Ortho)",
+      "center_name": "HealthWay Diagnostic Imaging",
+      "date": "2026-01-25",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "Both kidneys are normal in size and position with no evidence of calculus, hydronephrosis, or mass lesion. Bladder appears normal.",
+      "impression": "Normal CT KUB study.",
+      "important_notes": [
+        "Please correlate with previous imaging if available",
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["pre-employment"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Thyroid - Aarav Gupta - 2025-05-19",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Aarav Gupta",
+      "referred_by": "Dr. Sunita Singh, MD (Radiology)",
+      "center_name": "Vijaya Diagnostic Centre",
+      "date": "2025-05-19",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Thyroid",
+      "findings": "A well-defined solid-cystic nodule measuring approximately 1.1 cm noted in the right lobe of thyroid.",
+      "impression": "Solitary right thyroid nodule (TIRADS 3). Endocrinology correlation and follow-up ultrasound advised.",
+      "important_notes": ["Report to be reviewed by referring physician"],
+      "tags": ["pre-surgical", "follow-up-required"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Lata Singh - 2025-08-02",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Lata Singh",
+      "referred_by": "Dr. Lata Gupta, MS (Ortho)",
+      "center_name": "St. Mary's Radiology Dept.",
+      "date": "2025-08-02",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "A few chronic lacunar infarcts noted in bilateral basal ganglia region. No acute hemorrhage or mass lesion.",
+      "impression": "Chronic small vessel ischemic changes. Neurology correlation advised.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting",
+        "Follow-up scan advised as clinically indicated"
+      ],
+      "tags": ["follow-up-required"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Nikhil Reddy - 2025-09-23",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Nikhil Reddy",
+      "referred_by": "Dr. Aarav Mukherjee, MD (Gen. Med)",
+      "center_name": "Suburban Imaging Centre",
+      "date": "2025-09-23",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "No acute infarct, hemorrhage, mass lesion, or midline shift identified. Ventricular system is normal in size and configuration.",
+      "impression": "Normal CT study of the brain.",
+      "important_notes": [
+        "Clinical correlation is recommended",
+        "Follow-up scan advised as clinically indicated"
+      ],
+      "tags": ["routine-checkup", "screening"]
+    }
+  },
+  {
+    "title": "X-Ray - Left Wrist (AP/Lateral) - Tanvi Patel - 2025-10-10",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Tanvi Patel",
+      "referred_by": "Dr. Vivaan Kulkarni, MD (Pediatrics)",
+      "center_name": "Precision Scan Centre",
+      "date": "2025-10-10",
+      "modality": "X-Ray",
+      "body_part": "Left Wrist (AP/Lateral)",
+      "findings": "No fracture or dislocation identified. Bone alignment and joint spaces appear normal.",
+      "impression": "Normal radiograph of the left wrist.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting",
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["routine-checkup", "pre-employment"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Deepak Verma - 2026-02-20",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Deepak Verma",
+      "referred_by": "Dr. Lata Mehta, DM (Cardiology)",
+      "center_name": "Medall Imaging",
+      "date": "2026-02-20",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "A calculus measuring approximately 6mm noted in the right proximal ureter with mild upstream hydronephrosis.",
+      "impression": "Right proximal ureteric calculus with mild hydronephrosis. Urology correlation advised.",
+      "important_notes": ["Follow-up scan advised as clinically indicated"],
+      "tags": ["follow-up-required"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Lata Rao - 2024-11-11",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Lata Rao",
+      "referred_by": "Dr. Rohan Kulkarni, MS (Ortho)",
+      "center_name": "Suburban Imaging Centre",
+      "date": "2024-11-11",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "Both kidneys are normal in size and position with no evidence of calculus, hydronephrosis, or mass lesion. Bladder appears normal.",
+      "impression": "Normal CT KUB study.",
+      "important_notes": [
+        "Patient advised to carry this report for specialist consultation",
+        "Follow-up scan advised as clinically indicated"
+      ],
+      "tags": ["follow-up", "screening"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Whole Abdomen - Sai Reddy - 2025-12-20",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Sai Reddy",
+      "referred_by": "Dr. Isha Mehta, MD (Medicine)",
+      "center_name": "HealthWay Diagnostic Imaging",
+      "date": "2025-12-20",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Whole Abdomen",
+      "findings": "Liver, gallbladder, pancreas, spleen, and both kidneys appear normal in size, shape, and echotexture. No free fluid seen.",
+      "impression": "Normal ultrasound study of the whole abdomen.",
+      "important_notes": [
+        "Clinical correlation is recommended",
+        "Report to be reviewed by referring physician"
+      ],
+      "tags": ["follow-up"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Vikram Das - 2025-01-21",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Vikram Das",
+      "referred_by": "Dr. Vikram Gupta, MD (Gen. Med)",
+      "center_name": "St. Mary's Radiology Dept.",
+      "date": "2025-01-21",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "Both kidneys are normal in size and position with no evidence of calculus, hydronephrosis, or mass lesion. Bladder appears normal.",
+      "impression": "Normal CT KUB study.",
+      "important_notes": [
+        "Clinical correlation is recommended",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["routine-checkup"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Devika Verma - 2025-03-30",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Devika Verma",
+      "referred_by": "Dr. Neha Chatterjee, MD (Medicine)",
+      "center_name": "Metropolis Imaging",
+      "date": "2025-03-30",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "No acute infarct, hemorrhage, mass lesion, or midline shift identified. Ventricular system is normal in size and configuration.",
+      "impression": "Normal CT study of the brain.",
+      "important_notes": [
+        "Please correlate with previous imaging if available"
+      ],
+      "tags": ["screening"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Ishaan Reddy - 2025-04-09",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ishaan Reddy",
+      "referred_by": "Dr. Kiran Rao, MBBS, DNB",
+      "center_name": "Fortis Imaging Centre",
+      "date": "2025-04-09",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "No acute infarct, hemorrhage, mass lesion, or midline shift identified. Ventricular system is normal in size and configuration.",
+      "impression": "Normal CT study of the brain.",
+      "important_notes": ["Report to be reviewed by referring physician"],
+      "tags": ["pre-employment"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Krishna Banerjee - 2026-04-15",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Krishna Banerjee",
+      "referred_by": "Dr. Diya Menon, MS (Ortho)",
+      "center_name": "Krsnaa Diagnostics",
+      "date": "2026-04-15",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Joint space is well maintained. No fracture or dislocation seen. Bone density is normal for age.",
+      "impression": "Normal study of the right knee joint.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "Clinical correlation is recommended"
+      ],
+      "tags": ["routine-checkup"]
+    }
+  },
+  {
+    "title": "X-Ray - Chest (PA view) - Meera Bose - 2025-04-23",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Meera Bose",
+      "referred_by": "Dr. Diya Sharma, MBBS, DNB",
+      "center_name": "Vijaya Diagnostic Centre",
+      "date": "2025-04-23",
+      "modality": "X-Ray",
+      "body_part": "Chest (PA view)",
+      "findings": "Patchy opacities noted in the right lower lobe suggestive of infective consolidation. No pleural effusion seen.",
+      "impression": "Findings consistent with right lower lobe pneumonia. Clinical correlation advised.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["acute-finding"]
+    }
+  },
+  {
+    "title": "MRI - Right Knee - Nikhil Patel - 2024-11-30",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Nikhil Patel",
+      "referred_by": "Dr. Nikhil Nair, MD (Pediatrics)",
+      "center_name": "Care Radiology Centre",
+      "date": "2024-11-30",
+      "modality": "MRI",
+      "body_part": "Right Knee",
+      "findings": "Menisci, ligaments, and articular cartilage appear normal. No joint effusion or bone marrow edema noted.",
+      "impression": "Normal MRI study of the right knee.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting",
+        "Follow-up scan advised as clinically indicated"
+      ],
+      "tags": ["routine-checkup"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Thyroid - Ananya Chatterjee - 2024-07-13",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ananya Chatterjee",
+      "referred_by": "Dr. Riya Sharma, MD (Medicine)",
+      "center_name": "Fortis Imaging Centre",
+      "date": "2024-07-13",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Thyroid",
+      "findings": "Both thyroid lobes are normal in size and echotexture. No focal nodule or lymphadenopathy identified.",
+      "impression": "Normal thyroid ultrasound.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["pre-employment", "routine-checkup"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Riya Mukherjee - 2026-03-07",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Riya Mukherjee",
+      "referred_by": "Dr. Reyansh Choudhury, MS (Ortho)",
+      "center_name": "Suburban Imaging Centre",
+      "date": "2026-03-07",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "A few chronic lacunar infarcts noted in bilateral basal ganglia region. No acute hemorrhage or mass lesion.",
+      "impression": "Chronic small vessel ischemic changes. Neurology correlation advised.",
+      "important_notes": [
+        "Please correlate with previous imaging if available"
+      ],
+      "tags": ["specialist-referral"]
+    }
+  },
+  {
+    "title": "MRI - Lumbar Spine - Devika Kulkarni - 2025-04-27",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Devika Kulkarni",
+      "referred_by": "Dr. Simran Mehta, MD (Medicine)",
+      "center_name": "Metropolis Imaging",
+      "date": "2025-04-27",
+      "modality": "MRI",
+      "body_part": "Lumbar Spine",
+      "findings": "Diffuse disc bulge noted at L4-L5 level with mild indentation on the thecal sac, causing mild neural foraminal narrowing.",
+      "impression": "L4-L5 disc bulge with mild neural foraminal narrowing. Orthopedic/neurosurgery correlation advised.",
+      "important_notes": [
+        "Patient advised to carry this report for specialist consultation",
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["follow-up-required"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Whole Abdomen - Lata Sen - 2026-03-25",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Lata Sen",
+      "referred_by": "Dr. Neha Rao, MD (Chest)",
+      "center_name": "Sanjeevani Scan Centre",
+      "date": "2026-03-25",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Whole Abdomen",
+      "findings": "Mild hepatomegaly with increased echogenicity of liver parenchyma noted, suggestive of fatty infiltration.",
+      "impression": "Grade I fatty liver. Lifestyle modification and follow-up advised.",
+      "important_notes": [
+        "Patient advised to carry this report for specialist consultation",
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["chronic", "acute-finding"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Rohan Iyer - 2025-09-06",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Rohan Iyer",
+      "referred_by": "Dr. Ayaan Choudhury, DM (Cardiology)",
+      "center_name": "Apollo Diagnostics",
+      "date": "2025-09-06",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "A calculus measuring approximately 6mm noted in the right proximal ureter with mild upstream hydronephrosis.",
+      "impression": "Right proximal ureteric calculus with mild hydronephrosis. Urology correlation advised.",
+      "important_notes": [
+        "Please correlate with previous imaging if available",
+        "Report to be reviewed by referring physician"
+      ],
+      "tags": ["chronic", "acute-finding"]
+    }
+  },
+  {
+    "title": "MRI - Lumbar Spine - Pooja Reddy - 2026-02-14",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Pooja Reddy",
+      "referred_by": "Dr. Tanvi Kulkarni, MD (Radiology)",
+      "center_name": "New Life Imaging",
+      "date": "2026-02-14",
+      "modality": "MRI",
+      "body_part": "Lumbar Spine",
+      "findings": "Diffuse disc bulge noted at L4-L5 level with mild indentation on the thecal sac, causing mild neural foraminal narrowing.",
+      "impression": "L4-L5 disc bulge with mild neural foraminal narrowing. Orthopedic/neurosurgery correlation advised.",
+      "important_notes": ["Follow-up scan advised as clinically indicated"],
+      "tags": ["follow-up-required", "chronic"]
+    }
+  },
+  {
+    "title": "X-Ray - Left Wrist (AP/Lateral) - Vikram Gupta - 2026-06-26",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Vikram Gupta",
+      "referred_by": "Dr. Sai Rao, MBBS, DNB",
+      "center_name": "Sunrise Imaging Centre",
+      "date": "2026-06-26",
+      "modality": "X-Ray",
+      "body_part": "Left Wrist (AP/Lateral)",
+      "findings": "No fracture or dislocation identified. Bone alignment and joint spaces appear normal.",
+      "impression": "Normal radiograph of the left wrist.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone",
+        "Follow-up scan advised as clinically indicated"
+      ],
+      "tags": ["pre-employment", "screening"]
+    }
+  },
+  {
+    "title": "Mammography - Bilateral Breast - Priya Banerjee - 2026-07-11",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Priya Banerjee",
+      "referred_by": "Dr. Rajesh Sharma, MBBS",
+      "center_name": "Vijaya Diagnostic Centre",
+      "date": "2026-07-11",
+      "modality": "Mammography",
+      "body_part": "Bilateral Breast",
+      "findings": "A well-circumscribed oval mass noted in the upper outer quadrant of the left breast measuring approximately 1.5 cm.",
+      "impression": "BI-RADS Category 3 - Probably benign finding. Short-interval follow-up or ultrasound correlation advised.",
+      "important_notes": ["Clinical correlation is recommended"],
+      "tags": ["pre-surgical", "chronic"]
+    }
+  },
+  {
+    "title": "MRI - Lumbar Spine - Arnav Pillai - 2024-12-13",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Arnav Pillai",
+      "referred_by": "Dr. Kavya Nair, MBBS, DNB",
+      "center_name": "Neuberg Imaging Centre",
+      "date": "2024-12-13",
+      "modality": "MRI",
+      "body_part": "Lumbar Spine",
+      "findings": "Diffuse disc bulge noted at L4-L5 level with mild indentation on the thecal sac, causing mild neural foraminal narrowing.",
+      "impression": "L4-L5 disc bulge with mild neural foraminal narrowing. Orthopedic/neurosurgery correlation advised.",
+      "important_notes": ["Follow-up scan advised as clinically indicated"],
+      "tags": ["pre-surgical", "acute-finding"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Thyroid - Reyansh Chatterjee - 2026-02-07",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Reyansh Chatterjee",
+      "referred_by": "Dr. Diya Bose, MBBS, DNB",
+      "center_name": "Redcliffe Imaging",
+      "date": "2026-02-07",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Thyroid",
+      "findings": "A well-defined solid-cystic nodule measuring approximately 1.1 cm noted in the right lobe of thyroid.",
+      "impression": "Solitary right thyroid nodule (TIRADS 3). Endocrinology correlation and follow-up ultrasound advised.",
+      "important_notes": [
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["chronic", "specialist-referral"]
+    }
+  },
+  {
+    "title": "MRI - Right Knee - Kabir Chatterjee - 2026-01-10",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Kabir Chatterjee",
+      "referred_by": "Dr. Rohan Patel, MS (Ortho)",
+      "center_name": "City Scan & Imaging",
+      "date": "2026-01-10",
+      "modality": "MRI",
+      "body_part": "Right Knee",
+      "findings": "Horizontal tear noted involving the posterior horn of the medial meniscus with mild joint effusion.",
+      "impression": "Medial meniscal tear (posterior horn). Orthopedic correlation advised.",
+      "important_notes": [
+        "Please correlate with previous imaging if available"
+      ],
+      "tags": ["acute-finding", "chronic"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Isha Das - 2025-12-22",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Isha Das",
+      "referred_by": "Dr. Shreya Mukherjee, MD (Gen. Med)",
+      "center_name": "Krsnaa Diagnostics",
+      "date": "2025-12-22",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "Both kidneys are normal in size and position with no evidence of calculus, hydronephrosis, or mass lesion. Bladder appears normal.",
+      "impression": "Normal CT KUB study.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["follow-up", "screening"]
+    }
+  },
+  {
+    "title": "MRI - Right Knee - Devika Joshi - 2024-09-30",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Devika Joshi",
+      "referred_by": "Dr. Krishna Das, MD (Chest)",
+      "center_name": "Suburban Imaging Centre",
+      "date": "2024-09-30",
+      "modality": "MRI",
+      "body_part": "Right Knee",
+      "findings": "Menisci, ligaments, and articular cartilage appear normal. No joint effusion or bone marrow edema noted.",
+      "impression": "Normal MRI study of the right knee.",
+      "important_notes": ["Report to be reviewed by referring physician"],
+      "tags": ["routine-checkup", "follow-up"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Pelvis - Arnav Bose - 2026-07-07",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Arnav Bose",
+      "referred_by": "Dr. Sai Iyer, MD (Medicine)",
+      "center_name": "Nightingale Imaging",
+      "date": "2026-07-07",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Pelvis",
+      "findings": "Right ovary shows a thin-walled anechoic cystic lesion measuring approximately 3.2 cm, likely a functional/follicular cyst.",
+      "impression": "Simple right ovarian cyst, likely functional. Follow-up scan recommended after next cycle.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["acute-finding", "follow-up-required"]
+    }
+  },
+  {
+    "title": "X-Ray - Left Wrist (AP/Lateral) - Pooja Mukherjee - 2025-07-18",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Pooja Mukherjee",
+      "referred_by": "Dr. Ananya Choudhury, MD (Pediatrics)",
+      "center_name": "Care Radiology Centre",
+      "date": "2025-07-18",
+      "modality": "X-Ray",
+      "body_part": "Left Wrist (AP/Lateral)",
+      "findings": "Transverse fracture line noted through the distal radius with mild dorsal angulation.",
+      "impression": "Distal radius fracture (Colles type). Orthopedic correlation advised.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["chronic", "pre-surgical"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Manoj Bose - 2025-12-01",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Manoj Bose",
+      "referred_by": "Dr. Nikhil Bose, MD (Medicine)",
+      "center_name": "Care Radiology Centre",
+      "date": "2025-12-01",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "A calculus measuring approximately 6mm noted in the right proximal ureter with mild upstream hydronephrosis.",
+      "impression": "Right proximal ureteric calculus with mild hydronephrosis. Urology correlation advised.",
+      "important_notes": ["Clinical correlation is recommended"],
+      "tags": ["chronic", "pre-surgical"]
+    }
+  },
+  {
+    "title": "Mammography - Bilateral Breast - Sunita Das - 2025-05-21",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Sunita Das",
+      "referred_by": "Dr. Geeta Agarwal, MD (ENT)",
+      "center_name": "Rainbow Diagnostic Imaging",
+      "date": "2025-05-21",
+      "modality": "Mammography",
+      "body_part": "Bilateral Breast",
+      "findings": "Both breasts show scattered fibroglandular densities. No suspicious mass, calcification, or architectural distortion identified.",
+      "impression": "BI-RADS Category 2 - Benign findings. Routine screening advised as per age group.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["screening"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Nisha Pillai - 2025-10-22",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Nisha Pillai",
+      "referred_by": "Dr. Aditya Sen, MD (Pediatrics)",
+      "center_name": "Sanjeevani Scan Centre",
+      "date": "2025-10-22",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Joint space is well maintained. No fracture or dislocation seen. Bone density is normal for age.",
+      "impression": "Normal study of the right knee joint.",
+      "important_notes": [
+        "Please correlate with previous imaging if available",
+        "Clinical correlation is recommended"
+      ],
+      "tags": ["screening", "follow-up"]
+    }
+  },
+  {
+    "title": "X-Ray - Chest (PA view) - Kabir Sharma - 2026-03-31",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Kabir Sharma",
+      "referred_by": "Dr. Pooja Reddy, DM (Cardiology)",
+      "center_name": "Sanjeevani Scan Centre",
+      "date": "2026-03-31",
+      "modality": "X-Ray",
+      "body_part": "Chest (PA view)",
+      "findings": "Both lung fields appear clear with no evidence of consolidation, effusion, or pneumothorax. Cardiac silhouette is within normal limits.",
+      "impression": "Normal chest radiograph.",
+      "important_notes": ["Report to be reviewed by referring physician"],
+      "tags": ["follow-up"]
+    }
+  },
+  {
+    "title": "X-Ray - Left Wrist (AP/Lateral) - Ayaan Sen - 2024-08-19",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ayaan Sen",
+      "referred_by": "Dr. Neha Patel, MD (Chest)",
+      "center_name": "Metropolis Imaging",
+      "date": "2024-08-19",
+      "modality": "X-Ray",
+      "body_part": "Left Wrist (AP/Lateral)",
+      "findings": "Transverse fracture line noted through the distal radius with mild dorsal angulation.",
+      "impression": "Distal radius fracture (Colles type). Orthopedic correlation advised.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["specialist-referral", "follow-up-required"]
+    }
+  },
+  {
+    "title": "X-Ray - Right Knee (AP/Lateral) - Diya Verma - 2024-07-29",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Diya Verma",
+      "referred_by": "Dr. Isha Pillai, MD (Radiology)",
+      "center_name": "Sanjeevani Scan Centre",
+      "date": "2024-07-29",
+      "modality": "X-Ray",
+      "body_part": "Right Knee (AP/Lateral)",
+      "findings": "Mild narrowing of medial joint space with osteophyte formation noted.",
+      "impression": "Findings suggestive of early osteoarthritic changes in the right knee.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting",
+        "Clinical correlation is recommended"
+      ],
+      "tags": ["acute-finding"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Pelvis - Neha Agarwal - 2025-12-04",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Neha Agarwal",
+      "referred_by": "Dr. Sai Menon, MD (Medicine)",
+      "center_name": "Apollo Diagnostics",
+      "date": "2025-12-04",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Pelvis",
+      "findings": "Right ovary shows a thin-walled anechoic cystic lesion measuring approximately 3.2 cm, likely a functional/follicular cyst.",
+      "impression": "Simple right ovarian cyst, likely functional. Follow-up scan recommended after next cycle.",
+      "important_notes": [
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["specialist-referral"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Whole Abdomen - Ramesh Agarwal - 2025-09-18",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ramesh Agarwal",
+      "referred_by": "Dr. Anil Banerjee, MD (Chest)",
+      "center_name": "Suburban Imaging Centre",
+      "date": "2025-09-18",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Whole Abdomen",
+      "findings": "Liver, gallbladder, pancreas, spleen, and both kidneys appear normal in size, shape, and echotexture. No free fluid seen.",
+      "impression": "Normal ultrasound study of the whole abdomen.",
+      "important_notes": ["Follow-up scan advised as clinically indicated"],
+      "tags": ["pre-employment"]
+    }
+  },
+  {
+    "title": "X-Ray - Left Wrist (AP/Lateral) - Ishaan Iyer - 2026-06-01",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ishaan Iyer",
+      "referred_by": "Dr. Ishaan Bose, MS (Ortho)",
+      "center_name": "Precision Scan Centre",
+      "date": "2026-06-01",
+      "modality": "X-Ray",
+      "body_part": "Left Wrist (AP/Lateral)",
+      "findings": "Transverse fracture line noted through the distal radius with mild dorsal angulation.",
+      "impression": "Distal radius fracture (Colles type). Orthopedic correlation advised.",
+      "important_notes": ["Follow-up scan advised as clinically indicated"],
+      "tags": ["pre-surgical", "follow-up-required"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Whole Abdomen - Simran Sharma - 2026-06-02",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Simran Sharma",
+      "referred_by": "Dr. Krishna Patel, MD (ENT)",
+      "center_name": "New Life Imaging",
+      "date": "2026-06-02",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Whole Abdomen",
+      "findings": "Liver, gallbladder, pancreas, spleen, and both kidneys appear normal in size, shape, and echotexture. No free fluid seen.",
+      "impression": "Normal ultrasound study of the whole abdomen.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "Report to be reviewed by referring physician"
+      ],
+      "tags": ["pre-employment"]
+    }
+  },
+  {
+    "title": "CT Scan - KUB (Kidney-Ureter-Bladder) - Kiran Pillai - 2025-03-16",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Kiran Pillai",
+      "referred_by": "Dr. Reyansh Bose, DM (Cardiology)",
+      "center_name": "Care Radiology Centre",
+      "date": "2025-03-16",
+      "modality": "CT Scan",
+      "body_part": "KUB (Kidney-Ureter-Bladder)",
+      "findings": "Both kidneys are normal in size and position with no evidence of calculus, hydronephrosis, or mass lesion. Bladder appears normal.",
+      "impression": "Normal CT KUB study.",
+      "important_notes": [
+        "Clinical correlation is recommended",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["routine-checkup"]
+    }
+  },
+  {
+    "title": "CT Scan - Paranasal Sinuses (PNS) - Priya Iyer - 2026-05-08",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Priya Iyer",
+      "referred_by": "Dr. Neha Sharma, MS (Ortho)",
+      "center_name": "Apollo Diagnostics",
+      "date": "2026-05-08",
+      "modality": "CT Scan",
+      "body_part": "Paranasal Sinuses (PNS)",
+      "findings": "All paranasal sinuses are well aerated with no mucosal thickening or air-fluid levels.",
+      "impression": "Normal CT study of the paranasal sinuses.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["routine-checkup", "pre-employment"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Thyroid - Kiran Bose - 2026-06-19",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Kiran Bose",
+      "referred_by": "Dr. Manoj Agarwal, MBBS, DNB",
+      "center_name": "Vijaya Diagnostic Centre",
+      "date": "2026-06-19",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Thyroid",
+      "findings": "A well-defined solid-cystic nodule measuring approximately 1.1 cm noted in the right lobe of thyroid.",
+      "impression": "Solitary right thyroid nodule (TIRADS 3). Endocrinology correlation and follow-up ultrasound advised.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["follow-up-required"]
+    }
+  },
+  {
+    "title": "MRI - Lumbar Spine - Sai Pillai - 2026-03-14",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Sai Pillai",
+      "referred_by": "Dr. Reyansh Menon, MS (Ortho)",
+      "center_name": "City Scan & Imaging",
+      "date": "2026-03-14",
+      "modality": "MRI",
+      "body_part": "Lumbar Spine",
+      "findings": "Vertebral bodies and disc spaces appear normal in height and signal intensity. No significant disc herniation or canal stenosis seen.",
+      "impression": "Normal MRI study of the lumbar spine.",
+      "important_notes": [
+        "Please correlate with previous imaging if available"
+      ],
+      "tags": ["follow-up"]
+    }
+  },
+  {
+    "title": "MRI - Right Knee - Simran Iyer - 2025-10-05",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Simran Iyer",
+      "referred_by": "Dr. Deepak Reddy, MD (Chest)",
+      "center_name": "Sunrise Imaging Centre",
+      "date": "2025-10-05",
+      "modality": "MRI",
+      "body_part": "Right Knee",
+      "findings": "Horizontal tear noted involving the posterior horn of the medial meniscus with mild joint effusion.",
+      "impression": "Medial meniscal tear (posterior horn). Orthopedic correlation advised.",
+      "important_notes": ["Follow-up scan advised as clinically indicated"],
+      "tags": ["specialist-referral"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Pelvis - Rohan Banerjee - 2025-05-29",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Rohan Banerjee",
+      "referred_by": "Dr. Neha Das, MD (ENT)",
+      "center_name": "Rainbow Diagnostic Imaging",
+      "date": "2025-05-29",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Pelvis",
+      "findings": "Right ovary shows a thin-walled anechoic cystic lesion measuring approximately 3.2 cm, likely a functional/follicular cyst.",
+      "impression": "Simple right ovarian cyst, likely functional. Follow-up scan recommended after next cycle.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting",
+        "Report to be reviewed by referring physician"
+      ],
+      "tags": ["pre-surgical", "acute-finding"]
+    }
+  },
+  {
+    "title": "CT Scan - Paranasal Sinuses (PNS) - Meera Kulkarni - 2024-09-30",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Meera Kulkarni",
+      "referred_by": "Dr. Ramesh Chatterjee, MBBS, DNB",
+      "center_name": "Suburban Imaging Centre",
+      "date": "2024-09-30",
+      "modality": "CT Scan",
+      "body_part": "Paranasal Sinuses (PNS)",
+      "findings": "All paranasal sinuses are well aerated with no mucosal thickening or air-fluid levels.",
+      "impression": "Normal CT study of the paranasal sinuses.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["follow-up"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Thyroid - Neha Bose - 2024-10-05",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Neha Bose",
+      "referred_by": "Dr. Vivaan Menon, MS (Ortho)",
+      "center_name": "City Scan & Imaging",
+      "date": "2024-10-05",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Thyroid",
+      "findings": "A well-defined solid-cystic nodule measuring approximately 1.1 cm noted in the right lobe of thyroid.",
+      "impression": "Solitary right thyroid nodule (TIRADS 3). Endocrinology correlation and follow-up ultrasound advised.",
+      "important_notes": [
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["specialist-referral", "acute-finding"]
+    }
+  },
+  {
+    "title": "CT Scan - Paranasal Sinuses (PNS) - Ishaan Joshi - 2025-03-10",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ishaan Joshi",
+      "referred_by": "Dr. Vikram Menon, MD (Chest)",
+      "center_name": "Neuberg Imaging Centre",
+      "date": "2025-03-10",
+      "modality": "CT Scan",
+      "body_part": "Paranasal Sinuses (PNS)",
+      "findings": "Mucosal thickening noted in bilateral maxillary sinuses with mild osteomeatal complex narrowing.",
+      "impression": "Findings suggestive of chronic sinusitis. ENT correlation advised.",
+      "important_notes": ["Clinical correlation is recommended"],
+      "tags": ["pre-surgical", "follow-up-required"]
+    }
+  },
+  {
+    "title": "CT Scan - Brain (Plain) - Ramesh Das - 2025-08-21",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Ramesh Das",
+      "referred_by": "Dr. Aarav Agarwal, DM (Cardiology)",
+      "center_name": "Vijaya Diagnostic Centre",
+      "date": "2025-08-21",
+      "modality": "CT Scan",
+      "body_part": "Brain (Plain)",
+      "findings": "No acute infarct, hemorrhage, mass lesion, or midline shift identified. Ventricular system is normal in size and configuration.",
+      "impression": "Normal CT study of the brain.",
+      "important_notes": [
+        "Comparison with prior study not available at the time of reporting",
+        "No immediate intervention required based on imaging alone"
+      ],
+      "tags": ["follow-up", "pre-employment"]
+    }
+  },
+  {
+    "title": "Ultrasound (USG) - Thyroid - Devika Verma - 2025-05-19",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Devika Verma",
+      "referred_by": "Dr. Priya Pillai, MD (ENT)",
+      "center_name": "Redcliffe Imaging",
+      "date": "2025-05-19",
+      "modality": "Ultrasound (USG)",
+      "body_part": "Thyroid",
+      "findings": "A well-defined solid-cystic nodule measuring approximately 1.1 cm noted in the right lobe of thyroid.",
+      "impression": "Solitary right thyroid nodule (TIRADS 3). Endocrinology correlation and follow-up ultrasound advised.",
+      "important_notes": ["Follow-up scan advised as clinically indicated"],
+      "tags": ["specialist-referral"]
+    }
+  },
+  {
+    "title": "MRI - Right Knee - Shreya Chatterjee - 2025-02-25",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Shreya Chatterjee",
+      "referred_by": "Dr. Shreya Das, DM (Cardiology)",
+      "center_name": "Vijaya Diagnostic Centre",
+      "date": "2025-02-25",
+      "modality": "MRI",
+      "body_part": "Right Knee",
+      "findings": "Horizontal tear noted involving the posterior horn of the medial meniscus with mild joint effusion.",
+      "impression": "Medial meniscal tear (posterior horn). Orthopedic correlation advised.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "Patient advised to carry this report for specialist consultation"
+      ],
+      "tags": ["specialist-referral", "follow-up-required"]
+    }
+  },
+  {
+    "title": "CT Scan - Paranasal Sinuses (PNS) - Pooja Joshi - 2025-02-19",
+    "type": "Radiology Report",
+    "document_metadata": {
+      "patient_name": "Pooja Joshi",
+      "referred_by": "Dr. Meera Singh, MBBS, DNB",
+      "center_name": "Redcliffe Imaging",
+      "date": "2025-02-19",
+      "modality": "CT Scan",
+      "body_part": "Paranasal Sinuses (PNS)",
+      "findings": "All paranasal sinuses are well aerated with no mucosal thickening or air-fluid levels.",
+      "impression": "Normal CT study of the paranasal sinuses.",
+      "important_notes": [
+        "Follow-up scan advised as clinically indicated",
+        "Comparison with prior study not available at the time of reporting"
+      ],
+      "tags": ["pre-employment"]
+    }
+  }
+]

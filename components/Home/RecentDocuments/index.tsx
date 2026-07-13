@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useSQLiteContext } from "expo-sqlite";
 import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Documents from "../Documents";
+import Documents from "../../Documents";
 import SeeAllDocuments from "../SeeAllDocuments";
 
 const RecentDocuments = () => {
@@ -28,9 +28,6 @@ const RecentDocuments = () => {
     useFocusEffect(
         useCallback(() => {
             fetchRecentDocuments();
-            return () => {
-                fetchRecentDocuments();
-            };
         }, [])
     );
 
@@ -41,6 +38,7 @@ const RecentDocuments = () => {
             </Text>
             <Documents
                 documents={recentDocuments}
+                IsHome={true}
             />
             <SeeAllDocuments />
         </View>
@@ -49,14 +47,13 @@ const RecentDocuments = () => {
 
 const style = StyleSheet.create({
     container: {
-        flex: 1,
         flexDirection: "column",
-        gap: scale(20)
     },
     title: {
         fontSize: scale(18),
         fontFamily: "Aeonik-Medium",
-        color: "#23423B"
+        color: "#23423B",
+        marginBottom: scale(20)
     }
 })
 

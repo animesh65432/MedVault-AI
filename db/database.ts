@@ -26,7 +26,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
 
                 -- common
                 patient_name TEXT,
-                date DATETIME,
+                date DATETIME NOT NULL,
 
                 -- Prescription / Referral Letter
                 doctor_name TEXT,
@@ -178,6 +178,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
             CREATE VIRTUAL TABLE IF NOT EXISTS DocumentsSearch USING fts5(
                 title,
                 type,
+                date,
                 patient_name,
                 doctor_name,
                 clinic_name,
