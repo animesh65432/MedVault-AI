@@ -1,4 +1,6 @@
-import { BillingItem, DocumentRow, DocumentType, LabTest, Medicine } from "@/types";
+import { BillingItem, DocumentRow, DocumentType, LabTest, Medicine, SearchSuggestion } from "@/types";
+import { SOURCES } from "@/utils/contensnt";
+import { toLocalDateString } from "@/utils/toLocalDateString";
 import { SQLiteDatabase } from "expo-sqlite";
 
 
@@ -227,12 +229,10 @@ export const GetDocuments = async (
     db: SQLiteDatabase,
     ORDER: "DESC" | "ASC",
     LIMIT: number,
-    searchQuery?: string,
     CATEGORIES?: string[],
     DATE_RANGE?: { startDate: Date | null; endDate: Date | null }
 ): Promise<DocumentRow[]> => {
     try {
-        const hasSearch = !!searchQuery && searchQuery.trim().length > 0
         const hasCategories = !!CATEGORIES && CATEGORIES.length > 0
         const hasDateRange = !!(DATE_RANGE?.startDate && DATE_RANGE?.endDate)
 
@@ -249,29 +249,9 @@ export const GetDocuments = async (
         if (hasDateRange) {
             conditions.push(`COALESCE(Documents.date, Documents.CreatedAt) BETWEEN ? AND ?`)
             params.push(
-                DATE_RANGE!.startDate!.toISOString(),
-                DATE_RANGE!.endDate!.toISOString()
+                toLocalDateString(DATE_RANGE!.startDate!),
+                toLocalDateString(DATE_RANGE!.endDate!)
             )
-        }
-
-        console.log("params:", DATE_RANGE?.startDate)
-
-        if (hasSearch) {
-            conditions.unshift(`DocumentsSearch MATCH ?`)
-            params.unshift(searchQuery!.trim() + '*')
-
-            const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : ''
-
-            const rows = await db.getAllAsync<DocumentRow>(
-                `SELECT Documents.*
-                FROM DocumentsSearch
-                JOIN Documents ON Documents.Id = DocumentsSearch.rowid
-                ${whereClause}
-                ORDER BY COALESCE(Documents.date, Documents.CreatedAt) ${ORDER}
-                LIMIT ?`,
-                [...params, LIMIT]
-            )
-            return rows
         }
 
         const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : ''
@@ -284,12 +264,32 @@ export const GetDocuments = async (
             LIMIT ?`,
             [...params, LIMIT]
         )
-
-        console.log("params:", params)
-
         return rows
     } catch (error) {
         console.error("Error getting documents:", error)
+        return []
+    }
+}
+
+export const GetSearchByKeyword = async (
+    db: SQLiteDatabase,
+    searchQuery: string,
+    ORDER: "DESC" | "ASC",
+    LIMIT: number
+): Promise<DocumentRow[]> => {
+    try {
+        const rows = await db.getAllAsync<DocumentRow>(
+            `SELECT Documents.*
+            FROM DocumentsSearch
+            JOIN Documents ON Documents.Id = DocumentsSearch.rowid
+            WHERE DocumentsSearch MATCH ?
+            ORDER BY COALESCE(Documents.date, Documents.CreatedAt) ${ORDER}
+            LIMIT ?`,
+            [searchQuery.trim() + '*', LIMIT]
+        )
+        return rows
+    } catch (error) {
+        console.error("Error searching documents:", error)
         return []
     }
 }
@@ -304,4 +304,187 @@ export const HasAnyDocuments = async (db: SQLiteDatabase): Promise<boolean> => {
         console.error("Error checking if any documents exist:", error);
         return false;
     }
+}
+
+export const GetSearchSuggestions = async (
+    db: SQLiteDatabase,
+    query: string,
+    perSourceLimit = 3,
+    totalLimit = 6
+): Promise<SearchSuggestion[]> => {
+    const q = query.trim()
+    if (!q) return []
+    const matchTerm = `"${q.replace(/"/g, '""')}"*`
+    try {
+        const queries = SOURCES.map(async (src) => {
+            if (src.directDocId) {
+                return db.getAllAsync<any>(
+                    `SELECT
+                        Documents.Id as documentId,
+                        Documents.title as title,
+                        Documents.type as type,
+                        COALESCE(Documents.date, Documents.CreatedAt) as date,
+                        snippet(${src.ftsTable}, ${src.snippetCol}, '⟪', '⟫', '…', 10) as snip
+                    FROM ${src.ftsTable}
+                    JOIN Documents ON Documents.Id = ${src.ftsTable}.rowid
+                    WHERE ${src.ftsTable} MATCH ?
+                    LIMIT ?`,
+                    [matchTerm, perSourceLimit]
+                )
+            }
+            return db.getAllAsync<any>(
+                `SELECT
+                    Documents.Id as documentId,
+                    Documents.title as title,
+                    Documents.type as type,
+                    COALESCE(Documents.date, Documents.CreatedAt) as date,
+                    snippet(${src.ftsTable}, ${src.snippetCol}, '⟪', '⟫', '…', 10) as snip
+                FROM ${src.ftsTable}
+                JOIN ${src.baseTable} ON ${src.baseTable}.Id = ${src.ftsTable}.rowid
+                JOIN Documents ON Documents.Id = ${src.baseTable}.DocumentId
+                WHERE ${src.ftsTable} MATCH ?
+                LIMIT ?`,
+                [matchTerm, perSourceLimit]
+            )
+        })
+
+        const resultsPerSource = await Promise.all(queries)
+
+        const merged: SearchSuggestion[] = []
+
+        resultsPerSource.forEach((rows, i) => {
+            rows.forEach((row: any) => {
+                merged.push({
+                    documentId: row.documentId,
+                    title: row.title,
+                    date: row.date,
+                    field: SOURCES[i].label,
+                    snippet: row.snip,
+                    type: row.type || null,
+                })
+            })
+        })
+
+        const seen = new Set<number>()
+        const deduped = merged.filter(s => {
+            if (seen.has(s.documentId)) return false
+            seen.add(s.documentId)
+            return true
+        })
+
+        return deduped.slice(0, totalLimit)
+    } catch (error) {
+        console.error("Error getting search suggestions:", error)
+        return []
+    }
+}
+
+export const GetDocumentById = async (db: SQLiteDatabase, documentId: number): Promise<DocumentRow | null> => {
+    try {
+        const row = await db.getFirstAsync<DocumentRow>(
+            `SELECT *
+             FROM Documents
+             WHERE Id = ?`,
+            [documentId]
+        )
+
+        if (!row) return null
+
+        row.tags = await db.getAllAsync<{ tag: string }>(
+            `SELECT tag FROM DocumentTags WHERE DocumentId = ?`,
+            [documentId]
+        ).then(rows => rows.map(r => r.tag))
+
+        row.notes = await db.getAllAsync<{ note: string }>(
+            `SELECT note FROM DocumentNotes WHERE DocumentId = ? ORDER BY SortOrder`,
+            [documentId]
+        ).then(rows => rows.map(r => r.note))
+
+        switch (row.type) {
+            case "Prescription": {
+                row.medicines = await getMedicinesForDocument(db, documentId)
+                break
+            }
+            case "Prescription Receipt": {
+                row.medicines = await getMedicinesForDocument(db, documentId)
+                row.billing_items = await db.getAllAsync<BillingItem>(
+                    `SELECT * FROM BillingItems WHERE DocumentId = ?`,
+                    [documentId]
+                )
+                break
+            }
+            case "Lab Report": {
+                row.tests = await db.getAllAsync<LabTest>(
+                    `SELECT * FROM LabTests WHERE DocumentId = ?`,
+                    [documentId]
+                )
+                break
+            }
+            case "Radiology Report": {
+                break
+            }
+            case "Medical Bill": {
+                row.billing_items = await db.getAllAsync<BillingItem>(
+                    `SELECT * FROM BillingItems WHERE DocumentId = ?`,
+                    [documentId]
+                )
+                break
+            }
+            case "Discharge Summary": {
+                row.procedures = await db.getAllAsync<{ procedure: string }>(
+                    `SELECT procedure FROM DocumentProcedures WHERE DocumentId = ?`,
+                    [documentId]
+                ).then(rows => rows.map(r => r.procedure))
+                row.medicines = await getMedicinesForDocument(db, documentId)
+                row.tests = await db.getAllAsync<LabTest>(
+                    `SELECT * FROM LabTests WHERE DocumentId = ?`,
+                    [documentId]
+                )
+                break
+            }
+            case "Referral Letter": {
+                row.medicines = await getMedicinesForDocument(db, documentId)
+                break
+            }
+            default: {
+                row.medicines = await getMedicinesForDocument(db, documentId)
+                row.key_points = await db.getAllAsync<{ key_point: string }>(
+                    `SELECT key_point FROM DocumentKeyPoints WHERE DocumentId = ? ORDER BY SortOrder`,
+                    [documentId]
+                ).then(rows => rows.map(r => r.key_point))
+                break
+            }
+        }
+
+        return row
+    } catch (error) {
+        console.error("Error getting document by ID:", error)
+        return null
+    }
+}
+
+async function getMedicinesForDocument(db: SQLiteDatabase, documentId: number): Promise<Medicine[]> {
+    const medicines = await db.getAllAsync<any>(
+        `SELECT * FROM Medicines WHERE DocumentId = ?`,
+        [documentId]
+    )
+
+    for (const med of medicines) {
+        const timingRows = await db.getAllAsync<{ timing: string }>(
+            `SELECT timing FROM MedicineTiming WHERE MedicineId = ?`,
+            [med.Id]
+        )
+        med.timing = timingRows.map(t => t.timing)
+
+        const reminderRows = await db.getAllAsync<any>(
+            `SELECT * FROM Reminders WHERE MedicineId = ?`,
+            [med.Id]
+        )
+        med.reminders = reminderRows.map(r => ({
+            ...r,
+            time: new Date(r.time),
+        }))
+    }
+
+    return medicines
 }

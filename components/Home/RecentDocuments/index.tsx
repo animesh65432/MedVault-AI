@@ -14,7 +14,7 @@ const RecentDocuments = () => {
 
     async function fetchRecentDocuments() {
         try {
-            const documents = await GetDocuments(db, "DESC", 3)
+            const documents = await GetDocuments(db, "DESC", 2)
             setRecentDocuments(documents)
         } catch (error) {
             console.error("Failed to fetch recent documents:", error)

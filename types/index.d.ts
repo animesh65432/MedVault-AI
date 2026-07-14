@@ -192,6 +192,13 @@ export type CountTypes = {
 }
 
 export type DocumentRow = {
+    key_points: string[];
+    procedures: string[];
+    tests: LabTest[];
+    billing_items: BillingItem[];
+    medicines: Medicine[];
+    notes: string[];
+    tags: string[];
     Id: number;
     Hash: string;
     SourceFilePath: string;
@@ -223,4 +230,21 @@ export type DocumentRow = {
     discount: string | null;
     total_amount: string | null;
     summary: string | null;
+}
+
+export type SearchSuggestion = {
+    documentId: number
+    title: string
+    field: string
+    snippet: string
+    date: string | null,
+    type: TypeOfDocumenet
+}
+
+type SourceConfig = {
+    ftsTable: string
+    baseTable: string
+    label: string
+    snippetCol: number
+    directDocId: boolean
 }

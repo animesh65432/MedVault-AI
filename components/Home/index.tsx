@@ -10,6 +10,7 @@ import EmptyStats from "./EmptyStats";
 import NonEmptyStats from "./NonEmptyStats";
 import Title from './Title';
 
+
 const HomeLayOut = () => {
     const db = useSQLiteContext()
     const [counts, setCounts] = useState<CountTypes>({

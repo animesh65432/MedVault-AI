@@ -29,7 +29,7 @@ const TYPE_ICON: Record<DocumentRow['type'], { lib: IconLib; name: string }> = {
     "Other": { lib: 'Fontisto', name: 'file-1' },
 }
 
-const DocIcon: React.FC<{ type: DocumentRow['type'] }> = ({ type }) => {
+export const DocIcon: React.FC<{ type: DocumentRow['type'] }> = ({ type }) => {
     const config = TYPE_ICON[type] ?? TYPE_ICON["Other"]
     const props = { name: config.name, size: scale(20), color: "#23423B" }
 
@@ -87,7 +87,7 @@ const Documents: React.FC<Props> = ({ documents, IsHome = false }) => {
                         key={doc.Id}
                         style={styles.card}
                         activeOpacity={0.7}
-                        onPress={() => router.push(`/document/${doc.Id}` as any)}
+                        onPress={() => router.push(`/document/${doc.Id}`)}
                     >
                         <View style={styles.iconWrapper}>
                             <DocIcon type={doc.type} />

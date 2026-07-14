@@ -1,5 +1,5 @@
-import { GetDocuments, HasAnyDocuments } from "@/db/document";
-import { DocumentRow } from "@/types";
+import { GetDocuments, GetSearchSuggestions, HasAnyDocuments } from "@/db/document";
+import { DocumentRow, SearchSuggestion } from "@/types";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import { useFocusEffect } from '@react-navigation/native';
@@ -10,6 +10,7 @@ import Empty from './Empty';
 import Input from './Input';
 import NonEmpty from "./NonEmpty";
 import Filters from "./NonEmpty/Filters";
+import Suggestions from "./Suggestions";
 
 
 const Search: React.FC = () => {
@@ -21,6 +22,7 @@ const Search: React.FC = () => {
         startDate: null,
         endDate: null,
     })
+    const [SearchSuggestions, setSearchSuggestions] = useState<SearchSuggestion[]>([])
     const [hasAnyDocuments, setHasAnyDocuments] = useState<boolean | null>(null)
     const [searchQuery, setSearchQuery] = useState<string>("")
     const [documents, setdocuments] = useState<DocumentRow[]>([])
@@ -28,9 +30,7 @@ const Search: React.FC = () => {
 
     async function fetchDocuments() {
         try {
-            const docs = await db.getFirstSync(`SELECT * FROM Documents`)
-            console.log("docs", docs)
-            const documents = await GetDocuments(db, "ASC", 10, searchQuery, SelectedCategories, SelectedDate)
+            const documents = await GetDocuments(db, "ASC", 10, SelectedCategories, SelectedDate)
             setdocuments(documents)
         } catch (error) {
             console.error("Failed to fetch documents:", error)
@@ -52,7 +52,7 @@ const Search: React.FC = () => {
         }, 300)
 
         return () => clearTimeout(timeout)
-    }, [searchQuery, SelectedCategories, SelectedDate])
+    }, [SelectedCategories, SelectedDate])
 
     useFocusEffect(
         React.useCallback(() => {
@@ -61,7 +61,33 @@ const Search: React.FC = () => {
         }, [])
     )
 
-    const hasQuery = searchQuery.trim().length > 0 || SelectedCategories.length > 0 || SelectedDate.startDate !== null || SelectedDate.endDate !== null
+    useEffect(() => {
+        if (searchQuery.trim().length === 0) {
+            setSearchSuggestions([])
+            return
+        }
+
+        let cancelled = false
+
+        const timeout = setTimeout(async () => {
+            try {
+                const search_documents = await GetSearchSuggestions(db, searchQuery)
+                if (!cancelled) {
+                    setSearchSuggestions(search_documents)
+                }
+            } catch (error) {
+                console.log("Failed to fetch search documents:", error)
+            }
+        }, 300)
+
+        return () => {
+            cancelled = true
+            clearTimeout(timeout)
+        }
+    }, [searchQuery])
+
+    const hasQuery = searchQuery.trim().length > 0 || SelectedCategories.length > 0 || SelectedDate.startDate !== null || SelectedDate.endDate !== null;
+    const IsSearchIng = searchQuery.trim().length > 0;
 
     return (
         <View style={styles.wrapper}>
@@ -73,32 +99,39 @@ const Search: React.FC = () => {
                     setSearchQuery={setSearchQuery}
                 />
             </View>
-            <ScrollView
-                style={styles.container}
-                contentContainerStyle={styles.content}
-                showsVerticalScrollIndicator={true}
-            >
-                {hasAnyDocuments &&
-                    <Filters
-                        SelectedCategories={SelectedCategories}
-                        setSelectedCategories={setSelectedCategories}
-                        SelectedDate={SelectedDate}
-                        setSelectedDate={setSelectedDate}
-                    />
-                }
-                {documents.length === 0 ? (
-                    <Empty hasQuery={hasQuery} />
-                ) : (
-                    <NonEmpty
-                        hasQuery={hasQuery}
-                        documents={documents}
-                        SelectedCategories={SelectedCategories}
-                        setSelectedCategories={setSelectedCategories}
-                        SelectedDate={SelectedDate}
-                        setSelectedDate={setSelectedDate}
-                    />
-                )}
-            </ScrollView>
+            {IsSearchIng
+                && <Suggestions
+                    SearchSuggestions={SearchSuggestions}
+                />
+            }
+            {!IsSearchIng &&
+                <ScrollView
+                    style={styles.container}
+                    contentContainerStyle={styles.content}
+                    showsVerticalScrollIndicator={true}
+                >
+                    {hasAnyDocuments &&
+                        <Filters
+                            SelectedCategories={SelectedCategories}
+                            setSelectedCategories={setSelectedCategories}
+                            SelectedDate={SelectedDate}
+                            setSelectedDate={setSelectedDate}
+                        />
+                    }
+                    {documents.length === 0 ? (
+                        <Empty hasQuery={hasQuery} />
+                    ) : (
+                        <NonEmpty
+                            hasQuery={hasQuery}
+                            documents={documents}
+                            SelectedCategories={SelectedCategories}
+                            setSelectedCategories={setSelectedCategories}
+                            SelectedDate={SelectedDate}
+                            setSelectedDate={setSelectedDate}
+                        />
+                    )}
+                </ScrollView>
+            }
         </View>
     )
 }
