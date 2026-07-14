@@ -14,21 +14,27 @@ export type TypeOfDocumenet =
 export type ReminderRepeat = "once" | "daily" | "weekly";
 
 export type Reminder = {
+    Id?: number;
+    MedicineId?: number;
     title: string;
     time: Date;
     repeat: ReminderRepeat;
 };
 
 export interface Medicine {
+    Id?: number;
+    DocumentId?: number;
     name: string;
     dosage: string;
     frequency: "once_daily" | "twice_daily" | "thrice_daily" | "weekly" | "as_needed";
     duration: string;
-    timing: [];
-    reminders: Reminder[]
+    timing: string[];
+    reminders: Reminder[];
 }
 
 export interface LabTest {
+    Id?: number;
+    DocumentId?: number;
     name: string;
     value: string;
     unit: string;
@@ -37,6 +43,8 @@ export interface LabTest {
 }
 
 export interface BillingItem {
+    Id?: number;
+    DocumentId?: number;
     name: string;
     price: string;
 }
@@ -172,8 +180,6 @@ export interface GenericDocument extends BaseDocument {
     };
 }
 
-
-
 export type DocumentType =
     | PrescriptionDocument
     | PrescriptionReceiptDocument
@@ -183,6 +189,12 @@ export type DocumentType =
     | DischargeSummaryDocument
     | ReferralLetterDocument
     | GenericDocument;
+
+export type UploadedDocument = DocumentType & {
+    Id: number
+    SourceFilePath: string
+    Hash: string
+}
 
 
 export type CountTypes = {

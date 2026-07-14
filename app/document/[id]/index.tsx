@@ -1,10 +1,12 @@
 import { GetDocumentById } from "@/db/document";
+import { UploadedDocument } from "@/types";
 import { useLocalSearchParams } from "expo-router";
 import { useSQLiteContext } from "expo-sqlite";
 import React, { useEffect } from 'react';
 import { View } from "react-native";
 
 const Document: React.FC = () => {
+    const [Document, setDocument] = React.useState<UploadedDocument | null>(null);
     const { id } = useLocalSearchParams();
     const db = useSQLiteContext()
 
