@@ -23,6 +23,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 title TEXT NOT NULL,
                 type TEXT NOT NULL,
+                IsPdf BOOLEAN NOT NULL DEFAULT 0,
 
                 -- common
                 patient_name TEXT,

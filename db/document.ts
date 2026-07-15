@@ -55,28 +55,36 @@ async function insertTagsAndNotes(db: SQLiteDatabase, documentId: number, tags: 
     }
 }
 
-export const create_document = async (db: SQLiteDatabase, doc: DocumentType, SourceFilePath: string, Hash: string): Promise<number> => {
-    let documentId!: number;
+export const create_document = async (
+    db: SQLiteDatabase,
+    doc: DocumentType,
+    SourceFilePath: string,
+    Hash: string,
+    IsPdf: boolean
+): Promise<number> => {
+    let documentId: number | undefined;
 
     await db.withTransactionAsync(async () => {
         const meta: any = doc.document_metadata;
+
         switch (doc.type) {
             case "Prescription": {
                 const r = await db.runAsync(
-                    `INSERT INTO Documents (title, type, patient_name, doctor_name, clinic_name, date, SourceFilePath, Hash)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                    [doc.title, doc.type, meta.patient_name, meta.doctor_name, meta.clinic_name, meta.date, SourceFilePath, Hash]
+                    `INSERT INTO Documents (title, type, patient_name, doctor_name, clinic_name, date, SourceFilePath, Hash, IsPdf)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [doc.title, doc.type, meta.patient_name, meta.doctor_name, meta.clinic_name, meta.date, SourceFilePath, Hash, IsPdf]
                 );
                 documentId = r.lastInsertRowId;
                 for (const med of meta.medicines ?? []) await insertMedicine(db, documentId, med);
                 await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
                 break;
             }
+
             case "Prescription Receipt": {
                 const r = await db.runAsync(
-                    `INSERT INTO Documents (title, type, patient_name, pharmacy_name, total_amount, date, SourceFilePath, Hash)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                    [doc.title, doc.type, meta.patient_name, meta.pharmacy_name, meta.total_amount, meta.date, SourceFilePath, Hash]
+                    `INSERT INTO Documents (title, type, patient_name, pharmacy_name, total_amount, date, SourceFilePath, Hash, IsPdf)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [doc.title, doc.type, meta.patient_name, meta.pharmacy_name, meta.total_amount, meta.date, SourceFilePath, Hash, IsPdf]
                 );
                 documentId = r.lastInsertRowId;
                 for (const med of meta.medicines ?? []) await insertMedicine(db, documentId, med);
@@ -84,44 +92,48 @@ export const create_document = async (db: SQLiteDatabase, doc: DocumentType, Sou
                 await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
                 break;
             }
+
             case "Lab Report": {
                 const r = await db.runAsync(
-                    `INSERT INTO Documents (title, type, patient_name, lab_name, referred_by, date,SourceFilePath, Hash)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                    [doc.title, doc.type, meta.patient_name, meta.lab_name, meta.referred_by, meta.date, SourceFilePath, Hash]
+                    `INSERT INTO Documents (title, type, patient_name, lab_name, referred_by, date, SourceFilePath, Hash, IsPdf)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [doc.title, doc.type, meta.patient_name, meta.lab_name, meta.referred_by, meta.date, SourceFilePath, Hash, IsPdf]
                 );
                 documentId = r.lastInsertRowId;
                 await insertLabTests(db, documentId, meta.tests ?? []);
                 await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
                 break;
             }
+
             case "Radiology Report": {
                 const r = await db.runAsync(
-                    `INSERT INTO Documents (title, type, patient_name, referred_by, center_name, date, modality, body_part, findings, impression, SourceFilePath, Hash)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    `INSERT INTO Documents (title, type, patient_name, referred_by, center_name, date, modality, body_part, findings, impression, SourceFilePath, Hash, IsPdf)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                     [doc.title, doc.type, meta.patient_name, meta.referred_by, meta.center_name, meta.date,
-                    meta.modality, meta.body_part, meta.findings, meta.impression, SourceFilePath, Hash]
+                    meta.modality, meta.body_part, meta.findings, meta.impression, SourceFilePath, Hash, IsPdf]
                 );
                 documentId = r.lastInsertRowId;
                 await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
                 break;
             }
+
             case "Medical Bill": {
                 const r = await db.runAsync(
-                    `INSERT INTO Documents (title, type, patient_name, hospital_name, subtotal, discount, total_amount, date, SourceFilePath, Hash)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)`,
-                    [doc.title, doc.type, meta.patient_name, meta.hospital_name, meta.subtotal, meta.discount, meta.total_amount, meta.date, SourceFilePath, Hash]
+                    `INSERT INTO Documents (title, type, patient_name, hospital_name, subtotal, discount, total_amount, date, SourceFilePath, Hash, IsPdf)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [doc.title, doc.type, meta.patient_name, meta.hospital_name, meta.subtotal, meta.discount, meta.total_amount, meta.date, SourceFilePath, Hash, IsPdf]
                 );
                 documentId = r.lastInsertRowId;
                 await insertBillingItems(db, documentId, meta.billing_items ?? []);
                 await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
                 break;
             }
+
             case "Discharge Summary": {
                 const r = await db.runAsync(
-                    `INSERT INTO Documents (title, type, patient_name, hospital_name, admission_date, discharge_date, diagnosis, follow_up, date, SourceFilePath, Hash)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                    [doc.title, doc.type, meta.patient_name, meta.hospital_name, meta.admission_date, meta.discharge_date, meta.diagnosis, meta.follow_up, meta.date, SourceFilePath, Hash]
+                    `INSERT INTO Documents (title, type, patient_name, hospital_name, admission_date, discharge_date, diagnosis, follow_up, date, SourceFilePath, Hash, IsPdf)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [doc.title, doc.type, meta.patient_name, meta.hospital_name, meta.admission_date, meta.discharge_date, meta.diagnosis, meta.follow_up, meta.date, SourceFilePath, Hash, IsPdf]
                 );
                 documentId = r.lastInsertRowId;
                 for (const proc of meta.procedures ?? []) {
@@ -138,9 +150,11 @@ export const create_document = async (db: SQLiteDatabase, doc: DocumentType, Sou
 
             case "Referral Letter": {
                 const r = await db.runAsync(
-                    `INSERT INTO Documents (title, type, patient_name, doctor_name, referred_to, reason_for_referral, date, SourceFilePath, Hash)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                    [doc.title, doc.type, meta.patient_name, meta.referring_doctor, meta.referred_to, meta.reason_for_referral, meta.date, SourceFilePath, Hash]
+                    `INSERT INTO Documents (title, type, patient_name, doctor_name, referred_to, reason_for_referral, date, SourceFilePath, Hash, IsPdf)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    // NOTE: was meta.referring_doctor — changed to meta.doctor_name to match column.
+                    // Revert if your Referral Letter metadata type actually uses `referring_doctor`.
+                    [doc.title, doc.type, meta.patient_name, meta.doctor_name, meta.referred_to, meta.reason_for_referral, meta.date, SourceFilePath, Hash, IsPdf]
                 );
                 documentId = r.lastInsertRowId;
                 for (const med of meta.medicines ?? []) await insertMedicine(db, documentId, med);
@@ -150,9 +164,9 @@ export const create_document = async (db: SQLiteDatabase, doc: DocumentType, Sou
 
             default: {
                 const r = await db.runAsync(
-                    `INSERT INTO Documents (title, type, patient_name, summary, date, SourceFilePath, Hash)
-                     VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                    [doc.title, doc.type, meta.patient_name, meta.summary, meta.date, SourceFilePath, Hash]
+                    `INSERT INTO Documents (title, type, patient_name, summary, date, SourceFilePath, Hash, IsPdf)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [doc.title, doc.type, meta.patient_name, meta.summary, meta.date, SourceFilePath, Hash, IsPdf]
                 );
                 documentId = r.lastInsertRowId;
                 for (const med of meta.medicines ?? []) await insertMedicine(db, documentId, med);
@@ -167,6 +181,10 @@ export const create_document = async (db: SQLiteDatabase, doc: DocumentType, Sou
             }
         }
     });
+
+    if (documentId === undefined) {
+        throw new Error(`create_document: no row inserted for type "${doc.type}"`);
+    }
 
     return documentId;
 };

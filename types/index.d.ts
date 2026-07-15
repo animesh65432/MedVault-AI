@@ -190,11 +190,6 @@ export type DocumentType =
     | ReferralLetterDocument
     | GenericDocument;
 
-export type UploadedDocument = DocumentType & {
-    Id: number
-    SourceFilePath: string
-    Hash: string
-}
 
 
 export type CountTypes = {
@@ -260,3 +255,95 @@ type SourceConfig = {
     snippetCol: number
     directDocId: boolean
 }
+
+interface UploadedBase {
+    Id: number;
+    Hash: string;
+    SourceFilePath: string;
+    CreatedAt: string;
+    UpdatedAt: string;
+    IsPdf: boolean;
+    title: string;
+    date: string | null;
+    patient_name: string | null;
+    tags: string[];
+    notes: string[];
+}
+
+export interface UploadedPrescriptionDocument extends UploadedBase {
+    type: "Prescription";
+    doctor_name: string | null;
+    clinic_name: string | null;
+    medicines: Medicine[];
+}
+
+export interface UploadedPrescriptionReceiptDocument extends UploadedBase {
+    type: "Prescription Receipt";
+    pharmacy_name: string | null;
+    total_amount: string | null;
+    medicines: Medicine[];
+    billing_items: BillingItem[];
+}
+
+export interface UploadedLabReportDocument extends UploadedBase {
+    type: "Lab Report";
+    lab_name: string | null;
+    referred_by: string | null;
+    tests: LabTest[];
+}
+
+export interface UploadedRadiologyReportDocument extends UploadedBase {
+    type: "Radiology Report";
+    referred_by: string | null;
+    center_name: string | null;
+    modality: string | null;
+    body_part: string | null;
+    findings: string | null;
+    impression: string | null;
+}
+
+export interface UploadedMedicalBillDocument extends UploadedBase {
+    type: "Medical Bill";
+    hospital_name: string | null;
+    subtotal: string | null;
+    discount: string | null;
+    total_amount: string | null;
+    billing_items: BillingItem[];
+}
+
+export interface UploadedDischargeSummaryDocument extends UploadedBase {
+    type: "Discharge Summary";
+    hospital_name: string | null;
+    admission_date: string | null;
+    discharge_date: string | null;
+    diagnosis: string | null;
+    follow_up: string | null;
+    procedures: string[];
+    medicines: Medicine[];
+    tests: LabTest[];
+}
+
+export interface UploadedReferralLetterDocument extends UploadedBase {
+    type: "Referral Letter";
+    doctor_name: string | null;
+    referred_to: string | null;
+    reason_for_referral: string | null;
+    medicines: Medicine[];
+}
+
+export interface UploadedGenericDocument extends UploadedBase {
+    type: "Insurance Document" | "Consent Form" | "Medical History Record" | "Other";
+    summary: string | null;
+    key_points: string[];
+    medicines: Medicine[];
+}
+
+export type UploadedDocument =
+    | UploadedPrescriptionDocument
+    | UploadedPrescriptionReceiptDocument
+    | UploadedLabReportDocument
+    | UploadedRadiologyReportDocument
+    | UploadedMedicalBillDocument
+    | UploadedDischargeSummaryDocument
+    | UploadedReferralLetterDocument
+    | UploadedGenericDocument;

@@ -1,9 +1,10 @@
+import DocumentView from "@/components/DocumentView";
 import { GetDocumentById } from "@/db/document";
 import { UploadedDocument } from "@/types";
 import { useLocalSearchParams } from "expo-router";
 import { useSQLiteContext } from "expo-sqlite";
 import React, { useEffect } from 'react';
-import { View } from "react-native";
+import { Text, View } from "react-native";
 
 const Document: React.FC = () => {
     const [Document, setDocument] = React.useState<UploadedDocument | null>(null);
@@ -17,8 +18,12 @@ const Document: React.FC = () => {
         }
         let documentId = Number(id)
         try {
-            const document = await GetDocumentById(db, documentId);
-            console.log("Fetched document:", document);
+            const document = await GetDocumentById(db, documentId) as UploadedDocument | null;
+            if (document) {
+                setDocument(document);
+            } else {
+                console.error("Document not found for ID:", documentId);
+            }
         } catch (error) {
             console.error("Failed to fetch document:", error);
         }
@@ -28,9 +33,18 @@ const Document: React.FC = () => {
         fetchDocument();
     }, [id]);
 
-
+    if (!Document) {
+        return (
+            <View>
+                <Text>Loading document...</Text>
+            </View>
+        );
+    }
     return (
-        <View></View>
+        <DocumentView
+            document={Document as UploadedDocument}
+            setDocument={setDocument}
+        />
     )
 }
 

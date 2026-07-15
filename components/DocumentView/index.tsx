@@ -1,42 +1,35 @@
-import { CheckDocumentExists, create_document } from "@/db/document";
-import { BillingItem, DocumentType, LabTest, Medicine, Reminder } from "@/types";
-import { copyPhotoToPermanentStorage } from "@/utils/copyPhotoToPermanentStorage";
+import { BillingItem, LabTest, Medicine, Reminder, UploadedDocument } from "@/types";
 import { scale } from "@/utils/scale";
-import { usehashFile } from "@/utils/usehashfile";
 import { useSQLiteContext } from "expo-sqlite";
-import React, { useCallback, useMemo, useState } from "react";
-import { ScrollView, View } from "react-native";
+import React, { useCallback, useMemo, useState } from 'react';
+import { ScrollView, View } from 'react-native';
 import ImageView from "react-native-image-viewing";
 import Toast from "react-native-toast-message";
-import Below from "./Below";
-import DischargeSummary from "./DischargeSummary";
+import Below from "../DocumentResult/Below";
+import PDFViewer from "../DocumentResult/PDFViewer";
+import DischargeSummary from "./DischargeSummaryDocument";
 import Generic from "./Generic";
 import LabReport from "./LabReport";
 import MedicalBill from "./MedicalBill";
 import Navbar from "./Navbar";
-import PDFViewer from "./PDFViewer";
 import Prescription from "./Prescription";
 import PrescriptionReceipt from "./PrescriptionReceipt";
 import RadiologyReport from "./RadiologyReport";
-import ReferralLetter from "./ReferralLetter";
-
+import ReferralLetter from "./ReferralLetterDocument";
 
 type Props = {
-    isPdf: boolean,
-    fileUri: string
-    fileName: string,
-    Document: DocumentType
-    SetDocument: React.Dispatch<React.SetStateAction<DocumentType | null>>
-};
+    document: UploadedDocument;
+    setDocument: React.Dispatch<React.SetStateAction<UploadedDocument | null>>;
+}
 
-const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }) => {
+const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
     const [ShowDocumentViewVisible, setShowDocmentViewVisible] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [isEditable, setIsEditable] = useState(false);
     const db = useSQLiteContext();
 
     const onChangeTitle = (value: string) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
             return {
                 ...prev,
@@ -46,58 +39,52 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
     };
 
     const onFieldValueChange = (label: string, value: string) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    [label]: value,
-                }
-            } as DocumentType | null;
+                [label]: value,
+
+            } as UploadedDocument | null;
         });
     };
 
     const onRemoveNote = (index: number) => {
-        if (!Document.document_metadata.important_notes) return;
-        SetDocument(prev => {
-            if (!prev || !prev.document_metadata.important_notes) return prev;
+        if (!document.notes) return;
+        setDocument(prev => {
+            if (!prev || !prev.notes) return prev;
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    important_notes: prev.document_metadata.important_notes.filter((_, i) => i !== index)
-                }
-            } as DocumentType | null;
+                notes: prev.notes.filter((_, i) => i !== index)
+
+            } as UploadedDocument | null;
         });
     };
 
     const onUpdateNote = (index: number, value: string) => {
-        if (!Document.document_metadata.important_notes) return;
+        if (!document.notes) return;
 
         if (value.trim() === "") {
             onRemoveNote(index);
             return;
         }
 
-        SetDocument(prev => {
-            if (!prev || !prev.document_metadata.important_notes) return prev;
+        setDocument(prev => {
+            if (!prev || !prev.notes) return prev;
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    important_notes: [
-                        ...prev.document_metadata.important_notes.slice(0, index),
-                        value,
-                        ...prev.document_metadata.important_notes.slice(index + 1)
-                    ]
-                }
-            } as DocumentType
+                notes: [
+                    ...prev.notes.slice(0, index),
+                    value,
+                    ...prev.notes.slice(index + 1)
+                ]
+
+            } as UploadedDocument
         });
     };
 
     const onAddNote = (note: string) => {
-        if (!Document.document_metadata.important_notes) return;
+        if (!document.notes) return;
 
         if (note.trim() === "") {
             Toast.show({
@@ -107,60 +94,50 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
             return;
         }
 
-        SetDocument(prev => {
-            if (!prev || !prev.document_metadata.important_notes) return prev;
+        setDocument(prev => {
+            if (!prev || !prev.notes) return prev;
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    important_notes: [...prev.document_metadata.important_notes, note]
-                }
-            } as DocumentType
+                notes: [...prev.notes, note]
+
+            } as UploadedDocument
         })
     };
 
     const onUpdateTag = (index: number, value: string) => {
-        if (!Document.document_metadata.tags) return;
-        SetDocument(prev => {
-            if (!prev || !prev.document_metadata.tags) return prev;
+        if (!document.tags) return;
+        setDocument(prev => {
+            if (!prev || !prev.tags) return prev;
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    tags: [
-                        ...prev.document_metadata.tags.slice(0, index),
-                        value,
-                        ...prev.document_metadata.tags.slice(index + 1)
-                    ]
-                }
-            } as DocumentType
+                tags: [
+                    ...prev.tags.slice(0, index),
+                    value,
+                    ...prev.tags.slice(index + 1)
+                ]
+
+            } as UploadedDocument
         });
     };
 
     const onRemoveTag = (index: number) => {
-        if (!Document.document_metadata.tags) return;
-        SetDocument(prev => {
-            if (!prev || !prev.document_metadata.tags) return prev;
+        if (!document.tags) return;
+        setDocument(prev => {
+            if (!prev || !prev.tags) return prev;
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    tags: prev.document_metadata.tags.filter((_, i) => i !== index)
-                }
-            } as DocumentType;
+                tags: prev.tags.filter((_, i) => i !== index)
+            } as UploadedDocument;
         })
     };
 
     const onAddTag = (value: string) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    tags: [...(prev.document_metadata.tags ?? []), value]
-                }
-            } as DocumentType | null;
+                tags: [...(prev.tags ?? []), value]
+            } as UploadedDocument | null;
         });
     };
 
@@ -173,11 +150,11 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
     }
 
     const onUpdateMedicine = (index: number, field: keyof Medicine, value: string) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
 
-            if (!("medicines" in prev.document_metadata)) return prev;
-            const medicines = prev.document_metadata.medicines;
+            if (!("medicines" in prev)) return prev;
+            const medicines = prev.medicines;
             if (!medicines?.[index]) return prev;
 
             const updated = [...medicines];
@@ -185,56 +162,47 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    medicines: updated,
-                },
-            } as DocumentType;
+                medicines: updated,
+            } as UploadedDocument;
         });
     };
 
     const onRemoveMedicine = (index: number) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("medicines" in prev.document_metadata)) return prev;
-            const medicines = prev.document_metadata.medicines;
+            if (!("medicines" in prev)) return prev;
+            const medicines = prev.medicines;
             if (!medicines?.[index]) return prev;
 
             const updated = medicines.filter((_, i) => i !== index);
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    medicines: updated,
-                },
-            } as DocumentType;
+                medicines: updated,
+            } as UploadedDocument;
         });
     }
 
     const onAddMedicine = (medicine: Medicine) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("medicines" in prev.document_metadata)) return prev;
+            if (!("medicines" in prev)) return prev;
 
-            const medicines = prev.document_metadata.medicines ?? [];
+            const medicines = prev.medicines ?? [];
             const updated = [...medicines, medicine];
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    medicines: updated,
-                },
-            } as DocumentType;
+                medicines: updated,
+            } as UploadedDocument;
         });
     };
 
     const onBillingUpdateItem = (index: number, field: keyof BillingItem, value: string) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("billing_items" in prev.document_metadata)) return prev;
-            const items = prev.document_metadata.billing_items;
+            if (!("billing_items" in prev)) return prev;
+            const items = prev.billing_items;
             if (!items?.[index]) return prev;
 
             const updated = [...items];
@@ -242,101 +210,89 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    billing_items: updated,
-                },
-            } as DocumentType;
+                billing_items: updated,
+            } as UploadedDocument;
         });
     };
 
     const onBillingRemoveItem = (index: number) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("billing_items" in prev.document_metadata)) return prev;
-            const items = prev.document_metadata.billing_items;
+            if (!("billing_items" in prev)) return prev;
+            const items = prev.billing_items;
             if (!items?.[index]) return prev;
 
             const updated = items.filter((_, i) => i !== index);
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    billing_items: updated,
-                },
-            } as DocumentType;
+                billing_items: updated,
+
+            } as UploadedDocument;
         });
     }
 
     const onBillingAddItem = (item: BillingItem) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("billing_items" in prev.document_metadata)) return prev;
+            if (!("billing_items" in prev)) return prev;
 
-            const items = prev.document_metadata.billing_items ?? [];
+            const items = prev.billing_items ?? [];
             const updated = [...items, item];
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    billing_items: updated,
-                },
-            } as DocumentType;
+                billing_items: updated,
+            } as UploadedDocument;
         });
     }
 
     const onUpdateSubtotal = (value: string) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("subtotal" in prev.document_metadata)) return prev;
+            if (!("subtotal" in prev)) return prev;
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    subtotal: value,
-                },
-            } as DocumentType;
+                subtotal: value,
+
+            } as UploadedDocument;
         });
     }
 
     const onUpdateDiscount = (value: string) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("discount" in prev.document_metadata)) return prev;
+            if (!("discount" in prev)) return prev;
 
             return {
                 ...prev,
                 document_metadata: {
-                    ...prev.document_metadata,
+                    ...prev,
                     discount: value,
                 },
-            } as DocumentType;
+            } as UploadedDocument;
         });
     }
 
     const onUpdateTotal = (value: string) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("total" in prev.document_metadata)) return prev;
+            if (!("total" in prev)) return prev;
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    total_amount: value,
-                },
-            } as DocumentType;
+                total_amount: value,
+
+            } as UploadedDocument;
         });
     }
 
     const onChangeTest = (index: number, patch: Partial<LabTest>) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("tests" in prev.document_metadata)) return prev;
-            const tests = prev.document_metadata.tests;
+            if (!("tests" in prev)) return prev;
+            const tests = prev.tests;
             if (!tests?.[index]) return prev;
 
             const updated = [...tests];
@@ -344,56 +300,48 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    tests: updated,
-                },
-            } as DocumentType;
+                tests: updated,
+            } as UploadedDocument;
         });
     }
 
     const onRemoveTest = (index: number) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("tests" in prev.document_metadata)) return prev;
-            const tests = prev.document_metadata.tests;
+            if (!("tests" in prev)) return prev;
+            const tests = prev.tests;
             if (!tests?.[index]) return prev;
 
             const updated = tests.filter((_, i) => i !== index);
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    tests: updated,
-                },
-            } as DocumentType;
+                tests: updated,
+
+            } as UploadedDocument;
         });
     }
 
     const onAddTest = (test: LabTest) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("tests" in prev.document_metadata)) return prev;
+            if (!("tests" in prev)) return prev;
 
-            const tests = prev.document_metadata.tests ?? [];
+            const tests = prev.tests ?? [];
             const updated = [...tests, test];
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    tests: updated,
-                },
-            } as DocumentType;
+                tests: updated,
+            } as UploadedDocument;
         });
     }
 
     const onAddReminder = (index: number, reminder: Reminder) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("medicines" in prev.document_metadata)) return prev;
-            const medicines = prev.document_metadata.medicines;
+            if (!("medicines" in prev)) return prev;
+            const medicines = prev.medicines;
             const medicine = medicines?.[index];
             if (!medicine) return prev;
 
@@ -406,19 +354,17 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    medicines: updatedMedicines,
-                },
-            } as DocumentType;
+                medicines: updatedMedicines,
+
+            } as UploadedDocument;
         });
     }
 
     const onRemoveReminder = (medicineIndex: number, reminderIndex: number) => {
-        SetDocument(prev => {
+        setDocument(prev => {
             if (!prev) return prev;
-            if (!("medicines" in prev.document_metadata)) return prev;
-            const medicines = prev.document_metadata.medicines;
+            if (!("medicines" in prev)) return prev;
+            const medicines = prev.medicines;
             const medicine = medicines?.[medicineIndex];
             if (!medicine) return prev;
 
@@ -431,74 +377,70 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
 
             return {
                 ...prev,
-                document_metadata: {
-                    ...prev.document_metadata,
-                    medicines: updatedMedicines,
-                },
-            } as DocumentType;
+                medicines: updatedMedicines,
+
+            } as UploadedDocument;
         });
     }
 
     const onChangeTextProseBlock = (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => {
         if (type === "Radiology Report") {
-            SetDocument(prev => {
+            setDocument(prev => {
                 if (!prev) return prev;
                 if (prev.type !== "Radiology Report") return prev;
 
                 return {
                     ...prev,
-                    document_metadata: {
-                        ...prev.document_metadata,
-                        [label]: value,
-                    },
-                } as DocumentType;
+                    [label]: value,
+
+                } as UploadedDocument;
             });
         }
         else if (type === "Discharge Summary") {
-            SetDocument(prev => {
+            setDocument(prev => {
                 if (!prev) return prev;
                 if (prev.type !== "Discharge Summary") return prev;
 
                 return {
                     ...prev,
                     document_metadata: {
-                        ...prev.document_metadata,
+                        ...prev,
                         [label]: value,
                     },
-                } as DocumentType;
+                } as UploadedDocument;
             });
         }
         else if (type === "Referral Letter") {
-            SetDocument(prev => {
+            setDocument(prev => {
                 if (!prev) return prev;
                 if (prev.type !== "Referral Letter") return prev;
 
                 return {
                     ...prev,
                     document_metadata: {
-                        ...prev.document_metadata,
+                        ...prev,
                         [label]: value,
                     },
-                } as DocumentType;
+                } as UploadedDocument;
             })
         }
         else {
-            SetDocument(prev => {
+            setDocument(prev => {
                 if (!prev) return prev;
-                if (!("summary" in prev.document_metadata)) return prev;
-                return { ...prev, document_metadata: { ...prev.document_metadata, [label]: value } } as DocumentType;
+                if (!("summary" in prev)) return prev;
+                return { ...prev, [label]: value } as UploadedDocument;
             });
         }
     }
     const content = useMemo(() => {
-        switch (Document.type) {
+        switch (document.type) {
             case "Prescription":
                 return (
                     <Prescription
                         onChangeTitle={onChangeTitle}
                         onFieldValueChange={onFieldValueChange}
                         isEditable={isEditable}
-                        document={Document}
+                        document={document}
                         onUpdateNote={onUpdateNote}
                         onRemoveNote={onRemoveNote}
                         onUpdateTag={onUpdateTag}
@@ -508,7 +450,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onUpdateMedicine={onUpdateMedicine}
                         onRemoveMedicine={onRemoveMedicine}
                         onAddMedicine={onAddMedicine}
-                        initialTitle={Document.title}
+                        initialTitle={document.title}
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
                     />
@@ -519,7 +461,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onFieldValueChange={onFieldValueChange}
                         onChangeTitle={onChangeTitle}
                         isEditable={isEditable}
-                        document={Document}
+                        document={document}
                         onUpdateNote={onUpdateNote}
                         onRemoveNote={onRemoveNote}
                         onUpdateTag={onUpdateTag}
@@ -535,7 +477,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onUpdateSubtotal={onUpdateSubtotal}
                         onUpdateDiscount={onUpdateDiscount}
                         onUpdateTotal={onUpdateTotal}
-                        initialTitle={Document.title}
+                        initialTitle={document.title}
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
                     />
@@ -544,7 +486,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                 return <LabReport
                     onFieldValueChange={onFieldValueChange}
                     onChangeTitle={onChangeTitle}
-                    document={Document}
+                    document={document}
                     isEditable={isEditable}
                     onUpdateNote={onUpdateNote}
                     onRemoveNote={onRemoveNote}
@@ -559,7 +501,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
             case "Radiology Report":
                 return <RadiologyReport
                     onFieldValueChange={onFieldValueChange}
-                    document={Document}
+                    document={document}
                     isEditable={isEditable}
                     onChangeTitle={onChangeTitle}
                     onUpdateNote={onUpdateNote}
@@ -573,7 +515,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
             case "Medical Bill":
                 return <MedicalBill
                     onFieldValueChange={onFieldValueChange}
-                    document={Document}
+                    document={document}
                     isEditable={isEditable}
                     onChangeTitle={onChangeTitle}
                     onUpdateNote={onUpdateNote}
@@ -595,7 +537,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onFieldValueChange={onFieldValueChange}
                         onChangeTitle={onChangeTitle}
                         isEditable={isEditable}
-                        document={Document}
+                        document={document}
                         onUpdateNote={onUpdateNote}
                         onRemoveNote={onRemoveNote}
                         onUpdateTag={onUpdateTag}
@@ -608,7 +550,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onChangeTest={onChangeTest}
                         onRemoveTest={onRemoveTest}
                         onAddTest={onAddTest}
-                        initialTitle={Document.title}
+                        initialTitle={document.title}
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
                         onChangeTextProseBlock={onChangeTextProseBlock}
@@ -620,7 +562,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onFieldValueChange={onFieldValueChange}
                         onChangeTitle={onChangeTitle}
                         isEditable={isEditable}
-                        document={Document}
+                        document={document}
                         onUpdateNote={onUpdateNote}
                         onRemoveNote={onRemoveNote}
                         onUpdateTag={onUpdateTag}
@@ -630,7 +572,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onRemoveMedicine={onRemoveMedicine}
                         onUpdateMedicine={onUpdateMedicine}
                         onAddMedicine={onAddMedicine}
-                        initialTitle={Document.title}
+                        initialTitle={document.title}
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
                         onChangeTextProseBlock={onChangeTextProseBlock}
@@ -645,7 +587,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onFieldValueChange={onFieldValueChange}
                         onChangeTitle={onChangeTitle}
                         isEditable={isEditable}
-                        document={Document}
+                        document={document}
                         onUpdateNote={onUpdateNote}
                         onRemoveNote={onRemoveNote}
                         onUpdateTag={onUpdateTag}
@@ -655,7 +597,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onRemoveMedicine={onRemoveMedicine}
                         onUpdateMedicine={onUpdateMedicine}
                         onAddMedicine={onAddMedicine}
-                        initialTitle={Document.title}
+                        initialTitle={document.title}
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
                         onChangeTextProseBlock={onChangeTextProseBlock}
@@ -665,7 +607,8 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                 return null;
             }
         }
-    }, [Document, isEditable]);
+    }, [document, isEditable]);
+
 
     const handleViewOriginalPress = useCallback(() => {
         setShowDocmentViewVisible(true);
@@ -675,76 +618,46 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
         setShowDocmentViewVisible(false);
     }, []);
 
-    const saveDocument = async () => {
-        setIsSaving(true)
-        try {
-            console.log(Document.document_metadata.date, "document date")
-            const source_file = await copyPhotoToPermanentStorage(fileUri)
-            const hash_file = await usehashFile(source_file)
-            const IsDocumentExistsOrNot = await CheckDocumentExists(db, hash_file)
-
-            if (IsDocumentExistsOrNot) {
-                Toast.show({
-                    type: "info",
-                    text1: "Document already exists",
-                })
-                return;
-            }
-
-            await create_document(db, Document, source_file, hash_file, isPdf)
-
-            Toast.show({
-                type: "success",
-                text1: "Document saved successfully"
-            })
-        } catch (error) {
-            console.error("Error saving document:", error);
-            Toast.show({
-                type: "error",
-                text1: "Error saving document",
-                text2: "Please try again later."
-            })
-        }
-        finally {
-            setIsSaving(false)
-        }
-    }
-
-    return <View style={{ flex: 1 }}>
-        <Navbar
-            saveDocument={saveDocument}
-            isSaving={isSaving}
-        />
-        <ScrollView
-            contentContainerStyle={{ paddingBottom: scale(80) }}
+    return (
+        <View
+            style={styles.container}
         >
-            {content}
-        </ScrollView>
-        <Below
-            onViewOriginalPress={handleViewOriginalPress}
-            onEditPress={handleOpenEdit}
-            onEditClosePress={handleCloseEdit}
-            isEditable={isEditable}
-        />
-        {!isPdf &&
-            <ImageView
-                images={[{
-                    uri: fileUri,
-                }]}
-                visible={ShowDocumentViewVisible}
-                onRequestClose={() => setShowDocmentViewVisible(false)}
-                imageIndex={0}
+            <Navbar />
+            <ScrollView
+                contentContainerStyle={{ paddingBottom: scale(80) }}
+            >
+                {content}
+            </ScrollView>
+            <Below
+                onViewOriginalPress={handleViewOriginalPress}
+                onEditPress={handleOpenEdit}
+                onEditClosePress={handleCloseEdit}
+                isEditable={isEditable}
             />
-        }
-        {isPdf &&
-            <PDFViewer
-                visible={ShowDocumentViewVisible}
-                uri={fileUri}
-                Onclose={handleCloseDocumentView}
-            />
-        }
-    </View>
+            {!document.IsPdf &&
+                <ImageView
+                    images={[{ uri: document.SourceFilePath }]}
+                    visible={ShowDocumentViewVisible}
+                    onRequestClose={() => setShowDocmentViewVisible(false)}
+                    imageIndex={0}
+                />
+            }
+            {!!document.IsPdf &&
+                <PDFViewer
+                    visible={ShowDocumentViewVisible}
+                    uri={document.SourceFilePath}
+                    Onclose={handleCloseDocumentView}
+                />
+            }
+        </View>
+    )
+}
+
+const styles = {
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+    }
 };
 
-
-export default ShowDocument;
+export default DocumentView

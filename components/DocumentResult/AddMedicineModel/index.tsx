@@ -22,7 +22,7 @@ type Props = {
     setAddMedicineModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EMPTY: Medicine = { name: "", dosage: "", frequency: "as_needed", duration: "", timing: [], reminderTimes: [] };
+const EMPTY: Medicine = { name: "", dosage: "", frequency: "as_needed", duration: "", timing: [], reminders: [] };
 
 const AddMedicineModal: React.FC<Props> = ({
     isMedicineModalVisible,
