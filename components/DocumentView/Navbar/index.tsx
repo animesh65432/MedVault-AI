@@ -1,22 +1,60 @@
+import DeleteDocumentModel from '@/components/DeleteDocumentModel';
 import { fs } from '@/utils/fs';
-import { scale, } from '@/utils/scale';
+import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { router } from "expo-router";
-import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 
-const Navbar: React.FC = () => {
+type Props = {
+    onDelete: () => void;
+    IsDeleteLoading: boolean;
+};
+
+const Navbar: React.FC<Props> = ({ IsDeleteLoading, onDelete }) => {
+    const [ShowDocumentDeleteConfirmation, setShowDocumentDeleteConfirmation] = useState(false);
+
+    const handleConfirmDelete = () => {
+        onDelete();
+    };
+
     return (
         <View style={styles.container}>
             <Pressable
                 hitSlop={10}
-                style={styles.backButton}
+                disabled={IsDeleteLoading}
+                style={({ pressed }) => [styles.backButton, pressed && styles.pressed]}
                 onPress={() => router.back()}
             >
                 <MaterialIcons name="arrow-back" size={scale(22)} color="#234338" />
                 <Text style={styles.backText}>Back</Text>
             </Pressable>
+
+            <Pressable
+                hitSlop={10}
+                disabled={IsDeleteLoading}
+                style={({ pressed }) => [
+                    styles.deleteButton,
+                    pressed && styles.deleteButtonPressed,
+                    IsDeleteLoading && styles.deleteButtonDisabled,
+                ]}
+                onPress={() => setShowDocumentDeleteConfirmation(true)}
+            >
+                {IsDeleteLoading ? (
+                    <ActivityIndicator size="small" color="#5F5E5A" />
+                ) : (
+                    <AntDesign name="delete" size={scale(18)} color="#5F5E5A" />
+                )}
+            </Pressable>
+
+            <DeleteDocumentModel
+                visible={ShowDocumentDeleteConfirmation}
+                onCancel={() => setShowDocumentDeleteConfirmation(false)}
+                onConfirm={handleConfirmDelete}
+                isDeleting={IsDeleteLoading}
+            />
         </View>
     );
 };
@@ -40,13 +78,31 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(10),
         paddingVertical: vScale(6),
     },
-    pressed: {
-        opacity: 0.6,
-    },
     backText: {
         color: '#234338',
         fontSize: fs(15),
         fontFamily: 'Aeonik-Medium',
+    },
+    pressed: {
+        opacity: 0.6,
+    },
+    deleteButton: {
+        borderWidth: 1,
+        borderColor: '#E5E4DD',
+        backgroundColor: '#FAFAF8',
+        borderRadius: scale(8),
+        padding: scale(8),
+        minWidth: scale(34),
+        minHeight: scale(34),
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    deleteButtonPressed: {
+        backgroundColor: '#FBEEED',
+        borderColor: '#F0C9C5',
+    },
+    deleteButtonDisabled: {
+        opacity: 0.6,
     },
 });
 

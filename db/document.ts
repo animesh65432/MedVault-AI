@@ -1,4 +1,4 @@
-import { BillingItem, DocumentRow, DocumentType, LabTest, Medicine, SearchSuggestion } from "@/types";
+import { BillingItem, DocumentRow, DocumentType, LabTest, Medicine, Reminder, SearchSuggestion, UploadedDocument } from "@/types";
 import { SOURCES } from "@/utils/contensnt";
 import { toLocalDateString } from "@/utils/toLocalDateString";
 import { SQLiteDatabase } from "expo-sqlite";
@@ -152,8 +152,6 @@ export const create_document = async (
                 const r = await db.runAsync(
                     `INSERT INTO Documents (title, type, patient_name, doctor_name, referred_to, reason_for_referral, date, SourceFilePath, Hash, IsPdf)
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                    // NOTE: was meta.referring_doctor — changed to meta.doctor_name to match column.
-                    // Revert if your Referral Letter metadata type actually uses `referring_doctor`.
                     [doc.title, doc.type, meta.patient_name, meta.doctor_name, meta.referred_to, meta.reason_for_referral, meta.date, SourceFilePath, Hash, IsPdf]
                 );
                 documentId = r.lastInsertRowId;
@@ -506,3 +504,171 @@ async function getMedicinesForDocument(db: SQLiteDatabase, documentId: number): 
 
     return medicines
 }
+
+export const AddReminderToMedicineReturningId = async (
+    db: SQLiteDatabase,
+    medicineId: number,
+    reminder: Reminder
+): Promise<number> => {
+    const result = await db.runAsync(
+        `INSERT INTO Reminders (MedicineId, title, time, repeat) VALUES (?, ?, ?, ?)`,
+        [medicineId, reminder.title, reminder.time.toISOString(), reminder.repeat]
+    );
+    return result.lastInsertRowId;
+};
+
+export const RemoveReminderFromMedicine = async (db: SQLiteDatabase, reminderId: number): Promise<void> => {
+    await db.runAsync(`DELETE FROM Reminders WHERE Id = ?`, [reminderId]);
+};
+
+
+async function deleteMedicinesForDocument(db: SQLiteDatabase, documentId: number) {
+    const medicineRows = await db.getAllAsync<{ Id: number }>(
+        `SELECT Id FROM Medicines WHERE DocumentId = ?`,
+        [documentId]
+    );
+    for (const { Id } of medicineRows) {
+        await db.runAsync(`DELETE FROM Reminders WHERE MedicineId = ?`, [Id]);
+        await db.runAsync(`DELETE FROM MedicineTiming WHERE MedicineId = ?`, [Id]);
+    }
+    await db.runAsync(`DELETE FROM Medicines WHERE DocumentId = ?`, [documentId]);
+}
+
+async function deleteChildRows(db: SQLiteDatabase, documentId: number) {
+    await deleteMedicinesForDocument(db, documentId);
+    await db.runAsync(`DELETE FROM LabTests WHERE DocumentId = ?`, [documentId]);
+    await db.runAsync(`DELETE FROM BillingItems WHERE DocumentId = ?`, [documentId]);
+    await db.runAsync(`DELETE FROM DocumentProcedures WHERE DocumentId = ?`, [documentId]);
+    await db.runAsync(`DELETE FROM DocumentKeyPoints WHERE DocumentId = ?`, [documentId]);
+    await db.runAsync(`DELETE FROM DocumentTags WHERE DocumentId = ?`, [documentId]);
+    await db.runAsync(`DELETE FROM DocumentNotes WHERE DocumentId = ?`, [documentId]);
+}
+
+export const update_document = async (
+    db: SQLiteDatabase,
+    doc: UploadedDocument
+): Promise<void> => {
+    await db.withTransactionAsync(async () => {
+        const meta: any = doc;
+
+        const documentId = doc.Id;
+
+        await deleteChildRows(db, documentId);
+
+        switch (doc.type) {
+            case "Prescription": {
+                await db.runAsync(
+                    `UPDATE Documents SET title = ?, type = ?, patient_name = ?, doctor_name = ?, clinic_name = ?, date = ?
+                     WHERE Id = ?`,
+                    [doc.title, doc.type, meta.patient_name, meta.doctor_name, meta.clinic_name, meta.date, documentId]
+                );
+                for (const med of meta.medicines ?? []) await insertMedicine(db, documentId, med);
+                await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
+                break;
+            }
+
+            case "Prescription Receipt": {
+                await db.runAsync(
+                    `UPDATE Documents SET title = ?, type = ?, patient_name = ?, pharmacy_name = ?, total_amount = ?, date = ?
+                     WHERE Id = ?`,
+                    [doc.title, doc.type, meta.patient_name, meta.pharmacy_name, meta.total_amount, meta.date, documentId]
+                );
+                for (const med of meta.medicines ?? []) await insertMedicine(db, documentId, med);
+                await insertBillingItems(db, documentId, meta.billing_items ?? []);
+                await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
+                break;
+            }
+
+            case "Lab Report": {
+                await db.runAsync(
+                    `UPDATE Documents SET title = ?, type = ?, patient_name = ?, lab_name = ?, referred_by = ?, date = ?
+                     WHERE Id = ?`,
+                    [doc.title, doc.type, meta.patient_name, meta.lab_name, meta.referred_by, meta.date, documentId]
+                );
+                await insertLabTests(db, documentId, meta.tests ?? []);
+                await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
+                break;
+            }
+
+            case "Radiology Report": {
+                await db.runAsync(
+                    `UPDATE Documents SET title = ?, type = ?, patient_name = ?, referred_by = ?, center_name = ?, date = ?,
+                     modality = ?, body_part = ?, findings = ?, impression = ?
+                     WHERE Id = ?`,
+                    [doc.title, doc.type, meta.patient_name, meta.referred_by, meta.center_name, meta.date,
+                    meta.modality, meta.body_part, meta.findings, meta.impression, documentId]
+                );
+                await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
+                break;
+            }
+
+            case "Medical Bill": {
+                await db.runAsync(
+                    `UPDATE Documents SET title = ?, type = ?, patient_name = ?, hospital_name = ?, subtotal = ?, discount = ?,
+                     total_amount = ?, date = ?
+                     WHERE Id = ?`,
+                    [doc.title, doc.type, meta.patient_name, meta.hospital_name, meta.subtotal, meta.discount, meta.total_amount, meta.date, documentId]
+                );
+                await insertBillingItems(db, documentId, meta.billing_items ?? []);
+                await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
+                break;
+            }
+
+            case "Discharge Summary": {
+                await db.runAsync(
+                    `UPDATE Documents SET title = ?, type = ?, patient_name = ?, hospital_name = ?, admission_date = ?,
+                     discharge_date = ?, diagnosis = ?, follow_up = ?, date = ?
+                     WHERE Id = ?`,
+                    [doc.title, doc.type, meta.patient_name, meta.hospital_name, meta.admission_date, meta.discharge_date, meta.diagnosis, meta.follow_up, meta.date, documentId]
+                );
+                for (const proc of meta.procedures ?? []) {
+                    await db.runAsync(
+                        `INSERT INTO DocumentProcedures (DocumentId, procedure) VALUES (?, ?)`,
+                        [documentId, proc]
+                    );
+                }
+                for (const med of meta.medicines ?? []) await insertMedicine(db, documentId, med);
+                await insertLabTests(db, documentId, meta.tests ?? []);
+                await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
+                break;
+            }
+
+            case "Referral Letter": {
+                await db.runAsync(
+                    `UPDATE Documents SET title = ?, type = ?, patient_name = ?, doctor_name = ?, referred_to = ?,
+                     reason_for_referral = ?, date = ?
+                     WHERE Id = ?`,
+                    [doc.title, doc.type, meta.patient_name, meta.doctor_name, meta.referred_to, meta.reason_for_referral, meta.date, documentId]
+                );
+                for (const med of meta.medicines ?? []) await insertMedicine(db, documentId, med);
+                await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
+                break;
+            }
+
+            default: {
+                await db.runAsync(
+                    `UPDATE Documents SET title = ?, type = ?, patient_name = ?, summary = ?, date = ?
+                     WHERE Id = ?`,
+                    [doc.title, doc.type, meta.patient_name, meta.summary, meta.date, documentId]
+                );
+                for (const med of meta.medicines ?? []) await insertMedicine(db, documentId, med);
+                for (const [i, kp] of (meta.key_points ?? []).entries()) {
+                    await db.runAsync(
+                        `INSERT INTO DocumentKeyPoints (DocumentId, key_point, SortOrder) VALUES (?, ?, ?)`,
+                        [documentId, kp, i]
+                    );
+                }
+                await insertTagsAndNotes(db, documentId, meta.tags, meta.important_notes);
+                break;
+            }
+        }
+    });
+};
+
+export const delete_document = async (db: SQLiteDatabase, documentId: number): Promise<void> => {
+    await db.withTransactionAsync(async () => {
+        await deleteChildRows(db, documentId);
+        await db.runAsync(`DELETE FROM Documents WHERE Id = ?`, [documentId]);
+    });
+};
+

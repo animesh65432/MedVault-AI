@@ -208,6 +208,7 @@ const Medicines: React.FC<Props> = ({
                     initialReminders={medicines[MedicineIndexForReminder ?? 0]?.reminders || []}
                     onRemoveReminder={onRemoveReminder}
                     MedicineIndex={MedicineIndexForReminder ?? 0}
+                    medicines={medicines}
                 />
             }
         </View>

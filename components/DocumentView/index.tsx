@@ -1,5 +1,7 @@
+import { AddReminderToMedicineReturningId, delete_document, RemoveReminderFromMedicine, update_document } from "@/db/document";
 import { BillingItem, LabTest, Medicine, Reminder, UploadedDocument } from "@/types";
 import { scale } from "@/utils/scale";
+import { router } from "expo-router";
 import { useSQLiteContext } from "expo-sqlite";
 import React, { useCallback, useMemo, useState } from 'react';
 import { ScrollView, View } from 'react-native';
@@ -24,7 +26,7 @@ type Props = {
 
 const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
     const [ShowDocumentViewVisible, setShowDocmentViewVisible] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
+    const [IsDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
     const [isEditable, setIsEditable] = useState(false);
     const db = useSQLiteContext();
 
@@ -145,8 +147,36 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
         setIsEditable(true);
     }
 
-    const handleCloseEdit = () => {
-        setIsEditable(false);
+    const handleCloseEdit = async () => {
+        setIsEditable(true);
+        try {
+            await update_document(db, document);
+        }
+        catch (error) {
+            Toast.show({
+                type: "error",
+                text1: "Failed to save changes. Please try again."
+            });
+        }
+        finally {
+            setIsEditable(false);
+        }
+    }
+
+    const handleDeleteDocument = async () => {
+        setIsDeleteLoading(true);
+        try {
+            await delete_document(db, document.Id);
+            router.back();
+        } catch (error) {
+            Toast.show({
+                type: "error",
+                text1: "Failed to delete document. Please try again."
+            })
+        }
+        finally {
+            setIsDeleteLoading(false);
+        }
     }
 
     const onUpdateMedicine = (index: number, field: keyof Medicine, value: string) => {
@@ -337,7 +367,17 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
         });
     }
 
-    const onAddReminder = (index: number, reminder: Reminder) => {
+    const onAddReminder = async (index: number, reminder: Reminder) => {
+        const medicine = document && "medicines" in document ? document.medicines?.[index] : undefined;
+        if (!medicine) return;
+
+        let savedReminder = reminder;
+
+        if (medicine.Id) {
+            const result = await AddReminderToMedicineReturningId(db, medicine.Id, reminder);
+            savedReminder = { ...reminder, Id: result };
+        }
+
         setDocument(prev => {
             if (!prev) return prev;
             if (!("medicines" in prev)) return prev;
@@ -346,21 +386,25 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
             if (!medicine) return prev;
 
             const reminders = medicine.reminders ?? [];
-            const updated = [...reminders, reminder];
+            const updated = [...reminders, savedReminder];
 
             const updatedMedicines = medicines.map((m, i) =>
                 i === index ? { ...m, reminders: updated } : m
             );
 
-            return {
-                ...prev,
-                medicines: updatedMedicines,
-
-            } as UploadedDocument;
+            return { ...prev, medicines: updatedMedicines } as UploadedDocument;
         });
-    }
+    };
 
-    const onRemoveReminder = (medicineIndex: number, reminderIndex: number) => {
+    const onRemoveReminder = async (medicineIndex: number, reminderIndex: number) => {
+        const medicine = document && "medicines" in document ? document.medicines?.[medicineIndex] : undefined;
+        const reminder = medicine?.reminders?.[reminderIndex];
+        if (!reminder) return;
+
+        if (reminder.Id) {
+            await RemoveReminderFromMedicine(db, reminder.Id);
+        }
+
         setDocument(prev => {
             if (!prev) return prev;
             if (!("medicines" in prev)) return prev;
@@ -375,13 +419,9 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
                 i === medicineIndex ? { ...m, reminders: updatedReminders } : m
             );
 
-            return {
-                ...prev,
-                medicines: updatedMedicines,
-
-            } as UploadedDocument;
+            return { ...prev, medicines: updatedMedicines } as UploadedDocument;
         });
-    }
+    };
 
     const onChangeTextProseBlock = (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => {
         if (type === "Radiology Report") {
@@ -432,6 +472,7 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
             });
         }
     }
+
     const content = useMemo(() => {
         switch (document.type) {
             case "Prescription":
@@ -607,7 +648,7 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
                 return null;
             }
         }
-    }, [document, isEditable]);
+    }, [document, isEditable,]);
 
 
     const handleViewOriginalPress = useCallback(() => {
@@ -622,7 +663,10 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
         <View
             style={styles.container}
         >
-            <Navbar />
+            <Navbar
+                IsDeleteLoading={IsDeleteLoading}
+                onDelete={handleDeleteDocument}
+            />
             <ScrollView
                 contentContainerStyle={{ paddingBottom: scale(80) }}
             >

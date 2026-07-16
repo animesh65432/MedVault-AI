@@ -4,7 +4,7 @@ import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { StyleSheet, View } from "react-native";
 import EmptyStats from "./EmptyStats";
 import NonEmptyStats from "./NonEmptyStats";
@@ -37,10 +37,6 @@ const HomeLayOut = () => {
         }
     }
 
-    useEffect(() => {
-        fetchCounts();
-    }, [])
-
     useFocusEffect(
         useCallback(() => {
             fetchCounts();
@@ -49,7 +45,6 @@ const HomeLayOut = () => {
             };
         }, [])
     );
-
 
     return (
         <View style={styles.container}>

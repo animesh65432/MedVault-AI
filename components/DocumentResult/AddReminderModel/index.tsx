@@ -1,4 +1,4 @@
-import { Reminder, ReminderRepeat } from "@/types";
+import { Medicine as MedicineType, Reminder, ReminderRepeat } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
@@ -24,6 +24,8 @@ type Props = {
     initialReminders?: Reminder[];
     onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void;
     MedicineIndex: number;
+    IsDocumentViewComponent?: boolean;
+    medicines?: MedicineType[]
 };
 
 const REPEATS: { key: ReminderRepeat; label: string }[] = [
@@ -92,7 +94,7 @@ const AddReminderModel: React.FC<Props> = ({
         if (editingIndex === index) setEditingIndex(null);
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         const trimmed = title.trim();
         if (!trimmed) {
             Toast.show({
@@ -104,6 +106,7 @@ const AddReminderModel: React.FC<Props> = ({
         onAdd({ title: trimmed, time: time, repeat });
         close();
     };
+
 
     return (
         <Modal visible={visible} animationType="fade" transparent>
@@ -147,7 +150,7 @@ const AddReminderModel: React.FC<Props> = ({
                                         <Text style={styles.timeButtonText}>{formatTime(t.time)}</Text>
                                     </TouchableOpacity>
 
-                                    {reminders.length > 1 && (
+                                    {reminders.length > 0 && (
                                         <TouchableOpacity
                                             style={styles.removeTimeButton}
                                             onPress={() => removeTimeSlot(i)}

@@ -4,7 +4,7 @@ import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import { useFocusEffect } from '@react-navigation/native';
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import Empty from './Empty';
 import Input from './Input';
@@ -55,11 +55,15 @@ const Search: React.FC = () => {
     }, [SelectedCategories, SelectedDate])
 
     useFocusEffect(
-        React.useCallback(() => {
-            fetchDocuments()
-            fetchHasAnyDocuments()
-        }, [])
-    )
+        useCallback(() => {
+            fetchHasAnyDocuments();
+            fetchDocuments();
+            return () => {
+                fetchHasAnyDocuments();
+                fetchDocuments();
+            };
+        }, [SelectedCategories, SelectedDate])
+    );
 
     useEffect(() => {
         if (searchQuery.trim().length === 0) {

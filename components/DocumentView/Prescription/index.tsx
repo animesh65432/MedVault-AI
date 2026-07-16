@@ -24,7 +24,7 @@ type Props = {
     onAddMedicine: (medicine: MedicineType) => void;
     initialTitle: string;
     onAddReminder: (index: number, reminder: Reminder) => void;
-    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
+    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void;
 };
 
 const Prescription: React.FC<Props> = ({
