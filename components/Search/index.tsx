@@ -5,7 +5,7 @@ import { vScale } from "@/utils/vScale";
 import { useFocusEffect } from '@react-navigation/native';
 import { useSQLiteContext } from 'expo-sqlite';
 import React, { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
 import Empty from './Empty';
 import Input from './Input';
 import NonEmpty from "./NonEmpty";
@@ -14,6 +14,8 @@ import Suggestions from "./Suggestions";
 
 
 const Search: React.FC = () => {
+    const [setpage, setPage] = useState<number>(1)
+    const [limit, setLimit] = useState<number>(10)
     const [SelectedCategories, setSelectedCategories] = useState<string[]>([])
     const [SelectedDate, setSelectedDate] = useState<{
         startDate: Date | null;
@@ -30,7 +32,7 @@ const Search: React.FC = () => {
 
     async function fetchDocuments() {
         try {
-            const documents = await GetDocuments(db, "ASC", 10, SelectedCategories, SelectedDate)
+            const documents = await GetDocuments(db, "ASC", limit, SelectedCategories, SelectedDate)
             setdocuments(documents)
         } catch (error) {
             console.error("Failed to fetch documents:", error)
@@ -93,6 +95,12 @@ const Search: React.FC = () => {
     const hasQuery = searchQuery.trim().length > 0 || SelectedCategories.length > 0 || SelectedDate.startDate !== null || SelectedDate.endDate !== null;
     const IsSearchIng = searchQuery.trim().length > 0;
 
+    const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
+        if (contentOffset.y + layoutMeasurement.height >= contentSize.height - 20) {
+        }
+    }
+
     return (
         <View style={styles.wrapper}>
             <View
@@ -113,6 +121,7 @@ const Search: React.FC = () => {
                     style={styles.container}
                     contentContainerStyle={styles.content}
                     showsVerticalScrollIndicator={true}
+                    onScroll={handleScroll}
                 >
                     {hasAnyDocuments &&
                         <Filters
