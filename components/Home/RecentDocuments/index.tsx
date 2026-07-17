@@ -9,15 +9,20 @@ import Documents from "../../Documents";
 import SeeAllDocuments from "../SeeAllDocuments";
 
 const RecentDocuments = () => {
+    const [IsLoading, setIsLoading] = useState<boolean>(false)
     const [recentDocuments, setRecentDocuments] = useState<DocumentRow[]>([])
     const db = useSQLiteContext()
 
     async function fetchRecentDocuments() {
+        setIsLoading(true)
         try {
-            const documents = await GetDocuments(db, "DESC", 2)
+            const documents = await GetDocuments(db, "DESC", 2, 0)
             setRecentDocuments(documents)
         } catch (error) {
             console.error("Failed to fetch recent documents:", error)
+        }
+        finally {
+            setIsLoading(false)
         }
     }
 

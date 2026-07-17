@@ -12,10 +12,12 @@ import NonEmpty from "./NonEmpty";
 import Filters from "./NonEmpty/Filters";
 import Suggestions from "./Suggestions";
 
+const PAGE_SIZE = 10
 
 const Search: React.FC = () => {
-    const [setpage, setPage] = useState<number>(1)
-    const [limit, setLimit] = useState<number>(10)
+    const [page, setPage] = useState<number>(1)
+    const [hasMore, setHasMore] = useState<boolean>(true)
+    const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false)
     const [SelectedCategories, setSelectedCategories] = useState<string[]>([])
     const [SelectedDate, setSelectedDate] = useState<{
         startDate: Date | null;
@@ -30,40 +32,51 @@ const Search: React.FC = () => {
     const [documents, setdocuments] = useState<DocumentRow[]>([])
     const db = useSQLiteContext()
 
-    async function fetchDocuments() {
+    async function fetchDocuments(reset: boolean) {
         try {
-            const documents = await GetDocuments(db, "ASC", limit, SelectedCategories, SelectedDate)
-            setdocuments(documents)
+            const targetPage = reset ? 1 : page
+            const offset = (targetPage - 1) * PAGE_SIZE
+            const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, SelectedCategories, SelectedDate)
+
+            setdocuments(prev => reset ? rows : [...prev, ...rows])
+            setHasMore(rows.length === PAGE_SIZE)
+            if (reset) setPage(1)
         } catch (error) {
             console.error("Failed to fetch documents:", error)
+        }
+    }
+
+    async function loadMore() {
+        if (!hasMore || isLoadingMore) return
+        setIsLoadingMore(true)
+        const nextPage = page + 1
+        try {
+            const offset = (nextPage - 1) * PAGE_SIZE
+            const rows = await GetDocuments(db, "ASC", PAGE_SIZE, offset, SelectedCategories, SelectedDate)
+            setdocuments(prev => [...prev, ...rows])
+            setHasMore(rows.length === PAGE_SIZE)
+            setPage(nextPage)
+        } catch (error) {
+            console.error("Failed to load more documents:", error)
+        } finally {
+            setIsLoadingMore(false)
         }
     }
 
     async function fetchHasAnyDocuments() {
         try {
-            const hasAnyDocuments = await HasAnyDocuments(db)
-            setHasAnyDocuments(hasAnyDocuments)
+            const result = await HasAnyDocuments(db)
+            setHasAnyDocuments(result)
         } catch (error) {
             console.error("Failed to fetch documents:", error)
         }
     }
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            fetchDocuments()
-        }, 300)
-
-        return () => clearTimeout(timeout)
-    }, [SelectedCategories, SelectedDate])
-
     useFocusEffect(
         useCallback(() => {
             fetchHasAnyDocuments();
-            fetchDocuments();
-            return () => {
-                fetchHasAnyDocuments();
-                fetchDocuments();
-            };
+            const timeout = setTimeout(() => fetchDocuments(true), 300)
+            return () => clearTimeout(timeout)
         }, [SelectedCategories, SelectedDate])
     );
 
@@ -98,14 +111,13 @@ const Search: React.FC = () => {
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
         const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
         if (contentOffset.y + layoutMeasurement.height >= contentSize.height - 20) {
+            loadMore()
         }
     }
 
     return (
         <View style={styles.wrapper}>
-            <View
-                style={styles.InputWrapper}
-            >
+            <View style={styles.InputWrapper}>
                 <Input
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
@@ -122,6 +134,7 @@ const Search: React.FC = () => {
                     contentContainerStyle={styles.content}
                     showsVerticalScrollIndicator={true}
                     onScroll={handleScroll}
+                    scrollEventThrottle={16}
                 >
                     {hasAnyDocuments &&
                         <Filters

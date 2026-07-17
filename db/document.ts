@@ -245,6 +245,7 @@ export const GetDocuments = async (
     db: SQLiteDatabase,
     ORDER: "DESC" | "ASC",
     LIMIT: number,
+    OFFSET: number,
     CATEGORIES?: string[],
     DATE_RANGE?: { startDate: Date | null; endDate: Date | null }
 ): Promise<DocumentRow[]> => {
@@ -254,7 +255,6 @@ export const GetDocuments = async (
 
         const conditions: string[] = []
         const params: (string | number)[] = []
-
 
         if (hasCategories) {
             const placeholders = CATEGORIES!.map(() => '?').join(', ')
@@ -277,8 +277,8 @@ export const GetDocuments = async (
             FROM Documents
             ${whereClause}
             ORDER BY COALESCE(date, CreatedAt) ${ORDER}
-            LIMIT ?`,
-            [...params, LIMIT]
+            LIMIT ? OFFSET ?`,
+            [...params, LIMIT, OFFSET]
         )
         return rows
     } catch (error) {
