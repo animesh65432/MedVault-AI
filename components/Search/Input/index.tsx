@@ -1,6 +1,7 @@
+import { RecentSearchContext } from "@/context/RecentSearch"
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
-import React from "react"
+import React, { useContext } from "react"
 import { StyleSheet, TextInput, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -10,6 +11,18 @@ type Props = {
 }
 
 const InputBox: React.FC<Props> = ({ searchQuery, setSearchQuery }) => {
+    const { addRecentSearch, recentSearches } = useContext(RecentSearchContext)
+
+    const onChangeText = (text: string) => {
+        setSearchQuery(text)
+    }
+
+    const onSubmitEditing = async () => {
+        const trimmed = searchQuery.trim()
+        if (trimmed.length > 0) {
+            addRecentSearch(trimmed)
+        }
+    }
     return (
         <View style={styles.container}>
             <Ionicons
@@ -19,11 +32,21 @@ const InputBox: React.FC<Props> = ({ searchQuery, setSearchQuery }) => {
             />
             <TextInput
                 style={styles.input}
-                onChangeText={setSearchQuery}
+                onChangeText={onChangeText}
+                onSubmitEditing={onSubmitEditing}
                 value={searchQuery}
                 placeholder="Search your medical history"
                 placeholderTextColor="#5A7A74"
+                returnKeyType="search"
             />
+            {searchQuery.length > 0 &&
+                <Ionicons
+                    name="close"
+                    size={scale(24)}
+                    color="#5A7A74"
+                    onPress={() => setSearchQuery("")}
+                />
+            }
         </View>
     )
 }
@@ -39,12 +62,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(8),
         paddingVertical: vScale(4),
         gap: scale(8),
-        position: "sticky"
     },
     input: {
         flex: 1,
         fontFamily: "Aeonik-Regular",
-        fontSize: scale(16),
+        fontSize: scale(13),
         color: "#5A7A74",
     },
 })

@@ -3,6 +3,7 @@ import { BillingItem, DocumentType, LabTest, Medicine, Reminder } from "@/types"
 import { copyPhotoToPermanentStorage } from "@/utils/copyPhotoToPermanentStorage";
 import { scale } from "@/utils/scale";
 import { usehashFile } from "@/utils/usehashfile";
+import { router } from "expo-router";
 import { useSQLiteContext } from "expo-sqlite";
 import React, { useCallback, useMemo, useState } from "react";
 import { ScrollView, View } from "react-native";
@@ -678,7 +679,6 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
     const saveDocument = async () => {
         setIsSaving(true)
         try {
-            console.log(Document.document_metadata.date, "document date")
             const source_file = await copyPhotoToPermanentStorage(fileUri)
             const hash_file = await usehashFile(source_file)
             const IsDocumentExistsOrNot = await CheckDocumentExists(db, hash_file)
@@ -693,10 +693,8 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
 
             await create_document(db, Document, source_file, hash_file, isPdf)
 
-            Toast.show({
-                type: "success",
-                text1: "Document saved successfully"
-            })
+            router.back()
+
         } catch (error) {
             console.error("Error saving document:", error);
             Toast.show({
@@ -704,6 +702,8 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                 text1: "Error saving document",
                 text2: "Please try again later."
             })
+
+            router.back()
         }
         finally {
             setIsSaving(false)

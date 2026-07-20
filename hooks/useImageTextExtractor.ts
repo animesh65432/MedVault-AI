@@ -24,12 +24,13 @@ export const useImageTextExtractor = () => {
             });
 
             const data = await res.json();
+            console.log("OCR Response:", data);
             if (!data.success) throw new Error(data.error ?? "Unknown error");
             return data.text as string;
 
         } catch (err: any) {
 
-            console.error("Error extracting text from image:", err);
+            console.log(err);
 
             setError(err.message);
 

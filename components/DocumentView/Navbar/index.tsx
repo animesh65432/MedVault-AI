@@ -11,9 +11,10 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-nati
 type Props = {
     onDelete: () => void;
     IsDeleteLoading: boolean;
+    title: string
 };
 
-const Navbar: React.FC<Props> = ({ IsDeleteLoading, onDelete }) => {
+const Navbar: React.FC<Props> = ({ title, IsDeleteLoading, onDelete }) => {
     const [ShowDocumentDeleteConfirmation, setShowDocumentDeleteConfirmation] = useState(false);
 
     const handleConfirmDelete = () => {
@@ -22,30 +23,34 @@ const Navbar: React.FC<Props> = ({ IsDeleteLoading, onDelete }) => {
 
     return (
         <View style={styles.container}>
-            <Pressable
-                hitSlop={10}
-                disabled={IsDeleteLoading}
-                style={({ pressed }) => [styles.backButton, pressed && styles.pressed]}
-                onPress={() => router.back()}
-            >
-                <MaterialIcons name="arrow-back" size={scale(22)} color="#234338" />
-                <Text style={styles.backText}>Back</Text>
-            </Pressable>
+            <View style={styles.backButton}>
+                <Pressable
+                    hitSlop={10}
+                    disabled={IsDeleteLoading}
+                    onPress={() => router.back()}
+                >
+                    <MaterialIcons
+                        name="arrow-back"
+                        size={scale(24)}
+                        color="#234338"
+                    />
+                </Pressable>
+                <Text style={styles.backText}>{title}</Text>
+            </View>
 
             <Pressable
                 hitSlop={10}
                 disabled={IsDeleteLoading}
-                style={({ pressed }) => [
-                    styles.deleteButton,
-                    pressed && styles.deleteButtonPressed,
-                    IsDeleteLoading && styles.deleteButtonDisabled,
-                ]}
                 onPress={() => setShowDocumentDeleteConfirmation(true)}
             >
                 {IsDeleteLoading ? (
                     <ActivityIndicator size="small" color="#5F5E5A" />
                 ) : (
-                    <AntDesign name="delete" size={scale(18)} color="#5F5E5A" />
+                    <AntDesign
+                        name="delete"
+                        size={scale(22)}
+                        color="#234338"
+                    />
                 )}
             </Pressable>
 
@@ -71,16 +76,11 @@ const styles = StyleSheet.create({
     backButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: scale(4),
-        borderWidth: 1,
-        borderColor: '#234338',
-        borderRadius: scale(8),
-        paddingHorizontal: scale(10),
-        paddingVertical: vScale(6),
+        gap: scale(8),
     },
     backText: {
         color: '#234338',
-        fontSize: fs(15),
+        fontSize: fs(17),
         fontFamily: 'Aeonik-Medium',
     },
     pressed: {

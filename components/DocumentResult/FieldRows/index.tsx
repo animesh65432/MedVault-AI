@@ -24,6 +24,8 @@ const FieldRows: React.FC<Props> = ({ items, isEditable, onValueChange }) => {
 
     if (visible.length === 0) return null;
 
+    console.log(items)
+
     return (
         <View style={styles.container}>
             {visible.map((item) => (

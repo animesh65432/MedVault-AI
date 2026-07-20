@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { createContext } from "react";
+import React, { createContext, useEffect } from "react";
 
 type OnboardingContextType = {
     IsonboardingComplete: boolean
@@ -15,7 +15,7 @@ export const OnboardingContext = createContext<OnboardingContextType>({
 export const OnboardingProvider = ({ children }: { children: React.ReactNode }) => {
     const [IsonboardingComplete, setOnboardingComplete] = React.useState(false)
 
-    React.useEffect(() => {
+    useEffect(() => {
         const checkOnboardingStatus = async () => {
             const status = await AsyncStorage.getItem("isOnboardingComplete")
             setOnboardingComplete(status === "true")

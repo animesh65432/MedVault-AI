@@ -1,10 +1,11 @@
+import SaveDocumentModel from '@/components/SaveDocumentModel';
 import { fs } from '@/utils/fs';
 import { scale, } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { router } from "expo-router";
-import React from 'react';
+import React, { useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 
 type Props = {
@@ -13,6 +14,13 @@ type Props = {
 }
 
 const Navbar: React.FC<Props> = ({ saveDocument, isSaving = false }) => {
+    const [showSaveModel, setShowSaveModel] = useState(false);
+
+    const handleConfirm = () => {
+        setShowSaveModel(false);
+        saveDocument();
+    };
+
     return (
         <View style={styles.container}>
             <Pressable
@@ -27,7 +35,7 @@ const Navbar: React.FC<Props> = ({ saveDocument, isSaving = false }) => {
 
             <Pressable
                 hitSlop={10}
-                onPress={saveDocument}
+                onPress={() => setShowSaveModel(true)}
                 disabled={isSaving}
             >
                 {isSaving ? (
@@ -36,6 +44,13 @@ const Navbar: React.FC<Props> = ({ saveDocument, isSaving = false }) => {
                     <Fontisto name="save" size={scale(22)} color="#234338" />
                 )}
             </Pressable>
+
+            <SaveDocumentModel
+                visible={showSaveModel}
+                onCancel={() => setShowSaveModel(false)}
+                onConfirm={handleConfirm}
+                isSaving={isSaving}
+            />
         </View>
     );
 };

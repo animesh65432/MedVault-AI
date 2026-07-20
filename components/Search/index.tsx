@@ -10,15 +10,18 @@ import Empty from './Empty';
 import Input from './Input';
 import NonEmpty from "./NonEmpty";
 import Filters from "./NonEmpty/Filters";
+import RecentSearch from "./RecentSearch";
 import Suggestions from "./Suggestions";
+import Title from "./Title";
 
 const PAGE_SIZE = 10
 
 const Search: React.FC = () => {
     const [page, setPage] = useState<number>(1)
     const [hasMore, setHasMore] = useState<boolean>(true)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false)
-    const [SelectedCategories, setSelectedCategories] = useState<string[]>([])
+    const [SelectedCategories, setSelectedCategories] = useState<string[]>(["All Records"])
     const [SelectedDate, setSelectedDate] = useState<{
         startDate: Date | null;
         endDate: Date | null;
@@ -33,16 +36,32 @@ const Search: React.FC = () => {
     const db = useSQLiteContext()
 
     async function fetchDocuments(reset: boolean) {
+        if (reset) {
+            setIsLoading(true)
+        }
+        else {
+            setIsLoadingMore(true)
+        }
+
         try {
             const targetPage = reset ? 1 : page
             const offset = (targetPage - 1) * PAGE_SIZE
-            const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, SelectedCategories, SelectedDate)
+            const CateGories = SelectedCategories.filter(category => category !== "All Records")
+            const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, CateGories, SelectedDate)
 
             setdocuments(prev => reset ? rows : [...prev, ...rows])
             setHasMore(rows.length === PAGE_SIZE)
             if (reset) setPage(1)
         } catch (error) {
             console.error("Failed to fetch documents:", error)
+        }
+        finally {
+            if (reset) {
+                setIsLoading(false)
+            }
+            else {
+                setIsLoadingMore(false)
+            }
         }
     }
 
@@ -123,6 +142,20 @@ const Search: React.FC = () => {
                     setSearchQuery={setSearchQuery}
                 />
             </View>
+            {searchQuery.trim().length !== 0 &&
+                <RecentSearch
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                />
+            }
+            {
+                searchQuery.trim().length > 0 &&
+                <Title
+                    searchQuery={searchQuery}
+                    SearchSuggestionsLength={SearchSuggestions.length}
+                />
+            }
+
             {IsSearchIng
                 && <Suggestions
                     SearchSuggestions={SearchSuggestions}
@@ -148,12 +181,9 @@ const Search: React.FC = () => {
                         <Empty hasQuery={hasQuery} />
                     ) : (
                         <NonEmpty
-                            hasQuery={hasQuery}
                             documents={documents}
-                            SelectedCategories={SelectedCategories}
-                            setSelectedCategories={setSelectedCategories}
-                            SelectedDate={SelectedDate}
-                            setSelectedDate={setSelectedDate}
+                            isLoading={isLoading}
+                            isLoadingMore={isLoadingMore}
                         />
                     )}
                 </ScrollView>
@@ -174,7 +204,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         gap: vScale(14),
         paddingBottom: vScale(32),
-        paddingTop: vScale(14),
+        paddingTop: vScale(10),
         paddingHorizontal: scale(20),
     },
     InputWrapper: {

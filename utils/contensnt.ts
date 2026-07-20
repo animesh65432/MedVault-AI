@@ -10,3 +10,18 @@ export const SOURCES: SourceConfig[] = [
     { ftsTable: "DocumentKeyPointsSearch", baseTable: "DocumentKeyPoints", label: "in Key points", snippetCol: -1, directDocId: false },
     { ftsTable: "DocumentProceduresSearch", baseTable: "DocumentProcedures", label: "in Procedures", snippetCol: -1, directDocId: false },
 ]
+
+export const FILTER_OPTIONS = [
+    'All Records',
+    'Prescription',
+    'Prescription Receipt',
+    'Lab Report',
+    'Radiology Report',
+    'Medical Bill',
+    'Discharge Summary',
+    'Referral Letter',
+    'Insurance Document',
+    'Consent Form',
+    'Medical History Record',
+    'Other'
+]

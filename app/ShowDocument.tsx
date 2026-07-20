@@ -63,7 +63,18 @@ const ShowDocument = () => {
             return;
         }
 
+        if (!extractedText || extractedText.trim().length === 0) {
+            Toast.show({
+                type: "error",
+                text1: "Couldn't read this document",
+                text2: "Please try a clearer photo or a different file.",
+            });
+            setIsProcessing(false);
+            return;
+        }
+
         if (isTextTooLarge(extractedText)) {
+            console.warn("Document is too large to process.");
             Toast.show({
                 type: "error",
                 text1: "Document is too large",
@@ -78,6 +89,7 @@ const ShowDocument = () => {
         try {
             isMedical = await CheckIsMedicalOrNot(extractedText);
         } catch (error) {
+            console.warn("Error checking if document is medical:", error);
             Toast.show({
                 type: "error",
                 text1: "Couldn't verify this document",
@@ -88,6 +100,7 @@ const ShowDocument = () => {
         }
 
         if (!isMedical) {
+            console.warn("Document is not medical-related.");
             Toast.show({
                 type: "info",
                 text1: "This doesn't look like a medical document",
@@ -99,6 +112,8 @@ const ShowDocument = () => {
 
         try {
             const medicalCategory = await makeclassifymedical(extractedText);
+
+            console.log("Medical Category:", medicalCategory);
 
             const medicalData = (await makeMedicalDataJson(
                 extractedText,

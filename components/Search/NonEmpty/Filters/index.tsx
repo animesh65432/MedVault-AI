@@ -1,21 +1,11 @@
+import { FILTER_OPTIONS } from '@/utils/contensnt'
+import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import CustomCalender from '../../CustomCalender'
 
-const FILTER_OPTIONS = [
-    'Prescription',
-    'Prescription Receipt',
-    'Lab Report',
-    'Radiology Report',
-    'Medical Bill',
-    'Discharge Summary',
-    'Referral Letter',
-    'Insurance Document',
-    'Consent Form',
-    'Medical History Record',
-    'Other'
-]
+const VISIBLE_FILTER_COUNT = 4
 
 type DateRange = {
     id: string
@@ -26,35 +16,40 @@ type DateRange = {
 
 const CUSTOM_ID = 'custom'
 
-const buildPresetRanges = (documentDates: Date[] = []): DateRange[] => {
-    const now = new Date()
-
+const QUICK_RANGES = (now: Date): DateRange[] => {
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
     const startOfLast3Months = new Date(now.getFullYear(), now.getMonth() - 2, 1)
-
-    const ranges: DateRange[] = [
+    return [
         { id: 'this_month', label: 'This month', start: startOfMonth, end: now },
         { id: 'last_3_months', label: 'Last 3 months', start: startOfLast3Months, end: now },
     ]
+}
 
+const buildYearRanges = (documentDates: Date[] = [], now: Date): DateRange[] => {
     const years = documentDates.length
         ? Array.from(new Set(documentDates.map((d) => d.getFullYear()))).sort((a, b) => b - a)
         : [now.getFullYear()]
 
-    years.forEach((year) => {
-        ranges.push({
-            id: String(year),
-            label: String(year),
-            start: new Date(year, 0, 1),
-            end: new Date(year, 11, 31, 23, 59, 59),
-        })
-    })
-
-    return ranges
+    return years.map((year) => ({
+        id: String(year),
+        label: String(year),
+        start: new Date(year, 0, 1),
+        end: new Date(year, 11, 31, 23, 59, 59),
+    }))
 }
 
 const formatShort = (date: Date) =>
     date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+
+const formatRangeLabel = (start: Date, end: Date) => {
+    const sameYear = start.getFullYear() === end.getFullYear()
+    const startLabel = start.toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: sameYear ? undefined : 'numeric',
+    })
+    return `${startLabel} - ${formatShort(end)}`
+}
 
 type SelectedDateRange = {
     startDate: Date | null
@@ -70,15 +65,24 @@ type Props = {
 
 const Filters: React.FC<Props> = ({
     SelectedCategories,
-    SelectedDate,
     setSelectedDate,
     setSelectedCategories
 }) => {
-    const [androidPickerOpen, setAndroidPickerOpen] = useState(false)
+    const [showCustomCalender, setShowCustomCalender] = useState(false)
     const [selectedRangeId, setSelectedRangeId] = useState<string | null>(null)
-    const [customRange, setCustomRange] = useState<Date>()
+    const [customStart, setCustomStart] = useState<Date | null>(null)
+    const [customEnd, setCustomEnd] = useState<Date | null>(null)
+    const [showAllFilters, setShowAllFilters] = useState(false)
 
-    const presetRanges = buildPresetRanges([])
+    const now = new Date()
+    const quickRanges = QUICK_RANGES(now)
+    const yearRanges = buildYearRanges([], now)
+
+    const visibleFilters = showAllFilters
+        ? FILTER_OPTIONS
+        : FILTER_OPTIONS.slice(0, VISIBLE_FILTER_COUNT)
+
+    const hiddenCount = FILTER_OPTIONS.length - VISIBLE_FILTER_COUNT
 
     const toggleFilter = (filter: string) => {
         setSelectedCategories((prev) => {
@@ -103,37 +107,54 @@ const Filters: React.FC<Props> = ({
     }
 
     const openCustomPicker = () => {
-        setAndroidPickerOpen(true)
+        setShowCustomCalender(true)
     }
 
-    const handleAndroidChange = (event: DateTimePickerEvent, date?: Date) => {
-        setAndroidPickerOpen(false)
-        if (event.type !== 'set' || !date) return
-        setCustomRange(date)
-    }
-
-    const customLabel = customRange
-        ? `${formatShort(customRange)}`
-        : 'Custom'
-
-
-    useEffect(() => {
-        if (customRange) {
-            applyRange({
-                id: CUSTOM_ID,
-                label: customLabel,
-                start: customRange,
-                end: customRange,
-            })
+    const handleChange = (start: Date | null, end: Date | null) => {
+        if (!start || !end) {
+            return
         }
-    }, [customRange])
+        setCustomStart(start)
+        setCustomEnd(end)
+        applyRange({
+            id: CUSTOM_ID,
+            label: formatRangeLabel(start, end),
+            start,
+            end,
+        })
+    }
+
+    const onCloseCustomCalender = () => {
+        setShowCustomCalender(false)
+    }
+
+    const isCustomSelected = selectedRangeId === CUSTOM_ID
+    const customLabel = customStart && customEnd
+        ? formatRangeLabel(customStart, customEnd)
+        : 'Custom range'
+
+    const resetDate = () => {
+        setSelectedRangeId(null)
+        setCustomStart(null)
+        setCustomEnd(null)
+        setSelectedDate({ startDate: null, endDate: null })
+        setSelectedCategories(["All Records"])
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.section}>
-                <Text style={styles.title}>Quick filters</Text>
+                <View style={styles.titleRow}>
+                    <Text style={styles.title}>Quick filters</Text>
+                    <Text
+                        style={styles.ClearAll}
+                        onPress={resetDate}
+                    >
+                        Clear All
+                    </Text>
+                </View>
                 <View style={styles.chipWrap}>
-                    {FILTER_OPTIONS.map((filter) => {
+                    {visibleFilters.map((filter) => {
                         const isSelected = SelectedCategories.includes(filter)
                         return (
                             <Pressable
@@ -147,17 +168,34 @@ const Filters: React.FC<Props> = ({
                             </Pressable>
                         )
                     })}
+
+                    <Pressable
+                        onPress={() => setShowAllFilters((prev) => !prev)}
+                        style={[styles.chip, styles.moreChip]}
+                    >
+                        <Text style={styles.chipText}>
+                            {showAllFilters ? 'Show less' : `+${hiddenCount} more`}
+                        </Text>
+                    </Pressable>
                 </View>
             </View>
 
-            <View style={styles.section}>
-                <Text style={styles.title}>Browse by date</Text>
+            <View style={styles.dateSectionConatainer}>
+                <View style={styles.Browse_By_Date_Container}>
+                    <Text style={styles.title}>Browse by date</Text>
+                    <Pressable onPress={openCustomPicker} hitSlop={scale(8)}>
+                        <Text style={[styles.custom_range, isCustomSelected && styles.customRangeActive]}>
+                            {isCustomSelected ? customLabel : 'Custom Range'}
+                        </Text>
+                    </Pressable>
+                </View>
+
                 <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.dateRow}
                 >
-                    {presetRanges.map((range) => {
+                    {quickRanges.map((range) => {
                         const isSelected = selectedRangeId === range.id
                         return (
                             <Pressable
@@ -165,6 +203,9 @@ const Filters: React.FC<Props> = ({
                                 onPress={() => selectPreset(range)}
                                 style={[styles.datePill, isSelected && styles.datePillSelected]}
                             >
+                                <Text style={[styles.pillLabel, isSelected && styles.pillLabelSelected]}>
+                                    Period
+                                </Text>
                                 <Text style={[styles.dateText, isSelected && styles.dateTextSelected]}>
                                     {range.label}
                                 </Text>
@@ -172,47 +213,63 @@ const Filters: React.FC<Props> = ({
                         )
                     })}
 
-                    <Pressable
-                        onPress={openCustomPicker}
-                        style={[
-                            styles.datePill,
-                            styles.customPill,
-                            selectedRangeId === CUSTOM_ID && styles.datePillSelected,
-                        ]}
-                    >
-                        <Text style={[styles.dateText, selectedRangeId === CUSTOM_ID && styles.dateTextSelected]}>
-                            {customLabel}
-                        </Text>
-                    </Pressable>
+                    {yearRanges.map((range) => {
+                        const isSelected = selectedRangeId === range.id
+                        return (
+                            <Pressable
+                                key={range.id}
+                                onPress={() => selectPreset(range)}
+                                style={[styles.datePill, isSelected && styles.datePillSelected]}
+                            >
+                                <Text style={[styles.pillLabel, isSelected && styles.pillLabelSelected]}>
+                                    Year
+                                </Text>
+                                <Text style={[styles.dateText, isSelected && styles.dateTextSelected]}>
+                                    {range.label}
+                                </Text>
+                            </Pressable>
+                        )
+                    })}
                 </ScrollView>
             </View>
-
-            {androidPickerOpen && (
-                <DateTimePicker
-                    value={SelectedDate.startDate || new Date()}
-                    mode="date"
-                    display="default"
-                    maximumDate={new Date()}
-                    onChange={handleAndroidChange}
-                />
-            )}
+            <CustomCalender
+                isVisible={showCustomCalender}
+                onClose={onCloseCustomCalender}
+                onApply={handleChange}
+            />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        // no flex here — this renders inside a ScrollView's content,
-        // flex: 1 has nothing to expand against and collapses the layout
+        paddingTop: scale(10)
+    },
+    titleRow: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
     section: {
         marginBottom: scale(20),
     },
     title: {
-        color: '#23423B',
+        color: '#708090',
         fontFamily: 'Aeonik-Medium',
-        fontSize: scale(18),
+        fontSize: scale(14),
         marginBottom: scale(12),
+        textTransform: "uppercase"
+    },
+    yearLabel: {
+        color: '#708090',
+        fontFamily: 'Aeonik-Medium',
+        fontSize: scale(11),
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+    },
+    yearLabelRow: {
+        marginTop: scale(2),
     },
     chipWrap: {
         flexDirection: 'row',
@@ -239,23 +296,83 @@ const styles = StyleSheet.create({
     chipTextSelected: {
         color: '#FFFFFF',
     },
-    dateRow: {
-        flexDirection: 'row',
-        gap: scale(10),
+    moreChip: {
+        backgroundColor: '#FAFAF8',
+        borderWidth: 1,
+        borderColor: '#5A7A74',
+        borderStyle: 'dashed',
     },
-    datePill: {
+    yearPill: {
         paddingVertical: scale(8),
         paddingHorizontal: scale(16),
         borderRadius: scale(20),
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#FAFAF8',
+        borderWidth: 1,
+        borderColor: '#23423B33',
+    },
+    divider: {
+        width: 1,
+        height: scale(16),
+        backgroundColor: '#23423B22',
+        marginHorizontal: scale(2),
+    },
+    customDatePill: {
+        paddingVertical: scale(8),
+        paddingHorizontal: scale(16),
+        borderRadius: scale(20),
+        backgroundColor: '#FAFAF8',
+        borderWidth: 1,
+        borderColor: '#5A7A74',
+        borderStyle: 'dashed',
     },
     datePillSelected: {
         backgroundColor: '#23423B',
+        borderColor: '#23423B',
     },
-    customPill: {
+    customDateText: {
+        color: '#5A7A74',
+    },
+    dateSectionConatainer: {
+        gap: scale(10),
+    },
+    Browse_By_Date_Container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    custom_range: {
+        color: '#23423B',
+        fontFamily: 'Aeonik-Medium',
+        fontSize: scale(12),
+        textDecorationLine: 'underline',
+    },
+    customRangeActive: {
+        color: '#5A7A74',
+    },
+    dateRow: {
+        flexDirection: 'row',
+        gap: scale(8),
+    },
+    datePill: {
+        paddingVertical: scale(6),
+        paddingHorizontal: scale(14),
+        borderRadius: scale(10),
         borderWidth: 1,
-        borderColor: '#23423B55',
-        borderStyle: 'dashed',
+        borderColor: '#23423B22',
+        backgroundColor: '#FAFAF8',
+        alignItems: 'flex-start',
+        minWidth: scale(72),
+    },
+    pillLabel: {
+        fontFamily: 'Aeonik-Medium',
+        fontSize: scale(9),
+        color: '#708090',
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
+        marginBottom: scale(2),
+    },
+    pillLabelSelected: {
+        color: '#EEF6A2',
     },
     dateText: {
         fontFamily: 'Aeonik-Medium',
@@ -265,6 +382,12 @@ const styles = StyleSheet.create({
     dateTextSelected: {
         color: '#FFFFFF',
     },
+    ClearAll: {
+        fontSize: fs(15),
+        fontFamily: 'Aeonik-Medium',
+        color: '#5A7A74',
+        textDecorationLine: 'underline',
+    }
 })
 
 export default Filters

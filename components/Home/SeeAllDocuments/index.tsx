@@ -39,8 +39,7 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: "Aeonik-Medium",
         fontSize: scale(15),
-        color: "#23423B",
-        textDecorationLine: "underline",
+        color: "#23423B"
     },
 })
 

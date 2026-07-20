@@ -1,6 +1,7 @@
+import { DocIcon } from "@/components/Documents";
+import { TypeOfDocumenet } from "@/types";
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
-import Octicons from '@expo/vector-icons/Octicons';
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
@@ -15,7 +16,7 @@ const Title: React.FC<Props> = ({ title, type, isEditable, onTitleChange }) => {
     return (
         <View style={styles.container}>
             <View style={styles.docContainer}>
-                <Octicons name="dot-fill" size={fs(10)} color="#234338" />
+                <DocIcon type={type as TypeOfDocumenet} />
                 <Text style={styles.docTypeText}>{type}</Text>
             </View>
             {isEditable ? (
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        gap: scale(5),
+        gap: scale(8),
     },
     docTypeText: {
         color: '#234338',

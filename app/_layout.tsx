@@ -1,8 +1,12 @@
 import { Onboarding } from "@/components";
 import { toastConfig } from "@/components/toastConfig";
+import { AlarmContext, AlarmProvider } from "@/context/Alarm";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
+import { RecentSearchProvider } from "@/context/RecentSearch";
 import { migrateDbIfNeeded } from "@/db/database";
+import { registerForNotifications } from "@/utils/notifications";
 import { useFonts } from "expo-font";
+import * as Notifications from 'expo-notifications';
 import { Stack } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import { SQLiteProvider } from "expo-sqlite";
@@ -12,12 +16,37 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import 'react-native-reanimated';
 import Toast from "react-native-toast-message";
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowBanner: true,
+    shouldShowList: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
 export const unstable_settings = {
   anchor: '(tabs)',
 };
 
 function RootLayoutContent() {
+  const { IsAlarmActive, OnChangeIsAlarmActive } = useContext(AlarmContext);
   const { IsonboardingComplete } = useContext(OnboardingContext);
+
+  async function CheckNotifications() {
+    try {
+      const permissionGranted = await registerForNotifications();
+      OnChangeIsAlarmActive(permissionGranted)
+    } catch (error) {
+      console.error('Error registering for notifications:', error);
+    }
+  }
+
+  useEffect(() => {
+    if (IsonboardingComplete) {
+      CheckNotifications();
+    }
+  }, [IsonboardingComplete]);
 
   if (!IsonboardingComplete) {
     return <Onboarding />;
@@ -65,16 +94,19 @@ export default function RootLayout() {
     <SQLiteProvider
       databaseName="my-database.db"
       onInit={migrateDbIfNeeded}
-    >
-      <OnboardingProvider>
-        <KeyboardProvider>
-          <RootLayoutContent />
-          <Toast
-            config={toastConfig}
-          />
-          <StatusBar style="auto" />
-        </KeyboardProvider>
-      </OnboardingProvider>
+    ><RecentSearchProvider>
+        <OnboardingProvider>
+          <KeyboardProvider>
+            <AlarmProvider>
+              <RootLayoutContent />
+              <Toast
+                config={toastConfig}
+              />
+              <StatusBar style="auto" />
+            </AlarmProvider>
+          </KeyboardProvider>
+        </OnboardingProvider>
+      </RecentSearchProvider>
     </SQLiteProvider>
   );
 }

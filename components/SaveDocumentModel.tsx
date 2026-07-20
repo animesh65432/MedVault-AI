@@ -15,41 +15,41 @@ type Props = {
     visible: boolean;
     onCancel: () => void;
     onConfirm: () => void;
-    isDeleting: boolean;
+    isSaving: boolean;
 };
 
-const DeleteDocumentModel: React.FC<Props> = ({ visible, onCancel, onConfirm, isDeleting }) => {
+const SaveDocumentModel: React.FC<Props> = ({ visible, onCancel, onConfirm, isSaving }) => {
     return (
         <Modal visible={visible} animationType="fade" transparent>
-            <Pressable style={styles.backdrop} onPress={isDeleting ? undefined : onCancel}>
+            <Pressable style={styles.backdrop} onPress={isSaving ? undefined : onCancel}>
                 <Pressable style={styles.sheet} onPress={(e) => e.stopPropagation()}>
                     <View style={styles.iconWrap}>
-                        <Feather name="trash-2" size={fs(20)} color="#234338" />
+                        <Feather name="save" size={fs(20)} color="#234338" />
                     </View>
 
-                    <Text style={styles.title}>Delete this document?</Text>
+                    <Text style={styles.title}>Save changes?</Text>
                     <Text style={styles.subtitle}>
-                        This will permanently remove the document, its medicines, reminders, and all attached records. This can't be undone.
+                        This will update the document with your latest edits.
                     </Text>
 
                     <View style={styles.buttonRow}>
                         <Pressable
-                            style={[styles.cancelButton, isDeleting && styles.disabled]}
+                            style={[styles.cancelButton, isSaving && styles.disabled]}
                             onPress={onCancel}
-                            disabled={isDeleting}
+                            disabled={isSaving}
                         >
                             <Text style={styles.cancelText}>Cancel</Text>
                         </Pressable>
 
                         <Pressable
-                            style={[styles.confirmButton, isDeleting && styles.disabled]}
+                            style={[styles.confirmButton, isSaving && styles.disabled]}
                             onPress={onConfirm}
-                            disabled={isDeleting}
+                            disabled={isSaving}
                         >
-                            {isDeleting ? (
+                            {isSaving ? (
                                 <ActivityIndicator size="small" color="#EEF6A2" />
                             ) : (
-                                <Text style={styles.confirmText}>Delete</Text>
+                                <Text style={styles.confirmText}>Save</Text>
                             )}
                         </Pressable>
                     </View>
@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default DeleteDocumentModel;
+export default SaveDocumentModel;

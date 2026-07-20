@@ -664,6 +664,7 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
             style={styles.container}
         >
             <Navbar
+                title={document.type}
                 IsDeleteLoading={IsDeleteLoading}
                 onDelete={handleDeleteDocument}
             />

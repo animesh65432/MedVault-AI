@@ -65,9 +65,9 @@ const Prescription: React.FC<Props> = ({
                 <FieldRows
                     items={[
                         { icon: "user", label: "Patient", value: meta.patient_name ?? undefined, key: "patient_name" },
-                        { icon: "activity", label: "Doctor", value: meta.patient_name ?? undefined, key: "doctor_name" },
-                        { icon: "home", label: "Clinic", value: meta.patient_name ?? undefined, key: "clinic_name" },
-                        { icon: "calendar", label: "Date", value: meta.patient_name ?? undefined, key: "date" },
+                        { icon: "activity", label: "Doctor", value: meta.doctor_name ?? undefined, key: "doctor_name" },
+                        { icon: "home", label: "Clinic", value: meta.clinic_name ?? undefined, key: "clinic_name" },
+                        { icon: "calendar", label: "Date", value: meta.date ?? undefined, key: "date" },
                     ]}
                     isEditable={isEditable}
                     onValueChange={onFieldValueChange}

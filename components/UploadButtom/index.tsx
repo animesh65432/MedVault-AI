@@ -20,7 +20,7 @@ const UploadButtom: React.FC = () => {
         >
             <MaterialIcons name="camera-alt"
                 size={scale(18)}
-                color="#EEF6A2"
+                color="white"
             />
             <Text style={styles.uploadText}>Upload Document</Text>
         </TouchableOpacity>
@@ -35,14 +35,14 @@ const styles = StyleSheet.create({
         gap: scale(8),
         backgroundColor: "#23423B",
         borderRadius: scale(14),
-        paddingVertical: vScale(14),
+        paddingVertical: vScale(18),
         paddingHorizontal: scale(24),
         width: "100%",
     },
     uploadText: {
         fontFamily: "Aeonik-Medium",
         fontSize: scale(15),
-        color: "#EEF6A2",
+        color: "white",
     },
 })
 

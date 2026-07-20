@@ -1,3 +1,4 @@
+import DocumentsSkeleton from "@/components/DocumentsSkeleton";
 import { GetDocuments } from "@/db/document";
 import { DocumentRow } from "@/types";
 import { scale } from "@/utils/scale";
@@ -41,10 +42,15 @@ const RecentDocuments = () => {
             <Text style={style.title}>
                 Recent Documents
             </Text>
-            <Documents
-                documents={recentDocuments}
-                IsHome={true}
-            />
+            {IsLoading ?
+                <DocumentsSkeleton
+                    count={2}
+                /> :
+                <Documents
+                    documents={recentDocuments}
+                    IsHome={true}
+                />
+            }
             <SeeAllDocuments />
         </View>
     )
