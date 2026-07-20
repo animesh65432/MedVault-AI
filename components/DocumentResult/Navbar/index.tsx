@@ -6,7 +6,7 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { router } from "expo-router";
 import React, { useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
 type Props = {
     saveDocument: () => void;
@@ -25,12 +25,10 @@ const Navbar: React.FC<Props> = ({ saveDocument, isSaving = false }) => {
         <View style={styles.container}>
             <Pressable
                 hitSlop={10}
-                style={styles.backButton}
                 onPress={() => router.back()}
                 disabled={isSaving}
             >
                 <MaterialIcons name="arrow-back" size={scale(22)} color="#234338" />
-                <Text style={styles.backText}>Back</Text>
             </Pressable>
 
             <Pressable

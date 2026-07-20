@@ -27,6 +27,7 @@ type Props = {
     onAddReminder: (index: number, reminder: Reminder) => void;
     onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void;
     onChangeTextProseBlock: (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
+    IsShowDocument?: boolean;
 };
 
 const ReferralLetter: React.FC<Props> = ({
@@ -46,7 +47,8 @@ const ReferralLetter: React.FC<Props> = ({
     initialTitle,
     onAddReminder,
     onRemoveReminder,
-    onChangeTextProseBlock
+    onChangeTextProseBlock,
+    IsShowDocument = false
 }) => {
     const meta = document.document_metadata;
 
@@ -97,6 +99,7 @@ const ReferralLetter: React.FC<Props> = ({
                 initialTitle={initialTitle}
                 onAddReminder={onAddReminder}
                 onRemoveReminder={onRemoveReminder}
+                IsShowDocument={IsShowDocument}
             />
 
             <NotesAndTags

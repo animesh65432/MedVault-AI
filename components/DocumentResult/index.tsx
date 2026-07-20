@@ -391,6 +391,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
     }
 
     const onAddReminder = (index: number, reminder: Reminder) => {
+
         SetDocument(prev => {
             if (!prev) return prev;
             if (!("medicines" in prev.document_metadata)) return prev;
@@ -512,6 +513,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         initialTitle={Document.title}
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
+                        IsShowDocument={true}
                     />
                 );
             case "Prescription Receipt":
@@ -539,6 +541,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         initialTitle={Document.title}
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
+                        IsShowDocument={true}
                     />
                 );
             case "Lab Report":
@@ -613,6 +616,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
                         onChangeTextProseBlock={onChangeTextProseBlock}
+                        IsShowDocument={true}
                     />
                 );
             case "Referral Letter":
@@ -635,6 +639,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
                         onChangeTextProseBlock={onChangeTextProseBlock}
+                        IsShowDocument={true}
                     />
                 );
             case "Insurance Document":
@@ -660,6 +665,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
                         onChangeTextProseBlock={onChangeTextProseBlock}
+                        IsShowDocument={true}
                     />
                 );
             default: {
@@ -688,12 +694,16 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                     type: "info",
                     text1: "Document already exists",
                 })
+
                 return;
             }
 
-            await create_document(db, Document, source_file, hash_file, isPdf)
+            const documentId = await create_document(db, Document, source_file, hash_file, isPdf)
 
-            router.back()
+            router.push({
+                pathname: '/document/[id]',
+                params: { id: documentId },
+            })
 
         } catch (error) {
             console.error("Error saving document:", error);
@@ -702,8 +712,6 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                 text1: "Error saving document",
                 text2: "Please try again later."
             })
-
-            router.back()
         }
         finally {
             setIsSaving(false)

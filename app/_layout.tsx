@@ -30,7 +30,7 @@ export const unstable_settings = {
 };
 
 function RootLayoutContent() {
-  const { IsAlarmActive, OnChangeIsAlarmActive } = useContext(AlarmContext);
+  const { OnChangeIsAlarmActive } = useContext(AlarmContext);
   const { IsonboardingComplete } = useContext(OnboardingContext);
 
   async function CheckNotifications() {

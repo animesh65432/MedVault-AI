@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         fontFamily: "Aeonik-Regular",
-        fontSize: scale(13),
+        fontSize: scale(15),
         color: "#5A7A74",
     },
 })

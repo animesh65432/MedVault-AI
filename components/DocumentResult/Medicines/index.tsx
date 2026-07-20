@@ -7,9 +7,9 @@ import Octicons from "@expo/vector-icons/Octicons";
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
+import Toast from "react-native-toast-message";
 import AddMedicineModal from "../AddMedicineModel";
 import AddReminderModel from "../AddReminderModel";
-
 
 type Props = {
     medicines: MedicineType[];
@@ -19,7 +19,8 @@ type Props = {
     onAddMedicine: (medicine: MedicineType) => void;
     initialTitle: string;
     onAddReminder: (index: number, reminder: Reminder) => void;
-    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
+    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void;
+    IsShowDocument?: boolean
 };
 
 const Medicines: React.FC<Props> = ({
@@ -30,7 +31,8 @@ const Medicines: React.FC<Props> = ({
     onAddMedicine,
     initialTitle,
     onAddReminder,
-    onRemoveReminder
+    onRemoveReminder,
+    IsShowDocument = false
 }) => {
     const [MedicineIndexForReminder, setMedicineIndexForReminder] = useState<number | null>(null);
     const [isFrequencyFocus, setIsFrequencyFocus] = useState(false);
@@ -44,8 +46,16 @@ const Medicines: React.FC<Props> = ({
     }
 
     const onToogleReminderModal = (index: number) => {
-        setMedicineIndexForReminder(index);
-        setAddReminderModalVisible(true);
+        if (IsShowDocument) {
+            Toast.show({
+                type: "info",
+                text1: "You have to add reminders after saving the document",
+            })
+        }
+        else {
+            setMedicineIndexForReminder(index);
+            setAddReminderModalVisible(true);
+        }
     }
 
     const onCloseReminderModal = (reminder: Reminder) => {
@@ -204,7 +214,7 @@ const Medicines: React.FC<Props> = ({
                     visible={isAddReminderModalVisible}
                     onClose={() => setAddReminderModalVisible(false)}
                     onAdd={onCloseReminderModal}
-                    initialTitle={initialTitle}
+                    initialTitle={medicines[MedicineIndexForReminder ?? 0]?.name || initialTitle}
                     initialReminders={medicines[MedicineIndexForReminder ?? 0]?.reminders || []}
                     onRemoveReminder={onRemoveReminder}
                     MedicineIndex={MedicineIndexForReminder ?? 0}

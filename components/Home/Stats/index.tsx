@@ -1,6 +1,7 @@
 import { CountTypes } from "@/types"
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
+import { useRouter } from "expo-router"
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import Entypo from 'react-native-vector-icons/Entypo'
@@ -8,9 +9,13 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 
 const Stats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, remindersCount }) => {
+    const router = useRouter()
     return (
         <View style={styles.container}>
-            <View style={styles.statBox}>
+            <View
+                style={styles.statBox}
+                onTouchStart={() => router.push("/Search")}
+            >
                 <Fontisto
                     name="file-1"
                     size={scale(24)}

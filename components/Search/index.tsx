@@ -124,7 +124,8 @@ const Search: React.FC = () => {
         }
     }, [searchQuery])
 
-    const hasQuery = searchQuery.trim().length > 0 || SelectedCategories.length > 0 || SelectedDate.startDate !== null || SelectedDate.endDate !== null;
+    const FilterCateGories = SelectedCategories.filter(category => category !== "All Records")
+    const hasQuery = searchQuery.trim().length > 0 || FilterCateGories.length > 0 || SelectedDate.startDate !== null || SelectedDate.endDate !== null;
     const IsSearchIng = searchQuery.trim().length > 0;
 
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -133,6 +134,7 @@ const Search: React.FC = () => {
             loadMore()
         }
     }
+
 
     return (
         <View style={styles.wrapper}>
@@ -178,7 +180,9 @@ const Search: React.FC = () => {
                         />
                     }
                     {documents.length === 0 ? (
-                        <Empty hasQuery={hasQuery} />
+                        <Empty
+                            hasQuery={hasQuery}
+                        />
                     ) : (
                         <NonEmpty
                             documents={documents}

@@ -31,7 +31,8 @@ type Props = {
     onUpdateTotal: (value: string) => void;
     initialTitle: string;
     onAddReminder: (index: number, reminder: Reminder) => void;
-    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
+    onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void;
+    IsShowDocument: boolean
 };
 
 const PrescriptionReceipt: React.FC<Props> = ({
@@ -56,7 +57,8 @@ const PrescriptionReceipt: React.FC<Props> = ({
     onUpdateTotal,
     initialTitle,
     onRemoveReminder,
-    onAddReminder
+    onAddReminder,
+    IsShowDocument
 }) => {
     const meta = document.document_metadata;
 
@@ -96,6 +98,7 @@ const PrescriptionReceipt: React.FC<Props> = ({
                 initialTitle={initialTitle}
                 onAddReminder={onAddReminder}
                 onRemoveReminder={onRemoveReminder}
+                IsShowDocument={IsShowDocument}
             />
             <Billing
                 items={meta.billing_items}

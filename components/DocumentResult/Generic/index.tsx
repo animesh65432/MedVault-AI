@@ -27,6 +27,7 @@ type Props = {
     onAddReminder: (index: number, reminder: Reminder) => void;
     onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
     onChangeTextProseBlock: (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
+    IsShowDocument?: boolean;
 };
 
 const Generic: React.FC<Props> = ({
@@ -45,7 +46,8 @@ const Generic: React.FC<Props> = ({
     onAddMedicine,
     initialTitle,
     onAddReminder,
-    onRemoveReminder
+    onRemoveReminder,
+    IsShowDocument = false
 }) => {
     const meta = document.document_metadata;
     return (
@@ -89,6 +91,7 @@ const Generic: React.FC<Props> = ({
                 initialTitle={initialTitle}
                 onAddReminder={onAddReminder}
                 onRemoveReminder={onRemoveReminder}
+                IsShowDocument={IsShowDocument}
             />
             <NotesAndTags
                 notes={meta.important_notes}

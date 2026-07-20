@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
     custom_range: {
         color: '#23423B',
         fontFamily: 'Aeonik-Medium',
-        fontSize: scale(12),
+        fontSize: scale(14),
         textDecorationLine: 'underline',
     },
     customRangeActive: {
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
     ClearAll: {
         fontSize: fs(15),
         fontFamily: 'Aeonik-Medium',
-        color: '#5A7A74',
+        color: '#23423B',
         textDecorationLine: 'underline',
     }
 })

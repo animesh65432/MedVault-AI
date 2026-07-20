@@ -100,7 +100,6 @@ const ShowDocument = () => {
         }
 
         if (!isMedical) {
-            console.warn("Document is not medical-related.");
             Toast.show({
                 type: "info",
                 text1: "This doesn't look like a medical document",
@@ -113,16 +112,12 @@ const ShowDocument = () => {
         try {
             const medicalCategory = await makeclassifymedical(extractedText);
 
-            console.log("Medical Category:", medicalCategory);
-
             const medicalData = (await makeMedicalDataJson(
                 extractedText,
                 medicalCategory!
             )) as DocumentType;
 
             SetDocument(medicalData);
-
-            console.log("Medical Data:", medicalData);
         } catch (error) {
             console.error(error);
             Toast.show({

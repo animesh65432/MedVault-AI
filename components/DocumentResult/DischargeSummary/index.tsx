@@ -34,6 +34,7 @@ type Props = {
     onAddReminder: (index: number, reminder: Reminder) => void;
     onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
     onChangeTextProseBlock: (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
+    IsShowDocument?: boolean;
 };
 
 const DischargeSummary: React.FC<Props> = ({
@@ -56,7 +57,8 @@ const DischargeSummary: React.FC<Props> = ({
     initialTitle,
     onAddReminder,
     onRemoveReminder,
-    onChangeTextProseBlock
+    onChangeTextProseBlock,
+    IsShowDocument = false
 }) => {
     const meta = document.document_metadata;
     const hasStayDates = meta.admission_date || meta.discharge_date;
@@ -145,6 +147,7 @@ const DischargeSummary: React.FC<Props> = ({
                 onAddMedicine={onAddMedicine}
                 onAddReminder={onAddReminder}
                 onRemoveReminder={onRemoveReminder}
+                IsShowDocument={IsShowDocument}
             />
 
             <LabTests
