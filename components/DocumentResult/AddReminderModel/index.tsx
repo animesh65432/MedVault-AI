@@ -2,18 +2,17 @@ import { Medicine as MedicineType, Reminder, ReminderRepeat } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import Feather from "@expo/vector-icons/Feather";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
 import {
     Modal,
-    Platform,
     Pressable,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
-    View,
+    View
 } from "react-native";
+import { TimerPickerModal } from "react-native-timer-picker";
 import Toast from "react-native-toast-message";
 
 type Props = {
@@ -67,12 +66,6 @@ const AddReminderModel: React.FC<Props> = ({
         onClose();
     };
 
-    const handleTimeChange = (index: number, selected?: Date) => {
-        if (Platform.OS === "android") setEditingIndex(null);
-        if (!selected) return;
-        setTime(selected);
-    };
-
     const addTimeSlot = () => {
         if (reminders.length >= MAX_TIMES) return;
         const last = reminders.length
@@ -103,10 +96,9 @@ const AddReminderModel: React.FC<Props> = ({
             });
             return;
         }
-        onAdd({ title: trimmed, time: time, repeat });
+        reminders.forEach((r) => onAdd({ ...r, title: trimmed }));
         close();
     };
-
 
     return (
         <Modal visible={visible} animationType="fade" transparent>
@@ -144,7 +136,6 @@ const AddReminderModel: React.FC<Props> = ({
                                 <View key={i} style={styles.timeRow}>
                                     <TouchableOpacity
                                         style={styles.timeButton}
-                                        onPress={() => setEditingIndex(i)}
                                     >
                                         <Feather name="clock" size={fs(13)} color="#234338" />
                                         <Text style={styles.timeButtonText}>{formatTime(t.time)}</Text>
@@ -161,11 +152,35 @@ const AddReminderModel: React.FC<Props> = ({
                                     )}
 
                                     {editingIndex === i && (
-                                        <DateTimePicker
-                                            value={t.time}
-                                            mode="time"
-                                            display={Platform.OS === "ios" ? "spinner" : "default"}
-                                            onChange={(_, selected) => handleTimeChange(i, selected)}
+                                        <TimerPickerModal
+                                            use12HourPicker
+                                            initialValue={{
+                                                hours: new Date().getHours(),
+                                                minutes: new Date().getMinutes(),
+                                                seconds: new Date().getSeconds()
+                                            }}
+                                            hideHours={false}
+                                            visible={editingIndex === i}
+                                            setIsVisible={() => setEditingIndex(null)}
+                                            onConfirm={({ hours, minutes }) => {
+                                                const updated = new Date(t.time);
+                                                updated.setHours(hours, minutes);
+                                                setReminders((prev) =>
+                                                    prev.map((r, idx) => (idx === i ? { ...r, time: updated } : r))
+                                                );
+                                                setEditingIndex(null);
+                                            }}
+                                            onCancel={() => setEditingIndex(null)}
+                                            hideSeconds
+                                            styles={{
+                                                theme: "light",
+                                                backgroundColor: "#FAFAF8",
+                                                pickerItem: { fontFamily: "Aeonik-Medium", color: "#0D1F1C" },
+                                                pickerLabel: { color: "#5F5E5A" },
+                                                pickerAmPmLabel: { fontFamily: "Aeonik-Medium", color: "#234338" },
+                                                confirmButton: { backgroundColor: "#234338", color: "white" },
+                                                pickerColumnWidth: scale(130),
+                                            }}
                                         />
                                     )}
                                 </View>

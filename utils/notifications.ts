@@ -1,15 +1,16 @@
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+import { Platform } from "react-native";
 
 export async function registerForNotifications(): Promise<boolean> {
-
-    if (Platform.OS === 'android') {
-        await Notifications.setNotificationChannelAsync('medicine-reminders', {
-            name: 'Medicine Reminders',
-            importance: Notifications.AndroidImportance.HIGH,
+    if (Platform.OS === "android") {
+        await Notifications.setNotificationChannelAsync("medicine-reminders", {
+            name: "Medicine Reminders",
+            sound: 'default',
+            importance: Notifications.AndroidImportance.MAX,
             vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#23423B',
+            lightColor: "#23423B",
+            lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC
         });
     }
 
@@ -20,15 +21,15 @@ export async function registerForNotifications(): Promise<boolean> {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
 
-    if (existingStatus !== 'granted') {
+    if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
-        return true;
     }
 
-    if (finalStatus !== 'granted') {
-        console.warn('Notification permissions not granted');
+    if (finalStatus !== "granted") {
+        console.warn("Notification permissions not granted");
+        return false;
     }
 
-    return false;
+    return true;
 }

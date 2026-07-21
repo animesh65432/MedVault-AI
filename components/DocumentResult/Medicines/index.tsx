@@ -65,6 +65,7 @@ const Medicines: React.FC<Props> = ({
         setMedicineIndexForReminder(null);
     }
 
+
     return (
         <View style={styles.container}>
             <View style={styles.titleRow}>

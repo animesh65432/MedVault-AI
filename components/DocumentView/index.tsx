@@ -1,9 +1,11 @@
+import { AlarmContext } from "@/context/Alarm";
 import { AddReminderToMedicineReturningId, delete_document, RemoveReminderFromMedicine, update_document } from "@/db/document";
+import { useNotification } from "@/hooks/use-Notification";
 import { BillingItem, LabTest, Medicine, Reminder, UploadedDocument } from "@/types";
 import { scale } from "@/utils/scale";
 import { router } from "expo-router";
 import { useSQLiteContext } from "expo-sqlite";
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import ImageView from "react-native-image-viewing";
 import Toast from "react-native-toast-message";
@@ -25,9 +27,11 @@ type Props = {
 }
 
 const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
+    const { IsAlarmActive } = useContext(AlarmContext)
     const [ShowDocumentViewVisible, setShowDocmentViewVisible] = useState(false);
     const [IsDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
     const [isEditable, setIsEditable] = useState(false);
+    const { addAlarm, removeAlarm } = useNotification();
     const db = useSQLiteContext();
 
     const onChangeTitle = (value: string) => {
@@ -368,13 +372,25 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
     }
 
     const onAddReminder = async (index: number, reminder: Reminder) => {
+
+        if (!IsAlarmActive) {
+            Toast.show({
+                type: "info",
+                text1: "Please enable notifications to set reminders."
+            });
+            return;
+        }
+
         const medicine = document && "medicines" in document ? document.medicines?.[index] : undefined;
+
         if (!medicine) return;
 
         let savedReminder = reminder;
 
+        let result;
+
         if (medicine.Id) {
-            const result = await AddReminderToMedicineReturningId(db, medicine.Id, reminder);
+            result = await AddReminderToMedicineReturningId(db, medicine.Id, reminder);
             savedReminder = { ...reminder, Id: result };
         }
 
@@ -393,6 +409,10 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
             );
 
             return { ...prev, medicines: updatedMedicines } as UploadedDocument;
+        });
+
+        await addAlarm({
+            ...reminder, Id: result
         });
     };
 
@@ -421,6 +441,10 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
 
             return { ...prev, medicines: updatedMedicines } as UploadedDocument;
         });
+
+        if (reminder.Id !== undefined) {
+            await removeAlarm(reminder.Id.toString());
+        }
     };
 
     const onChangeTextProseBlock = (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => {
