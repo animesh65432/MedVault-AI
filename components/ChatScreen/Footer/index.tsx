@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 type Props = {
     onSend: (message: string) => void
-    isSending?: boolean
+    isSending: boolean
 }
 
 const Footer: React.FC<Props> = ({ onSend, isSending = false }) => {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        backgroundColor: '#F1EFE8',
+        backgroundColor: 'white',
         borderRadius: scale(20),
         paddingHorizontal: scale(14),
         paddingVertical: vScale(20),
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     },
     sendButton: {
         width: scale(46),
-        height: scale(46),
+        height: scale(56),
         borderRadius: scale(18),
         backgroundColor: '#234338',
         alignItems: 'center',

@@ -347,3 +347,5 @@ export type UploadedDocument =
     | UploadedDischargeSummaryDocument
     | UploadedReferralLetterDocument
     | UploadedGenericDocument;
+
+export type ChatType = "GENERAL_AI" | "CURRENT_DOCUMENT" | "DATABASE_QUERY"
