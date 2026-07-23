@@ -174,6 +174,13 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
 
             CREATE INDEX IF NOT EXISTS idx_billingitems_document_id ON BillingItems(DocumentId);
 
+            CREATE TABLE IF NOT EXISTS MESSAGES (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                UserMessage TEXT NOT NULL,
+                AIResponse TEXT NOT NULL,
+                CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+
             -- ================= FTS5 SEARCH TABLES =================
 
             CREATE VIRTUAL TABLE IF NOT EXISTS DocumentsSearch USING fts5(
@@ -244,6 +251,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 content='BillingItems',
                 content_rowid='Id'
             );
+            
 
             -- ================= SYNC TRIGGERS =================
             -- External-content FTS5 tables do NOT auto-populate.

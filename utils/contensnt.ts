@@ -25,3 +25,10 @@ export const FILTER_OPTIONS = [
     'Medical History Record',
     'Other'
 ]
+
+export const TEMPLATE_QUESTIONS = [
+    "What medicines am I currently on?",
+    "Summarize my last report",
+    "What are my upcoming reminders?",
+    "Show my recent prescriptions"
+]

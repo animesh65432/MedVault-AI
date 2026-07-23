@@ -11,6 +11,9 @@ export const ScanImageUrl = "https://text-ocr.kiranduttta234.workers.dev"
 export const MakeclassifymedicalUrl = "https://makeclassifymedical.kiranduttta234.workers.dev"
 export const CheckIsMedicalRealatedOrNot = "https://checkmedicalrealtedornot.kiranduttta234.workers.dev"
 export const MakeMedicalDataJsonUrl = "https://makemedicaldatajsonurl.kiranduttta234.workers.dev"
+export const ClassificationChatType = "https://llm.kiranduttta234.workers.dev"
+export const ExcuteLlmUrl = "https://excute-sql.kiranduttta234.workers.dev"
 export const API_KEY_SCANIMAGEURL = "medvault-secret-123"
 export const API_KEY = "medvault-secret-123";
 
+// REDACTED

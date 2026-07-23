@@ -4,8 +4,9 @@ import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import { useFocusEffect } from '@react-navigation/native';
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
+import ChatBotAI from "../ChatBotAI";
 import Empty from './Empty';
 import Input from './Input';
 import NonEmpty from "./NonEmpty";
@@ -20,7 +21,7 @@ const Search: React.FC = () => {
     const [page, setPage] = useState<number>(1)
     const [hasMore, setHasMore] = useState<boolean>(true)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false)
+    const isLoadingMoreRef = useRef(false)
     const [SelectedCategories, setSelectedCategories] = useState<string[]>(["All Records"])
     const [SelectedDate, setSelectedDate] = useState<{
         startDate: Date | null;
@@ -40,7 +41,7 @@ const Search: React.FC = () => {
             setIsLoading(true)
         }
         else {
-            setIsLoadingMore(true)
+            isLoadingMoreRef.current = true
         }
 
         try {
@@ -60,25 +61,26 @@ const Search: React.FC = () => {
                 setIsLoading(false)
             }
             else {
-                setIsLoadingMore(false)
+                isLoadingMoreRef.current = false
             }
         }
     }
 
     async function loadMore() {
-        if (!hasMore || isLoadingMore) return
-        setIsLoadingMore(true)
+        if (!hasMore || isLoadingMoreRef.current) return
+        isLoadingMoreRef.current = true
         const nextPage = page + 1
         try {
             const offset = (nextPage - 1) * PAGE_SIZE
-            const rows = await GetDocuments(db, "ASC", PAGE_SIZE, offset, SelectedCategories, SelectedDate)
+            const CateGories = SelectedCategories.filter(category => category !== "All Records")
+            const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, CateGories, SelectedDate)
             setdocuments(prev => [...prev, ...rows])
             setHasMore(rows.length === PAGE_SIZE)
             setPage(nextPage)
         } catch (error) {
             console.error("Failed to load more documents:", error)
         } finally {
-            setIsLoadingMore(false)
+            isLoadingMoreRef.current = false
         }
     }
 
@@ -187,10 +189,13 @@ const Search: React.FC = () => {
                         <NonEmpty
                             documents={documents}
                             isLoading={isLoading}
-                            isLoadingMore={isLoadingMore}
+                            isLoadingMore={isLoadingMoreRef.current}
                         />
                     )}
                 </ScrollView>
+            }
+            {documents.length === 0 || !IsSearchIng &&
+                <ChatBotAI />
             }
         </View>
     )

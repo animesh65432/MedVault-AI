@@ -9,6 +9,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import ImageView from "react-native-image-viewing";
 import Toast from "react-native-toast-message";
+import ChatBotAI from "../ChatBotAI";
 import Below from "../DocumentResult/Below";
 import PDFViewer from "../DocumentResult/PDFViewer";
 import DischargeSummary from "./DischargeSummaryDocument";
@@ -697,6 +698,7 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
             >
                 {content}
             </ScrollView>
+            <ChatBotAI />
             <Below
                 onViewOriginalPress={handleViewOriginalPress}
                 onEditPress={handleOpenEdit}

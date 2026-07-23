@@ -22,7 +22,8 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "newArchEnabled": true
+      "newArchEnabled": true,
+      "softwareKeyboardLayoutMode": "pan"
     },
     "plugins": [
       "expo-router",
