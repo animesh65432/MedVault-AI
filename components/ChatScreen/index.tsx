@@ -22,13 +22,13 @@ const Chat: React.FC<Props> = ({ type }) => {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [IsLoading, setIsLoading] = useState(false);
     const { CheckMessageType } = useCheckMessageType();
-    const [limited, setLimited] = useState(false);
     const { MakesqlRaw } = useMakeSqlRaw();
     const { ExplainDocumentsWithAiReponse } = useExplainDocumentsWithAiReponse();
     const { GenralAiResponse } = useGenralAiResponse();
 
     const handleSendMessage = async (message: string) => {
         setIsLoading(true);
+        let count = 0;
         try {
             const messageType = await CheckMessageType(message, false);
             if (messageType === "DATABASE_QUERY") {
@@ -36,15 +36,23 @@ const Chat: React.FC<Props> = ({ type }) => {
                 if (!data?.sql || data.sql.trim() === "") {
                     return;
                 }
-                setLimited(data.limited);
-                console.log(data)
+                console.log("data", data)
                 const docs = await runSqlRaw(db, data.sql);
-                const reponse = await ExplainDocumentsWithAiReponse(message, docs)
+                if (data.countSql) {
+                    let Responsecount = await runSqlRaw(db, data.countSql)
+                    count = Responsecount[0].total || 0;
+                }
+                console.log(count, "count")
+                const reponse = await ExplainDocumentsWithAiReponse(message, docs, count, data.table)
                 console.log("reponse", reponse)
             }
             else {
                 const response = await GenralAiResponse(message)
+                console.log("response", response)
             }
+        }
+        catch (error) {
+            console.log("Error handling message:", error);
         }
         finally {
             setIsLoading(false);

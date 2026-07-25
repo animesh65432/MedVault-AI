@@ -3,9 +3,9 @@ import { TypeOfDocumenet } from "@/types";
 import { useState } from "react";
 
 type MakesqlRawResponse = {
-    error?: string;
-    limited: boolean,
+    error: string;
     sql: string,
+    countSql: string,
     table: string,
     type: TypeOfDocumenet
 }

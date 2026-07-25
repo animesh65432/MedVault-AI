@@ -14,31 +14,6 @@ type Props = {
 }
 
 
-const joinDefined = (parts: (string | null)[], sep = " • "): string => {
-    return parts.filter((p): p is string => !!p && p.trim().length > 0).join(sep)
-}
-
-const getSubtitle = (doc: DocumentRow): string => {
-    switch (doc.type) {
-        case "Prescription":
-            return joinDefined([doc.doctor_name, doc.clinic_name])
-        case "Prescription Receipt":
-            return doc.pharmacy_name ?? ""
-        case "Lab Report":
-            return doc.lab_name ?? ""
-        case "Radiology Report":
-            return doc.center_name ?? ""
-        case "Medical Bill":
-            return doc.hospital_name ?? ""
-        case "Discharge Summary":
-            return doc.hospital_name ?? ""
-        case "Referral Letter":
-            return joinDefined([doc.referring_doctor, doc.referred_to], " → ")
-        default:
-            return doc.summary ?? ""
-    }
-}
-
 const getDate = (doc: DocumentRow): string | null => {
     return doc.date && doc.date.trim().length > 0 ? doc.date : null
 }
@@ -57,7 +32,6 @@ const Documents: React.FC<Props> = ({ documents, IsHome = false }) => {
     return (
         <View style={[styles.container, { marginBottom: !IsHome ? vScale(100) : vScale(20) }]}>
             {documents.map((doc) => {
-                const subtitle = getSubtitle(doc)
                 return (
                     <TouchableOpacity
                         key={doc.Id}
@@ -82,12 +56,12 @@ const Documents: React.FC<Props> = ({ documents, IsHome = false }) => {
                             {getDate(doc) && (
                                 <Text style={styles.date}>{getDate(doc)}</Text>
                             )}
-                            {subtitle.length > 0 && (
+                            {doc.title.length > 0 && (
                                 <Text
                                     style={styles.subtitle}
                                     numberOfLines={2}
                                 >
-                                    {subtitle}
+                                    {doc.title}
                                 </Text>
                             )}
                         </View>

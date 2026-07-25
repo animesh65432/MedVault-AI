@@ -6,7 +6,9 @@ export const useExplainDocumentsWithAiReponse = () => {
 
     const ExplainDocumentsWithAiReponse = async (
         question: string,
-        data: unknown
+        data: unknown,
+        count: number,
+        table: string
     ) => {
         try {
             setError(null);
@@ -20,6 +22,8 @@ export const useExplainDocumentsWithAiReponse = () => {
                 body: JSON.stringify({
                     question,
                     data,
+                    count,
+                    table,
                 }),
             });
 
