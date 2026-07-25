@@ -81,17 +81,17 @@ const styles = StyleSheet.create({
     label: {
         fontSize: fs(11),
         fontFamily: "Aeonik-Regular",
-        color: "white",
+        color: "#0D1F1C",
     },
     value: {
         fontSize: fs(13.5),
         fontFamily: "Aeonik-Medium",
-        color: "white",
+        color: "#0D1F1C",
     },
     valueInput: {
         fontSize: fs(13.5),
         fontFamily: "Aeonik-Medium",
-        color: "white",
+        color: "#0D1F1C",
         padding: 0,
     },
 });

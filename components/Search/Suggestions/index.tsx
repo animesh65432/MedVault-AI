@@ -2,10 +2,11 @@ import { SearchSuggestion } from '@/types'
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
+import { Feather } from '@expo/vector-icons'
+import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { DocIcon } from "../../Documents"
 import Empty from '../Empty'
 
 type Props = {
@@ -50,7 +51,16 @@ const Suggestions: React.FC<Props> = ({ SearchSuggestions }) => {
                     onPress={() => router.push(`/document/${item.documentId}`)}
                 >
                     <View style={styles.iconWrapper}>
-                        <DocIcon type={item.type} />
+                        {item.IsPdf ? (
+                            <View style={styles.pdfPlaceholder}>
+                                <Feather name="file-text" size={fs(28)} color="#234338" />
+                            </View>
+                        ) : (
+                            <Image
+                                source={{ uri: item.SourceFilePath }}
+                                style={styles.Image}
+                            />
+                        )}
                     </View>
                     <View style={styles.rowContent}>
                         <View style={styles.rowHeader}>
@@ -94,12 +104,11 @@ const styles = StyleSheet.create({
         opacity: 0.6,
     },
     iconWrapper: {
-        width: scale(32),
-        height: scale(32),
-        borderRadius: scale(8),
-        backgroundColor: '#EEF6A2',
-        alignItems: 'center',
-        justifyContent: 'center',
+        width: scale(80),
+        height: scale(80),
+        borderRadius: scale(10),
+        alignItems: "center",
+        justifyContent: "center",
     },
     rowContent: {
         flex: 1,
@@ -136,6 +145,17 @@ const styles = StyleSheet.create({
     highlight: {
         backgroundColor: '#EEF6A2',
         fontFamily: 'Aeonik-Medium',
+    },
+    Image: {
+        width: "100%",
+        height: "100%",
+    },
+    pdfPlaceholder: {
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#EEF6A2",
+        alignItems: "center",
+        justifyContent: "center",
     },
 })
 

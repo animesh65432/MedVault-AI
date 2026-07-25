@@ -1,5 +1,15 @@
 import { ExcuteLlmUrl } from "@/config";
+import { TypeOfDocumenet } from "@/types";
 import { useState } from "react";
+
+type MakesqlRawResponse = {
+    error?: string;
+    limited: boolean,
+    sql: string,
+    table: string,
+    type: TypeOfDocumenet
+}
+
 
 export const useMakeSqlRaw = () => {
     const [error, setError] = useState<string | null>(null);
@@ -15,12 +25,12 @@ export const useMakeSqlRaw = () => {
                 }),
             })
 
-            const data = await response.json();
+            const data = await response.json() as MakesqlRawResponse;
 
             if (!response.ok) {
                 throw new Error(data.error || `HTTP ${response.status}`);
             }
-            return data.sql as string
+            return data as MakesqlRawResponse
         }
         catch (err: any) {
             setError(err);

@@ -1,42 +1,18 @@
 import { DocumentRow } from "@/types"
+import { fs } from "@/utils/fs"
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
+import { Feather } from "@expo/vector-icons"
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import Entypo from 'react-native-vector-icons/Entypo'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import Fontisto from 'react-native-vector-icons/Fontisto'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+
 
 type Props = {
     documents: DocumentRow[],
     IsHome?: boolean
 }
 
-type IconLib = 'Fontisto' | 'Entypo' | 'FontAwesome5'
-
-const TYPE_ICON: Record<DocumentRow['type'], { lib: IconLib; name: string }> = {
-    "Prescription": { lib: 'FontAwesome5', name: 'pills' },
-    "Prescription Receipt": { lib: 'FontAwesome5', name: 'receipt' },
-    "Lab Report": { lib: 'Entypo', name: 'lab-flask' },
-    "Radiology Report": { lib: 'Fontisto', name: 'file-1' },
-    "Medical Bill": { lib: 'FontAwesome5', name: 'file-invoice-dollar' },
-    "Discharge Summary": { lib: 'Fontisto', name: 'file-1' },
-    "Referral Letter": { lib: 'Fontisto', name: 'email' },
-    "Insurance Document": { lib: 'FontAwesome5', name: 'shield-alt' },
-    "Consent Form": { lib: 'Fontisto', name: 'file-1' },
-    "Medical History Record": { lib: 'Fontisto', name: 'file-1' },
-    "Other": { lib: 'Fontisto', name: 'file-1' },
-}
-
-export const DocIcon: React.FC<{ type: DocumentRow['type'] }> = ({ type }) => {
-    const config = TYPE_ICON[type] ?? TYPE_ICON["Other"]
-    const props = { name: config.name, size: scale(20), color: "#23423B" }
-
-    if (config.lib === 'Entypo') return <Entypo {...props} />
-    if (config.lib === 'FontAwesome5') return <FontAwesome5 {...props} />
-    return <Fontisto {...props} />
-}
 
 const joinDefined = (parts: (string | null)[], sep = " • "): string => {
     return parts.filter((p): p is string => !!p && p.trim().length > 0).join(sep)
@@ -90,7 +66,16 @@ const Documents: React.FC<Props> = ({ documents, IsHome = false }) => {
                         onPress={() => router.push(`/document/${doc.Id}`)}
                     >
                         <View style={styles.iconWrapper}>
-                            <DocIcon type={doc.type} />
+                            {doc.IsPdf ? (
+                                <View style={styles.pdfPlaceholder}>
+                                    <Feather name="file-text" size={fs(28)} color="#234338" />
+                                </View>
+                            ) : (
+                                <Image
+                                    source={{ uri: doc.SourceFilePath }}
+                                    style={styles.Image}
+                                />
+                            )}
                         </View>
                         <View style={styles.textWrapper}>
                             <Text style={styles.type}>{doc.type}</Text>
@@ -106,6 +91,11 @@ const Documents: React.FC<Props> = ({ documents, IsHome = false }) => {
                                 </Text>
                             )}
                         </View>
+                        <View style={[styles.badge, doc.IsPdf ? styles.badgePdf : styles.badgeImg]}>
+                            <Text style={[styles.doctype, doc.IsPdf ? styles.doctypePdf : styles.doctypeImg]}>
+                                {doc.IsPdf ? "PDF" : "JPG"}
+                            </Text>
+                        </View>
                     </TouchableOpacity>
                 )
             })}
@@ -120,37 +110,35 @@ const styles = StyleSheet.create({
     },
     card: {
         flexDirection: "row",
-        alignItems: "center",
         backgroundColor: "#FAFAF8",
         borderRadius: scale(14),
         padding: scale(14),
         gap: scale(12),
     },
     iconWrapper: {
-        width: scale(40),
-        height: scale(40),
+        width: scale(80),
+        height: scale(80),
         borderRadius: scale(10),
-        backgroundColor: "#EEF6A2",
         alignItems: "center",
         justifyContent: "center",
     },
     textWrapper: {
         flex: 1,
-        gap: vScale(2),
+        gap: vScale(6),
     },
     type: {
         fontFamily: "Aeonik-Medium",
-        fontSize: scale(14),
+        fontSize: scale(15),
         color: "#23423B",
     },
     date: {
         fontFamily: "Aeonik-Regular",
-        fontSize: scale(12),
+        fontSize: scale(13),
         color: "#5A7A74",
     },
     subtitle: {
         fontFamily: "Aeonik-Regular",
-        fontSize: scale(12),
+        fontSize: scale(13),
         color: "#5A7A74",
     },
     emptyContainer: {
@@ -161,6 +149,45 @@ const styles = StyleSheet.create({
         fontFamily: "Aeonik-Regular",
         fontSize: scale(14),
         color: "#5A7A74",
+    },
+    Image: {
+        width: "100%",
+        height: "100%",
+
+    },
+    badge: {
+        paddingHorizontal: scale(8),
+        paddingVertical: vScale(2),
+        borderRadius: scale(20),
+        borderWidth: 1,
+        alignSelf: "flex-start",
+    },
+    badgePdf: {
+        borderColor: "#234338",
+        backgroundColor: "#23433814", // ~8% tint
+    },
+    badgeImg: {
+        borderColor: "#5A7A74",
+        backgroundColor: "#5A7A7414",
+    },
+    doctype: {
+        fontFamily: "Aeonik-Medium",
+        fontSize: fs(10),
+        letterSpacing: 0.5,
+        textTransform: "uppercase",
+    },
+    doctypePdf: {
+        color: "#234338",
+    },
+    doctypeImg: {
+        color: "#5A7A74",
+    },
+    pdfPlaceholder: {
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#EEF6A2",
+        alignItems: "center",
+        justifyContent: "center",
     },
 })
 

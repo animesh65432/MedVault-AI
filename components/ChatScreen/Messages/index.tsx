@@ -1,9 +1,10 @@
+import { ChatMessage } from "@/types"
 import React from "react"
 import { FlatList, StyleSheet, View } from "react-native"
 import TemplateQuestions from "../TemplateQuestions"
 
 type Props = {
-    messages: string[]
+    messages: ChatMessage[]
     onSelectTemplate: (question: string) => void;
     IsLoading: boolean
 }
@@ -20,7 +21,7 @@ const Messages: React.FC<Props> = ({ messages, onSelectTemplate }) => {
     return (
         <FlatList
             data={messages}
-            keyExtractor={(item) => item}
+            keyExtractor={(item) => item.Id.toString()}
             renderItem={({ item }) => (
                 <View></View>
             )}

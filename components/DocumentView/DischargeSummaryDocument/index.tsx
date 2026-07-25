@@ -12,6 +12,7 @@ import Medicines from "../../DocumentResult/Medicines";
 import NotesAndTags from "../../DocumentResult/NotesandTags";
 import ProseBlock from "../../DocumentResult/ProseBlock";
 import Title from "../../DocumentResult/Title";
+import DocumentHero from "../DocumentHero";
 
 type Props = {
     document: UploadedDischargeSummaryDocument;
@@ -69,6 +70,10 @@ const DischargeSummary: React.FC<Props> = ({
             bottomOffset={scale(80)}
         >
             <View style={styles.div}>
+                <DocumentHero
+                    isPdf={document.IsPdf}
+                    sourceFilePath={document.SourceFilePath}
+                />
                 <Title
                     title={document.title}
                     type={document.type}
@@ -219,9 +224,7 @@ const styles = StyleSheet.create({
         color: "#234338",
     },
     div: {
-        backgroundColor: "#234338",
         borderRadius: scale(16),
-        padding: scale(16),
         gap: scale(10)
     },
     stayDateInput: {

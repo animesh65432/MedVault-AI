@@ -8,6 +8,7 @@ import FieldRows from "../../DocumentResult/FieldRows";
 import Medicines from "../../DocumentResult/Medicines";
 import NotesAndTags from "../../DocumentResult/NotesandTags";
 import Title from "../../DocumentResult/Title";
+import DocumentHero from "../DocumentHero";
 
 type Props = {
     isEditable: boolean
@@ -70,6 +71,10 @@ const PrescriptionReceipt: React.FC<Props> = ({
             <View
                 style={styles.div}
             >
+                <DocumentHero
+                    isPdf={document.IsPdf}
+                    sourceFilePath={document.SourceFilePath}
+                />
                 <Title
                     title={document.title}
                     type={document.type}
@@ -134,9 +139,7 @@ const styles = {
         paddingBottom: scale(40),
     },
     div: {
-        backgroundColor: "#234338",
         borderRadius: scale(16),
-        padding: scale(16),
         gap: scale(10)
     },
 };

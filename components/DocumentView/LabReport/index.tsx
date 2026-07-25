@@ -7,6 +7,7 @@ import FieldRows from "../../DocumentResult/FieldRows";
 import LabTests from "../../DocumentResult/LabTests";
 import NotesAndTags from "../../DocumentResult/NotesandTags";
 import Title from "../../DocumentResult/Title";
+import DocumentHero from "../DocumentHero";
 
 type Props = {
     document: UploadedLabReportDocument;
@@ -35,6 +36,10 @@ const LabReport: React.FC<Props> = ({ onAddTest, onRemoveTest, onChangeTest, onU
             bottomOffset={scale(80)}
         >
             <View style={styles.div}>
+                <DocumentHero
+                    isPdf={document.IsPdf}
+                    sourceFilePath={document.SourceFilePath}
+                />
                 <Title
                     title={document.title}
                     type={document.type}
@@ -90,7 +95,6 @@ const styles = {
     div: {
         backgroundColor: "#234338",
         borderRadius: scale(16),
-        padding: scale(16),
         gap: scale(10)
     },
 };

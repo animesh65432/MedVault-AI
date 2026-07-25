@@ -1,4 +1,4 @@
-import { DocIcon } from "@/components/Documents";
+import { DocIcon } from "@/components/DocIcon";
 import { TypeOfDocumenet } from "@/types";
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
@@ -25,7 +25,7 @@ const Title: React.FC<Props> = ({ title, type, isEditable, onTitleChange }) => {
                     onChangeText={onTitleChange}
                     style={styles.titleInput}
                     placeholder="Document title"
-                    placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                    placeholderTextColor="#0D1F1C"
                     multiline
                 />
             ) : (
@@ -69,13 +69,13 @@ const styles = StyleSheet.create({
         fontSize: fs(22),
         lineHeight: fs(22) * 1.3,
         fontFamily: 'Aeonik-Medium',
-        color: 'white',
+        color: '#0D1F1C',
     },
     titleInput: {
         fontSize: fs(22),
         lineHeight: fs(22) * 1.3,
         fontFamily: 'Aeonik-Medium',
-        color: 'white',
+        color: '#0D1F1C',
         padding: 0,
         alignSelf: 'stretch',
     },

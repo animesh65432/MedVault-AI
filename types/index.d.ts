@@ -237,6 +237,7 @@ export type DocumentRow = {
     discount: string | null;
     total_amount: string | null;
     summary: string | null;
+    IsPdf: boolean;
 }
 
 export type SearchSuggestion = {
@@ -245,7 +246,9 @@ export type SearchSuggestion = {
     field: string
     snippet: string
     date: string | null,
-    type: TypeOfDocumenet
+    type: TypeOfDocumenet,
+    SourceFilePath: string,
+    IsPdf: boolean
 }
 
 type SourceConfig = {
@@ -349,3 +352,10 @@ export type UploadedDocument =
     | UploadedGenericDocument;
 
 export type ChatType = "GENERAL_AI" | "CURRENT_DOCUMENT" | "DATABASE_QUERY"
+
+export type ChatMessage = {
+    Id: number;
+    UserMessage: string,
+    AIResponse: string,
+    CreatedAt: string
+}

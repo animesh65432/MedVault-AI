@@ -1,6 +1,10 @@
+import { runSqlRaw } from "@/db/document";
 import { useCheckMessageType } from "@/hooks/use-CheckMessageType";
+import { useExplainDocumentsWithAiReponse } from "@/hooks/use-ExplainDocumentsWithAiReponse";
 import { useGenralAiResponse } from "@/hooks/use-GenralAiResponse";
 import { useMakeSqlRaw } from "@/hooks/use-MakeSqlRaw";
+import { ChatMessage } from "@/types";
+import { useSQLiteContext } from "expo-sqlite";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardStickyView } from "react-native-keyboard-controller";
@@ -13,9 +17,14 @@ type Props = {
 }
 
 const Chat: React.FC<Props> = ({ type }) => {
+    const db = useSQLiteContext()
+    const [message, setMessage] = useState<string>("");
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [IsLoading, setIsLoading] = useState(false);
     const { CheckMessageType } = useCheckMessageType();
+    const [limited, setLimited] = useState(false);
     const { MakesqlRaw } = useMakeSqlRaw();
+    const { ExplainDocumentsWithAiReponse } = useExplainDocumentsWithAiReponse();
     const { GenralAiResponse } = useGenralAiResponse();
 
     const handleSendMessage = async (message: string) => {
@@ -23,17 +32,27 @@ const Chat: React.FC<Props> = ({ type }) => {
         try {
             const messageType = await CheckMessageType(message, false);
             if (messageType === "DATABASE_QUERY") {
-                const sqlRaw = await MakesqlRaw(message);
+                const data = await MakesqlRaw(message);
+                if (!data?.sql || data.sql.trim() === "") {
+                    return;
+                }
+                setLimited(data.limited);
+                console.log(data)
+                const docs = await runSqlRaw(db, data.sql);
+                const reponse = await ExplainDocumentsWithAiReponse(message, docs)
+                console.log("reponse", reponse)
             }
             else {
                 const response = await GenralAiResponse(message)
             }
-
-        } catch (error) {
         }
         finally {
             setIsLoading(false);
         }
+    }
+
+    const onSelectTemplate = (template: string) => {
+        setMessage(template);
     }
 
     return (
@@ -41,13 +60,15 @@ const Chat: React.FC<Props> = ({ type }) => {
             <Header />
             <Messages
                 IsLoading={IsLoading}
-                messages={[]}
-                onSelectTemplate={(question) => { }}
+                messages={messages}
+                onSelectTemplate={onSelectTemplate}
             />
             <KeyboardStickyView>
                 <Footer
                     onSend={handleSendMessage}
                     isSending={IsLoading}
+                    message={message}
+                    setMessage={setMessage}
                 />
             </KeyboardStickyView>
         </View>

@@ -34,7 +34,7 @@ const Stats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, reminders
                     color="#23423B"
                 />
                 <Text style={styles.count}>{medicinesCount}</Text>
-                <Text style={styles.label}>Meds</Text>
+                <Text style={styles.label}>Medicines</Text>
             </View>
 
             <View style={styles.divider} />

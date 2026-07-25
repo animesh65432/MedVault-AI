@@ -340,6 +340,8 @@ export const GetSearchSuggestions = async (
                         Documents.title as title,
                         Documents.type as type,
                         COALESCE(Documents.date, Documents.CreatedAt) as date,
+                        Documents.SourceFilePath as SourceFilePath,
+                        Documents.IsPdf as IsPdf,
                         snippet(${src.ftsTable}, ${src.snippetCol}, '⟪', '⟫', '…', 10) as snip
                     FROM ${src.ftsTable}
                     JOIN Documents ON Documents.Id = ${src.ftsTable}.rowid
@@ -354,6 +356,8 @@ export const GetSearchSuggestions = async (
                     Documents.title as title,
                     Documents.type as type,
                     COALESCE(Documents.date, Documents.CreatedAt) as date,
+                    Documents.SourceFilePath as SourceFilePath,
+                    Documents.IsPdf as IsPdf,
                     snippet(${src.ftsTable}, ${src.snippetCol}, '⟪', '⟫', '…', 10) as snip
                 FROM ${src.ftsTable}
                 JOIN ${src.baseTable} ON ${src.baseTable}.Id = ${src.ftsTable}.rowid
@@ -377,6 +381,8 @@ export const GetSearchSuggestions = async (
                     field: SOURCES[i].label,
                     snippet: row.snip,
                     type: row.type || null,
+                    SourceFilePath: row.SourceFilePath,
+                    IsPdf: row.IsPdf,
                 })
             })
         })
@@ -672,3 +678,12 @@ export const delete_document = async (db: SQLiteDatabase, documentId: number): P
     });
 };
 
+export const runSqlRaw = async (db: SQLiteDatabase, sqlRaw: string): Promise<any[]> => {
+    try {
+        const rows = await db.getAllAsync(sqlRaw);
+        return rows;
+    } catch (error) {
+        console.error("Error executing raw SQL:", error);
+        throw error;
+    }
+}
