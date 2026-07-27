@@ -1,10 +1,9 @@
 import Spinner from "@/components/Spinner";
 import { ChatMessage } from "@/types";
-import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
-import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { FlatList, Keyboard, StyleSheet, View } from "react-native";
 import TemplateQuestions from "../TemplateQuestions";
 import Message from "./Message";
 
@@ -16,6 +15,26 @@ type Props = {
 }
 
 const Messages: React.FC<Props> = ({ AllMessageLoading, messages, onSelectTemplate, IsLoading }) => {
+    const listRef = useRef<FlatList>(null);
+
+    const scrollToBottom = (animated: boolean = true) => {
+        requestAnimationFrame(() => {
+            listRef.current?.scrollToEnd({ animated });
+        });
+    };
+
+    useEffect(() => {
+        if (messages.length > 0) {
+            scrollToBottom();
+        }
+    }, [messages]);
+
+    useEffect(() => {
+        const sub = Keyboard.addListener("keyboardDidShow", () => {
+            scrollToBottom();
+        });
+        return () => sub.remove();
+    }, []);
 
     if (AllMessageLoading) {
         return (
@@ -37,24 +56,22 @@ const Messages: React.FC<Props> = ({ AllMessageLoading, messages, onSelectTempla
 
     return (
         <FlatList
+            ref={listRef}
+            style={{ flex: 1 }}
             data={messages}
             keyExtractor={(item) => item.Id.toString()}
             renderItem={({ item }) => {
                 const isAwaitingReply =
                     IsLoading && item.Id === lastId && item.AIResponse === "";
-
-                return (
-                    <Message
-                        item={item}
-                        isAwaitingReply={isAwaitingReply}
-                    />
-                );
+                return <Message item={item} isAwaitingReply={isAwaitingReply} />;
             }}
             contentContainerStyle={style.listContent}
+            onContentSizeChange={() => scrollToBottom(false)}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="interactive"
         />
     )
 }
-
 
 const style = StyleSheet.create({
     TemplateQuestionsContainer: {
@@ -65,42 +82,6 @@ const style = StyleSheet.create({
         paddingHorizontal: scale(16),
         paddingVertical: vScale(16),
         gap: vScale(20),
-    },
-    exchange: {
-        gap: vScale(10),
-    },
-    userRow: {
-        flexDirection: "row",
-        justifyContent: "flex-end",
-    },
-    userBubble: {
-        maxWidth: "82%",
-        backgroundColor: "#234338",
-        borderRadius: scale(18),
-        borderBottomRightRadius: scale(4),
-        paddingHorizontal: scale(16),
-        paddingVertical: vScale(10),
-    },
-    userText: {
-        color: "#FAFAF8",
-        fontFamily: "Aeonik-Regular",
-        fontSize: fs(15),
-        lineHeight: fs(21),
-    },
-    aiRow: {
-        flexDirection: "row",
-        alignItems: "flex-start",
-    },
-    aiBubble: {
-        flex: 1,
-        maxWidth: "94%",
-        backgroundColor: "#FAFAF8",
-        borderRadius: scale(18),
-        borderTopLeftRadius: scale(4),
-        paddingHorizontal: scale(14),
-        paddingVertical: vScale(10),
-        borderWidth: 1,
-        borderColor: "#0D1F1C10",
     },
     SpinnerContainer: {
         flex: 1,

@@ -698,7 +698,10 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
             >
                 {content}
             </ScrollView>
-            <ChatBotAI />
+            <ChatBotAI
+                currentDocument="true"
+                documentId={document.Id}
+            />
             <Below
                 onViewOriginalPress={handleViewOriginalPress}
                 onEditPress={handleOpenEdit}

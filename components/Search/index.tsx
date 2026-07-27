@@ -195,7 +195,9 @@ const Search: React.FC = () => {
                 </ScrollView>
             }
             {documents.length === 0 || !IsSearchIng &&
-                <ChatBotAI />
+                <ChatBotAI
+                    currentDocument="false"
+                />
             }
         </View>
     )

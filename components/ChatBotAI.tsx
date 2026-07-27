@@ -3,15 +3,27 @@ import { vScale } from "@/utils/vScale"
 import Feather from "@expo/vector-icons/Feather"
 import { LinearGradient } from "expo-linear-gradient"
 import { useRouter } from "expo-router"
+import React from "react"
 import { StyleSheet, TouchableOpacity } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-const ChatBotAI = () => {
+type Props = {
+    currentDocument: "false" | "true"
+    documentId?: Number
+}
+
+const ChatBotAI: React.FC<Props> = ({ currentDocument, documentId }) => {
     const insets = useSafeAreaInsets()
     const router = useRouter()
 
     const redirect_to_chat = () => {
-        router.push("/Chat")
+        router.push({
+            pathname: "/Chat",
+            params: {
+                currentDocument,
+                documentId: documentId?.toString() || undefined
+            }
+        })
     }
 
     return (

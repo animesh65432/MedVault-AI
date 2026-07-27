@@ -1,4 +1,4 @@
-import { runSqlRaw } from "@/db/document";
+import { GetDocumentById, runSqlRaw } from "@/db/document";
 import { insertChatMessage, loadChatMessages } from "@/db/message";
 import { useCheckMessageType } from "@/hooks/use-CheckMessageType";
 import { useExplainDocumentsWithAiReponse } from "@/hooks/use-ExplainDocumentsWithAiReponse";
@@ -16,11 +16,13 @@ import Header from "./Header";
 import Messages from "./Messages";
 
 type Props = {
-    currentDocument: boolean
+    currentDocument: boolean;
+    documentId: number | undefined;
 }
 
-const Chat: React.FC<Props> = ({ currentDocument }) => {
+const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
     const db = useSQLiteContext();
+    const [currentDocumentData, setCurrentDocumentData] = useState<any>(null);
     const [AllMessageLoading, setAllMessageLoading] = useState(false);
     const [message, setMessage] = useState<string>("");
     const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -83,7 +85,18 @@ const Chat: React.FC<Props> = ({ currentDocument }) => {
                     types = data.types ?? [];
                     sources = fixSources(docs)
                 }
-            } else {
+            } else if (messageType === "CURRENT_DOCUMENT") {
+                if (!currentDocumentData) {
+                    answerText = "I couldn't load the open document. Please try again.";
+                } else {
+                    answerText = await ExplainDocumentsWithAiReponse(
+                        message,
+                        currentDocumentData,
+                        historyMessages
+                    );
+                }
+            }
+            else {
                 answerText = await GenralAiResponse(message, historyMessages);
             }
 
@@ -132,6 +145,17 @@ const Chat: React.FC<Props> = ({ currentDocument }) => {
         }
     };
 
+    const fetchDocument = async (id: number) => {
+        try {
+            const document = await GetDocumentById(db, id);
+            if (document) {
+                setCurrentDocumentData(document);
+            }
+        } catch (error) {
+            console.log("Error fetching document:", error);
+        }
+    }
+
     const onSelectTemplate = (template: string) => {
         setMessage(template);
     };
@@ -151,6 +175,13 @@ const Chat: React.FC<Props> = ({ currentDocument }) => {
     useEffect(() => {
         fetchMessages();
     }, [db]);
+
+    useEffect(() => {
+        if (currentDocument && documentId) {
+            fetchDocument(documentId);
+        }
+    }, [db, currentDocument, documentId]);
+
     return (
         <View style={styles.container}>
             <Header />
@@ -160,7 +191,9 @@ const Chat: React.FC<Props> = ({ currentDocument }) => {
                 messages={messages}
                 onSelectTemplate={onSelectTemplate}
             />
-            <KeyboardStickyView>
+            <KeyboardStickyView
+                offset={{ closed: 0, opened: 0 }}
+            >
                 <Footer
                     onSend={handleSendMessage}
                     isSending={IsLoading}
