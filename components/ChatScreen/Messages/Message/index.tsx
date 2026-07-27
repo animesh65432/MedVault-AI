@@ -6,6 +6,7 @@ import { vScale } from '@/utils/vScale';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Markdown from "react-native-markdown-display";
+import ShowMore from "./ShowMore";
 import Sources from "./Sources";
 
 const markdownRules = {
@@ -45,6 +46,12 @@ const Message: React.FC<Props> = ({ isAwaitingReply, item }) => {
                         <Markdown style={markdownStyles} rules={markdownRules}>
                             {item.AIResponse}
                         </Markdown>
+                        {item.ShowMore && item.TableName && item.TableName?.length > 0 &&
+                            <ShowMore
+                                tableName={item.TableName}
+                                Types={item.Types || []}
+                            />
+                        }
                         {item.Soucres &&
                             <Sources sources={item.Soucres} />
                         }

@@ -1,14 +1,15 @@
+import PDFViewer from "@/components/DocumentResult/PDFViewer";
 import { SourcesTypes } from "@/types";
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { Feather } from '@expo/vector-icons';
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import ImageView from "react-native-image-viewing";
 
 type Props = {
     sources: SourcesTypes[];
-    onPressSource?: (source: SourcesTypes) => void;
 };
 
 const getFileName = (path: string): string => {
@@ -16,10 +17,26 @@ const getFileName = (path: string): string => {
     return parts[parts.length - 1] || path;
 };
 
-const Sources: React.FC<Props> = ({ sources, onPressSource }) => {
+const Sources: React.FC<Props> = ({ sources }) => {
+    const [selectedPdfUri, setSelectedPdfUri] = useState<string | null>(null);
+    const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+
     if (!sources || sources.length === 0) {
         return null;
     }
+
+    const imageSources = sources.filter((s) => !s.IsPdf);
+
+    const handlePressSource = (source: SourcesTypes) => {
+        if (source.IsPdf) {
+            setSelectedPdfUri(source.SourceFilePath);
+        } else {
+            const index = imageSources.findIndex(
+                (s) => s.SourceFilePath === source.SourceFilePath
+            );
+            setSelectedImageIndex(index >= 0 ? index : 0);
+        }
+    };
 
     return (
         <View style={style.container}>
@@ -40,7 +57,7 @@ const Sources: React.FC<Props> = ({ sources, onPressSource }) => {
                         key={`${source.SourceFilePath}-${index}`}
                         style={style.chip}
                         activeOpacity={0.7}
-                        onPress={() => onPressSource?.(source)}
+                        onPress={() => handlePressSource(source)}
                     >
                         <View style={style.iconWrap}>
                             <Feather
@@ -55,6 +72,21 @@ const Sources: React.FC<Props> = ({ sources, onPressSource }) => {
                     </TouchableOpacity>
                 ))}
             </ScrollView>
+
+            {selectedPdfUri && (
+                <PDFViewer
+                    uri={selectedPdfUri}
+                    visible={!!selectedPdfUri}
+                    Onclose={() => setSelectedPdfUri(null)}
+                />
+            )}
+
+            <ImageView
+                images={imageSources.map((s) => ({ uri: s.SourceFilePath }))}
+                imageIndex={selectedImageIndex ?? 0}
+                visible={selectedImageIndex !== null}
+                onRequestClose={() => setSelectedImageIndex(null)}
+            />
         </View>
     );
 };
