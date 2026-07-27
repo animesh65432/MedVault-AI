@@ -1,3 +1,4 @@
+import DocumentHero from "@/components/DocumentView/DocumentHero";
 import { BillingItem, MedicalBillDocument } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
@@ -25,9 +26,11 @@ type Props = {
     onUpdateSubtotal: (value: string) => void;
     onUpdateDiscount: (value: string) => void;
     onUpdateTotal: (value: string) => void;
+    isPdf: boolean;
+    sourceFilePath: string
 };
 
-const MedicalBill: React.FC<Props> = ({ onUpdateTotal, onUpdateSubtotal, onUpdateDiscount, onUpdateItem, onRemoveItem, onAddItem, onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, document, isEditable }) => {
+const MedicalBill: React.FC<Props> = ({ isPdf, sourceFilePath, onUpdateTotal, onUpdateSubtotal, onUpdateDiscount, onUpdateItem, onRemoveItem, onAddItem, onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, document, isEditable }) => {
     const meta = document.document_metadata;
 
     return (
@@ -40,6 +43,10 @@ const MedicalBill: React.FC<Props> = ({ onUpdateTotal, onUpdateSubtotal, onUpdat
             <View
                 style={styles.div}
             >
+                <DocumentHero
+                    isPdf={isPdf}
+                    sourceFilePath={sourceFilePath}
+                />
                 <Title
                     title={document.title}
                     type={document.type}
@@ -96,7 +103,6 @@ const styles = {
         paddingBottom: scale(40),
     },
     div: {
-        backgroundColor: "#234338",
         borderRadius: scale(16),
         padding: scale(16),
         gap: scale(10)

@@ -1,3 +1,4 @@
+import DocumentHero from "@/components/DocumentView/DocumentHero";
 import { Medicine as MedicineType, ReferralLetterDocument, Reminder } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
@@ -28,6 +29,8 @@ type Props = {
     onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void;
     onChangeTextProseBlock: (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
     IsShowDocument?: boolean;
+    isPdf: boolean
+    sourceFilePath: string
 };
 
 const ReferralLetter: React.FC<Props> = ({
@@ -48,7 +51,9 @@ const ReferralLetter: React.FC<Props> = ({
     onAddReminder,
     onRemoveReminder,
     onChangeTextProseBlock,
-    IsShowDocument = false
+    IsShowDocument = false,
+    isPdf,
+    sourceFilePath
 }) => {
     const meta = document.document_metadata;
 
@@ -62,6 +67,10 @@ const ReferralLetter: React.FC<Props> = ({
             <View
                 style={styles.div}
             >
+                <DocumentHero
+                    isPdf={true}
+                    sourceFilePath={sourceFilePath}
+                />
                 <Title
                     isEditable={isEditable}
                     title={document.title}
@@ -128,7 +137,6 @@ const styles = {
         paddingBottom: scale(40),
     },
     div: {
-        backgroundColor: "#234338",
         borderRadius: scale(16),
         padding: scale(16),
         gap: scale(10)

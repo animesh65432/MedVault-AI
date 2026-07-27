@@ -1,3 +1,4 @@
+import DocumentHero from "@/components/DocumentView/DocumentHero";
 import { LabReportDocument, LabTest } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
@@ -22,9 +23,11 @@ type Props = {
     onChangeTest: (index: number, patch: Partial<LabTest>) => void;
     onRemoveTest: (index: number) => void;
     onAddTest: (test: LabTest) => void;
+    isPdf: boolean;
+    sourceFilePath: string
 };
 
-const LabReport: React.FC<Props> = ({ onAddTest, onRemoveTest, onChangeTest, onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, document, isEditable }) => {
+const LabReport: React.FC<Props> = ({ sourceFilePath, isPdf, onAddTest, onRemoveTest, onChangeTest, onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, document, isEditable }) => {
     const meta = document.document_metadata;
 
     return (
@@ -35,6 +38,10 @@ const LabReport: React.FC<Props> = ({ onAddTest, onRemoveTest, onChangeTest, onU
             bottomOffset={scale(80)}
         >
             <View style={styles.div}>
+                <DocumentHero
+                    isPdf={isPdf}
+                    sourceFilePath={sourceFilePath}
+                />
                 <Title
                     title={document.title}
                     type={document.type}
@@ -88,7 +95,6 @@ const styles = {
         paddingBottom: scale(40),
     },
     div: {
-        backgroundColor: "#234338",
         borderRadius: scale(16),
         padding: scale(16),
         gap: scale(10)

@@ -1,5 +1,5 @@
 import { ExcuteLlmUrl } from "@/config";
-import { TypeOfDocumenet } from "@/types";
+import { ChatMessagePayload, TypeOfDocumenet } from "@/types";
 import { useState } from "react";
 
 type MakesqlRawResponse = {
@@ -7,13 +7,13 @@ type MakesqlRawResponse = {
     sql: string,
     countSql: string,
     table: string,
-    type: TypeOfDocumenet
+    types: TypeOfDocumenet[]
 }
 
 
 export const useMakeSqlRaw = () => {
     const [error, setError] = useState<string | null>(null);
-    const MakesqlRaw = async (text: string) => {
+    const MakesqlRaw = async (text: string, history: ChatMessagePayload[]) => {
         try {
             const response = await fetch(ExcuteLlmUrl, {
                 method: "POST",
@@ -22,6 +22,7 @@ export const useMakeSqlRaw = () => {
                 },
                 body: JSON.stringify({
                     text,
+                    history
                 }),
             })
 

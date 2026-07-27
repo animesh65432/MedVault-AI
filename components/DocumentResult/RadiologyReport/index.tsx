@@ -1,3 +1,4 @@
+import DocumentHero from "@/components/DocumentView/DocumentHero";
 import { RadiologyReportDocument } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
@@ -20,9 +21,11 @@ type Props = {
     onRemoveTag: (index: number) => void;
     onAddTag: (value: string) => void;
     onChangeTextProseBlock: (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
+    isPdf: boolean;
+    sourceFilePath: string
 };
 
-const RadiologyReport: React.FC<Props> = ({ onChangeTextProseBlock, onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, isEditable, document }) => {
+const RadiologyReport: React.FC<Props> = ({ isPdf, sourceFilePath, onChangeTextProseBlock, onUpdateNote, onRemoveNote, onUpdateTag, onRemoveTag, onAddTag, onAddNote, onFieldValueChange, onChangeTitle, isEditable, document }) => {
     const meta = document.document_metadata;
 
     return (
@@ -35,6 +38,10 @@ const RadiologyReport: React.FC<Props> = ({ onChangeTextProseBlock, onUpdateNote
             <View
                 style={styles.div}
             >
+                <DocumentHero
+                    isPdf={isPdf}
+                    sourceFilePath={sourceFilePath}
+                />
                 <Title
                     title={document.title}
                     type={document.type}
@@ -99,7 +106,6 @@ const styles = {
         paddingBottom: scale(40),
     },
     div: {
-        backgroundColor: "#234338",
         borderRadius: scale(16),
         padding: scale(16),
         gap: scale(10)

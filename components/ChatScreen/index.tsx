@@ -1,11 +1,14 @@
 import { runSqlRaw } from "@/db/document";
+import { insertChatMessage, loadChatMessages } from "@/db/message";
 import { useCheckMessageType } from "@/hooks/use-CheckMessageType";
 import { useExplainDocumentsWithAiReponse } from "@/hooks/use-ExplainDocumentsWithAiReponse";
 import { useGenralAiResponse } from "@/hooks/use-GenralAiResponse";
 import { useMakeSqlRaw } from "@/hooks/use-MakeSqlRaw";
-import { ChatMessage } from "@/types";
+import { ChatMessage, SourcesTypes, TypeOfDocumenet } from "@/types";
+import { fixSources } from "@/utils/fixSources";
+import { makeHistoryPayload } from "@/utils/makehistoryPayload";
 import { useSQLiteContext } from "expo-sqlite";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardStickyView } from "react-native-keyboard-controller";
 import Footer from "./Footer";
@@ -13,11 +16,12 @@ import Header from "./Header";
 import Messages from "./Messages";
 
 type Props = {
-    type: "Chat" | "Search"
+    currentDocument: boolean
 }
 
-const Chat: React.FC<Props> = ({ type }) => {
-    const db = useSQLiteContext()
+const Chat: React.FC<Props> = ({ currentDocument }) => {
+    const db = useSQLiteContext();
+    const [AllMessageLoading, setAllMessageLoading] = useState(false);
     const [message, setMessage] = useState<string>("");
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [IsLoading, setIsLoading] = useState(false);
@@ -28,45 +32,130 @@ const Chat: React.FC<Props> = ({ type }) => {
 
     const handleSendMessage = async (message: string) => {
         setIsLoading(true);
-        let count = 0;
+        const tempId = Date.now();
+        const historyMessages = makeHistoryPayload(messages);
         try {
-            const messageType = await CheckMessageType(message, false);
+
+            setMessages((prevMessages) => [
+                ...prevMessages,
+                {
+                    Id: tempId,
+                    UserMessage: message,
+                    AIResponse: "",
+                    ShowMore: false,
+                    TableName: "",
+                    Types: [],
+                    Soucres: [],
+                    CreatedAt: new Date().toISOString(),
+                },
+            ]);
+
+            const messageType = await CheckMessageType(message, currentDocument);
+
+            let answerText: string | undefined;
+            let hasMore = false;
+            let showMoreTable = "";
+            let types: TypeOfDocumenet[] = [];
+            let sources: SourcesTypes[] = [];
+
+
             if (messageType === "DATABASE_QUERY") {
-                const data = await MakesqlRaw(message);
+                const data = await MakesqlRaw(message, historyMessages);
                 if (!data?.sql || data.sql.trim() === "") {
-                    return;
+                    answerText = "Sorry, I couldn't find matching records for that.";
+                } else {
+                    const docs = await runSqlRaw(db, data.sql);
+                    let totalCount = 0;
+
+                    if (data.countSql) {
+                        const countResult = await runSqlRaw(db, data.countSql);
+                        totalCount = countResult?.[0]?.total ?? 0;
+                    }
+
+                    answerText = await ExplainDocumentsWithAiReponse(
+                        message,
+                        docs,
+                        historyMessages
+                    );
+
+                    hasMore = totalCount > 3;
+                    showMoreTable = data.table ?? "";
+                    types = data.types ?? [];
+                    sources = fixSources(docs)
                 }
-                console.log("data", data)
-                const docs = await runSqlRaw(db, data.sql);
-                if (data.countSql) {
-                    let Responsecount = await runSqlRaw(db, data.countSql)
-                    count = Responsecount[0].total || 0;
-                }
-                console.log(count, "count")
-                const reponse = await ExplainDocumentsWithAiReponse(message, docs, count, data.table)
-                console.log("reponse", reponse)
+            } else {
+                answerText = await GenralAiResponse(message, historyMessages);
             }
-            else {
-                const response = await GenralAiResponse(message)
-                console.log("response", response)
-            }
-        }
-        catch (error) {
+
+            const finalAnswer = answerText ?? "Something went wrong. Please try again.";
+
+            const insertedId = await insertChatMessage(
+                db,
+                message,
+                finalAnswer,
+                hasMore,
+                showMoreTable,
+                types,
+                sources
+            );
+
+            setMessages((prevMessages) =>
+                prevMessages.map((msg) =>
+                    msg.Id === tempId
+                        ? {
+                            ...msg,
+                            Id: insertedId,
+                            AIResponse: finalAnswer,
+                            ShowMore: hasMore,
+                            TableName: showMoreTable,
+                            Types: types,
+                            Soucres: sources,
+                        }
+                        : msg
+                )
+            );
+
+        } catch (error) {
             console.log("Error handling message:", error);
-        }
-        finally {
+            setMessages((prevMessages) =>
+                prevMessages.map((msg) =>
+                    msg.Id === tempId
+                        ? {
+                            ...msg,
+                            AIResponse: "Error processing your message. Please try again.",
+                        }
+                        : msg
+                )
+            );
+        } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     const onSelectTemplate = (template: string) => {
         setMessage(template);
-    }
+    };
 
+    const fetchMessages = async () => {
+        setAllMessageLoading(true);
+        try {
+            const loadedMessages = await loadChatMessages(db);
+            setMessages(loadedMessages);
+        } catch (error) {
+            console.error("Error loading messages:", error);
+        } finally {
+            setAllMessageLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchMessages();
+    }, [db]);
     return (
         <View style={styles.container}>
             <Header />
             <Messages
+                AllMessageLoading={AllMessageLoading}
                 IsLoading={IsLoading}
                 messages={messages}
                 onSelectTemplate={onSelectTemplate}
@@ -80,15 +169,15 @@ const Chat: React.FC<Props> = ({ type }) => {
                 />
             </KeyboardStickyView>
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         display: "flex",
-        flexDirection: "column"
-    }
-})
+        flexDirection: "column",
+    },
+});
 
-export default Chat
+export default Chat;

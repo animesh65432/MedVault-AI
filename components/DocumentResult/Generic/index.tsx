@@ -1,3 +1,4 @@
+import DocumentHero from "@/components/DocumentView/DocumentHero";
 import { GenericDocument, Medicine as MedicineType, Reminder } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
@@ -28,6 +29,8 @@ type Props = {
     onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
     onChangeTextProseBlock: (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
     IsShowDocument?: boolean;
+    isPdf: boolean
+    sourceFilePath: string
 };
 
 const Generic: React.FC<Props> = ({
@@ -47,7 +50,9 @@ const Generic: React.FC<Props> = ({
     initialTitle,
     onAddReminder,
     onRemoveReminder,
-    IsShowDocument = false
+    IsShowDocument = false,
+    isPdf,
+    sourceFilePath
 }) => {
     const meta = document.document_metadata;
     return (
@@ -58,6 +63,10 @@ const Generic: React.FC<Props> = ({
             bottomOffset={scale(80)}
         >
             <View style={styles.div}>
+                <DocumentHero
+                    isPdf={isPdf}
+                    sourceFilePath={sourceFilePath}
+                />
                 <Title
                     onTitleChange={onChangeTitle}
                     title={document.title}
@@ -119,7 +128,6 @@ const styles = {
         paddingBottom: scale(40),
     },
     div: {
-        backgroundColor: "#234338",
         borderRadius: scale(16),
         padding: scale(16),
         gap: scale(10)

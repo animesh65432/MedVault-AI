@@ -1,4 +1,5 @@
 import { ExplainWithDocumentUrl } from "@/config";
+import { ChatMessagePayload } from "@/types";
 import { useState } from "react";
 
 export const useExplainDocumentsWithAiReponse = () => {
@@ -7,8 +8,7 @@ export const useExplainDocumentsWithAiReponse = () => {
     const ExplainDocumentsWithAiReponse = async (
         question: string,
         data: unknown,
-        count: number,
-        table: string
+        history: ChatMessagePayload[] = []
     ) => {
         try {
             setError(null);
@@ -22,8 +22,7 @@ export const useExplainDocumentsWithAiReponse = () => {
                 body: JSON.stringify({
                     question,
                     data,
-                    count,
-                    table,
+                    history
                 }),
             });
 

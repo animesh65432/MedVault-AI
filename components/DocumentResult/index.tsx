@@ -497,6 +497,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
             case "Prescription":
                 return (
                     <Prescription
+                        isPdf={isPdf}
                         onChangeTitle={onChangeTitle}
                         onFieldValueChange={onFieldValueChange}
                         isEditable={isEditable}
@@ -514,6 +515,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
                         IsShowDocument={true}
+                        sourceFilePath={fileUri}
                     />
                 );
             case "Prescription Receipt":
@@ -542,6 +544,8 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onAddReminder={onAddReminder}
                         onRemoveReminder={onRemoveReminder}
                         IsShowDocument={true}
+                        isPdf={isPdf}
+                        sourceFilePath={fileUri}
                     />
                 );
             case "Lab Report":
@@ -559,6 +563,8 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                     onChangeTest={onChangeTest}
                     onRemoveTest={onRemoveTest}
                     onAddTest={onAddTest}
+                    isPdf={isPdf}
+                    sourceFilePath={fileUri}
                 />;
             case "Radiology Report":
                 return <RadiologyReport
@@ -573,6 +579,8 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                     onAddTag={onAddTag}
                     onAddNote={onAddNote}
                     onChangeTextProseBlock={onChangeTextProseBlock}
+                    isPdf={isPdf}
+                    sourceFilePath={fileUri}
                 />;
             case "Medical Bill":
                 return <MedicalBill
@@ -592,6 +600,8 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                     onUpdateSubtotal={onUpdateSubtotal}
                     onUpdateDiscount={onUpdateDiscount}
                     onUpdateTotal={onUpdateTotal}
+                    isPdf={isPdf}
+                    sourceFilePath={fileUri}
                 />;
             case "Discharge Summary":
                 return (
@@ -617,6 +627,8 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onRemoveReminder={onRemoveReminder}
                         onChangeTextProseBlock={onChangeTextProseBlock}
                         IsShowDocument={true}
+                        isPdf={isPdf}
+                        sourceFilePath={fileUri}
                     />
                 );
             case "Referral Letter":
@@ -640,6 +652,8 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onRemoveReminder={onRemoveReminder}
                         onChangeTextProseBlock={onChangeTextProseBlock}
                         IsShowDocument={true}
+                        isPdf={isPdf}
+                        sourceFilePath={fileUri}
                     />
                 );
             case "Insurance Document":
@@ -666,6 +680,8 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                         onRemoveReminder={onRemoveReminder}
                         onChangeTextProseBlock={onChangeTextProseBlock}
                         IsShowDocument={true}
+                        isPdf={isPdf}
+                        sourceFilePath={fileUri}
                     />
                 );
             default: {

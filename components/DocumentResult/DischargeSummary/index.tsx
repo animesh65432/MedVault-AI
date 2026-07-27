@@ -1,3 +1,4 @@
+import DocumentHero from "@/components/DocumentView/DocumentHero";
 import { DischargeSummaryDocument, LabTest, Medicine as MedicineType, Reminder } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
@@ -35,6 +36,8 @@ type Props = {
     onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void
     onChangeTextProseBlock: (type: "Generic" | "Radiology Report" | "Discharge Summary" | "Referral Letter", label: string, value: string) => void;
     IsShowDocument?: boolean;
+    isPdf: boolean
+    sourceFilePath: string
 };
 
 const DischargeSummary: React.FC<Props> = ({
@@ -58,7 +61,9 @@ const DischargeSummary: React.FC<Props> = ({
     onAddReminder,
     onRemoveReminder,
     onChangeTextProseBlock,
-    IsShowDocument = false
+    IsShowDocument = false,
+    isPdf,
+    sourceFilePath
 }) => {
     const meta = document.document_metadata;
     const hasStayDates = meta.admission_date || meta.discharge_date;
@@ -71,6 +76,10 @@ const DischargeSummary: React.FC<Props> = ({
             bottomOffset={scale(80)}
         >
             <View style={styles.div}>
+                <DocumentHero
+                    isPdf={isPdf}
+                    sourceFilePath={sourceFilePath}
+                />
                 <Title
                     title={document.title}
                     type={document.type}
@@ -222,7 +231,6 @@ const styles = StyleSheet.create({
         color: "#234338",
     },
     div: {
-        backgroundColor: "#234338",
         borderRadius: scale(16),
         padding: scale(16),
         gap: scale(10)

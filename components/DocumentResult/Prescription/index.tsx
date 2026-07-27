@@ -1,3 +1,4 @@
+import DocumentHero from "@/components/DocumentView/DocumentHero";
 import { Medicine as MedicineType, PrescriptionDocument, Reminder } from "@/types";
 import { scale } from "@/utils/scale";
 import React from "react";
@@ -25,7 +26,9 @@ type Props = {
     initialTitle: string;
     onAddReminder: (index: number, reminder: Reminder) => void;
     onRemoveReminder: (medicineIndex: number, reminderIndex: number) => void;
-    IsShowDocument: boolean
+    IsShowDocument: boolean;
+    isPdf: boolean;
+    sourceFilePath: string;
 };
 
 const Prescription: React.FC<Props> = ({
@@ -45,7 +48,9 @@ const Prescription: React.FC<Props> = ({
     initialTitle,
     onAddReminder,
     onRemoveReminder,
-    IsShowDocument
+    IsShowDocument,
+    isPdf,
+    sourceFilePath
 }) => {
     const meta = document.document_metadata;
     return (
@@ -58,6 +63,11 @@ const Prescription: React.FC<Props> = ({
             <View
                 style={styles.div}
             >
+                <DocumentHero
+                    isPdf={isPdf}
+                    sourceFilePath={sourceFilePath}
+                />
+
                 <Title
                     isEditable={isEditable}
                     title={document.title}
@@ -113,7 +123,6 @@ const styles = {
         paddingBottom: scale(40),
     },
     div: {
-        backgroundColor: "#234338",
         borderRadius: scale(16),
         padding: scale(16),
         gap: scale(10)

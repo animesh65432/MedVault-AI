@@ -353,9 +353,23 @@ export type UploadedDocument =
 
 export type ChatType = "GENERAL_AI" | "CURRENT_DOCUMENT" | "DATABASE_QUERY"
 
+type SourcesTypes = {
+    IsPdf: boolean,
+    SourceFilePath: string,
+}
+
 export type ChatMessage = {
     Id: number;
     UserMessage: string,
     AIResponse: string,
-    CreatedAt: string
+    ShowMore: boolean,
+    TableName: string | null,
+    Types: TypeOfDocumenet[] | null,
+    Soucres: SourcesTypes[] | null,
+    CreatedAt: string,
+}
+
+export type ChatMessagePayload = {
+    "role": "user" | "assistant",
+    "content": string,
 }

@@ -1,20 +1,19 @@
 import { type SQLiteDatabase } from 'expo-sqlite';
 
 export async function migrateDbIfNeeded(db: SQLiteDatabase) {
-    const DATABASE_VERSION = 2;
-
+    const DATABASE_VERSION = 9;
     try {
         const result = await db.getFirstAsync<{ user_version: number }>(
             'PRAGMA user_version'
         );
 
         let currentDbVersion = result?.user_version ?? 0;
-
         if (currentDbVersion === 0) {
             currentDbVersion = 1;
         }
 
-        if (currentDbVersion < DATABASE_VERSION) {
+
+        if (currentDbVersion === DATABASE_VERSION) {
 
             await db.execAsync(`
             PRAGMA foreign_keys = ON;
@@ -174,12 +173,6 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
 
             CREATE INDEX IF NOT EXISTS idx_billingitems_document_id ON BillingItems(DocumentId);
 
-            CREATE TABLE IF NOT EXISTS MESSAGES (
-                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                UserMessage TEXT NOT NULL,
-                AIResponse TEXT NOT NULL,
-                CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
 
             -- ================= FTS5 SEARCH TABLES =================
 
@@ -250,6 +243,17 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 price,
                 content='BillingItems',
                 content_rowid='Id'
+            );
+
+            CREATE TABLE IF NOT EXISTS ChatMessages (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                UserMessage TEXT NOT NULL,
+                AIResponse TEXT NOT NULL,
+                ShowMore INTEGER NOT NULL DEFAULT 0,
+                TableName TEXT,
+                Types TEXT,
+                Soucres TEXT,
+                CreatedAt TEXT NOT NULL DEFAULT (datetime('now'))
             );
             
 
@@ -382,6 +386,8 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 INSERT INTO BillingItemsSearch(rowid, name, price) VALUES (new.Id, new.name, new.price);
             END;
         `);
+
+            console.log('Database schema created or verified successfully.');
         }
 
         await db.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);
