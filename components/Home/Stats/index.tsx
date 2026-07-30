@@ -3,7 +3,7 @@ import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
 import { useRouter } from "expo-router"
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import Entypo from 'react-native-vector-icons/Entypo'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Fontisto from 'react-native-vector-icons/Fontisto'
@@ -12,9 +12,9 @@ const Stats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, reminders
     const router = useRouter()
     return (
         <View style={styles.container}>
-            <View
+            <TouchableOpacity
                 style={styles.statBox}
-                onTouchStart={() => router.push("/Search")}
+                onPress={() => router.push("/Search")}
             >
                 <Fontisto
                     name="file-1"
@@ -23,11 +23,12 @@ const Stats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, reminders
                 />
                 <Text style={styles.count}>{documentsCount}</Text>
                 <Text style={styles.label}>Documents</Text>
-            </View>
-
+            </TouchableOpacity>
             <View style={styles.divider} />
-
-            <View style={styles.statBox}>
+            <TouchableOpacity
+                style={styles.statBox}
+                onPress={() => router.push("/Medicines")}
+            >
                 <FontAwesome5
                     name="pills"
                     size={scale(24)}
@@ -35,11 +36,14 @@ const Stats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, reminders
                 />
                 <Text style={styles.count}>{medicinesCount}</Text>
                 <Text style={styles.label}>Medicines</Text>
-            </View>
+            </TouchableOpacity>
 
             <View style={styles.divider} />
 
-            <View style={styles.statBox}>
+            <TouchableOpacity
+                style={styles.statBox}
+                onPress={() => router.push("/(tabs)/Alerts")}
+            >
                 <Entypo
                     name="bell"
                     size={scale(24)}
@@ -47,7 +51,7 @@ const Stats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, reminders
                 />
                 <Text style={styles.count}>{remindersCount}</Text>
                 <Text style={styles.label}>Reminders</Text>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }

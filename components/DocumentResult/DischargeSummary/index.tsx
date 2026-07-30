@@ -232,7 +232,6 @@ const styles = StyleSheet.create({
     },
     div: {
         borderRadius: scale(16),
-        padding: scale(16),
         gap: scale(10)
     },
     stayDateInput: {

@@ -32,3 +32,18 @@ export const TEMPLATE_QUESTIONS = [
     "What are my upcoming reminders?",
     "Show my recent prescriptions"
 ]
+
+
+export const DosageUnitOptions = [
+    { label: "mg", value: "mg" },
+    { label: "ml", value: "ml" },
+    { label: "tablet", value: "tablet" },
+    { label: "drops", value: "drops" },
+    { label: "puff", value: "puff" },
+]
+
+export const DurationUnitOptions = [
+    { label: "days", value: "days" },
+    { label: "weeks", value: "weeks" },
+    { label: "months", value: "months" },
+]

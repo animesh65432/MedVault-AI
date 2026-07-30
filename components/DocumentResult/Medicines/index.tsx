@@ -2,6 +2,7 @@ import { Medicine as MedicineType, Reminder } from "@/types";
 import { FrequencyOptions } from "@/utils/frequencyOptions";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Feather from "@expo/vector-icons/Feather";
 import Octicons from "@expo/vector-icons/Octicons";
 import React, { useState } from "react";
@@ -105,9 +106,17 @@ const Medicines: React.FC<Props> = ({
                                         placeholderTextColor="#B4B2A9"
                                     />
                                 ) : (
-                                    <Text style={styles.medName} numberOfLines={2}>
-                                        {med.name || "Unnamed medicine"}
-                                    </Text>
+                                    <>
+                                        <MaterialCommunityIcons
+                                            name="pill"
+                                            size={scale(18)}
+                                            color="#23423B"
+                                        />
+
+                                        <Text style={styles.medName} numberOfLines={2}>
+                                            {med.name || "Unnamed medicine"}
+                                        </Text>
+                                    </>
                                 )}
 
                                 <View style={styles.actionsRow}>
@@ -440,6 +449,10 @@ const styles = StyleSheet.create({
         fontFamily: "Aeonik-Medium",
         color: "#0D1F1C",
     },
+    rowtitle: {
+        display: "flex",
+        flexDirection: "row"
+    }
 });
 
 export default Medicines;

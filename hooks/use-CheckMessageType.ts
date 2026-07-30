@@ -27,7 +27,7 @@ export const useCheckMessageType = () => {
         }
         catch (err: any) {
             setError(err);
-            console.log("CheckMessageType", err);
+            console.log(err);
         }
     }
     return { error, CheckMessageType }

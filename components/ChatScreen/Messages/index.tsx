@@ -3,7 +3,7 @@ import { ChatMessage } from "@/types";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import React, { useEffect, useRef } from "react";
-import { FlatList, Keyboard, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import TemplateQuestions from "../TemplateQuestions";
 import Message from "./Message";
 
@@ -13,28 +13,23 @@ type Props = {
     IsLoading: boolean;
     AllMessageLoading: boolean
 }
-
 const Messages: React.FC<Props> = ({ AllMessageLoading, messages, onSelectTemplate, IsLoading }) => {
     const listRef = useRef<FlatList>(null);
-
-    const scrollToBottom = (animated: boolean = true) => {
-        requestAnimationFrame(() => {
-            listRef.current?.scrollToEnd({ animated });
-        });
-    };
+    const prevLengthRef = useRef(0);
 
     useEffect(() => {
-        if (messages.length > 0) {
-            scrollToBottom();
+        if (messages.length > prevLengthRef.current) {
+            const newIndex = messages.length - 1;
+            requestAnimationFrame(() => {
+                listRef.current?.scrollToIndex({
+                    index: newIndex,
+                    viewPosition: 0,
+                    animated: true,
+                });
+            });
         }
+        prevLengthRef.current = messages.length;
     }, [messages]);
-
-    useEffect(() => {
-        const sub = Keyboard.addListener("keyboardDidShow", () => {
-            scrollToBottom();
-        });
-        return () => sub.remove();
-    }, []);
 
     if (AllMessageLoading) {
         return (
@@ -65,8 +60,16 @@ const Messages: React.FC<Props> = ({ AllMessageLoading, messages, onSelectTempla
                     IsLoading && item.Id === lastId && item.AIResponse === "";
                 return <Message item={item} isAwaitingReply={isAwaitingReply} />;
             }}
-            contentContainerStyle={style.listContent}
-            onContentSizeChange={() => scrollToBottom(false)}
+            contentContainerStyle={[style.listContent, { paddingBottom: vScale(400) }]}
+            onScrollToIndexFailed={(info) => {
+                setTimeout(() => {
+                    listRef.current?.scrollToIndex({
+                        index: info.index,
+                        viewPosition: 0,
+                        animated: true,
+                    });
+                }, 100);
+            }}
             keyboardShouldPersistTaps="handled"
             keyboardDismissMode="interactive"
         />

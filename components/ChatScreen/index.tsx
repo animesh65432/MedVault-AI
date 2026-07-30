@@ -54,6 +54,8 @@ const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
 
             const messageType = await CheckMessageType(message, currentDocument);
 
+            console.log("Message Type:", messageType);
+
             let answerText: string | undefined;
             let hasMore = false;
             let showMoreTable = "";
@@ -63,6 +65,8 @@ const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
 
             if (messageType === "DATABASE_QUERY") {
                 const data = await MakesqlRaw(message, historyMessages);
+
+                console.log("SQL Data:", data);
                 if (!data?.sql || data.sql.trim() === "") {
                     answerText = "Sorry, I couldn't find matching records for that.";
                 } else {

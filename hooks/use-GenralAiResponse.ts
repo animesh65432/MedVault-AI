@@ -32,7 +32,7 @@ export const useGenralAiResponse = () => {
         }
         catch (err: any) {
             setError(err);
-            console.log("CheckMessageType", err);
+            console.log("GenralAiResponse", err);
         }
     }
 

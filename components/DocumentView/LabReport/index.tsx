@@ -93,7 +93,6 @@ const styles = {
         paddingBottom: scale(40),
     },
     div: {
-        backgroundColor: "#234338",
         borderRadius: scale(16),
         gap: scale(10)
     },

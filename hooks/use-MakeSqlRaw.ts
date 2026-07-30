@@ -35,7 +35,7 @@ export const useMakeSqlRaw = () => {
         }
         catch (err: any) {
             setError(err);
-            console.log("CheckMessageType", err);
+            console.log("MakesqlRaw", err);
         }
     }
     return { error, MakesqlRaw }

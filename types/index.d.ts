@@ -373,3 +373,28 @@ export type ChatMessagePayload = {
     "role": "user" | "assistant",
     "content": string,
 }
+
+
+export interface MedicineWithDetailsTypes {
+    Id: number;
+    DocumentId: number;
+    name: string;
+    dosage: string | null;
+    frequency: string | null;
+    duration: string | null;
+    prescribedDate: string;
+    doctorName: string | null;
+    clinicName: string | null;
+    timings?: string[];
+    iconColor?: string;
+    tags?: MedicineTag[];
+    courseLabel?: string;
+}
+
+export interface MedicineTag {
+    label: string;
+    icon: "sun" | "moon" | "utensils" | "coffee";
+    tone?: "accent" | "neutral";
+}
+
+export type MedicinesTab = "prescription" | "all";
