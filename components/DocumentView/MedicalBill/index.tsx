@@ -45,22 +45,25 @@ const MedicalBill: React.FC<Props> = ({ onUpdateTotal, onUpdateSubtotal, onUpdat
                     isPdf={document.IsPdf}
                     sourceFilePath={document.SourceFilePath}
                 />
-                <Title
-                    title={document.title}
-                    type={document.type}
-                    isEditable={isEditable}
-                    onTitleChange={onChangeTitle}
-                />
-
-                <FieldRows
-                    items={[
-                        { icon: "user", label: "Patient", value: meta.patient_name ?? undefined, key: "patient_name" },
-                        { icon: "home", label: "Hospital", value: meta.hospital_name ?? undefined, key: "hospital_name" },
-                        { icon: "calendar", label: "Date", value: meta.date ?? undefined, key: "date" },
-                    ]}
-                    isEditable={isEditable}
-                    onValueChange={onFieldValueChange}
-                />
+                <View
+                    style={styles.BelowDiv}
+                >
+                    <Title
+                        title={document.title}
+                        type={document.type}
+                        isEditable={isEditable}
+                        onTitleChange={onChangeTitle}
+                    />
+                    <FieldRows
+                        items={[
+                            { icon: "user", label: "Patient", value: meta.patient_name ?? undefined, key: "patient_name" },
+                            { icon: "home", label: "Hospital", value: meta.hospital_name ?? undefined, key: "hospital_name" },
+                            { icon: "calendar", label: "Date", value: meta.date ?? undefined, key: "date" },
+                        ]}
+                        isEditable={isEditable}
+                        onValueChange={onFieldValueChange}
+                    />
+                </View>
             </View>
             <Billing
                 items={meta.billing_items}
@@ -101,8 +104,12 @@ const styles = {
         paddingBottom: scale(40),
     },
     div: {
-        borderRadius: scale(16),
-        gap: scale(10)
+        borderRadius: scale(30),
+        gap: scale(10),
+        backgroundColor: "#F7F9F8",
+    },
+    BelowDiv: {
+        padding: scale(16),
     },
 };
 

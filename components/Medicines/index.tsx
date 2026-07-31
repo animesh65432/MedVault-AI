@@ -1,5 +1,6 @@
 import { CreateMedicine, GetAllMedicines, GetMedicinesCount, GetPrescriptionMedicines, GetPrescriptionMedicinesCount } from "@/db/medicines"
 import { MedicinesTab, MedicineWithDetailsTypes } from "@/types"
+import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
 import { useFocusEffect } from "expo-router"
 import { useSQLiteContext } from "expo-sqlite"
@@ -152,42 +153,53 @@ const MedicinesComponent: React.FC = () => {
                     activeTab={activeTab}
                     onChange={setActiveTab}
                 />
-                <SectionHeader
-                    title={activeTab === "prescription" ? "Prescriptions" : "All Medicines"}
-                    count={Count}
-                />
-                <FlatList
-                    data={rows}
-                    keyExtractor={(row) => row.key}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={styles.listContent}
-                    onEndReached={loadMore}
-                    onEndReachedThreshold={0.4}
-                    ListFooterComponent={
-                        IsLoadIngMore ? (
-                            <ActivityIndicator style={styles.footerSpinner} color="#234338" />
-                        ) : null
-                    }
-                    renderItem={({ item }) =>
-                        item.type === "divider" ? (
-                            <>
-                                <DateDivider
-                                    label={item.label}
+                {!IsLoadIng &&
+                    <SectionHeader
+                        title={activeTab === "prescription" ? "Prescriptions" : "All Medicines"}
+                        count={Count}
+                    />
+                }
+                {IsLoadIng ?
+                    <ActivityIndicator
+                        style={styles.MainSpinner}
+                        color="#234338"
+                        size={scale(30)}
+                    /> :
+                    <FlatList
+                        data={rows}
+                        keyExtractor={(row) => row.key}
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={styles.listContent}
+                        onEndReached={loadMore}
+                        onEndReachedThreshold={0.4}
+                        ListFooterComponent={
+                            IsLoadIngMore ? (
+                                <ActivityIndicator style={styles.footerSpinner} color="#234338" />
+                            ) : null
+                        }
+                        renderItem={({ item }) =>
+                            item.type === "divider" ? (
+                                <>
+                                    <DateDivider
+                                        label={item.label}
+                                    />
+                                    <AddMedicine
+                                        DocumentId={item.DocumentId}
+                                        setDocumentId={setDocumentId}
+                                        IsAddMedicineModalOpen={IsAddMedicineModalOpen}
+                                        setIsAddMedicineModalOpe={setIsAddMedicineModalOpen}
+                                    />
+                                </>
+                            ) : (
+                                <MedicineCard
+                                    activeTab={activeTab}
+                                    loadInitial={loadInitial}
+                                    medicine={item.medicine}
                                 />
-                                <AddMedicine
-                                    DocumentId={item.DocumentId}
-                                    setDocumentId={setDocumentId}
-                                    IsAddMedicineModalOpen={IsAddMedicineModalOpen}
-                                    setIsAddMedicineModalOpe={setIsAddMedicineModalOpen}
-                                />
-                            </>
-                        ) : (
-                            <MedicineCard
-                                medicine={item.medicine}
-                            />
-                        )
-                    }
-                />
+                            )
+                        }
+                    />
+                }
             </View>
             {activeTab !== "prescription" && (
                 <FAB onPress={OnToggoleAddMedicine} />
@@ -228,6 +240,9 @@ const styles = StyleSheet.create({
     footerSpinner: {
         marginVertical: vScale(16),
     },
+    MainSpinner: {
+        marginVertical: vScale(166)
+    }
 })
 
 export default MedicinesComponent

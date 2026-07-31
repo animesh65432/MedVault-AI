@@ -80,21 +80,22 @@ const DischargeSummary: React.FC<Props> = ({
                     isPdf={isPdf}
                     sourceFilePath={sourceFilePath}
                 />
-                <Title
-                    title={document.title}
-                    type={document.type}
-                    isEditable={isEditable}
-                    onTitleChange={onChangeTitle}
-                />
-
-                <FieldRows
-                    items={[
-                        { icon: "user", label: "Patient", value: meta.patient_name, key: "patient_name" },
-                        { icon: "home", label: "Hospital", value: meta.hospital_name, key: "hospital_name" },
-                    ]}
-                    isEditable={isEditable}
-                    onValueChange={onFieldValueChange}
-                />
+                <View style={styles.BelowDiv}>
+                    <Title
+                        title={document.title}
+                        type={document.type}
+                        isEditable={isEditable}
+                        onTitleChange={onChangeTitle}
+                    />
+                    <FieldRows
+                        items={[
+                            { icon: "user", label: "Patient", value: meta.patient_name, key: "patient_name" },
+                            { icon: "home", label: "Hospital", value: meta.hospital_name, key: "hospital_name" },
+                        ]}
+                        isEditable={isEditable}
+                        onValueChange={onFieldValueChange}
+                    />
+                </View>
             </View>
 
 
@@ -231,8 +232,12 @@ const styles = StyleSheet.create({
         color: "#234338",
     },
     div: {
-        borderRadius: scale(16),
-        gap: scale(10)
+        borderRadius: scale(30),
+        gap: scale(10),
+        backgroundColor: "#F7F9F8",
+    },
+    BelowDiv: {
+        padding: scale(16),
     },
     stayDateInput: {
         fontSize: fs(13),

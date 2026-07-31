@@ -74,21 +74,22 @@ const DischargeSummary: React.FC<Props> = ({
                     isPdf={document.IsPdf}
                     sourceFilePath={document.SourceFilePath}
                 />
-                <Title
-                    title={document.title}
-                    type={document.type}
-                    isEditable={isEditable}
-                    onTitleChange={onChangeTitle}
-                />
-
-                <FieldRows
-                    items={[
-                        { icon: "user", label: "Patient", value: meta.patient_name ?? undefined, key: "patient_name" },
-                        { icon: "home", label: "Hospital", value: meta.hospital_name ?? undefined, key: "hospital_name" },
-                    ]}
-                    isEditable={isEditable}
-                    onValueChange={onFieldValueChange}
-                />
+                <View style={styles.BelowDiv}>
+                    <Title
+                        title={document.title}
+                        type={document.type}
+                        isEditable={isEditable}
+                        onTitleChange={onChangeTitle}
+                    />
+                    <FieldRows
+                        items={[
+                            { icon: "user", label: "Patient", value: meta.patient_name ?? undefined, key: "patient_name" },
+                            { icon: "home", label: "Hospital", value: meta.hospital_name ?? undefined, key: "hospital_name" },
+                        ]}
+                        isEditable={isEditable}
+                        onValueChange={onFieldValueChange}
+                    />
+                </View>
             </View>
 
 
@@ -223,10 +224,6 @@ const styles = StyleSheet.create({
         fontFamily: "Aeonik-Medium",
         color: "#234338",
     },
-    div: {
-        borderRadius: scale(16),
-        gap: scale(10)
-    },
     stayDateInput: {
         fontSize: fs(13),
         fontFamily: "Aeonik-Medium",
@@ -234,7 +231,15 @@ const styles = StyleSheet.create({
         padding: 0,
         textAlign: "center",
         minWidth: scale(70),
-    }
+    },
+    div: {
+        borderRadius: scale(30),
+        gap: scale(10),
+        backgroundColor: "#F7F9F8",
+    },
+    BelowDiv: {
+        padding: scale(16),
+    },
 });
 
 export default DischargeSummary;

@@ -13,7 +13,9 @@ import MedicineTagPill from "../Medicinetagpill"
 
 
 interface MedicineCardProps {
-    medicine: MedicineWithDetailsTypes
+    medicine: MedicineWithDetailsTypes;
+    activeTab: "prescription" | "all";
+    loadInitial: (tab: "prescription" | "all") => Promise<void>;
 }
 
 function formatDoctorLine(medicine: MedicineWithDetailsTypes): string {
@@ -31,6 +33,8 @@ function splitValueUnit(raw: string | null | undefined): [string, string] {
 
 const MedicineCard: React.FC<MedicineCardProps> = ({
     medicine,
+    loadInitial,
+    activeTab
 }) => {
     const db = useSQLiteContext()
     const [isEditable, setIsEditable] = useState(false)
@@ -72,6 +76,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
         setIsDeleting(true)
         try {
             await deleteMedicine(db, medicine.Id)
+            await loadInitial(activeTab)
         } catch (error) {
             console.error("Error deleting medicine:", error)
         } finally {
@@ -90,7 +95,9 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
                 frequency: frequency.trim(),
                 duration: durationValue.trim() ? `${durationValue.trim()} ${durationUnit}` : "",
             }
+
             await updateMedicine(db, updated)
+            await loadInitial(activeTab)
             setIsEditable(false)
         } catch (error) {
             console.error("Error updating medicine:", error)

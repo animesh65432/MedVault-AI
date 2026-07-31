@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     },
     backText: {
         color: '#234338',
-        fontSize: fs(17),
+        fontSize: fs(23),
         fontFamily: 'Aeonik-Medium',
     },
     pressed: {

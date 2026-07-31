@@ -41,25 +41,26 @@ const RadiologyReport: React.FC<Props> = ({ onChangeTextProseBlock, onUpdateNote
                     sourceFilePath={document.SourceFilePath}
                 />
 
-                <Title
-                    title={document.title}
-                    type={document.type}
-                    isEditable={isEditable}
-                    onTitleChange={onChangeTitle}
-                />
-
-                <FieldRows
-                    items={[
-                        { icon: "user", label: "Patient", value: meta.patient_name ?? undefined, key: "patient_name" },
-                        { icon: "home", label: "Center", value: meta.center_name ?? undefined, key: "center_name" },
-                        { icon: "activity", label: "Referred by", value: meta.referred_by ?? undefined, key: "referred_by" },
-                        { icon: "calendar", label: "Date", value: meta.date ?? undefined, key: "date" },
-                        { icon: "aperture", label: "Modality", value: meta.modality ?? undefined, key: "modality" },
-                        { icon: "crosshair", label: "Body part", value: meta.body_part ?? undefined, key: "body_part" },
-                    ]}
-                    isEditable={isEditable}
-                    onValueChange={onFieldValueChange}
-                />
+                <View style={styles.BelowDiv}>
+                    <Title
+                        title={document.title}
+                        type={document.type}
+                        isEditable={isEditable}
+                        onTitleChange={onChangeTitle}
+                    />
+                    <FieldRows
+                        items={[
+                            { icon: "user", label: "Patient", value: meta.patient_name ?? undefined, key: "patient_name" },
+                            { icon: "home", label: "Center", value: meta.center_name ?? undefined, key: "center_name" },
+                            { icon: "activity", label: "Referred by", value: meta.referred_by ?? undefined, key: "referred_by" },
+                            { icon: "calendar", label: "Date", value: meta.date ?? undefined, key: "date" },
+                            { icon: "aperture", label: "Modality", value: meta.modality ?? undefined, key: "modality" },
+                            { icon: "crosshair", label: "Body part", value: meta.body_part ?? undefined, key: "body_part" },
+                        ]}
+                        isEditable={isEditable}
+                        onValueChange={onFieldValueChange}
+                    />
+                </View>
             </View>
 
             <ProseBlock
@@ -105,8 +106,12 @@ const styles = {
         paddingBottom: scale(40),
     },
     div: {
-        borderRadius: scale(16),
-        gap: scale(10)
+        borderRadius: scale(30),
+        gap: scale(10),
+        backgroundColor: "#F7F9F8",
+    },
+    BelowDiv: {
+        padding: scale(16),
     },
 };
 

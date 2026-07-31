@@ -67,21 +67,23 @@ const Generic: React.FC<Props> = ({
                     isPdf={isPdf}
                     sourceFilePath={sourceFilePath}
                 />
-                <Title
-                    onTitleChange={onChangeTitle}
-                    title={document.title}
-                    type={document.type}
-                    isEditable={isEditable}
-                />
+                <View style={styles.BelowDiv} >
+                    <Title
+                        onTitleChange={onChangeTitle}
+                        title={document.title}
+                        type={document.type}
+                        isEditable={isEditable}
+                    />
 
-                <FieldRows
-                    items={[
-                        { icon: "user", label: "Patient", value: meta.patient_name, key: "patient_name" },
-                        { icon: "calendar", label: "Date", value: meta.date, key: "date" },
-                    ]}
-                    isEditable={isEditable}
-                    onValueChange={onFieldValueChange}
-                />
+                    <FieldRows
+                        items={[
+                            { icon: "user", label: "Patient", value: meta.patient_name, key: "patient_name" },
+                            { icon: "calendar", label: "Date", value: meta.date, key: "date" },
+                        ]}
+                        isEditable={isEditable}
+                        onValueChange={onFieldValueChange}
+                    />
+                </View>
             </View>
             <ProseBlock
                 onChangeText={onFieldValueChange}
@@ -128,8 +130,12 @@ const styles = {
         paddingBottom: scale(40),
     },
     div: {
-        borderRadius: scale(16),
-        gap: scale(10)
+        borderRadius: scale(30),
+        gap: scale(10),
+        backgroundColor: "#F7F9F8",
+    },
+    BelowDiv: {
+        padding: scale(16),
     },
 };
 
