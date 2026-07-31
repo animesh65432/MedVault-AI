@@ -1,10 +1,11 @@
+import { deleteMedicine, updateMedicine } from "@/db/medicines"
 import { MedicineWithDetailsTypes } from "@/types"
 import { DosageUnitOptions, DurationUnitOptions } from "@/utils/contensnt"
 import { FrequencyOptions } from "@/utils/frequencyOptions"
 import { fs } from "@/utils/fs"
 import { scale } from "@/utils/scale"
-import { TimingOptions } from "@/utils/timing"
 import Feather from "@expo/vector-icons/Feather"
+import { useSQLiteContext } from "expo-sqlite"
 import React, { useState } from "react"
 import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { Dropdown } from "react-native-element-dropdown"
@@ -13,10 +14,6 @@ import MedicineTagPill from "../Medicinetagpill"
 
 interface MedicineCardProps {
     medicine: MedicineWithDetailsTypes
-    onPress?: (medicine: MedicineWithDetailsTypes) => void
-    onDeleted?: (id: MedicineWithDetailsTypes["Id"]) => void
-    onUpdated?: (medicine: MedicineWithDetailsTypes) => void
-    onSetReminder?: (medicine: MedicineWithDetailsTypes) => void
 }
 
 function formatDoctorLine(medicine: MedicineWithDetailsTypes): string {
@@ -34,10 +31,8 @@ function splitValueUnit(raw: string | null | undefined): [string, string] {
 
 const MedicineCard: React.FC<MedicineCardProps> = ({
     medicine,
-    onPress,
-    onDeleted,
-    onUpdated,
 }) => {
+    const db = useSQLiteContext()
     const [isEditable, setIsEditable] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
@@ -54,9 +49,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
     const [durationValue, setDurationValue] = useState(durationInitialValue)
     const [durationUnit, setDurationUnit] = useState(durationInitialUnit || "days")
 
-    const [timings, setTimings] = useState<string[]>(medicine.timings ?? [])
-
-    const hasDetails = medicine.dosage || medicine.frequency || medicine.duration || medicine.timings?.length
+    const hasDetails = medicine.dosage || medicine.frequency || medicine.duration
 
     const resetDraft = () => {
         setName(medicine.name)
@@ -67,14 +60,8 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
         const [drv, dru] = splitValueUnit(medicine.duration)
         setDurationValue(drv)
         setDurationUnit(dru || "days")
-        setTimings(medicine.timings ?? [])
     }
 
-    const toggleTiming = (value: string) => {
-        setTimings((prev) =>
-            prev.includes(value) ? prev.filter((t) => t !== value) : [...prev, value]
-        )
-    }
 
     const handleCancel = () => {
         resetDraft()
@@ -84,7 +71,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
     const handleDelete = async () => {
         setIsDeleting(true)
         try {
-            onDeleted?.(medicine.Id)
+            await deleteMedicine(db, medicine.Id)
         } catch (error) {
             console.error("Error deleting medicine:", error)
         } finally {
@@ -102,9 +89,8 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
                 dosage: dosageValue.trim() ? `${dosageValue.trim()}${dosageUnit}` : "",
                 frequency: frequency.trim(),
                 duration: durationValue.trim() ? `${durationValue.trim()} ${durationUnit}` : "",
-                timings,
             }
-            onUpdated?.(updated)
+            await updateMedicine(db, updated)
             setIsEditable(false)
         } catch (error) {
             console.error("Error updating medicine:", error)
@@ -117,7 +103,6 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
         <TouchableOpacity
             activeOpacity={isEditable ? 1 : 0.7}
             style={styles.card}
-            onPress={() => !isEditable && onPress?.(medicine)}
         >
             <View style={styles.cardTop}>
                 {isEditable ? (
@@ -249,30 +234,6 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
                             />
                         </View>
                     </View>
-
-
-                    <View style={styles.timingRow}>
-                        {(TimingOptions as unknown as { label: string; value: string }[]).map((opt) => {
-                            const active = timings.includes(opt.value)
-                            return (
-                                <TouchableOpacity
-                                    key={opt.value}
-                                    style={[styles.timingChip, active && styles.timingChipActive]}
-                                    onPress={() => toggleTiming(opt.value)}
-                                    hitSlop={6}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.timingChipText,
-                                            active && styles.timingChipTextActive,
-                                        ]}
-                                    >
-                                        {opt.label}
-                                    </Text>
-                                </TouchableOpacity>
-                            )
-                        })}
-                    </View>
                 </View>
             ) : (
                 !!hasDetails && (
@@ -280,7 +241,6 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
                         {!!medicine.dosage && <Pill text={medicine.dosage} />}
                         {!!medicine.frequency && <Pill text={medicine.frequency} />}
                         {!!medicine.duration && <Pill text={medicine.duration} />}
-                        {!!medicine.timings?.length && <Pill text={medicine.timings.join(", ")} />}
                     </View>
                 )
             )}

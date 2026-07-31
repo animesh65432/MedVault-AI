@@ -1,11 +1,12 @@
-import { GetMedicines, GetMedicinesCount, GetPrescriptionMedicinesCount } from "@/db/medicines"
+import { CreateMedicine, GetAllMedicines, GetMedicinesCount, GetPrescriptionMedicines, GetPrescriptionMedicinesCount } from "@/db/medicines"
 import { MedicinesTab, MedicineWithDetailsTypes } from "@/types"
 import { vScale } from "@/utils/vScale"
-import { useFocusEffect, useRouter } from "expo-router"
+import { useFocusEffect } from "expo-router"
 import { useSQLiteContext } from "expo-sqlite"
 import React, { useCallback, useMemo, useState } from "react"
-import { FlatList, StyleSheet, View } from "react-native"
+import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native"
 import AddMedicineModal from "../DocumentResult/AddMedicineModel"
+import AddMedicine from "./AddMedicine"
 import DateDivider from "./DateDivider"
 import FAB from "./Fab"
 import MedicineCard from "./MedicineCard"
@@ -14,38 +15,84 @@ import SectionHeader from "./SectionHeader"
 import TabSwitcher from "./TabSwitcher"
 
 type ListRow =
-    | { type: "divider"; key: string; label: string }
+    | { type: "divider"; key: string; label: string, DocumentId: number }
     | { type: "medicine"; key: string; medicine: MedicineWithDetailsTypes }
+
+const Limit = 10
 
 const MedicinesComponent: React.FC = () => {
     const db = useSQLiteContext()
-    const router = useRouter()
+    const [DocumentId, setDocumentId] = useState<number | null>(null)
+    const [IsLoadIng, setIsLoading] = useState<boolean>(true)
+    const [Page, setPage] = useState<number>(1)
+    const [IsLoadIngMore, setIsLoadingMore] = useState<boolean>(false)
+    const [HasMore, setHasMore] = useState<boolean>(true)
     const [IsAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState<boolean>(false)
     const [Count, setCount] = useState(0)
     const [medicines, setMedicines] = useState<MedicineWithDetailsTypes[]>([])
     const [activeTab, setActiveTab] = useState<MedicinesTab>("prescription")
-    const [collapsed, setCollapsed] = useState(false)
 
-    async function fetchMedicines() {
-        try {
-            if (activeTab === "prescription") {
-                const count = await GetPrescriptionMedicinesCount(db)
+    const fetchMedicineList = useCallback(
+        async (tab: MedicinesTab, pageNum: number) => {
+            return tab === "prescription"
+                ? await GetPrescriptionMedicines(db, pageNum, Limit)
+                : await GetAllMedicines(db, pageNum, Limit)
+        },
+        [db]
+    )
+
+    const fetchCount = useCallback(
+        async (tab: MedicinesTab) => {
+            return tab === "prescription"
+                ? await GetPrescriptionMedicinesCount(db)
+                : await GetMedicinesCount(db)
+        },
+        [db]
+    )
+
+    const loadInitial = useCallback(
+        async (tab: MedicinesTab) => {
+            setIsLoading(true)
+            try {
+                const [count, result] = await Promise.all([
+                    fetchCount(tab),
+                    fetchMedicineList(tab, 1),
+                ])
                 setCount(count)
-            } else {
-                const count = await GetMedicinesCount(db)
-                setCount(count)
+                setMedicines(result)
+                setPage(1)
+                setHasMore(result.length === Limit)
+            } catch (error) {
+                console.log("Error fetching medicines:", error)
+                setMedicines([])
+                setHasMore(false)
+            } finally {
+                setIsLoading(false)
             }
-            const result = await GetMedicines(db)
-            setMedicines(result)
+        },
+        [fetchCount, fetchMedicineList]
+    )
+
+    const loadMore = useCallback(async () => {
+        if (IsLoadIngMore || IsLoadIng || !HasMore) return
+        setIsLoadingMore(true)
+        try {
+            const nextPage = Page + 1
+            const result = await fetchMedicineList(activeTab, nextPage)
+            setMedicines((prev) => [...prev, ...result])
+            setPage(nextPage)
+            setHasMore(result.length === Limit)
         } catch (error) {
-            setMedicines([])
+            console.log("Error loading more medicines:", error)
+        } finally {
+            setIsLoadingMore(false)
         }
-    }
+    }, [IsLoadIngMore, IsLoadIng, HasMore, Page, activeTab, fetchMedicineList])
 
     useFocusEffect(
         useCallback(() => {
-            fetchMedicines()
-        }, [activeTab])
+            loadInitial(activeTab)
+        }, [activeTab, loadInitial])
     )
 
     const rows: ListRow[] = useMemo(() => {
@@ -67,16 +114,34 @@ const MedicinesComponent: React.FC = () => {
 
         const out: ListRow[] = []
         for (const [date, meds] of groups) {
-            out.push({ type: "divider", key: `div-${date}`, label: `PRESCRIBED ${date}` })
+            if (meds[0].DocumentId !== undefined) {
+                out.push({ type: "divider", key: `div-${date}`, label: `PRESCRIBED ${date}`, DocumentId: meds[0].DocumentId })
+            }
             for (const med of meds) {
                 out.push({ type: "medicine", key: `med-${med.Id}`, medicine: med })
             }
         }
         return out
-    }, [medicines, activeTab]);
+    }, [medicines, activeTab])
 
     const OnToggoleAddMedicine = () => {
         setIsAddMedicineModalOpen((prev) => !prev)
+    }
+
+    const onAddMedicine = async (medicine: MedicineWithDetailsTypes) => {
+        try {
+            await CreateMedicine(db, {
+                ...medicine,
+                DocumentId: DocumentId || undefined,
+            })
+            await loadInitial(activeTab)
+            setDocumentId(null)
+        } catch (error) {
+            console.log("Error adding medicine:", error)
+        }
+        finally {
+            setIsAddMedicineModalOpen(false)
+        }
     }
 
     return (
@@ -91,30 +156,47 @@ const MedicinesComponent: React.FC = () => {
                     title={activeTab === "prescription" ? "Prescriptions" : "All Medicines"}
                     count={Count}
                 />
-                {!collapsed && (
-                    <FlatList
-                        data={rows}
-                        keyExtractor={(row) => row.key}
-                        showsVerticalScrollIndicator={false}
-                        contentContainerStyle={styles.listContent}
-                        renderItem={({ item }) =>
-                            item.type === "divider" ? (
-                                <DateDivider label={item.label} />
-                            ) : (
-                                <MedicineCard
-                                    medicine={item.medicine}
+                <FlatList
+                    data={rows}
+                    keyExtractor={(row) => row.key}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={styles.listContent}
+                    onEndReached={loadMore}
+                    onEndReachedThreshold={0.4}
+                    ListFooterComponent={
+                        IsLoadIngMore ? (
+                            <ActivityIndicator style={styles.footerSpinner} color="#234338" />
+                        ) : null
+                    }
+                    renderItem={({ item }) =>
+                        item.type === "divider" ? (
+                            <>
+                                <DateDivider
+                                    label={item.label}
                                 />
-                            )
-                        }
-                    />
-                )}
+                                <AddMedicine
+                                    DocumentId={item.DocumentId}
+                                    setDocumentId={setDocumentId}
+                                    IsAddMedicineModalOpen={IsAddMedicineModalOpen}
+                                    setIsAddMedicineModalOpe={setIsAddMedicineModalOpen}
+                                />
+                            </>
+                        ) : (
+                            <MedicineCard
+                                medicine={item.medicine}
+                            />
+                        )
+                    }
+                />
             </View>
-            <FAB onPress={OnToggoleAddMedicine} />
+            {activeTab !== "prescription" && (
+                <FAB onPress={OnToggoleAddMedicine} />
+            )}
             {
                 IsAddMedicineModalOpen && (
                     <AddMedicineModal
                         onAddMedicine={(medicine) => {
-                            setIsAddMedicineModalOpen(false);
+                            onAddMedicine(medicine)
                         }}
                         setMedicineModalIsVisible={setIsAddMedicineModalOpen}
                         isMedicineModalVisible={IsAddMedicineModalOpen}
@@ -142,7 +224,10 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         gap: vScale(12),
         paddingHorizontal: vScale(18),
-    }
+    },
+    footerSpinner: {
+        marginVertical: vScale(16),
+    },
 })
 
 export default MedicinesComponent

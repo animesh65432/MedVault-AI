@@ -377,7 +377,6 @@ export type ChatMessagePayload = {
 
 export interface MedicineWithDetailsTypes {
     Id: number;
-    DocumentId: number;
     name: string;
     dosage: string | null;
     frequency: string | null;
@@ -385,10 +384,10 @@ export interface MedicineWithDetailsTypes {
     prescribedDate: string;
     doctorName: string | null;
     clinicName: string | null;
-    timings?: string[];
     iconColor?: string;
     tags?: MedicineTag[];
     courseLabel?: string;
+    DocumentId?: number;
 }
 
 export interface MedicineTag {

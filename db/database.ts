@@ -1,7 +1,7 @@
 import { type SQLiteDatabase } from 'expo-sqlite';
 
 export async function migrateDbIfNeeded(db: SQLiteDatabase) {
-    const DATABASE_VERSION = 9;
+    const DATABASE_VERSION = 12;
     try {
         const result = await db.getFirstAsync<{ user_version: number }>(
             'PRAGMA user_version'
@@ -116,7 +116,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
 
             CREATE TABLE IF NOT EXISTS Medicines (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                DocumentId INTEGER NOT NULL,
+                DocumentId INTEGER ,
                 name TEXT NOT NULL,
                 dosage TEXT,
                 frequency TEXT,

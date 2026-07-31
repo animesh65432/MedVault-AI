@@ -22,7 +22,16 @@ type Props = {
     setAddMedicineModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EMPTY: MedicineWithDetailsTypes = { name: "", dosage: "", frequency: "as_needed", duration: "", timing: [], reminders: [] };
+const EMPTY: MedicineWithDetailsTypes = {
+    name: "", dosage: "",
+    frequency: "as_needed",
+    duration: "",
+    Id: 0,
+    DocumentId: 0,
+    prescribedDate: "",
+    doctorName: null,
+    clinicName: null
+};
 
 const AddMedicineModal: React.FC<Props> = ({
     isMedicineModalVisible,
@@ -102,7 +111,7 @@ const AddMedicineModal: React.FC<Props> = ({
                         </View>
                         <Field
                             label="Duration"
-                            value={medicine.duration}
+                            value={medicine.duration || ""}
                             onChangeText={(t) => update("duration", t)}
                         />
                     </View>

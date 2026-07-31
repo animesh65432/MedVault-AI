@@ -3,7 +3,6 @@ import { FrequencyOptions } from "@/utils/frequencyOptions";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import { TimingOptions } from "@/utils/timing";
-import { vScale } from "@/utils/vScale";
 import Feather from "@expo/vector-icons/Feather";
 import React, { useState } from "react";
 import {
@@ -17,7 +16,6 @@ import {
 } from "react-native";
 import { Dropdown } from 'react-native-element-dropdown';
 
-// TODO: move to a shared utils file (e.g. @/utils/units) — duplicated in MedicineCard.tsx
 const DosageUnitOptions = [
     { label: "mg", value: "mg" },
     { label: "ml", value: "ml" },
@@ -106,7 +104,7 @@ const AddMedicineModal: React.FC<Props> = ({
                     <View style={styles.header}>
                         <Text style={styles.title}>Add Medicine</Text>
                         <TouchableOpacity onPress={close} hitSlop={8}>
-                            <Feather name="x" size={fs(18)} color="#5F5E5A" />
+                            <Feather name="x" size={fs(22)} color="#5F5E5A" />
                         </TouchableOpacity>
                     </View>
 
@@ -120,7 +118,6 @@ const AddMedicineModal: React.FC<Props> = ({
                     />
 
                     <View style={styles.grid}>
-                        {/* Dosage: number + unit */}
                         <View style={styles.fieldWrap}>
                             <Text style={styles.fieldLabel}>Dosage</Text>
                             <View style={styles.splitField}>
@@ -146,7 +143,6 @@ const AddMedicineModal: React.FC<Props> = ({
                             </View>
                         </View>
 
-                        {/* Frequency dropdown */}
                         <View style={styles.fieldWrap}>
                             <Text style={styles.fieldLabel}>Frequency</Text>
                             <Dropdown
@@ -173,7 +169,6 @@ const AddMedicineModal: React.FC<Props> = ({
                             />
                         </View>
 
-                        {/* Duration: number + unit */}
                         <View style={styles.fieldWrap}>
                             <Text style={styles.fieldLabel}>Duration</Text>
                             <View style={styles.splitField}>
@@ -200,7 +195,6 @@ const AddMedicineModal: React.FC<Props> = ({
                         </View>
                     </View>
 
-                    {/* Timing: toggle chips, no typing */}
                     <View style={styles.fieldWrap}>
                         <Text style={styles.fieldLabel}>Timing</Text>
                         <View style={styles.timingRow}>
@@ -251,8 +245,6 @@ const styles = StyleSheet.create({
         borderRadius: scale(20),
         padding: scale(16),
         gap: scale(12),
-        height: vScale(360),
-        margin: scale(5)
     },
     header: {
         flexDirection: "row",
@@ -260,7 +252,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     title: {
-        fontSize: fs(14),
+        fontSize: fs(16),
         fontFamily: "Aeonik-Medium",
         color: "#0D1F1C",
     },
@@ -277,14 +269,15 @@ const styles = StyleSheet.create({
     grid: {
         flexDirection: "row",
         flexWrap: "wrap",
-        gap: scale(8),
+        gap: scale(18),
     },
     fieldWrap: {
-        flexBasis: "47%",
+        display: "flex",
+        flexDirection: "column",
         gap: scale(4),
     },
     fieldLabel: {
-        fontSize: fs(10),
+        fontSize: fs(13),
         fontFamily: "Aeonik-Medium",
         textTransform: "uppercase",
         letterSpacing: 0.4,
@@ -294,8 +287,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: "#F1EFE8",
-        borderRadius: scale(8),
-        overflow: "hidden",
+        borderRadius: scale(13),
+        paddingHorizontal: scale(10),
     },
     splitFieldInput: {
         flex: 1,
@@ -320,6 +313,7 @@ const styles = StyleSheet.create({
         paddingVertical: scale(8),
         height: scale(36),
         justifyContent: "center",
+        minWidth: scale(120),
     },
     dropdownFocused: {
         borderWidth: 1,
@@ -368,8 +362,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#234338",
         borderRadius: scale(20),
         paddingVertical: scale(12),
-        alignItems: "center",
-        marginTop: scale(4),
+        alignItems: "center"
     },
     saveButtonDisabled: {
         opacity: 0.5,

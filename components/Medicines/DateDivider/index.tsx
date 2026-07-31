@@ -5,7 +5,7 @@ import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 
 interface DateDividerProps {
-    label: string
+    label: string;
 }
 
 const DateDivider: React.FC<DateDividerProps> = ({ label }) => {
