@@ -1,4 +1,4 @@
-import { MedicineWithDetailsTypes } from "@/types";
+import { Medicine } from "@/types";
 import { FrequencyOptions } from "@/utils/frequencyOptions";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
@@ -33,7 +33,7 @@ const DurationUnitOptions = [
 type Props = {
     isMedicineModalVisible: boolean;
     setMedicineModalIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    onAddMedicine: (medicine: MedicineWithDetailsTypes) => void;
+    onAddMedicine: (medicine: Medicine) => void;
 };
 
 type DraftMedicine = {
@@ -84,13 +84,15 @@ const AddMedicineModal: React.FC<Props> = ({
     const handleSave = () => {
         if (!draft.name.trim()) return;
 
-        const medicine: MedicineWithDetailsTypes = {
+        const medicine: Medicine = {
             name: draft.name.trim(),
             dosage: draft.dosageValue.trim() ? `${draft.dosageValue.trim()}${draft.dosageUnit}` : null,
             frequency: draft.frequency || null,
             duration: draft.durationValue.trim() ? `${draft.durationValue.trim()} ${draft.durationUnit}` : null,
             timings: draft.timings,
-        } as MedicineWithDetailsTypes;
+            reminders: [],
+            timing: draft.timings,
+        } as Medicine;
 
         onAddMedicine(medicine);
         setDraft(EMPTY);
@@ -277,7 +279,7 @@ const styles = StyleSheet.create({
         gap: scale(4),
     },
     fieldLabel: {
-        fontSize: fs(13),
+        fontSize: fs(12),
         fontFamily: "Aeonik-Medium",
         textTransform: "uppercase",
         letterSpacing: 0.4,

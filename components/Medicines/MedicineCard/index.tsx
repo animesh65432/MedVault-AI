@@ -4,6 +4,7 @@ import { DosageUnitOptions, DurationUnitOptions } from "@/utils/contensnt"
 import { FrequencyOptions } from "@/utils/frequencyOptions"
 import { fs } from "@/utils/fs"
 import { scale } from "@/utils/scale"
+import { TimingOptions } from "@/utils/timing"
 import Feather from "@expo/vector-icons/Feather"
 import { useSQLiteContext } from "expo-sqlite"
 import React, { useState } from "react"
@@ -53,6 +54,8 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
     const [durationValue, setDurationValue] = useState(durationInitialValue)
     const [durationUnit, setDurationUnit] = useState(durationInitialUnit || "days")
 
+    const [timings, setTimings] = useState<string[]>(medicine.timing || [])
+
     const hasDetails = medicine.dosage || medicine.frequency || medicine.duration
 
     const resetDraft = () => {
@@ -65,6 +68,16 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
         setDurationValue(drv)
         setDurationUnit(dru || "days")
     }
+
+    const toggleTiming = (value: string) => {
+        setTimings((prev) => {
+            if (prev.includes(value)) {
+                return prev.filter((v) => v !== value)
+            } else {
+                return [...prev, value]
+            }
+        })
+    };
 
 
     const handleCancel = () => {
@@ -94,6 +107,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
                 dosage: dosageValue.trim() ? `${dosageValue.trim()}${dosageUnit}` : "",
                 frequency: frequency.trim(),
                 duration: durationValue.trim() ? `${durationValue.trim()} ${durationUnit}` : "",
+                timing: timings,
             }
 
             await updateMedicine(db, updated)
@@ -240,6 +254,31 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
                                 onChange={(item) => setDurationUnit(item.value)}
                             />
                         </View>
+                        <View style={styles.fieldWrap}>
+                            <Text style={styles.fieldLabel}>Timing</Text>
+                            <View style={styles.timingRow}>
+                                {(TimingOptions as unknown as { label: string; value: string }[]).map((opt) => {
+                                    const active = timings.includes(opt.value)
+                                    return (
+                                        <TouchableOpacity
+                                            key={opt.value}
+                                            onPress={() => toggleTiming(opt.value)}
+                                            style={[styles.timingChip, active && styles.timingChipActive]}
+                                            hitSlop={6}
+                                        >
+                                            <Text
+                                                style={[
+                                                    styles.timingChipText,
+                                                    active && styles.timingChipTextActive,
+                                                ]}
+                                            >
+                                                {opt.label}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    );
+                                })}
+                            </View>
+                        </View>
                     </View>
                 </View>
             ) : (
@@ -248,6 +287,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
                         {!!medicine.dosage && <Pill text={medicine.dosage} />}
                         {!!medicine.frequency && <Pill text={medicine.frequency} />}
                         {!!medicine.duration && <Pill text={medicine.duration} />}
+                        {medicine.timing.length > 0 ? <Pill text={medicine.timing.join(" , ")} /> : null}
                     </View>
                 )
             )}
@@ -432,7 +472,7 @@ const styles = StyleSheet.create({
         borderColor: "#B4B2A9",
         borderRadius: scale(20),
         paddingHorizontal: scale(10),
-        paddingVertical: scale(5),
+        paddingVertical: scale(2),
     },
     timingChipActive: {
         backgroundColor: "#23423B",
@@ -473,7 +513,39 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#E5E4DD",
         marginVertical: scale(8),
-    }
+    },
+    fieldWrap: {
+        display: "flex",
+        flexDirection: "column",
+        gap: scale(4),
+    },
+    fieldLabel: {
+        fontSize: fs(11),
+        fontFamily: "Aeonik-Medium",
+        textTransform: "uppercase",
+        letterSpacing: 0.4,
+        color: "#5F5E5A",
+        marginTop: scale(4)
+    },
+    dropdownFocused: {
+        borderWidth: 1,
+        borderColor: "#234338",
+    },
+    saveButton: {
+        backgroundColor: "#234338",
+        borderRadius: scale(20),
+        paddingVertical: scale(12),
+        alignItems: "center"
+    },
+    saveButtonDisabled: {
+        opacity: 0.5,
+    },
+    saveButtonText: {
+        fontSize: fs(13),
+        fontFamily: "Aeonik-Medium",
+        color: "#EEF6A2",
+    },
 })
 
 export default MedicineCard
+

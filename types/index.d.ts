@@ -388,6 +388,7 @@ export interface MedicineWithDetailsTypes {
     tags?: MedicineTag[];
     courseLabel?: string;
     DocumentId?: number;
+    timing: string[];
 }
 
 export interface MedicineTag {
@@ -397,3 +398,12 @@ export interface MedicineTag {
 }
 
 export type MedicinesTab = "prescription" | "all";
+
+export type AddMedicineTypes = {
+    name: string;
+    dosage: string | null;
+    frequency: string | null;
+    duration: string | null;
+    DocumentId?: number;
+    timing: string[];
+}

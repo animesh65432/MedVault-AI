@@ -1,6 +1,25 @@
 import { SQLiteDatabase } from "expo-sqlite";
 import { MedicineWithDetailsTypes } from "../types";
 
+const parseTimings = (timings: string | null): string[] => {
+    return timings ? timings.split(",").filter(Boolean) : [];
+};
+
+const insertTimings = async (
+    db: SQLiteDatabase,
+    medicineId: number,
+    timing?: string[] | null
+): Promise<void> => {
+    if (!timing?.length) return;
+
+    for (const t of timing) {
+        await db.runAsync(
+            "INSERT INTO MedicineTiming (MedicineId, timing) VALUES (?, ?)",
+            [medicineId, t]
+        );
+    }
+};
+
 export const GetPrescriptionMedicines = async (
     db: SQLiteDatabase,
     page: number = 1,
@@ -9,7 +28,7 @@ export const GetPrescriptionMedicines = async (
     try {
         const offset = (page - 1) * limit;
 
-        const medicines = await db.getAllAsync<MedicineWithDetailsTypes>(`
+        const rows = await db.getAllAsync<MedicineWithDetailsTypes & { timings: string | null }>(`
             SELECT
                 m.Id,
                 m.DocumentId,
@@ -20,14 +39,20 @@ export const GetPrescriptionMedicines = async (
                 d.date AS prescribedDate,
                 d.doctor_name AS doctorName,
                 d.clinic_name AS clinicName,
-                d.Id AS DocumentId
+                d.Id AS DocumentId,
+                GROUP_CONCAT(mt.timing) AS timings
             FROM Medicines m
             JOIN Documents d ON d.Id = m.DocumentId
+            LEFT JOIN MedicineTiming mt ON mt.MedicineId = m.Id
+            GROUP BY m.Id
             ORDER BY d.date DESC, m.Id ASC
             LIMIT ? OFFSET ?
         `, [limit, offset]);
 
-        return medicines
+        return rows.map(({ timings, ...row }) => ({
+            ...row,
+            timing: parseTimings(timings),
+        }));
     } catch (error) {
         console.error("Error fetching medicines:", error);
         return [];
@@ -42,7 +67,7 @@ export const GetAllMedicines = async (
     try {
         const offset = (page - 1) * limit;
 
-        const medicines = await db.getAllAsync<MedicineWithDetailsTypes>(`
+        const rows = await db.getAllAsync<MedicineWithDetailsTypes & { timings: string | null }>(`
             SELECT
                 m.Id,
                 m.DocumentId,
@@ -53,20 +78,25 @@ export const GetAllMedicines = async (
                 d.date AS prescribedDate,
                 d.doctor_name AS doctorName,
                 d.clinic_name AS clinicName,
-                d.Id AS DocumentId
+                d.Id AS DocumentId,
+                GROUP_CONCAT(mt.timing) AS timings
             FROM Medicines m
             LEFT JOIN Documents d ON d.Id = m.DocumentId
+            LEFT JOIN MedicineTiming mt ON mt.MedicineId = m.Id
+            GROUP BY m.Id
             ORDER BY d.date DESC, m.Id ASC
             LIMIT ? OFFSET ?
         `, [limit, offset]);
 
-        return medicines;
+        return rows.map(({ timings, ...row }) => ({
+            ...row,
+            timing: parseTimings(timings),
+        }));
     } catch (error) {
         console.error("Error fetching all medicines:", error);
         return [];
     }
-}
-
+};
 
 export const deleteMedicine = async (db: SQLiteDatabase, medicineId: number): Promise<void> => {
     try {
@@ -76,18 +106,21 @@ export const deleteMedicine = async (db: SQLiteDatabase, medicineId: number): Pr
     }
 };
 
-export const updateMedicine = async (db: SQLiteDatabase, medicine: MedicineWithDetailsTypes): Promise<void> => {
+export const updateMedicine = async (
+    db: SQLiteDatabase,
+    medicine: MedicineWithDetailsTypes
+): Promise<void> => {
     try {
         await db.runAsync(
             "UPDATE Medicines SET name = ?, dosage = ?, frequency = ?, duration = ? WHERE Id = ?",
             [medicine.name, medicine.dosage, medicine.frequency, medicine.duration, medicine.Id]
         );
+        await db.runAsync("DELETE FROM MedicineTiming WHERE MedicineId = ?", [medicine.Id]);
+        await insertTimings(db, medicine.Id, medicine.timing);
     } catch (error) {
         console.error("Error updating medicine:", error);
     }
 };
-
-
 
 export const CreateMedicine = async (
     db: SQLiteDatabase,
@@ -97,10 +130,11 @@ export const CreateMedicine = async (
         frequency?: string | null;
         duration?: string | null;
         DocumentId?: number;
+        timing?: string[];
     }
 ): Promise<number | null> => {
     try {
-        let result
+        let result;
         if (medicine.DocumentId) {
             result = await db.runAsync(
                 "INSERT INTO Medicines (DocumentId, name, dosage, frequency, duration) VALUES (?, ?, ?, ?, ?)",
@@ -112,8 +146,7 @@ export const CreateMedicine = async (
                     medicine.duration ?? null,
                 ]
             );
-        }
-        else {
+        } else {
             result = await db.runAsync(
                 "INSERT INTO Medicines (name, dosage, frequency, duration) VALUES (?, ?, ?, ?)",
                 [
@@ -126,6 +159,8 @@ export const CreateMedicine = async (
         }
 
         const medicineId = result.lastInsertRowId;
+
+        await insertTimings(db, medicineId, medicine.timing);
 
         return medicineId;
     } catch (error) {
@@ -164,4 +199,4 @@ export const GetMedicinesCount = async (db: SQLiteDatabase): Promise<number> => 
         console.error("Error counting medicines:", error);
         return 0;
     }
-}
+};

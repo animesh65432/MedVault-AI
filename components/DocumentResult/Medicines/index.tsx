@@ -215,7 +215,7 @@ const Medicines: React.FC<Props> = ({
                 <AddMedicineModal
                     onAddMedicine={onAddMedicine}
                     isMedicineModalVisible={isAddMedicineModalVisible}
-                    setMedicineModalIsVisible={setAddMedicineModalVisible} setAddMedicineModalVisible={setAddMedicineModalVisible}
+                    setMedicineModalIsVisible={setAddMedicineModalVisible}
                 />
             }
             {isAddReminderModalVisible

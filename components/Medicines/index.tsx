@@ -6,8 +6,8 @@ import { useFocusEffect } from "expo-router"
 import { useSQLiteContext } from "expo-sqlite"
 import React, { useCallback, useMemo, useState } from "react"
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native"
-import AddMedicineModal from "../DocumentResult/AddMedicineModel"
 import AddMedicine from "./AddMedicine"
+import AddMedicineModal from "./AddMedicineModal"
 import DateDivider from "./DateDivider"
 import FAB from "./Fab"
 import MedicineCard from "./MedicineCard"
@@ -207,11 +207,11 @@ const MedicinesComponent: React.FC = () => {
             {
                 IsAddMedicineModalOpen && (
                     <AddMedicineModal
-                        onAddMedicine={(medicine) => {
-                            onAddMedicine(medicine)
-                        }}
-                        setMedicineModalIsVisible={setIsAddMedicineModalOpen}
+                        activeTab={activeTab}
+                        loadInitial={loadInitial}
+                        DocumentId={DocumentId}
                         isMedicineModalVisible={IsAddMedicineModalOpen}
+                        setMedicineModalIsVisible={setIsAddMedicineModalOpen}
                     />
                 )
             }
