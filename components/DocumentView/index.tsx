@@ -149,11 +149,12 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
     };
 
     const handleOpenEdit = () => {
+        const t0 = performance.now();
         setIsEditable(true);
-    }
+        requestAnimationFrame(() => console.log('edit mode render took', performance.now() - t0, 'ms'));
+    };
 
     const handleCloseEdit = async () => {
-        setIsEditable(true);
         try {
             await update_document(db, document);
         }
@@ -673,7 +674,7 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
                 return null;
             }
         }
-    }, [document, isEditable,]);
+    }, [document, isEditable]);
 
 
     const handleViewOriginalPress = useCallback(() => {

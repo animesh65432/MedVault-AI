@@ -1,10 +1,10 @@
-import { CreateMedicine, GetAllMedicines, GetMedicinesCount, GetPrescriptionMedicines, GetPrescriptionMedicinesCount } from "@/db/medicines"
+import { GetAllMedicines, GetMedicinesCount, GetPrescriptionMedicines, GetPrescriptionMedicinesCount } from "@/db/medicines"
 import { MedicinesTab, MedicineWithDetailsTypes } from "@/types"
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
 import { useFocusEffect } from "expo-router"
 import { useSQLiteContext } from "expo-sqlite"
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useMemo, useRef, useState } from "react"
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native"
 import AddMedicine from "./AddMedicine"
 import AddMedicineModal from "./AddMedicineModal"
@@ -21,6 +21,15 @@ type ListRow =
 
 const Limit = 10
 
+const dedupeById = (list: MedicineWithDetailsTypes[]): MedicineWithDetailsTypes[] => {
+    const seen = new Set<number>()
+    return list.filter((m) => {
+        if (seen.has(m.Id)) return false
+        seen.add(m.Id)
+        return true
+    })
+}
+
 const MedicinesComponent: React.FC = () => {
     const db = useSQLiteContext()
     const [DocumentId, setDocumentId] = useState<number | null>(null)
@@ -32,6 +41,7 @@ const MedicinesComponent: React.FC = () => {
     const [Count, setCount] = useState(0)
     const [medicines, setMedicines] = useState<MedicineWithDetailsTypes[]>([])
     const [activeTab, setActiveTab] = useState<MedicinesTab>("prescription")
+    const skipNextFocusReload = useRef(false)
 
     const fetchMedicineList = useCallback(
         async (tab: MedicinesTab, pageNum: number) => {
@@ -60,7 +70,11 @@ const MedicinesComponent: React.FC = () => {
                     fetchMedicineList(tab, 1),
                 ])
                 setCount(count)
-                setMedicines(result)
+                setMedicines((prev) => {
+                    const resultIds = new Set(result.map((m) => m.Id))
+                    const keepFromPrev = prev.filter((m) => !resultIds.has(m.Id))
+                    return dedupeById([...result, ...keepFromPrev])
+                })
                 setPage(1)
                 setHasMore(result.length === Limit)
             } catch (error) {
@@ -80,7 +94,7 @@ const MedicinesComponent: React.FC = () => {
         try {
             const nextPage = Page + 1
             const result = await fetchMedicineList(activeTab, nextPage)
-            setMedicines((prev) => [...prev, ...result])
+            setMedicines((prev) => dedupeById([...prev, ...result]))
             setPage(nextPage)
             setHasMore(result.length === Limit)
         } catch (error) {
@@ -92,6 +106,10 @@ const MedicinesComponent: React.FC = () => {
 
     useFocusEffect(
         useCallback(() => {
+            if (skipNextFocusReload.current) {
+                skipNextFocusReload.current = false
+                return
+            }
             loadInitial(activeTab)
         }, [activeTab, loadInitial])
     )
@@ -100,7 +118,7 @@ const MedicinesComponent: React.FC = () => {
         if (activeTab === "all") {
             return medicines.map((m) => ({
                 type: "medicine" as const,
-                key: `med-${m.Id}`,
+                key: `med-${m.name}-${m.Id}`,
                 medicine: m,
             }))
         }
@@ -108,15 +126,20 @@ const MedicinesComponent: React.FC = () => {
         const groups = new Map<string, MedicineWithDetailsTypes[]>()
 
         for (const med of medicines) {
-            const key = med.prescribedDate ?? "Unknown"
+            const key = med.DocumentId != null ? `doc-${med.DocumentId}` : `unknown-${med.Id}`
             if (!groups.has(key)) groups.set(key, [])
             groups.get(key)!.push(med)
         }
 
         const out: ListRow[] = []
-        for (const [date, meds] of groups) {
+        for (const [key, meds] of groups) {
             if (meds[0].DocumentId !== undefined) {
-                out.push({ type: "divider", key: `div-${date}`, label: `PRESCRIBED ${date}`, DocumentId: meds[0].DocumentId })
+                out.push({
+                    type: "divider",
+                    key: `div-${key}`,
+                    label: `PRESCRIBED ${meds[0].prescribedDate ?? "Unknown date"}`,
+                    DocumentId: meds[0].DocumentId,
+                })
             }
             for (const med of meds) {
                 out.push({ type: "medicine", key: `med-${med.Id}`, medicine: med })
@@ -125,24 +148,34 @@ const MedicinesComponent: React.FC = () => {
         return out
     }, [medicines, activeTab])
 
-    const OnToggoleAddMedicine = () => {
-        setIsAddMedicineModalOpen((prev) => !prev)
+    async function refreshCount() {
+        try {
+            const count = await fetchCount(activeTab)
+            setCount(count)
+        } catch (error) {
+            console.log("Error refreshing count:", error)
+        }
     }
 
-    const onAddMedicine = async (medicine: MedicineWithDetailsTypes) => {
-        try {
-            await CreateMedicine(db, {
-                ...medicine,
-                DocumentId: DocumentId || undefined,
-            })
-            await loadInitial(activeTab)
-            setDocumentId(null)
-        } catch (error) {
-            console.log("Error adding medicine:", error)
-        }
-        finally {
-            setIsAddMedicineModalOpen(false)
-        }
+    const deleteMedicineFromState = (medicineId: number) => {
+        setMedicines((prev) => prev.filter((m) => m.Id !== medicineId))
+        refreshCount()
+    }
+
+    const updateMedicineFromState = (updatedMedicine: MedicineWithDetailsTypes) => {
+        setMedicines((prev) =>
+            prev.map((m) => (m.Id === updatedMedicine.Id ? updatedMedicine : m))
+        )
+    }
+
+    const addMedicineFromeState = (newMedicine: MedicineWithDetailsTypes) => {
+        skipNextFocusReload.current = true
+        setMedicines((prev) => dedupeById([newMedicine, ...prev]))
+        refreshCount();
+    }
+
+    const OnToggoleAddMedicine = () => {
+        setIsAddMedicineModalOpen((prev) => !prev)
     }
 
     return (
@@ -172,6 +205,10 @@ const MedicinesComponent: React.FC = () => {
                         contentContainerStyle={styles.listContent}
                         onEndReached={loadMore}
                         onEndReachedThreshold={0.4}
+                        initialNumToRender={12}
+                        maxToRenderPerBatch={10}
+                        windowSize={7}
+                        removeClippedSubviews
                         ListFooterComponent={
                             IsLoadIngMore ? (
                                 <ActivityIndicator style={styles.footerSpinner} color="#234338" />
@@ -192,8 +229,8 @@ const MedicinesComponent: React.FC = () => {
                                 </>
                             ) : (
                                 <MedicineCard
-                                    activeTab={activeTab}
-                                    loadInitial={loadInitial}
+                                    deleteMedicineFromState={deleteMedicineFromState}
+                                    updateMedicineFromState={updateMedicineFromState}
                                     medicine={item.medicine}
                                 />
                             )
@@ -207,8 +244,7 @@ const MedicinesComponent: React.FC = () => {
             {
                 IsAddMedicineModalOpen && (
                     <AddMedicineModal
-                        activeTab={activeTab}
-                        loadInitial={loadInitial}
+                        addMedicineFromeState={addMedicineFromeState}
                         DocumentId={DocumentId}
                         isMedicineModalVisible={IsAddMedicineModalOpen}
                         setMedicineModalIsVisible={setIsAddMedicineModalOpen}

@@ -165,15 +165,11 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
         });
     };
 
-    const handleOpenEdit = () => {
-        setIsEditable(true);
-    }
-
     const handleCloseEdit = () => {
         setIsEditable(false);
     }
 
-    const onUpdateMedicine = (index: number, field: keyof Medicine, value: string) => {
+    const onUpdateMedicine = useCallback((index: number, field: keyof Medicine, value: string | string[]) => {
         SetDocument(prev => {
             if (!prev) return prev;
 
@@ -192,9 +188,9 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                 },
             } as DocumentType;
         });
-    };
+    }, []);
 
-    const onRemoveMedicine = (index: number) => {
+    const onRemoveMedicine = useCallback((index: number) => {
         SetDocument(prev => {
             if (!prev) return prev;
             if (!("medicines" in prev.document_metadata)) return prev;
@@ -211,9 +207,9 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                 },
             } as DocumentType;
         });
-    }
+    }, [])
 
-    const onAddMedicine = (medicine: Medicine) => {
+    const onAddMedicine = useCallback((medicine: Medicine) => {
         SetDocument(prev => {
             if (!prev) return prev;
             if (!("medicines" in prev.document_metadata)) return prev;
@@ -229,7 +225,7 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
                 },
             } as DocumentType;
         });
-    };
+    }, []);
 
     const onBillingUpdateItem = (index: number, field: keyof BillingItem, value: string) => {
         SetDocument(prev => {
@@ -733,6 +729,10 @@ const ShowDocument: React.FC<Props> = ({ SetDocument, Document, fileUri, isPdf }
             setIsSaving(false)
         }
     }
+
+    const handleOpenEdit = () => {
+        setIsEditable(true);
+    };
 
     return <View style={{ flex: 1 }}>
         <Navbar

@@ -1,21 +1,18 @@
 import { Medicine as MedicineType, Reminder } from "@/types";
-import { FrequencyOptions } from "@/utils/frequencyOptions";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Feather from "@expo/vector-icons/Feather";
-import Octicons from "@expo/vector-icons/Octicons";
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { Dropdown } from "react-native-element-dropdown";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Toast from "react-native-toast-message";
 import AddMedicineModal from "../AddMedicineModel";
 import AddReminderModel from "../AddReminderModel";
+import Medicine from "./Medicine";
 
 type Props = {
     medicines: MedicineType[];
     isEditable: boolean;
-    onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
+    onUpdateMedicine: (index: number, field: keyof MedicineType, value: string | string[]) => void;
     onRemoveMedicine: (index: number) => void;
     onAddMedicine: (medicine: MedicineType) => void;
     initialTitle: string;
@@ -36,7 +33,6 @@ const Medicines: React.FC<Props> = ({
     IsShowDocument = false
 }) => {
     const [MedicineIndexForReminder, setMedicineIndexForReminder] = useState<number | null>(null);
-    const [isFrequencyFocus, setIsFrequencyFocus] = useState(false);
     const [isAddMedicineModalVisible, setAddMedicineModalVisible] = useState(false);
     const [isAddReminderModalVisible, setAddReminderModalVisible] = useState(false);
 
@@ -66,7 +62,6 @@ const Medicines: React.FC<Props> = ({
         setMedicineIndexForReminder(null);
     }
 
-
     return (
         <View style={styles.container}>
             <View style={styles.titleRow}>
@@ -93,120 +88,19 @@ const Medicines: React.FC<Props> = ({
                     const hasDetails =
                         med.dosage || med.frequency || med.duration || med.timing;
                     const hasReminders = med?.reminders?.length > 0;
-
                     return (
-                        <View key={med.name ? `${med.name}-${index}` : index} style={styles.card}>
-                            <View style={styles.cardTop}>
-                                {isEditable ? (
-                                    <TextInput
-                                        value={med.name}
-                                        onChangeText={(text) => onUpdateMedicine?.(index, "name", text)}
-                                        style={styles.medNameInput}
-                                        placeholder="Medicine name"
-                                        placeholderTextColor="#B4B2A9"
-                                    />
-                                ) : (
-                                    <>
-                                        <MaterialCommunityIcons
-                                            name="pill"
-                                            size={scale(18)}
-                                            color="#23423B"
-                                        />
-
-                                        <Text style={styles.medName} numberOfLines={2}>
-                                            {med.name || "Unnamed medicine"}
-                                        </Text>
-                                    </>
-                                )}
-
-                                <View style={styles.actionsRow}>
-                                    <TouchableOpacity
-                                        style={[styles.chip, hasReminders && styles.chipActive]}
-                                        onPress={() => onToogleReminderModal(index)}
-                                        hitSlop={8}
-                                    >
-                                        <Octicons
-                                            name={hasReminders ? "bell-fill" : "bell"}
-                                            size={fs(11)}
-                                            color={hasReminders ? "#EEF6A2" : "#5F5E5A"}
-                                        />
-                                        {hasReminders && (
-                                            <View style={styles.chipCountBadge}>
-                                                <Text style={styles.chipCountText}>{med.reminders.length}</Text>
-                                            </View>
-                                        )}
-                                        <Text
-                                            style={[
-                                                styles.chipText,
-                                                hasReminders && styles.chipTextActive,
-                                            ]}
-                                        >
-                                            {hasReminders ? "Reminders" : "Set"}
-                                        </Text>
-                                    </TouchableOpacity>
-
-                                    {isEditable && (
-                                        <TouchableOpacity
-                                            style={styles.removeChip}
-                                            onPress={() => onRemoveMedicine?.(index)}
-                                            hitSlop={8}
-                                        >
-                                            <Feather name="trash-2" size={fs(13)} color="#B3261E" />
-                                        </TouchableOpacity>
-                                    )}
-                                </View>
-                            </View>
-
-                            {isEditable ? (
-                                <View style={styles.pillRow}>
-                                    <PillInput
-                                        value={med.dosage}
-                                        placeholder="Dosage"
-                                        onChangeText={(text) => onUpdateMedicine?.(index, "dosage", text)}
-                                    />
-                                    <Dropdown
-                                        style={styles.dropdown}
-                                        placeholderStyle={styles.dropdownPlaceholder}
-                                        selectedTextStyle={styles.dropdownSelectedText}
-                                        itemTextStyle={styles.pickerItemText}
-                                        containerStyle={styles.dropdownContainer}
-                                        data={FrequencyOptions as unknown as { label: string; value: string }[]}
-                                        maxHeight={220}
-                                        labelField="label"
-                                        valueField="value"
-                                        placeholder="Select"
-                                        value={med.frequency}
-                                        onFocus={() => setIsFrequencyFocus(true)}
-                                        onBlur={() => setIsFrequencyFocus(false)}
-                                        onChange={(item) => {
-                                            onUpdateMedicine?.(index, "frequency", item.value)
-                                            setIsFrequencyFocus(false);
-                                        }}
-                                    />
-                                    <PillInput
-                                        value={med.duration}
-                                        placeholder="Duration"
-                                        onChangeText={(text) => onUpdateMedicine?.(index, "duration", text)}
-                                    />
-                                    {medicines.length > 0 && (
-                                        <PillInput
-                                            value={med.timing.join(", ")}
-                                            placeholder="Timing"
-                                            onChangeText={(text) => onUpdateMedicine?.(index, "timing", text)}
-                                        />
-                                    )}
-                                </View>
-                            ) : (
-                                !!hasDetails && (
-                                    <View style={styles.pillRow}>
-                                        {!!med.dosage && <Pill text={med.dosage} />}
-                                        {!!med.frequency && <Pill text={med.frequency} />}
-                                        {!!med.duration && <Pill text={med.duration} />}
-                                        {!!med.timing && med.timing.length > 0 && <Pill text={med.timing.join(", ")} />}
-                                    </View>
-                                )
-                            )}
-                        </View>
+                        <Medicine
+                            key={index}
+                            med={med}
+                            index={index}
+                            isEditable={isEditable}
+                            hasDetails={!!hasDetails}
+                            hasReminders={!!hasReminders}
+                            onUpdateMedicine={onUpdateMedicine}
+                            onRemoveMedicine={onRemoveMedicine}
+                            onAddMedicine={onAddMedicine}
+                            onToogleReminderModal={onToogleReminderModal}
+                        />
                     );
                 })}
             </View>
@@ -235,29 +129,9 @@ const Medicines: React.FC<Props> = ({
     );
 };
 
-const Pill = ({ text }: { text: string }) => (
+export const Pill = ({ text }: { text: string }) => (
     <View style={styles.pill}>
         <Text style={styles.pillText}>{text}</Text>
-    </View>
-);
-
-const PillInput = ({
-    value,
-    placeholder,
-    onChangeText,
-}: {
-    value?: string;
-    placeholder: string;
-    onChangeText: (text: string) => void;
-}) => (
-    <View style={styles.pillInputWrap}>
-        <TextInput
-            value={value ?? ""}
-            onChangeText={onChangeText}
-            placeholder={placeholder}
-            placeholderTextColor="#B4B2A9"
-            style={styles.pillInput}
-        />
     </View>
 );
 
@@ -393,7 +267,7 @@ const styles = StyleSheet.create({
         gap: scale(6),
     },
     pill: {
-        backgroundColor: "#F1EFE8",
+        backgroundColor: "#EDF2F1",
         borderRadius: scale(8),
         paddingHorizontal: scale(8),
         paddingVertical: scale(3),
@@ -452,7 +326,67 @@ const styles = StyleSheet.create({
     rowtitle: {
         display: "flex",
         flexDirection: "row"
-    }
+    },
+    splitField: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#F1EFE8",
+        borderRadius: scale(8),
+        overflow: "hidden",
+        minWidth: scale(96),
+    },
+    splitFieldInput: {
+        fontSize: fs(11),
+        fontFamily: "Aeonik-Medium",
+        color: "#5F5E5A",
+        paddingHorizontal: scale(8),
+        paddingVertical: scale(3),
+        minWidth: scale(36),
+    },
+    unitDropdown: {
+        paddingHorizontal: scale(8),
+        paddingVertical: scale(3),
+        borderLeftWidth: 1,
+        borderLeftColor: "#E5E4DD",
+        minWidth: scale(86),
+    },
+    fieldWrap: {
+        display: "flex",
+        flexDirection: "column",
+        gap: scale(4),
+    },
+    fieldLabel: {
+        fontSize: fs(11),
+        fontFamily: "Aeonik-Medium",
+        textTransform: "uppercase",
+        letterSpacing: 0.4,
+        color: "#5F5E5A",
+        marginTop: scale(4)
+    },
+    timingRow: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        gap: scale(6),
+    },
+    timingChip: {
+        borderWidth: 1,
+        borderColor: "#B4B2A9",
+        borderRadius: scale(20),
+        paddingHorizontal: scale(10),
+        paddingVertical: scale(2),
+    },
+    timingChipActive: {
+        backgroundColor: "#23423B",
+        borderColor: "#23423B",
+    },
+    timingChipText: {
+        fontSize: fs(11),
+        fontFamily: "Aeonik-Medium",
+        color: "#5F5E5A",
+    },
+    timingChipTextActive: {
+        color: "#EEF6A2",
+    },
 });
 
 export default Medicines;

@@ -1,5 +1,5 @@
 import { CreateMedicine } from "@/db/medicines";
-import { AddMedicineTypes } from "@/types";
+import { AddMedicineTypes, MedicineWithDetailsTypes } from "@/types";
 import { FrequencyOptions } from "@/utils/frequencyOptions";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
@@ -37,8 +37,7 @@ type Props = {
     DocumentId: number | null;
     isMedicineModalVisible: boolean;
     setMedicineModalIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    activeTab: "prescription" | "all";
-    loadInitial: (tab: "prescription" | "all") => Promise<void>;
+    addMedicineFromeState: (newMedicine: MedicineWithDetailsTypes) => void;
 };
 
 type DraftMedicine = {
@@ -66,8 +65,7 @@ const AddMedicineModal: React.FC<Props> = ({
     isMedicineModalVisible,
     setMedicineModalIsVisible,
     DocumentId,
-    activeTab,
-    loadInitial
+    addMedicineFromeState
 }) => {
     const db = useSQLiteContext()
     const [IsLoadIng, SetIsLoading] = useState(false)
@@ -107,14 +105,18 @@ const AddMedicineModal: React.FC<Props> = ({
                 DocumentId: DocumentId
             } as AddMedicineTypes;
 
-            await CreateMedicine(db, medicine)
+            const medicineId = await CreateMedicine(db, medicine)
 
-            setDraft(EMPTY);
-            setMedicineModalIsVisible(false);
+            addMedicineFromeState({
+                ...medicine,
+                Id: medicineId,
+                DocumentId: DocumentId,
+            } as MedicineWithDetailsTypes);
         } catch (error) {
             console.log("Error saving medicine:", error);
         } finally {
-            await loadInitial(activeTab)
+            setDraft(EMPTY);
+            setMedicineModalIsVisible(false);
             SetIsLoading(false)
         }
     };

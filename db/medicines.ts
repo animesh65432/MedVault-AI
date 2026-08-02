@@ -161,7 +161,6 @@ export const CreateMedicine = async (
         const medicineId = result.lastInsertRowId;
 
         await insertTimings(db, medicineId, medicine.timing);
-
         return medicineId;
     } catch (error) {
         console.error("Error creating medicine:", error);
