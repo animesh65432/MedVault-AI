@@ -9,6 +9,7 @@ import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native"
 import AddMedicine from "./AddMedicine"
 import AddMedicineModal from "./AddMedicineModal"
 import DateDivider from "./DateDivider"
+import Empty from "./Empty"
 import FAB from "./Fab"
 import MedicineCard from "./MedicineCard"
 import Navbar from "./Navbar"
@@ -133,7 +134,7 @@ const MedicinesComponent: React.FC = () => {
 
         const out: ListRow[] = []
         for (const [key, meds] of groups) {
-            if (meds[0].DocumentId !== undefined) {
+            if (meds[0].DocumentId) {
                 out.push({
                     type: "divider",
                     key: `div-${key}`,
@@ -178,6 +179,8 @@ const MedicinesComponent: React.FC = () => {
         setIsAddMedicineModalOpen((prev) => !prev)
     }
 
+    console.log(medicines, "medicines")
+
     return (
         <View style={styles.container}>
             <Navbar />
@@ -200,6 +203,7 @@ const MedicinesComponent: React.FC = () => {
                     /> :
                     <FlatList
                         data={rows}
+                        ListEmptyComponent={!IsLoadIng ? <Empty /> : null}
                         keyExtractor={(row) => row.key}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.listContent}

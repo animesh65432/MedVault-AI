@@ -217,30 +217,6 @@ export const GetDocumentsCount = async (db: SQLiteDatabase): Promise<number> => 
     }
 };
 
-export const GetMedicinesCount = async (db: SQLiteDatabase): Promise<number> => {
-    try {
-        const result = await db.getFirstAsync<{ count: number }>(
-            `SELECT COUNT(*) as count FROM Medicines`
-        );
-        return result?.count ?? 0;
-    } catch (error) {
-        console.error("Error getting medicines count:", error);
-        return 0;
-    }
-}
-
-export const GetRemindersCount = async (db: SQLiteDatabase): Promise<number> => {
-    try {
-        const result = await db.getFirstAsync<{ count: number }>(
-            `SELECT COUNT(*) as count FROM Reminders`
-        );
-        return result?.count ?? 0;
-    } catch (error) {
-        console.error("Error getting reminders count:", error);
-        return 0;
-    }
-}
-
 export const GetDocuments = async (
     db: SQLiteDatabase,
     ORDER: "DESC" | "ASC",

@@ -8,7 +8,7 @@ const Navbar = () => {
         <View style={styles.container}>
             <BackButton />
             <Text style={styles.text}>
-                Medications
+                Alerts
             </Text>
         </View>
     )
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         gap: scale(20),
         backgroundColor: "white",
         paddingHorizontal: scale(20),
-        paddingTop: scale(30),
+        paddingTop: scale(40),
         paddingBottom: scale(10),
     },
     text: {

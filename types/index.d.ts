@@ -407,3 +407,14 @@ export type AddMedicineTypes = {
     DocumentId?: number;
     timing: string[];
 }
+
+export type ReminderWithMedicine = {
+    Id: number
+    MedicineId: number
+    title: string
+    time: string
+    repeat: string
+    medicineName: string
+    dosage: string | null
+    frequency: string | null
+}

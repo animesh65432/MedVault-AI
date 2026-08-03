@@ -1,4 +1,5 @@
-import { GetDocumentsCount, GetRemindersCount } from "@/db/document";
+import { GetRemindersCount } from "@/db/alerts";
+import { GetDocumentsCount } from "@/db/document";
 import { GetMedicinesCount } from "@/db/medicines";
 import { CountTypes } from "@/types";
 import { scale } from '@/utils/scale';

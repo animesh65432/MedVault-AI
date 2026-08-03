@@ -1,11 +1,9 @@
+import AlertsComponent from '@/components/AlertsComponent'
 import React from 'react'
-import { Text, View } from 'react-native'
 
-const Alerts = () => {
+const Alerts: React.FC = () => {
     return (
-        <View>
-            <Text>Alerts</Text>
-        </View>
+        <AlertsComponent />
     )
 }
 
