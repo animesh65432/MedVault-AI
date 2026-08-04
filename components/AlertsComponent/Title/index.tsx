@@ -1,16 +1,14 @@
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
-import { Feather } from "@expo/vector-icons"
 import React from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 type Props = {
     Count: number
-    onAddPress: () => void
 }
 
-const Title: React.FC<Props> = ({ Count, onAddPress }) => {
+const Title: React.FC<Props> = ({ Count }) => {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
@@ -26,17 +24,6 @@ const Title: React.FC<Props> = ({ Count, onAddPress }) => {
                         {Count === 1 ? "Reminder" : "Reminders"}
                     </Text>
                 </View>
-
-                <Pressable
-                    onPress={onAddPress}
-                    style={({ pressed }) => [
-                        styles.addButton,
-                        pressed && styles.addButtonPressed
-                    ]}
-                    hitSlop={scale(8)}
-                >
-                    <Feather name="calendar" size={scale(16)} color="#FAFAF8" />
-                </Pressable>
             </View>
         </View>
     )
@@ -94,23 +81,6 @@ const styles = StyleSheet.create({
         color: "#4D661C",
         fontFamily: "Aeonik-Regular",
         fontSize: fs(13)
-    },
-    addButton: {
-        width: scale(38),
-        height: scale(38),
-        borderRadius: scale(19),
-        backgroundColor: "#234338",
-        alignItems: "center",
-        justifyContent: "center",
-        shadowColor: "#0D1F1C",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
-        elevation: 3
-    },
-    addButtonPressed: {
-        opacity: 0.85,
-        transform: [{ scale: 0.96 }]
     }
 })
 

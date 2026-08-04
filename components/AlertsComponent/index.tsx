@@ -1,45 +1,62 @@
-import { GetRemindersCount } from "@/db/alerts";
+import { GetAllReminders, GetRemindersCount } from "@/db/alerts";
+import { ReminderWithMedicine } from "@/types";
 import { scale } from "@/utils/scale";
 import { useFocusEffect } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Hero from "./Hero";
+import FAB from "./Fab";
+import Medicines from "./Medicines";
 import Navbar from './Navbar';
+import RemindersList from "./RemindersList";
 import Title from './Title';
 
 const AlertsComponent: React.FC = () => {
     const db = useSQLiteContext();
+    const [OnToggoleAddMedicine, SetOnToggoleAddMedicine] = useState(false);
+    const [SelectedMedicineID, SetSelectedMedicineID] = useState<number | null>(null);
+    const [Reminders, setReminders] = useState<ReminderWithMedicine[]>([]);
     const [AlertsCount, setAlertsCount] = useState(0);
 
-    async function fetchAlertsCount() {
+    async function IntialLoad() {
         try {
-            const remindersCount = await GetRemindersCount(db);
-            setAlertsCount(remindersCount);
+            const [Count, Data] = await Promise.all([GetRemindersCount(db), GetAllReminders(db)]);
+            setAlertsCount(Count);
+            setReminders(Data);
         } catch (error) {
-            console.error("Failed to fetch alerts count:", error);
+            console.log("Error loading reminders:", error);
         }
     }
 
     useFocusEffect(
         useCallback(() => {
-            fetchAlertsCount();
+            IntialLoad();
             return () => {
-                fetchAlertsCount();
+                IntialLoad();
             };
         }, [])
     );
 
-    const onAddPress = () => { }
+    const handleFABPress = () => {
+        SetOnToggoleAddMedicine(!OnToggoleAddMedicine);
+    }
 
     return (
         <View style={styles.container}>
             <Navbar />
             <Title
                 Count={AlertsCount}
-                onAddPress={onAddPress}
             />
-            <Hero />
+            {OnToggoleAddMedicine ?
+                <Medicines /> : <RemindersList
+                    Reminders={Reminders}
+                />
+            }
+
+            <FAB
+                onPress={handleFABPress}
+            />
+
         </View>
     )
 }

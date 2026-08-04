@@ -1,6 +1,11 @@
 import { ReminderWithMedicine } from "@/types";
 import { SQLiteDatabase } from "expo-sqlite";
 
+type Medicine = {
+    Id: number;
+    name: string
+}
+
 export const GetRemindersCount = async (db: SQLiteDatabase): Promise<number> => {
     try {
         const result = await db.getFirstAsync<{ count: number }>(
@@ -24,6 +29,7 @@ export const GetAllReminders = async (
                 r.title,
                 r.time,
                 r.repeat,
+                r.IsEnabled,
                 m.name AS medicineName,
                 m.dosage,
                 m.frequency
@@ -77,5 +83,39 @@ export const updateReminder = async (
     } catch (error) {
         console.error(`Error updating reminder with ID ${reminderId}:`, error)
         return false
+    }
+}
+
+export const CrateReminder = async (
+    db: SQLiteDatabase,
+    reminder: ReminderWithMedicine
+): Promise<number | null> => {
+    const { MedicineId, title, time, repeat } = reminder
+
+    try {
+        const result = await db.runAsync(
+            `INSERT INTO Reminders (MedicineId, title, time, repeat) VALUES (?, ?, ?, ?)`,
+            [MedicineId, title, time, repeat]
+        )
+        return result.lastInsertRowId ?? null
+
+    } catch (error) {
+        console.error('Error creating reminder:', error)
+        return null
+    }
+}
+
+export const GetAllMedicines = async (db: SQLiteDatabase, page: number = 1,
+    limit: number = 10): Promise<Medicine[]> => {
+    try {
+        const result = await db.getAllAsync<any>(
+            `SELECT Id, name FROM Medicines
+            LIMIT ? OFFSET ?`,
+            [limit, (page - 1) * limit]
+        )
+        return result
+    } catch (error) {
+        console.error('Error fetching medicines:', error)
+        return []
     }
 }

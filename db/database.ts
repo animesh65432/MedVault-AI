@@ -1,7 +1,7 @@
 import { type SQLiteDatabase } from 'expo-sqlite';
 
 export async function migrateDbIfNeeded(db: SQLiteDatabase) {
-    const DATABASE_VERSION = 12;
+    const DATABASE_VERSION = 13;
     try {
         const result = await db.getFirstAsync<{ user_version: number }>(
             'PRAGMA user_version'
@@ -141,6 +141,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 MedicineId INTEGER NOT NULL,
                 title TEXT NOT NULL,
                 time DATETIME NOT NULL,
+                IsEnabled BOOLEAN NOT NULL DEFAULT 1,
                 repeat TEXT NOT NULL,
                 FOREIGN KEY (MedicineId) REFERENCES Medicines(Id) ON DELETE CASCADE
             );
