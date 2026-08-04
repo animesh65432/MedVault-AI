@@ -417,4 +417,5 @@ export type ReminderWithMedicine = {
     medicineName: string
     dosage: string | null
     frequency: string | null
+    IsEnabled: boolean
 }

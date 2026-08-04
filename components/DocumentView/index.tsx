@@ -185,7 +185,7 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
         }
     }
 
-    const onUpdateMedicine = (index: number, field: keyof Medicine, value: string) => {
+    const onUpdateMedicine = (index: number, field: keyof Medicine, value: string | string[]) => {
         setDocument(prev => {
             if (!prev) return prev;
 

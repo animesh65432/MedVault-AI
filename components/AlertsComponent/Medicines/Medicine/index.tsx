@@ -1,15 +1,15 @@
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export type Medicine = {
     Id: number;
     name: string;
-    dosage?: string | null;
-    frequency?: string | null;
+    dosage: string;
+    frequency: string;
 };
 
 type Props = {
@@ -26,6 +26,12 @@ const Medicine: React.FC<Props> = ({ medicine, selected, onPress }) => {
             onPress={() => onPress(medicine.Id)}
         >
             <View style={styles.textWrap}>
+                <MaterialCommunityIcons
+                    name="pill"
+                    size={scale(20)}
+                    color="#OD483F"
+                    style={{ marginBottom: vScale(4) }}
+                />
                 <Text style={[styles.name, selected && styles.nameSelected]}>
                     {medicine.name}
                 </Text>
@@ -69,6 +75,10 @@ const styles = StyleSheet.create({
     },
     textWrap: {
         flex: 1,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(10),
     },
     name: {
         fontFamily: 'Aeonik-Regular',

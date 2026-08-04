@@ -5,6 +5,7 @@ import { useFocusEffect } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import AddReminder from "./AddReminder";
 import FAB from "./Fab";
 import Medicines from "./Medicines";
 import { Medicine } from "./Medicines/Medicine";
@@ -50,7 +51,11 @@ const AlertsComponent: React.FC = () => {
         setStep('setReminder');
     };
 
-    console.log("Selected Medicine:", selectedMedicine);
+    const handleSaveReminder = (reminderwithmedicine: ReminderWithMedicine) => {
+        setStep('list');
+    }
+
+    console.log("Reminders:", Reminders);
 
     return (
         <View style={styles.container}>
@@ -64,9 +69,17 @@ const AlertsComponent: React.FC = () => {
                 />
             )}
             {step === 'setReminder' && selectedMedicine && (
-                <View />
+                <AddReminder
+                    medicine={selectedMedicine}
+                    onBack={() => setStep('pickMedicine')}
+                    onSaved={handleSaveReminder}
+                />
             )}
-            {step === 'list' && <FAB onPress={handleFABPress} />}
+            {step === 'list' &&
+                <FAB
+                    onPress={handleFABPress}
+                />
+            }
         </View>
     )
 }

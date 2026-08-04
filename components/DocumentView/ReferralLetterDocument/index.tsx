@@ -13,7 +13,7 @@ import DocumentHero from "../DocumentHero";
 type Props = {
     document: UploadedReferralLetterDocument;
     isEditable: boolean;
-    onUpdateMedicine: (index: number, field: keyof MedicineType, value: string) => void;
+    onUpdateMedicine: (index: number, field: keyof MedicineType, value: string | string[]) => void;
     onRemoveMedicine: (index: number) => void;
     onChangeTitle: (value: string) => void;
     onFieldValueChange: (label: string, value: string) => void;

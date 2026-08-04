@@ -39,7 +39,6 @@ const Medicines: React.FC<Props> = ({ onBack, onConfirm }) => {
             else setLoadingMore(true);
 
             const data = await GetAllMedicines(db, pageToLoad, PAGE_SIZE);
-
             setMedicines(prev => (isInitial ? data : [...prev, ...data]));
             setHasMore(data.length === PAGE_SIZE);
             setPage(pageToLoad);

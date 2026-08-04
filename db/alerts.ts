@@ -4,7 +4,17 @@ import { SQLiteDatabase } from "expo-sqlite";
 type Medicine = {
     Id: number;
     name: string
+    dosage: string;
+    frequency: string
 }
+
+export type NewReminder = {
+    MedicineId: number;
+    title: string;
+    time: Date;
+    repeat: string;
+};
+
 
 export const GetRemindersCount = async (db: SQLiteDatabase): Promise<number> => {
     try {
@@ -88,28 +98,26 @@ export const updateReminder = async (
 
 export const CrateReminder = async (
     db: SQLiteDatabase,
-    reminder: ReminderWithMedicine
+    reminder: NewReminder
 ): Promise<number | null> => {
-    const { MedicineId, title, time, repeat } = reminder
-
+    const { MedicineId, title, time, repeat } = reminder;
     try {
         const result = await db.runAsync(
             `INSERT INTO Reminders (MedicineId, title, time, repeat) VALUES (?, ?, ?, ?)`,
-            [MedicineId, title, time, repeat]
-        )
-        return result.lastInsertRowId ?? null
-
+            [MedicineId, title, time.toISOString(), repeat]
+        );
+        return result.lastInsertRowId;
     } catch (error) {
-        console.error('Error creating reminder:', error)
-        return null
+        console.error('Error creating reminder:', error);
+        return null;
     }
-}
+};
 
 export const GetAllMedicines = async (db: SQLiteDatabase, page: number = 1,
     limit: number = 10): Promise<Medicine[]> => {
     try {
         const result = await db.getAllAsync<any>(
-            `SELECT Id, name FROM Medicines
+            `SELECT Id, name, dosage,frequency  FROM Medicines
             LIMIT ? OFFSET ?`,
             [limit, (page - 1) * limit]
         )
