@@ -7,14 +7,17 @@ import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import FAB from "./Fab";
 import Medicines from "./Medicines";
+import { Medicine } from "./Medicines/Medicine";
 import Navbar from './Navbar';
 import RemindersList from "./RemindersList";
 import Title from './Title';
 
+type Step = 'list' | 'pickMedicine' | 'setReminder';
+
 const AlertsComponent: React.FC = () => {
     const db = useSQLiteContext();
-    const [OnToggoleAddMedicine, SetOnToggoleAddMedicine] = useState(false);
-    const [SelectedMedicineID, SetSelectedMedicineID] = useState<number | null>(null);
+    const [step, setStep] = useState<Step>('list');
+    const [selectedMedicine, setSelectedMedicine] = useState<Medicine | null>(null);
     const [Reminders, setReminders] = useState<ReminderWithMedicine[]>([]);
     const [AlertsCount, setAlertsCount] = useState(0);
 
@@ -38,25 +41,32 @@ const AlertsComponent: React.FC = () => {
     );
 
     const handleFABPress = () => {
-        SetOnToggoleAddMedicine(!OnToggoleAddMedicine);
-    }
+        setStep('pickMedicine');
+        setSelectedMedicine(null);
+    };
+
+    const handleMedicineConfirm = (medicine: Medicine) => {
+        setSelectedMedicine(medicine);
+        setStep('setReminder');
+    };
+
+    console.log("Selected Medicine:", selectedMedicine);
 
     return (
         <View style={styles.container}>
             <Navbar />
-            <Title
-                Count={AlertsCount}
-            />
-            {OnToggoleAddMedicine ?
-                <Medicines /> : <RemindersList
-                    Reminders={Reminders}
+            {step === 'list' && <Title Count={AlertsCount} />}
+            {step === 'list' && <RemindersList Reminders={Reminders} />}
+            {step === 'pickMedicine' && (
+                <Medicines
+                    onBack={() => setStep('list')}
+                    onConfirm={handleMedicineConfirm}
                 />
-            }
-
-            <FAB
-                onPress={handleFABPress}
-            />
-
+            )}
+            {step === 'setReminder' && selectedMedicine && (
+                <View />
+            )}
+            {step === 'list' && <FAB onPress={handleFABPress} />}
         </View>
     )
 }

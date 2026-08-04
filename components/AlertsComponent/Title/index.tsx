@@ -1,6 +1,7 @@
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
@@ -23,6 +24,11 @@ const Title: React.FC<Props> = ({ Count }) => {
                     <Text style={styles.countLabel}>
                         {Count === 1 ? "Reminder" : "Reminders"}
                     </Text>
+                    <MaterialCommunityIcons
+                        name="bell-ring"
+                        size={scale(16)}
+                        color="#4D661C"
+                    />
                 </View>
             </View>
         </View>
