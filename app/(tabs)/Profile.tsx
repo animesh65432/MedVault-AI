@@ -1,17 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import ProfileComponent from '@/components/ProfileComponent';
 
 export default function ExploreScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Explore</Text>
-    </View>
+    <ProfileComponent />
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

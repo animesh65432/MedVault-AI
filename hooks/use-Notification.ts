@@ -7,6 +7,7 @@ export const useNotification = () => {
             const trigger = buildTrigger(reminder);
 
             const notificationId = await Notifications.scheduleNotificationAsync({
+                identifier: String(reminder.Id!),
                 content: {
                     title: reminder.title,
                     sound: 'default',

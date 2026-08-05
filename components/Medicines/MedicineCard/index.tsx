@@ -10,7 +10,9 @@ import { useSQLiteContext } from "expo-sqlite"
 import React, { useState } from "react"
 import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { Dropdown } from "react-native-element-dropdown"
+import Swipeable from 'react-native-gesture-handler/Swipeable'
 import MedicineTagPill from "../Medicinetagpill"
+import Delete from "./Delete"
 
 
 interface MedicineCardProps {
@@ -39,7 +41,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
 }) => {
     const db = useSQLiteContext()
     const [isEditable, setIsEditable] = useState(false)
-    const [isDeleting, setIsDeleting] = useState(false)
+    const [IsDeleting, setIsDeleting] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
 
     const [name, setName] = useState(medicine.name)
@@ -121,202 +123,198 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
     }
 
     return (
-        <TouchableOpacity
-            activeOpacity={isEditable ? 1 : 0.7}
-            style={styles.card}
+        <Swipeable
+            overshootRight={false}
+            renderRightActions={() => <Delete
+                handleDelete={handleDelete}
+                IsDeleting={IsDeleting}
+            />}
         >
-            <View style={styles.cardTop}>
-                {isEditable ? (
-                    <TextInput
-                        value={name}
-                        onChangeText={setName}
-                        style={styles.medNameInput}
-                        placeholder="Medicine name"
-                        placeholderTextColor="#234338"
-                        autoFocus
-                    />
-                ) : (
-                    <Text style={styles.medName} numberOfLines={2}>
-                        {medicine.name || "Unnamed medicine"}
-                    </Text>
-                )}
-
-                <View style={styles.actionsRow}>
+            <TouchableOpacity
+                activeOpacity={isEditable ? 1 : 0.7}
+                style={styles.card}
+            >
+                <View style={styles.cardTop}>
                     {isEditable ? (
-                        <>
-                            <TouchableOpacity
-                                style={[styles.chip, styles.chipActive]}
-                                onPress={handleSave}
-                                disabled={isSaving}
-                                hitSlop={8}
-                            >
-                                {isSaving ? (
-                                    <ActivityIndicator size="small" color="#EEF6A2" />
-                                ) : (
-                                    <>
-                                        <Feather name="check" size={fs(11)} color="#EEF6A2" />
-                                        <Text style={[styles.chipText, styles.chipTextActive]}>Save</Text>
-                                    </>
-                                )}
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.chip}
-                                onPress={handleCancel}
-                                disabled={isSaving}
-                                hitSlop={8}
-                            >
-                                <Feather name="x" size={fs(11)} color="#5F5E5A" />
-                            </TouchableOpacity>
-                        </>
-                    ) : (
-                        <>
-                            <TouchableOpacity
-                                style={styles.chip}
-                                onPress={() => setIsEditable(true)}
-                                hitSlop={8}
-                            >
-                                <Feather name="edit-2" size={fs(11)} color="#5F5E5A" />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.removeChip}
-                                onPress={handleDelete}
-                                disabled={isDeleting}
-                                hitSlop={8}
-                            >
-                                {isDeleting ? (
-                                    <ActivityIndicator size="small" color="#B3261E" />
-                                ) : (
-                                    <Feather name="trash-2" size={fs(13)} color="#B3261E" />
-                                )}
-                            </TouchableOpacity>
-                        </>
-                    )}
-                </View>
-            </View>
-
-            {isEditable ? (
-                <View style={styles.editBlock}>
-                    <View style={styles.pillRow}>
-                        <View style={styles.splitField}>
-                            <TextInput
-                                value={dosageValue}
-                                onChangeText={setDosageValue}
-                                placeholder="Dosage"
-                                placeholderTextColor="#B4B2A9"
-                                keyboardType="numeric"
-                                style={styles.splitFieldInput}
-                            />
-                            <Dropdown
-                                style={styles.unitDropdown}
-                                selectedTextStyle={styles.dropdownSelectedText}
-                                itemTextStyle={styles.pickerItemText}
-                                containerStyle={styles.dropdownContainer}
-                                data={DosageUnitOptions}
-                                labelField="label"
-                                valueField="value"
-                                value={dosageUnit}
-                                onChange={(item) => setDosageUnit(item.value)}
-                            />
-                        </View>
-                        <Dropdown
-                            style={styles.dropdown}
-                            placeholderStyle={styles.dropdownPlaceholder}
-                            selectedTextStyle={styles.dropdownSelectedText}
-                            itemTextStyle={styles.pickerItemText}
-                            containerStyle={styles.dropdownContainer}
-                            data={FrequencyOptions as unknown as { label: string; value: string }[]}
-                            maxHeight={220}
-                            labelField="label"
-                            valueField="value"
-                            placeholder="Frequency"
-                            value={frequency}
-                            onChange={(item) => setFrequency(item.value)}
+                        <TextInput
+                            value={name}
+                            onChangeText={setName}
+                            style={styles.medNameInput}
+                            placeholder="Medicine name"
+                            placeholderTextColor="#234338"
+                            autoFocus
                         />
+                    ) : (
+                        <Text style={styles.medName} numberOfLines={2}>
+                            {medicine.name || "Unnamed medicine"}
+                        </Text>
+                    )}
 
-                        <View style={styles.splitField}>
-                            <TextInput
-                                value={durationValue}
-                                onChangeText={setDurationValue}
-                                placeholder="Duration"
-                                placeholderTextColor="#B4B2A9"
-                                keyboardType="numeric"
-                                style={styles.splitFieldInput}
-                            />
+                    <View style={styles.actionsRow}>
+                        {isEditable ? (
+                            <>
+                                <TouchableOpacity
+                                    style={[styles.chip, styles.chipActive]}
+                                    onPress={handleSave}
+                                    disabled={isSaving}
+                                    hitSlop={8}
+                                >
+                                    {isSaving ? (
+                                        <ActivityIndicator size="small" color="#EEF6A2" />
+                                    ) : (
+                                        <>
+                                            <Feather name="check" size={fs(11)} color="#EEF6A2" />
+                                            <Text style={[styles.chipText, styles.chipTextActive]}>Save</Text>
+                                        </>
+                                    )}
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.chip}
+                                    onPress={handleCancel}
+                                    disabled={isSaving}
+                                    hitSlop={8}
+                                >
+                                    <Feather name="x" size={fs(11)} color="#5F5E5A" />
+                                </TouchableOpacity>
+                            </>
+                        ) : (
+                            <>
+                                <TouchableOpacity
+                                    style={styles.chip}
+                                    onPress={() => setIsEditable(true)}
+                                    hitSlop={8}
+                                >
+                                    <Feather name="edit-2" size={fs(11)} color="#5F5E5A" />
+                                </TouchableOpacity>
+                            </>
+                        )}
+                    </View>
+                </View>
+
+                {isEditable ? (
+                    <View style={styles.editBlock}>
+                        <View style={styles.pillRow}>
+                            <View style={styles.splitField}>
+                                <TextInput
+                                    value={dosageValue}
+                                    onChangeText={setDosageValue}
+                                    placeholder="Dosage"
+                                    placeholderTextColor="#B4B2A9"
+                                    keyboardType="numeric"
+                                    style={styles.splitFieldInput}
+                                />
+                                <Dropdown
+                                    style={styles.unitDropdown}
+                                    selectedTextStyle={styles.dropdownSelectedText}
+                                    itemTextStyle={styles.pickerItemText}
+                                    containerStyle={styles.dropdownContainer}
+                                    data={DosageUnitOptions}
+                                    labelField="label"
+                                    valueField="value"
+                                    value={dosageUnit}
+                                    onChange={(item) => setDosageUnit(item.value)}
+                                />
+                            </View>
                             <Dropdown
-                                style={styles.unitDropdown}
+                                style={styles.dropdown}
+                                placeholderStyle={styles.dropdownPlaceholder}
                                 selectedTextStyle={styles.dropdownSelectedText}
                                 itemTextStyle={styles.pickerItemText}
                                 containerStyle={styles.dropdownContainer}
-                                data={DurationUnitOptions}
+                                data={FrequencyOptions as unknown as { label: string; value: string }[]}
+                                maxHeight={220}
                                 labelField="label"
                                 valueField="value"
-                                value={durationUnit}
-                                onChange={(item) => setDurationUnit(item.value)}
+                                placeholder="Frequency"
+                                value={frequency}
+                                onChange={(item) => setFrequency(item.value)}
                             />
-                        </View>
-                        <View style={styles.fieldWrap}>
-                            <Text style={styles.fieldLabel}>Timing</Text>
-                            <View style={styles.timingRow}>
-                                {(TimingOptions as unknown as { label: string; value: string }[]).map((opt) => {
-                                    const active = timings.includes(opt.value)
-                                    return (
-                                        <TouchableOpacity
-                                            key={opt.value}
-                                            onPress={() => toggleTiming(opt.value)}
-                                            style={[styles.timingChip, active && styles.timingChipActive]}
-                                            hitSlop={6}
-                                        >
-                                            <Text
-                                                style={[
-                                                    styles.timingChipText,
-                                                    active && styles.timingChipTextActive,
-                                                ]}
+
+                            <View style={styles.splitField}>
+                                <TextInput
+                                    value={durationValue}
+                                    onChangeText={setDurationValue}
+                                    placeholder="Duration"
+                                    placeholderTextColor="#B4B2A9"
+                                    keyboardType="numeric"
+                                    style={styles.splitFieldInput}
+                                />
+                                <Dropdown
+                                    style={styles.unitDropdown}
+                                    selectedTextStyle={styles.dropdownSelectedText}
+                                    itemTextStyle={styles.pickerItemText}
+                                    containerStyle={styles.dropdownContainer}
+                                    data={DurationUnitOptions}
+                                    labelField="label"
+                                    valueField="value"
+                                    value={durationUnit}
+                                    onChange={(item) => setDurationUnit(item.value)}
+                                />
+                            </View>
+                            <View style={styles.fieldWrap}>
+                                <Text style={styles.fieldLabel}>Timing</Text>
+                                <View style={styles.timingRow}>
+                                    {(TimingOptions as unknown as { label: string; value: string }[]).map((opt) => {
+                                        const active = timings.includes(opt.value)
+                                        return (
+                                            <TouchableOpacity
+                                                key={opt.value}
+                                                onPress={() => toggleTiming(opt.value)}
+                                                style={[styles.timingChip, active && styles.timingChipActive]}
+                                                hitSlop={6}
                                             >
-                                                {opt.label}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    );
-                                })}
+                                                <Text
+                                                    style={[
+                                                        styles.timingChipText,
+                                                        active && styles.timingChipTextActive,
+                                                    ]}
+                                                >
+                                                    {opt.label}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        );
+                                    })}
+                                </View>
                             </View>
                         </View>
                     </View>
-                </View>
-            ) : (
-                !!hasDetails && (
-                    <View style={styles.pillRow}>
-                        {!!medicine.dosage && <Pill text={medicine.dosage} />}
-                        {!!medicine.frequency && <Pill text={medicine.frequency} />}
-                        {!!medicine.duration && <Pill text={medicine.duration} />}
-                        {medicine.timing.length > 0 ? <Pill text={medicine.timing.join(" , ")} /> : null}
+                ) : (
+                    !!hasDetails && (
+                        <View style={styles.pillRow}>
+                            {!!medicine.dosage && <Pill text={medicine.dosage} />}
+                            {!!medicine.frequency && <Pill text={medicine.frequency} />}
+                            {!!medicine.duration && <Pill text={medicine.duration} />}
+                            {medicine.timing.length > 0 ? <Pill text={medicine.timing.join(" , ")} /> : null}
+                        </View>
+                    )
+                )}
+
+                {!isEditable && (medicine.tags?.length || medicine.courseLabel) && (
+                    <View style={styles.tagsRow}>
+                        <View style={styles.tagsGroup}>
+                            {medicine.tags?.map((tag) => (
+                                <MedicineTagPill key={tag.label} tag={tag} />
+                            ))}
+                        </View>
+                        {!!medicine.courseLabel && (
+                            <Text style={styles.courseLabel}>{medicine.courseLabel}</Text>
+                        )}
                     </View>
-                )
-            )}
-
-            {!isEditable && (medicine.tags?.length || medicine.courseLabel) && (
-                <View style={styles.tagsRow}>
-                    <View style={styles.tagsGroup}>
-                        {medicine.tags?.map((tag) => (
-                            <MedicineTagPill key={tag.label} tag={tag} />
-                        ))}
-                    </View>
-                    {!!medicine.courseLabel && (
-                        <Text style={styles.courseLabel}>{medicine.courseLabel}</Text>
-                    )}
-                </View>
-            )}
-            {
-                !isEditable && formatDoctorLine(medicine).length > 0 && <View
-                    style={styles.border}
-                />
-            }
+                )}
+                {
+                    !isEditable && formatDoctorLine(medicine).length > 0 && <View
+                        style={styles.border}
+                    />
+                }
 
 
-            {!isEditable && (
-                <Text style={styles.doctorLine} numberOfLines={1}>
-                    {formatDoctorLine(medicine)}
-                </Text>
-            )}
-        </TouchableOpacity>
+                {!isEditable && (
+                    <Text style={styles.doctorLine} numberOfLines={1}>
+                        {formatDoctorLine(medicine)}
+                    </Text>
+                )}
+            </TouchableOpacity>
+        </Swipeable>
     )
 }
 

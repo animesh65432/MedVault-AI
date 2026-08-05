@@ -14,6 +14,7 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import Empty from './Empty';
 import MedicineRow, { Medicine } from './Medicine';
 
 type Props = {
@@ -39,6 +40,7 @@ const Medicines: React.FC<Props> = ({ onBack, onConfirm }) => {
             else setLoadingMore(true);
 
             const data = await GetAllMedicines(db, pageToLoad, PAGE_SIZE);
+
             setMedicines(prev => (isInitial ? data : [...prev, ...data]));
             setHasMore(data.length === PAGE_SIZE);
             setPage(pageToLoad);
@@ -68,6 +70,10 @@ const Medicines: React.FC<Props> = ({ onBack, onConfirm }) => {
     }, [medicines, query]);
 
     const selectedMedicine = medicines.find((m) => m.Id === selectedId) ?? null;
+
+    if (medicines.length === 0 && !loading) {
+        return <Empty />;
+    }
 
     return (
         <View style={styles.container}>

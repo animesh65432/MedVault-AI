@@ -71,7 +71,8 @@ const AddReminder: React.FC<Props> = ({ medicine, onBack, onSaved }) => {
                 repeat,
                 medicineName: medicine.name,
                 dosage: medicine.dosage,
-                frequency: medicine.frequency
+                frequency: medicine.frequency,
+                IsEnabled: true
             });
 
         } catch (error) {

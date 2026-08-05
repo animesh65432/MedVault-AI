@@ -4,10 +4,13 @@ import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import React from 'react';
 import { StyleSheet, Switch, Text, View } from 'react-native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import Delete from './Delete';
 
 type Props = {
     reminder: ReminderWithMedicine;
     onToggle: (id: number, value: boolean) => void;
+    OnDeleteReminder: (id: number) => Promise<void>;
 };
 
 const formatTime = (isoString: string) => {
@@ -29,42 +32,51 @@ const REPEAT_LABELS: Record<string, string> = {
     weekly: 'Weekly',
 };
 
-const Reminder: React.FC<Props> = ({ reminder, onToggle }) => {
+const Reminder: React.FC<Props> = ({ OnDeleteReminder, reminder, onToggle }) => {
     const { period, clock } = formatTime(reminder.time);
     return (
-        <View style={styles.container}>
-            <View style={styles.timeBadge}>
-                <Text style={styles.period}>{period}</Text>
-                <Text style={styles.clock}>{clock}</Text>
-            </View>
+        <Swipeable
+            overshootRight={false}
+            renderRightActions={() => <Delete
+                id={reminder.Id}
+                OnDeleteReminder={OnDeleteReminder}
+            />}
+        >
+            <View
+                style={styles.container}
+            >
+                <View style={styles.timeBadge}>
+                    <Text style={styles.period}>{period}</Text>
+                    <Text style={styles.clock}>{clock}</Text>
+                </View>
 
-            <View style={styles.info}>
-                <Text style={styles.title} numberOfLines={1}>
-                    {reminder.medicineName}
-                </Text>
-                <Text style={styles.subtext} numberOfLines={1}>
-                    {reminder.dosage ? `${reminder.dosage}` : ''}
-                    {reminder.dosage && reminder.title ? ' · ' : ''}
-                    {reminder.title}
-                </Text>
-            </View>
-
-            <View style={styles.rightCol}>
-                <View style={styles.repeatChip}>
-                    <Text style={styles.repeatChipText}>
-                        {REPEAT_LABELS[reminder.repeat] ?? reminder.repeat}
+                <View style={styles.info}>
+                    <Text style={styles.title} numberOfLines={1}>
+                        {reminder.medicineName}
+                    </Text>
+                    <Text style={styles.subtext} numberOfLines={1}>
+                        {reminder.dosage ? `${reminder.dosage}` : ''}
+                        {reminder.dosage && reminder.title ? ' · ' : ''}
+                        {reminder.title}
                     </Text>
                 </View>
-                <Switch
-                    value={reminder.IsEnabled}
-                    onValueChange={(value) => onToggle(reminder.Id, value)}
-                    trackColor={{ false: '#DCE3DF', true: '#234338' }}
-                    thumbColor="#FAFAF8"
-                    ios_backgroundColor="#DCE3DF"
-                    style={styles.switch}
-                />
+
+                <View style={styles.rightCol}>
+                    <View style={styles.repeatChip}>
+                        <Text style={styles.repeatChipText}>
+                            {REPEAT_LABELS[reminder.repeat] ?? reminder.repeat}
+                        </Text>
+                    </View>
+                    <Switch
+                        value={!!reminder.IsEnabled}
+                        onValueChange={(value) => onToggle(reminder.Id, value)}
+                        trackColor={{ false: '#DCE3DF', true: '#234338' }}
+                        thumbColor="#FAFAF8"
+                        style={styles.switch}
+                    />
+                </View>
             </View>
-        </View>
+        </Swipeable>
     );
 };
 

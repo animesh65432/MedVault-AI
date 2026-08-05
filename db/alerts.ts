@@ -18,9 +18,7 @@ export type NewReminder = {
 
 export const GetRemindersCount = async (db: SQLiteDatabase): Promise<number> => {
     try {
-        const result = await db.getFirstAsync<{ count: number }>(
-            `SELECT COUNT(*) as count FROM Reminders`
-        );
+        const result = await db.getFirstAsync<{ count: number }>(`SELECT COUNT(*) as count FROM Reminders`);
         return result?.count ?? 0;
     } catch (error) {
         console.error("Error getting reminders count:", error);
@@ -29,7 +27,9 @@ export const GetRemindersCount = async (db: SQLiteDatabase): Promise<number> => 
 }
 
 export const GetAllReminders = async (
-    db: SQLiteDatabase
+    db: SQLiteDatabase,
+    offset: number = 1,
+    limit: number = 15
 ): Promise<ReminderWithMedicine[]> => {
     try {
         const result = await db.getAllAsync<ReminderWithMedicine>(`
@@ -46,7 +46,8 @@ export const GetAllReminders = async (
             FROM Reminders r
             JOIN Medicines m ON r.MedicineId = m.Id
             ORDER BY r.time ASC
-        `)
+            LIMIT ? OFFSET ?
+        `, [limit, offset])
         return result
     } catch (error) {
         console.error('Error fetching reminders:', error)
@@ -65,36 +66,6 @@ export const deleteReminder = async (db: SQLiteDatabase, reminderId: number): Pr
     }
 };
 
-
-export const updateReminder = async (
-    db: SQLiteDatabase,
-    reminderId: number,
-    reminder: ReminderWithMedicine
-): Promise<boolean> => {
-    const { MedicineId, title, time, repeat } = reminder
-
-    const fields: Record<string, unknown> = { MedicineId, title, time, repeat }
-    const entries = Object.entries(fields).filter(([, value]) => value !== undefined)
-
-    if (entries.length === 0) {
-        console.warn(`updateReminder called with no fields for ID ${reminderId}`)
-        return false
-    }
-
-    const setClause = entries.map(([key]) => `${key} = ?`).join(', ')
-    const values = entries.map(([, value]) => value as number | string | null)
-
-    try {
-        await db.runAsync(
-            `UPDATE Reminders SET ${setClause} WHERE Id = ?`,
-            [...values, reminderId]
-        )
-        return true
-    } catch (error) {
-        console.error(`Error updating reminder with ID ${reminderId}:`, error)
-        return false
-    }
-}
 
 export const CrateReminder = async (
     db: SQLiteDatabase,
@@ -127,3 +98,34 @@ export const GetAllMedicines = async (db: SQLiteDatabase, page: number = 1,
         return []
     }
 }
+
+export const OffAlarm = async (db: SQLiteDatabase, reminderId: number): Promise<void> => {
+    try {
+        await db.runAsync(
+            `UPDATE Reminders SET IsEnabled = 0 WHERE Id = ?`,
+            [reminderId]
+        );
+    } catch (error) {
+        console.error(`Error disabling alarm for reminder with ID ${reminderId}:`, error);
+    }
+}
+
+const OnAlarm = async (db: SQLiteDatabase, reminderId: number): Promise<void> => {
+    try {
+        await db.runAsync(
+            `UPDATE Reminders SET IsEnabled = 1 WHERE Id = ?`,
+            [reminderId]
+        );
+    } catch (error) {
+        console.error(`Error enabling alarm for reminder with ID ${reminderId}:`, error);
+    }
+}
+
+export const toggleAlarm = async (db: SQLiteDatabase, reminderId: number, isEnabled: boolean): Promise<void> => {
+    if (isEnabled) {
+        await OnAlarm(db, reminderId);
+    } else {
+        await OffAlarm(db, reminderId);
+    }
+};
+

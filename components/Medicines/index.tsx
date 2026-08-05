@@ -34,7 +34,7 @@ const dedupeById = (list: MedicineWithDetailsTypes[]): MedicineWithDetailsTypes[
 const MedicinesComponent: React.FC = () => {
     const db = useSQLiteContext()
     const [DocumentId, setDocumentId] = useState<number | null>(null)
-    const [IsLoadIng, setIsLoading] = useState<boolean>(true)
+    const [IsLoadIng, setIsLoading] = useState<boolean>(false)
     const [Page, setPage] = useState<number>(1)
     const [IsLoadIngMore, setIsLoadingMore] = useState<boolean>(false)
     const [HasMore, setHasMore] = useState<boolean>(true)
@@ -178,8 +178,6 @@ const MedicinesComponent: React.FC = () => {
     const OnToggoleAddMedicine = () => {
         setIsAddMedicineModalOpen((prev) => !prev)
     }
-
-    console.log(medicines, "medicines")
 
     return (
         <View style={styles.container}>
