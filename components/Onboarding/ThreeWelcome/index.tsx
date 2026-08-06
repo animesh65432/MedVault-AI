@@ -26,8 +26,7 @@ const ThreeWelcome: React.FC<Props> = ({ handlePageChange }) => {
             </View>
 
             <Text style={styles.description}>
-                Your medical records stay protected
-                and available whenever you need them.
+                Get timely alerts for every dose — never wonder if you took today's medicine
             </Text>
             <LottieView
                 source={animation}
@@ -140,6 +139,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: vScale(16),
         gap: vScale(10),
+        marginTop: vScale(80),
     },
     trustTitle: {
         fontSize: fs(14),

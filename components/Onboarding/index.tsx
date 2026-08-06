@@ -2,6 +2,7 @@ import { OnboardingContext } from '@/context';
 import React, { useContext, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import OnboardingSwiper from "react-native-onboarding-swiper";
+import NameInputScreen from './NameInputScreen';
 import ThreeWelcome from './ThreeWelcome';
 import TwoWelCome from './Twowelcome';
 import WelCome from './welcome';
@@ -15,7 +16,7 @@ const Onboarding: React.FC = () => {
     };
 
     const handlePageChange = async (index: number) => {
-        if (index > 2) {
+        if (index > 3) {
             await setOnboardingCompleteAndCache(true);
             return;
         }
@@ -45,7 +46,13 @@ const Onboarding: React.FC = () => {
                         image: <></>,
                         title: <ThreeWelcome handlePageChange={handlePageChange} />,
                         subtitle: '',
-                    }
+                    },
+                    {
+                        backgroundColor: '#fff',
+                        image: <></>,
+                        title: <NameInputScreen onContinue={(name) => console.log(name)} />,
+                        subtitle: '',
+                    },
                 ]}
                 showPagination={false}
                 showSkip={false}
