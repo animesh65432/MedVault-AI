@@ -25,8 +25,10 @@ const COLORS = {
 
 export default function NameInputScreen({
     onContinue,
+    isActive
 }: {
     onContinue: (name: string) => void;
+    isActive: boolean;
 }) {
     const [name, setName] = useState('');
     const [focused, setFocused] = useState(false);
@@ -76,7 +78,6 @@ export default function NameInputScreen({
 
             <View style={styles.content}>
                 <View style={styles.avatarWrap}>
-                    {/* decorative dashed rings — echoes the screen 2 illustration motif */}
                     <View style={styles.ringOuter} />
                     <View style={styles.ringInner} />
                     <View style={styles.avatarCircle}>
@@ -96,19 +97,22 @@ export default function NameInputScreen({
                 </Text>
 
                 <View style={styles.inputWrap}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Your name"
-                        placeholderTextColor="#B7C0BA"
-                        value={name}
-                        onChangeText={setName}
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                        autoFocus
-                        autoCapitalize="words"
-                        returnKeyType="done"
-                        onSubmitEditing={handleContinue}
-                    />
+                    {isActive ? (
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Your name"
+                            placeholderTextColor="#B7C0BA"
+                            value={name}
+                            onChangeText={setName}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
+                            autoCapitalize="words"
+                            returnKeyType="done"
+                            onSubmitEditing={handleContinue}
+                        />
+                    ) : (
+                        <View style={styles.input} />
+                    )}
                     <View style={styles.underlineTrack}>
                         <Animated.View
                             style={[

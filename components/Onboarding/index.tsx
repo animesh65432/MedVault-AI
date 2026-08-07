@@ -1,5 +1,6 @@
 import { OnboardingContext } from '@/context';
-import React, { useContext, useRef } from 'react';
+import { UserNameContext } from "@/context/UserName";
+import React, { useContext, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import OnboardingSwiper from "react-native-onboarding-swiper";
 import NameInputScreen from './NameInputScreen';
@@ -8,6 +9,8 @@ import TwoWelCome from './Twowelcome';
 import WelCome from './welcome';
 
 const Onboarding: React.FC = () => {
+    const { setUserName } = useContext(UserNameContext)
+    const [activeIndex, setActiveIndex] = useState(0);
     const { setOnboardingCompleteAndCache } = useContext(OnboardingContext)
     const swiperRef = useRef<OnboardingSwiper>(null);
 
@@ -16,11 +19,17 @@ const Onboarding: React.FC = () => {
     };
 
     const handlePageChange = async (index: number) => {
+        setActiveIndex(index);
         if (index > 3) {
             await setOnboardingCompleteAndCache(true);
             return;
         }
         swiperRef.current?.goToPage(index, true);
+    };
+
+    const handleNameSubmit = (name: string) => {
+        setUserName(name);
+        handlePageChange(activeIndex + 1);
     };
 
     return (
@@ -50,7 +59,10 @@ const Onboarding: React.FC = () => {
                     {
                         backgroundColor: '#fff',
                         image: <></>,
-                        title: <NameInputScreen onContinue={(name) => console.log(name)} />,
+                        title: <NameInputScreen
+                            isActive={activeIndex === 3}
+                            onContinue={handleNameSubmit}
+                        />,
                         subtitle: '',
                     },
                 ]}
