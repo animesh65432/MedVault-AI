@@ -4,12 +4,11 @@ import { useRef, useState } from 'react';
 import {
     Animated,
     KeyboardAvoidingView,
-    Platform,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
 import AntDesign from "react-native-vector-icons/AntDesign";
 
@@ -67,7 +66,6 @@ export default function NameInputScreen({
     return (
         <KeyboardAvoidingView
             style={styles.container}
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
             <View style={styles.dots}>
                 <View style={styles.dotInactive} />
@@ -122,7 +120,7 @@ export default function NameInputScreen({
                         <Animated.View style={{ transform: [{ scale: pressScale }] }}>
                             <TouchableOpacity
                                 style={[styles.fab, !canContinue && styles.fabDisabled]}
-                                onPress={handleContinue}
+                                onPressIn={handleContinue}
                                 disabled={!canContinue}
                                 activeOpacity={0.85}
                                 hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}

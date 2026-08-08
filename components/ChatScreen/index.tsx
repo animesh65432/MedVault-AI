@@ -54,8 +54,6 @@ const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
 
             const messageType = await CheckMessageType(message, currentDocument);
 
-            console.log("Message Type:", messageType);
-
             let answerText: string | undefined;
             let hasMore = false;
             let showMoreTable = "";

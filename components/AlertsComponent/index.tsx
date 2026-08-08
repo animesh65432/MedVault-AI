@@ -1,11 +1,10 @@
-import { AlarmContext } from "@/context/Alarm";
-import { CrateReminder, deleteReminder, GetAllReminders, GetRemindersCount, toggleAlarm } from "@/db/alerts";
+import { deleteReminder, GetAllReminders, GetRemindersCount, toggleAlarm } from "@/db/alerts";
 import { useNotification } from "@/hooks/use-Notification";
 import { ReminderRepeat, ReminderWithMedicine } from "@/types";
 import { scale } from "@/utils/scale";
 import { useFocusEffect } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Toast from "react-native-toast-message";
 import AddReminder from "./AddReminder";
@@ -26,7 +25,6 @@ const AlertsComponent: React.FC = () => {
     const [loadingMore, setLoadingMore] = useState(false);
     const { addAlarm, removeAlarm } = useNotification()
     const [step, setStep] = useState<Step>('list');
-    const { IsAlarmActive } = useContext(AlarmContext)
     const [selectedMedicine, setSelectedMedicine] = useState<Medicine | null>(null);
     const [Reminders, setReminders] = useState<ReminderWithMedicine[]>([]);
     const [AlertsCount, setAlertsCount] = useState(0);
@@ -89,38 +87,15 @@ const AlertsComponent: React.FC = () => {
     }
 
     const handleSaveReminder = async (reminderwithmedicine: ReminderWithMedicine) => {
-        if (!IsAlarmActive) {
-            Toast.show({
-                type: "info",
-                text1: "Please enable notifications to set reminders."
-            });
-            return;
-        }
         try {
-            const reminderId = await CrateReminder(db, {
-                time: new Date(reminderwithmedicine.time),
-                title: reminderwithmedicine.title,
-                repeat: reminderwithmedicine.repeat,
-                MedicineId: reminderwithmedicine.MedicineId
-            });
-
-            if (!reminderId) {
-                Toast.show({
-                    type: "error",
-                    text1: "Failed to create reminder."
-                });
-                return;
-            }
-
             await addAlarm({
                 ...reminderwithmedicine,
                 time: new Date(reminderwithmedicine.time),
                 repeat: reminderwithmedicine.repeat as ReminderRepeat,
-                Id: reminderId
+                Id: reminderwithmedicine.Id,
             })
 
-            setReminders(prev => [...prev, { ...reminderwithmedicine, Id: reminderId }]
-            );
+            setReminders(prev => [...prev, { ...reminderwithmedicine, IsEnabled: true }]);
 
             await refreshCount();
         }

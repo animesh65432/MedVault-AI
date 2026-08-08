@@ -3,8 +3,9 @@ import { DocumentRow, SearchSuggestion } from "@/types";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import { useFocusEffect } from '@react-navigation/native';
+import { useLocalSearchParams } from "expo-router";
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
 import ChatBotAI from "../ChatBotAI";
 import Empty from './Empty';
@@ -18,6 +19,8 @@ import Title from "./Title";
 const PAGE_SIZE = 10
 
 const Search: React.FC = () => {
+    const { types } = useLocalSearchParams();
+    const Types = useMemo(() => (types ? JSON.parse(types as string) : []), [types]);
     const [page, setPage] = useState<number>(1)
     const [hasMore, setHasMore] = useState<boolean>(true)
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -125,6 +128,12 @@ const Search: React.FC = () => {
             clearTimeout(timeout)
         }
     }, [searchQuery])
+
+    useEffect(() => {
+        if (Types.length > 0) {
+            setSelectedCategories(Types);
+        }
+    }, [Types])
 
     const FilterCateGories = SelectedCategories.filter(category => category !== "All Records")
     const hasQuery = searchQuery.trim().length > 0 || FilterCateGories.length > 0 || SelectedDate.startDate !== null || SelectedDate.endDate !== null;

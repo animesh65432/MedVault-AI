@@ -11,7 +11,7 @@ const Chat: React.FC = () => {
     return (
         <ChatScreen
             currentDocument={isDocumentActive}
-            documentId={documentId?.toString() || ''}
+            documentId={documentId}
         />
     );
 };

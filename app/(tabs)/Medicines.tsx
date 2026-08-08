@@ -1,4 +1,4 @@
-import MedicinesComponent from '@/components/Medicines'
+import MedicinesComponent from '@/components/Medicines';
 
 const Medicines: React.FC = () => {
     return (

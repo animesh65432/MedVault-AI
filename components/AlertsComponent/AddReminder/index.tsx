@@ -1,3 +1,4 @@
+import { AlarmContext } from '@/context/Alarm';
 import { CrateReminder } from '@/db/alerts';
 import { ReminderRepeat, ReminderWithMedicine } from '@/types';
 import { fs } from '@/utils/fs';
@@ -5,7 +6,7 @@ import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import Feather from '@expo/vector-icons/Feather';
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     ScrollView,
     StyleSheet,
@@ -35,6 +36,7 @@ const formatTime = (d: Date) =>
 
 const AddReminder: React.FC<Props> = ({ medicine, onBack, onSaved }) => {
     const db = useSQLiteContext();
+    const { IsAlarmActive } = useContext(AlarmContext)
     const [title, setTitle] = useState(medicine.name);
     const [time, setTime] = useState(new Date());
     const [repeat, setRepeat] = useState<ReminderRepeat>('daily');
@@ -47,6 +49,14 @@ const AddReminder: React.FC<Props> = ({ medicine, onBack, onSaved }) => {
             Toast.show({ type: 'error', text2: 'Please provide a title.' });
             return;
         }
+        if (!IsAlarmActive) {
+            Toast.show({
+                type: "info",
+                text1: "Please enable notifications to set reminders."
+            });
+            return;
+        }
+
         try {
             setSaving(true);
             const reminderId = await CrateReminder(db, {

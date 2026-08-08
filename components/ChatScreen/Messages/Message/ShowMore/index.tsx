@@ -30,7 +30,7 @@ const ShowMore: React.FC<Props> = ({ Types, tableName }) => {
                     pressed && style.pillPressed,
                 ]}
             >
-                <Text style={style.label}>Show more results</Text>
+                <Text style={style.label}>Show more</Text>
                 <View style={style.iconCircle}>
                     <Feather name="arrow-right" size={scale(12)} color="#FAFAF8" />
                 </View>
