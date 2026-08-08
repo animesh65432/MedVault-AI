@@ -58,7 +58,7 @@ export default function NameInputScreen({
     const handleContinue = () => {
         if (!canContinue) return;
         Animated.sequence([
-            Animated.timing(pressScale, { toValue: 0.97, duration: 80, useNativeDriver: true }),
+            Animated.timing(pressScale, { toValue: 0.9, duration: 80, useNativeDriver: true }),
             Animated.timing(pressScale, { toValue: 1, duration: 80, useNativeDriver: true }),
         ]).start();
         onContinue(name.trim());
@@ -82,7 +82,11 @@ export default function NameInputScreen({
                     <View style={styles.ringInner} />
                     <View style={styles.avatarCircle}>
                         {name.trim().length === 0 ? (
-                            <AntDesign name="user" size={scale(34)} color={COLORS.dark} />
+                            <AntDesign
+                                name="user"
+                                size={scale(34)}
+                                color={COLORS.dark}
+                            />
                         ) : (
                             <Text style={styles.avatarInitial}>
                                 {name.trim().charAt(0).toUpperCase()}
@@ -97,22 +101,37 @@ export default function NameInputScreen({
                 </Text>
 
                 <View style={styles.inputWrap}>
-                    {isActive ? (
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Your name"
-                            placeholderTextColor="#B7C0BA"
-                            value={name}
-                            onChangeText={setName}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                            autoCapitalize="words"
-                            returnKeyType="done"
-                            onSubmitEditing={handleContinue}
-                        />
-                    ) : (
-                        <View style={styles.input} />
-                    )}
+                    <View style={styles.inputRow}>
+                        {isActive ? (
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Your name"
+                                placeholderTextColor="#B7C0BA"
+                                value={name}
+                                onChangeText={setName}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                autoCapitalize="words"
+                                returnKeyType="done"
+                                onSubmitEditing={handleContinue}
+                            />
+                        ) : (
+                            <View style={styles.input} />
+                        )}
+
+                        <Animated.View style={{ transform: [{ scale: pressScale }] }}>
+                            <TouchableOpacity
+                                style={[styles.fab, !canContinue && styles.fabDisabled]}
+                                onPress={handleContinue}
+                                disabled={!canContinue}
+                                activeOpacity={0.85}
+                                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                            >
+                                <AntDesign name="arrow-right" size={fs(18)} color={COLORS.cream} />
+                            </TouchableOpacity>
+                        </Animated.View>
+                    </View>
+
                     <View style={styles.underlineTrack}>
                         <Animated.View
                             style={[
@@ -120,7 +139,7 @@ export default function NameInputScreen({
                                 {
                                     width: underlineWidth.interpolate({
                                         inputRange: [0.5, 1],
-                                        outputRange: ['50%', '100%'],
+                                        outputRange: ['50%', '50%'],
                                     }),
                                     backgroundColor: focused ? COLORS.borderFocus : COLORS.border,
                                 },
@@ -128,20 +147,6 @@ export default function NameInputScreen({
                         />
                     </View>
                 </View>
-            </View>
-
-            <View style={styles.footer}>
-                <Animated.View style={{ transform: [{ scale: pressScale }] }}>
-                    <TouchableOpacity
-                        style={[styles.button, !canContinue && styles.buttonDisabled]}
-                        onPress={handleContinue}
-                        disabled={!canContinue}
-                        activeOpacity={0.85}
-                    >
-                        <Text style={styles.buttonText}>Continue</Text>
-                        <AntDesign name="arrow-right" size={fs(18)} color={COLORS.cream} />
-                    </TouchableOpacity>
-                </Animated.View>
             </View>
         </KeyboardAvoidingView>
     );
@@ -176,7 +181,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom: scale(80),
+        paddingBottom: scale(200),
     },
     avatarWrap: {
         width: scale(140),
@@ -240,8 +245,15 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
-    input: {
+    inputRow: {
         width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: scale(12),
+    },
+    input: {
+        flex: 1,
         fontSize: fs(22),
         fontWeight: '600',
         color: COLORS.dark,
@@ -249,7 +261,7 @@ const styles = StyleSheet.create({
         paddingVertical: scale(10),
     },
     underlineTrack: {
-        width: '80%',
+        width: '180%',
         height: scale(2),
         alignItems: 'center',
     },
@@ -257,31 +269,23 @@ const styles = StyleSheet.create({
         height: scale(2),
         borderRadius: scale(1),
     },
-    footer: {
-        paddingBottom: scale(28),
-    },
-    button: {
-        flexDirection: 'row',
-        gap: scale(8),
+    fab: {
+        width: scale(40),
+        height: scale(40),
+        borderRadius: scale(20),
         backgroundColor: COLORS.dark,
-        borderRadius: scale(14),
-        paddingVertical: scale(18),
         alignItems: 'center',
         justifyContent: 'center',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: scale(4) },
-        shadowOpacity: 0.12,
-        shadowRadius: scale(8),
+        shadowOffset: { width: 0, height: scale(3) },
+        shadowOpacity: 0.15,
+        shadowRadius: scale(6),
         elevation: 3,
+        marginRight: scale(24),
     },
-    buttonDisabled: {
+    fabDisabled: {
         backgroundColor: '#B7C4BB',
         shadowOpacity: 0,
         elevation: 0,
-    },
-    buttonText: {
-        color: COLORS.cream,
-        fontSize: fs(17),
-        fontWeight: '700',
     },
 });

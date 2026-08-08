@@ -3,14 +3,14 @@ import React, { createContext, useEffect } from "react"
 
 type UserNameContextType = {
     userName: string
-    setUserName: React.Dispatch<React.SetStateAction<string>>
+    OnChangeUserName: (name: string) => Promise<void>
 }
 
 const RECENT_SEARCHES_KEY = "UserName"
 
 export const UserNameContext = createContext<UserNameContextType>({
     userName: "",
-    setUserName: () => { },
+    OnChangeUserName: async (name: string) => { }
 })
 
 export const UserNameProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -27,6 +27,15 @@ export const UserNameProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }
     }
 
+    const OnChangeUserName = async (name: string) => {
+        setUserName(name)
+        try {
+            await AsyncStorage.setItem(RECENT_SEARCHES_KEY, name)
+        } catch (e) {
+            console.error("Failed to save user name", e)
+        }
+    }
+
     useEffect(() => {
         loadUserName()
     }, [])
@@ -34,7 +43,7 @@ export const UserNameProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return (
         <UserNameContext.Provider value={{
             userName,
-            setUserName
+            OnChangeUserName
         }}>
             {children}
         </UserNameContext.Provider>

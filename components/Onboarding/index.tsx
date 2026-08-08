@@ -9,7 +9,7 @@ import TwoWelCome from './Twowelcome';
 import WelCome from './welcome';
 
 const Onboarding: React.FC = () => {
-    const { setUserName } = useContext(UserNameContext)
+    const { OnChangeUserName } = useContext(UserNameContext)
     const [activeIndex, setActiveIndex] = useState(0);
     const { setOnboardingCompleteAndCache } = useContext(OnboardingContext)
     const swiperRef = useRef<OnboardingSwiper>(null);
@@ -27,8 +27,8 @@ const Onboarding: React.FC = () => {
         swiperRef.current?.goToPage(index, true);
     };
 
-    const handleNameSubmit = (name: string) => {
-        setUserName(name);
+    const handleNameSubmit = async (name: string) => {
+        await OnChangeUserName(name);
         handlePageChange(activeIndex + 1);
     };
 

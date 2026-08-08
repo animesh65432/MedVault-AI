@@ -3,6 +3,7 @@ import { toastConfig } from "@/components/toastConfig";
 import { AlarmContext, AlarmProvider } from "@/context/Alarm";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { RecentSearchProvider } from "@/context/RecentSearch";
+import { UserNameProvider } from "@/context/UserName";
 import { migrateDbIfNeeded } from "@/db/database";
 import { registerForNotifications } from "@/utils/notifications";
 import { useFonts } from "expo-font";
@@ -110,11 +111,13 @@ export default function RootLayout() {
         <OnboardingProvider>
           <KeyboardProvider>
             <AlarmProvider>
-              <RootLayoutContent />
-              <Toast
-                config={toastConfig}
-              />
-              <StatusBar style="auto" />
+              <UserNameProvider>
+                <RootLayoutContent />
+                <Toast
+                  config={toastConfig}
+                />
+                <StatusBar style="auto" />
+              </UserNameProvider>
             </AlarmProvider>
           </KeyboardProvider>
         </OnboardingProvider>
