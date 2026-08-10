@@ -1,4 +1,3 @@
-import { UserNameContext } from "@/context/UserName";
 import { GetRemindersCount } from "@/db/alerts";
 import { GetDocumentsCount } from "@/db/document";
 import { GetMedicinesCount } from "@/db/medicines";
@@ -7,7 +6,7 @@ import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { StyleSheet, View } from "react-native";
 import EmptyStats from "./EmptyStats";
 import NonEmptyStats from "./NonEmptyStats";
@@ -16,7 +15,6 @@ import Title from './Title';
 
 const HomeLayOut = () => {
     const db = useSQLiteContext()
-    const { userName } = useContext(UserNameContext)
     const [counts, setCounts] = useState<CountTypes>({
         documentsCount: 0,
         medicinesCount: 0,

@@ -45,9 +45,9 @@ export const GetAllReminders = async (
                 m.frequency
             FROM Reminders r
             JOIN Medicines m ON r.MedicineId = m.Id
-            ORDER BY r.time ASC
+            ORDER BY r.time DESC
             LIMIT ? OFFSET ?
-        `, [limit, offset])
+        `, [limit, (offset - 1) * limit]);
         return result
     } catch (error) {
         console.error('Error fetching reminders:', error)

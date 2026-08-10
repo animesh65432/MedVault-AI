@@ -1,4 +1,5 @@
 import { Onboarding } from "@/components";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import { toastConfig } from "@/components/toastConfig";
 import { AlarmContext, AlarmProvider } from "@/context/Alarm";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
@@ -8,7 +9,7 @@ import { migrateDbIfNeeded } from "@/db/database";
 import { registerForNotifications } from "@/utils/notifications";
 import { useFonts } from "expo-font";
 import * as Notifications from 'expo-notifications';
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import { SQLiteProvider } from "expo-sqlite";
 import { StatusBar } from 'expo-status-bar';
@@ -32,6 +33,7 @@ export const unstable_settings = {
 };
 
 function RootLayoutContent() {
+  const router = useRouter();
   const { OnChangeIsAlarmActive } = useContext(AlarmContext);
   const { IsonboardingComplete } = useContext(OnboardingContext);
 
@@ -49,6 +51,26 @@ function RootLayoutContent() {
       CheckNotifications();
     }
   }, [IsonboardingComplete]);
+
+  useEffect(() => {
+    Notifications.getLastNotificationResponseAsync().then((response) => {
+      const data = response?.notification.request.content.data;
+      if (data?.reminderId) {
+        router.push(`/MedicineDetails/${data.reminderId}`);
+      }
+    });
+
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        const data = response.notification.request.content.data;
+        if (data?.reminderId) {
+          router.push(`/MedicineDetails/${data.reminderId}`);
+        }
+      }
+    );
+
+    return () => subscription.remove();
+  }, [router]);
 
   if (!IsonboardingComplete) {
     return <Onboarding />;
@@ -104,24 +126,26 @@ export default function RootLayout() {
   }
 
   return (
-    <SQLiteProvider
-      databaseName="my-database.db"
-      onInit={migrateDbIfNeeded}
-    ><RecentSearchProvider>
-        <OnboardingProvider>
-          <KeyboardProvider>
-            <AlarmProvider>
-              <UserNameProvider>
-                <RootLayoutContent />
-                <Toast
-                  config={toastConfig}
-                />
-                <StatusBar style="auto" />
-              </UserNameProvider>
-            </AlarmProvider>
-          </KeyboardProvider>
-        </OnboardingProvider>
-      </RecentSearchProvider>
-    </SQLiteProvider>
+    <ErrorBoundary>
+      <SQLiteProvider
+        databaseName="my-database.db"
+        onInit={migrateDbIfNeeded}
+      ><RecentSearchProvider>
+          <OnboardingProvider>
+            <KeyboardProvider>
+              <AlarmProvider>
+                <UserNameProvider>
+                  <RootLayoutContent />
+                  <Toast
+                    config={toastConfig}
+                  />
+                  <StatusBar style="auto" />
+                </UserNameProvider>
+              </AlarmProvider>
+            </KeyboardProvider>
+          </OnboardingProvider>
+        </RecentSearchProvider>
+      </SQLiteProvider>
+    </ErrorBoundary>
   );
 }

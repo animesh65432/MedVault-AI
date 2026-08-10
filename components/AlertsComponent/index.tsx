@@ -95,7 +95,7 @@ const AlertsComponent: React.FC = () => {
                 Id: reminderwithmedicine.Id,
             })
 
-            setReminders(prev => [...prev, { ...reminderwithmedicine, IsEnabled: true }]);
+            setReminders(prev => [{ ...reminderwithmedicine, IsEnabled: true }, ...prev]);
 
             await refreshCount();
         }

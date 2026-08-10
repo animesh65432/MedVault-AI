@@ -256,8 +256,24 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 Soucres TEXT,
                 CreatedAt TEXT NOT NULL DEFAULT (datetime('now'))
             );
-            
 
+            CREATE TABLE IF NOT EXISTS DoseLogs (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                ReminderId INTEGER NOT NULL,
+                MedicineId INTEGER NOT NULL,
+                ScheduledTime DATETIME NOT NULL,
+                Status TEXT NOT NULL,
+                ActionAt DATETIME,
+                SnoozeUntil DATETIME,
+                CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (ReminderId) REFERENCES Reminders(Id) ON DELETE CASCADE,
+                FOREIGN KEY (MedicineId) REFERENCES Medicines(Id) ON DELETE CASCADE
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_doselogs_reminder_id ON DoseLogs(ReminderId);
+            CREATE INDEX IF NOT EXISTS idx_doselogs_medicine_id ON DoseLogs(MedicineId);
+            CREATE INDEX IF NOT EXISTS idx_doselogs_scheduled_time ON DoseLogs(ScheduledTime);
+            
             -- ================= SYNC TRIGGERS =================
             -- External-content FTS5 tables do NOT auto-populate.
             -- Every base table needs 3 triggers: insert, delete, update.

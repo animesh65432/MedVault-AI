@@ -1,5 +1,5 @@
 import { SQLiteDatabase } from "expo-sqlite";
-import { MedicineWithDetailsTypes } from "../types";
+import { MedicineDetails, MedicineReminder, MedicineWithDetailsTypes } from "../types";
 
 const parseTimings = (timings: string | null): string[] => {
     return timings ? timings.split(",").filter(Boolean) : [];
@@ -197,5 +197,76 @@ export const GetMedicinesCount = async (db: SQLiteDatabase): Promise<number> => 
     } catch (error) {
         console.error("Error counting medicines:", error);
         return 0;
+    }
+};
+
+
+export const GetMedicineDetailsById = async (
+    db: SQLiteDatabase,
+    reminderId: number
+): Promise<MedicineDetails | null> => {
+    try {
+        const reminder = await db.getFirstAsync<MedicineReminder>(
+            `SELECT  Id,  MedicineId, title, time, IsEnabled, repeat FROM Reminders WHERE Id = ?`,
+            [reminderId]
+        );
+
+        if (!reminder) return null;
+
+        const medicineId = reminder.MedicineId;
+
+        const medicine = await db.getFirstAsync<{
+            Id: number;
+            name: string;
+            dosage: string | null;
+            frequency: string | null;
+            duration: string | null;
+            DocumentId: number | null;
+        }>(
+            `SELECT Id, name, dosage, frequency, duration, DocumentId
+            FROM Medicines
+            WHERE Id = ?`,
+            [medicineId]
+        );
+
+        if (!medicine) return null;
+
+        let doctor_name: string | null = null;
+        let date: string | null = null;
+        let notes: string[] = [];
+        let isPdf: boolean = false;
+        let source: string = "";
+
+        if (medicine.DocumentId) {
+            const [document, noteRows] = await Promise.all([
+                db.getFirstAsync<{ doctor_name: string | null; date: string | null, IsPdf: boolean, SourceFilePath: string }>(
+                    `SELECT doctor_name, date, IsPdf, SourceFilePath FROM Documents WHERE Id = ?`,
+                    [medicine.DocumentId]
+                ),
+                db.getAllAsync<{ note: string }>(
+                    `SELECT note FROM DocumentNotes WHERE DocumentId = ? ORDER BY SortOrder ASC`,
+                    [medicine.DocumentId]
+                ),
+            ]);
+
+            doctor_name = document?.doctor_name ?? null;
+            date = document?.date ?? null;
+            notes = noteRows.map((r) => r.note);
+            isPdf = !!document?.IsPdf;
+            source = document?.SourceFilePath ?? "";
+        }
+
+        return {
+            ...medicine,
+            doctor_name,
+            date,
+            notes,
+            reminder,
+            isPdf,
+            source,
+        };
+    } catch (error) {
+        console.error('Error fetching medicine details:', error);
+        return null;
     }
 };

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         paddingTop: vScale(100),
         paddingBottom: vScale(32),
-        gap: vScale(32),
+        gap: vScale(52),
     }
 })
 

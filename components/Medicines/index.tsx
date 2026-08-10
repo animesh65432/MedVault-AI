@@ -1,11 +1,11 @@
 import { GetAllMedicines, GetMedicinesCount, GetPrescriptionMedicines, GetPrescriptionMedicinesCount } from "@/db/medicines"
 import { MedicinesTab, MedicineWithDetailsTypes } from "@/types"
-import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
 import { useFocusEffect } from "expo-router"
 import { useSQLiteContext } from "expo-sqlite"
 import React, { useCallback, useMemo, useRef, useState } from "react"
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native"
+import DocumentsSkeleton from "../DocumentsSkeleton"
 import AddMedicine from "./AddMedicine"
 import AddMedicineModal from "./AddMedicineModal"
 import DateDivider from "./DateDivider"
@@ -179,6 +179,8 @@ const MedicinesComponent: React.FC = () => {
         setIsAddMedicineModalOpen((prev) => !prev)
     }
 
+
+
     return (
         <View style={styles.container}>
             <Navbar />
@@ -194,10 +196,8 @@ const MedicinesComponent: React.FC = () => {
                     />
                 }
                 {IsLoadIng ?
-                    <ActivityIndicator
-                        style={styles.MainSpinner}
-                        color="#234338"
-                        size={scale(30)}
+                    <DocumentsSkeleton
+                        count={4}
                     /> :
                     <FlatList
                         data={rows}

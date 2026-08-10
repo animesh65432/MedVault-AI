@@ -11,7 +11,9 @@ export const useNotification = () => {
                 content: {
                     title: reminder.title,
                     sound: 'default',
-                    data: { reminderId: reminder.Id },
+                    data: {
+                        reminderId: reminder.Id,
+                    },
                 },
                 trigger,
             });
@@ -36,26 +38,27 @@ export const useNotification = () => {
 };
 
 function buildTrigger(reminder: Reminder): Notifications.NotificationTriggerInput {
+    const time = reminder.time instanceof Date ? reminder.time : new Date(reminder.time);
     switch (reminder.repeat) {
         case 'daily':
             return {
                 type: Notifications.SchedulableTriggerInputTypes.DAILY,
-                hour: reminder.time.getHours(),
-                minute: reminder.time.getMinutes(),
+                hour: time.getHours(),
+                minute: time.getMinutes(),
                 channelId: 'medicine-reminders',
             };
         case 'weekly':
             return {
                 type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
-                weekday: reminder.time.getDay() + 1,
-                hour: reminder.time.getHours(),
-                minute: reminder.time.getMinutes(),
+                weekday: time.getDay() + 1,
+                hour: time.getHours(),
+                minute: time.getMinutes(),
                 channelId: 'medicine-reminders',
             };
         case 'once':
             return {
                 type: Notifications.SchedulableTriggerInputTypes.DATE,
-                date: reminder.time,
+                date: time,
                 channelId: 'medicine-reminders',
             };
     }

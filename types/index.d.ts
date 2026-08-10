@@ -419,3 +419,27 @@ export type ReminderWithMedicine = {
     frequency: string | null
     IsEnabled: boolean
 }
+
+export type MedicineDetails = {
+    Id: number;
+    name: string;
+    dosage: string | null;
+    frequency: string | null;
+    duration: string | null;
+    DocumentId: number | null;
+    doctor_name: string | null;
+    date: string | null;
+    notes: string[];
+    reminder: MedicineReminder;
+    isPdf: boolean;
+    source: string;
+};
+
+export type MedicineReminder = {
+    Id: number;
+    title: string;
+    time: string;
+    IsEnabled: boolean;
+    repeat: string;
+    MedicineId: number;
+};

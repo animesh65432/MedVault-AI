@@ -1,3 +1,4 @@
+import DocumentsSkeleton from '@/components/DocumentsSkeleton';
 import { ReminderWithMedicine } from '@/types';
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
@@ -28,10 +29,8 @@ const RemindersList: React.FC<Props> = ({ OnDeleteReminder, IsLoading, Reminders
     };
 
     if (IsLoading) {
-        return <ActivityIndicator
-            style={styles.MainSpinner}
-            color="#234338"
-            size={scale(30)}
+        return <DocumentsSkeleton
+            count={4}
         />
     }
 
