@@ -2,6 +2,7 @@ import { Onboarding } from "@/components";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { toastConfig } from "@/components/toastConfig";
 import { AlarmContext, AlarmProvider } from "@/context/Alarm";
+import { NetworkProvider } from "@/context/Netwrok";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { RecentSearchProvider } from "@/context/RecentSearch";
 import { UserNameProvider } from "@/context/UserName";
@@ -130,21 +131,23 @@ export default function RootLayout() {
       <SQLiteProvider
         databaseName="my-database.db"
         onInit={migrateDbIfNeeded}
-      ><RecentSearchProvider>
-          <OnboardingProvider>
-            <KeyboardProvider>
-              <AlarmProvider>
-                <UserNameProvider>
-                  <RootLayoutContent />
-                  <Toast
-                    config={toastConfig}
-                  />
-                  <StatusBar style="auto" />
-                </UserNameProvider>
-              </AlarmProvider>
-            </KeyboardProvider>
-          </OnboardingProvider>
-        </RecentSearchProvider>
+      ><NetworkProvider>
+          <RecentSearchProvider>
+            <OnboardingProvider>
+              <KeyboardProvider>
+                <AlarmProvider>
+                  <UserNameProvider>
+                    <RootLayoutContent />
+                    <Toast
+                      config={toastConfig}
+                    />
+                    <StatusBar style="auto" />
+                  </UserNameProvider>
+                </AlarmProvider>
+              </KeyboardProvider>
+            </OnboardingProvider>
+          </RecentSearchProvider>
+        </NetworkProvider>
       </SQLiteProvider>
     </ErrorBoundary>
   );

@@ -1,5 +1,6 @@
 import DocumentResult from '@/components/DocumentResult';
 import DocumentScanning from '@/components/DocumentScaning';
+import { NetworkContext } from '@/context/Netwrok';
 import { useCheckIsMedicalRelated } from "@/hooks/useCheckIsMedicalRelated";
 import { useImageTextExtractor } from '@/hooks/useImageTextExtractor';
 import { usemakeclassifymedical } from "@/hooks/usemakeclassifymedical";
@@ -10,7 +11,7 @@ import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { extractText } from "expo-pdf-text-extract";
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
     Image,
     SafeAreaView,
@@ -26,6 +27,7 @@ import MaterialIcons from 'react-native-vector-icons/AntDesign';
 
 const ShowDocument = () => {
     const [IsProcessing, setIsProcessing] = useState(false);
+    const { isOnline } = useContext(NetworkContext)
     const { fileUri, fileName, fileType } = useLocalSearchParams();
     const router = useRouter();
     const [Document, SetDocument] = useState<DocumentType | null>(null)
@@ -47,6 +49,16 @@ const ShowDocument = () => {
         setIsProcessing(true);
 
         let extractedText = "";
+
+        if (!isOnline) {
+            Toast.show({
+                type: "error",
+                text1: "No internet connection",
+                text2: "Please check your connection and try again.",
+            });
+            setIsProcessing(false);
+            return;
+        }
 
         try {
             extractedText = !isPdf

@@ -76,13 +76,6 @@ const UploadModal: React.FC = () => {
         if (!result.canceled) {
             const asset = result.assets[0];
 
-            console.log('Selected PDF:', {
-                uri: asset.uri,
-                name: asset.name,
-                size: asset.size,
-                mimeType: asset.mimeType,
-            });
-
             router.push({
                 pathname: '/ShowDocument',
                 params: {

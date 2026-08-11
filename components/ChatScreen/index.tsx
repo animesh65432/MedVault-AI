@@ -1,3 +1,4 @@
+import { NetworkContext } from "@/context/Netwrok";
 import { GetDocumentById, runSqlRaw } from "@/db/document";
 import { insertChatMessage, loadChatMessages } from "@/db/message";
 import { useCheckMessageType } from "@/hooks/use-CheckMessageType";
@@ -8,7 +9,7 @@ import { ChatMessage, SourcesTypes, TypeOfDocumenet } from "@/types";
 import { fixSources } from "@/utils/fixSources";
 import { makeHistoryPayload } from "@/utils/makehistoryPayload";
 import { useSQLiteContext } from "expo-sqlite";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardStickyView } from "react-native-keyboard-controller";
 import Footer from "./Footer";
@@ -22,6 +23,7 @@ type Props = {
 
 const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
     const db = useSQLiteContext();
+    const { isOnline } = useContext(NetworkContext)
     const [currentDocumentData, setCurrentDocumentData] = useState<any>(null);
     const [AllMessageLoading, setAllMessageLoading] = useState(false);
     const [message, setMessage] = useState<string>("");
@@ -33,6 +35,23 @@ const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
     const { GenralAiResponse } = useGenralAiResponse();
 
     const handleSendMessage = async (message: string) => {
+
+        if (!isOnline) {
+            setMessages((prevMessages) => [
+                ...prevMessages,
+                {
+                    Id: Date.now(),
+                    UserMessage: message,
+                    AIResponse: "No internet connection. Please check your connection and try again.",
+                    ShowMore: false,
+                    TableName: "",
+                    Types: [],
+                    Soucres: [],
+                    CreatedAt: new Date().toISOString(),
+                },
+            ]);
+            return;
+        }
         setIsLoading(true);
         const tempId = Date.now();
         const historyMessages = makeHistoryPayload(messages);
