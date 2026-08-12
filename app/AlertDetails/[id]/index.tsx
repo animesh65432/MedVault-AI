@@ -1,6 +1,6 @@
 import AlertDetailsComponent from "@/components/AlertDetailsComponent";
 import DocumentSkeleton from "@/components/DocumentSkeleton";
-import { GeAlertMedicineDetailsById } from "@/db/medicines";
+import { GetAlertMedicineDetailsById } from "@/db/medicines";
 import { AlertMedicineDetails as AlertMedicineDetailsTypes } from "@/types";
 import { useLocalSearchParams } from "expo-router";
 import { useSQLiteContext } from "expo-sqlite";
@@ -20,7 +20,7 @@ const AlertDetails: React.FC = () => {
         let reminderId = Number(id);
         setIsLoading(true);
         try {
-            const medicineDetails = await GeAlertMedicineDetailsById(db, reminderId);
+            const medicineDetails = await GetAlertMedicineDetailsById(db, reminderId);
             setMedicineDetails(medicineDetails);
         } catch (error) {
             console.log("Failed to fetch medicine details:", error);

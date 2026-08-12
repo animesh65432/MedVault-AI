@@ -6,6 +6,7 @@ import { fs } from "@/utils/fs"
 import { scale } from "@/utils/scale"
 import { TimingOptions } from "@/utils/timing"
 import Feather from "@expo/vector-icons/Feather"
+import { router } from "expo-router"
 import { useSQLiteContext } from "expo-sqlite"
 import React, { useState } from "react"
 import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
@@ -131,6 +132,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
             />}
         >
             <TouchableOpacity
+                onPress={() => router.push(`/MedicineDetail/${medicine.Id}`)}
                 activeOpacity={isEditable ? 1 : 0.7}
                 style={styles.card}
             >

@@ -1,5 +1,41 @@
 import { SQLiteDatabase } from "expo-sqlite";
-import { AlertMedicineDetails, MedicineReminder, MedicineWithDetailsTypes } from "../types";
+import { AlertMedicineDetails, DocumentRow, MedicineReminder, MedicineWithDetailsTypes, ReminderRepeat } from "../types";
+
+interface MedicineRowDB {
+    Id: number;
+    DocumentId: number | null;
+    name: string;
+    dosage: string | null;
+    frequency: string | null;
+    duration: string | null;
+}
+
+type DocumentSummary = Pick<DocumentRow, 'Id' | 'title' | 'doctor_name' | 'date'>;
+
+export interface ReminderRowDB {
+    Id: number;
+    title: string;
+    time: string;
+    IsEnabled: number;
+    repeat: ReminderRepeat;
+}
+
+export interface DoseLogRow {
+    Id: number;
+    ReminderId: number;
+    ScheduledTime: string;
+    Status: "taken" | "missed" | "snoozed" | "pending";
+    ActionAt: string | null;
+    SnoozeUntil: string | null;
+}
+
+export interface MedicineDetail {
+    medicine: MedicineRowDB;
+    document: DocumentSummary | null;
+    timing: string[];
+    reminders: ReminderRowDB[];
+    doseLogs: DoseLogRow[];
+}
 
 const parseTimings = (timings: string | null): string[] => {
     return timings ? timings.split(",").filter(Boolean) : [];
@@ -201,7 +237,7 @@ export const GetMedicinesCount = async (db: SQLiteDatabase): Promise<number> => 
 };
 
 
-export const GeAlertMedicineDetailsById = async (
+export const GetAlertMedicineDetailsById = async (
     db: SQLiteDatabase,
     reminderId: number
 ): Promise<AlertMedicineDetails | null> => {
@@ -268,5 +304,62 @@ export const GeAlertMedicineDetailsById = async (
     } catch (error) {
         console.error('Error fetching medicine details:', error);
         return null;
+    }
+};
+
+export const GetMedicineDetailId = async (
+    db: SQLiteDatabase,
+    Id: number
+): Promise<MedicineDetail | null> => {
+    try {
+        const medicine = await db.getFirstAsync<MedicineRowDB>(
+            `SELECT Id, DocumentId, name, dosage, frequency, duration
+            FROM Medicines WHERE Id = ?`,
+            [Id]
+        );
+
+        if (!medicine) return null;
+
+        const [document, timingRows, reminders, doseLogs] = await Promise.all([
+            medicine.DocumentId
+                ? db.getFirstAsync<DocumentSummary>(
+                    `SELECT Id, title, doctor_name, date FROM Documents WHERE Id = ?`,
+                    [medicine.DocumentId]
+                )
+                : Promise.resolve(null),
+
+            db.getAllAsync<{ timing: string }>(
+                `SELECT timing FROM MedicineTiming WHERE MedicineId = ?`,
+                [Id]
+            ),
+
+            db.getAllAsync<ReminderRowDB>(
+                `SELECT Id, title, time, IsEnabled, repeat
+                FROM Reminders
+                WHERE MedicineId = ?
+                ORDER BY time DESC`,
+                [Id]
+            ),
+
+            db.getAllAsync<DoseLogRow>(
+                `SELECT Id, ReminderId, ScheduledTime, Status, ActionAt, SnoozeUntil
+                FROM DoseLogs
+                WHERE MedicineId = ?
+                ORDER BY ScheduledTime DESC
+                LIMIT 30`,
+                [Id]
+            ),
+        ]);
+
+        return {
+            medicine,
+            document,
+            timing: timingRows.map(t => t.timing),
+            reminders,
+            doseLogs,
+        };
+    } catch (error) {
+        console.error('Error fetching medicine detail:', error);
+        throw error;
     }
 };

@@ -420,7 +420,7 @@ export type ReminderWithMedicine = {
     IsEnabled: boolean
 }
 
-export type MedicineDetails = {
+export type AlertMedicineDetails = {
     Id: number;
     name: string;
     dosage: string | null;
