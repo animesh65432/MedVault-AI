@@ -5,7 +5,7 @@ import { useState } from "react";
 export const useGenralAiResponse = () => {
     const [error, setError] = useState<string | null>(null);
 
-    const GenralAiResponse = async (text: string, history: ChatMessagePayload[]) => {
+    const GenralAiResponse = async (text: string, userName: string, history: ChatMessagePayload[]) => {
         try {
             const response = await fetch(GenralAiResponseUrl, {
                 method: "POST",
@@ -14,7 +14,8 @@ export const useGenralAiResponse = () => {
                 },
                 body: JSON.stringify({
                     text,
-                    history
+                    history,
+                    userName
                 }),
             })
 

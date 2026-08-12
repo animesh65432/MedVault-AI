@@ -1,15 +1,17 @@
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
+import { vScale } from "@/utils/vScale";
 import { useRef, useState } from 'react';
 import {
     Animated,
     KeyboardAvoidingView,
+    ScrollView,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
     View
-} from 'react-native';
+} from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
 const COLORS = {
@@ -55,6 +57,7 @@ export default function NameInputScreen({
     };
 
     const handleContinue = () => {
+        console.log('handleContinue called with name:', name);
         if (!canContinue) return;
         Animated.sequence([
             Animated.timing(pressScale, { toValue: 0.9, duration: 80, useNativeDriver: true }),
@@ -99,37 +102,42 @@ export default function NameInputScreen({
                 </Text>
 
                 <View style={styles.inputWrap}>
-                    <View style={styles.inputRow}>
-                        {isActive ? (
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Your name"
-                                placeholderTextColor="#B7C0BA"
-                                value={name}
-                                onChangeText={setName}
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
-                                autoCapitalize="words"
-                                returnKeyType="done"
-                                onSubmitEditing={handleContinue}
-                            />
-                        ) : (
-                            <View style={styles.input} />
-                        )}
+                    <ScrollView
+                        style={{ width: '100%' }}
+                        scrollEnabled={false}
+                        keyboardShouldPersistTaps="always"
+                    >
+                        <View style={styles.inputRow}>
+                            {isActive ? (
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Your name"
+                                    placeholderTextColor="#B7C0BA"
+                                    value={name}
+                                    onChangeText={setName}
+                                    onFocus={handleFocus}
+                                    onBlur={handleBlur}
+                                    autoCapitalize="words"
+                                    returnKeyType="done"
+                                    onSubmitEditing={handleContinue}
+                                />
+                            ) : (
+                                <View style={styles.input} />
+                            )}
 
-                        <Animated.View style={{ transform: [{ scale: pressScale }] }}>
-                            <TouchableOpacity
-                                style={[styles.fab, !canContinue && styles.fabDisabled]}
-                                onPressIn={handleContinue}
-                                disabled={!canContinue}
-                                activeOpacity={0.85}
-                                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                            >
-                                <AntDesign name="arrow-right" size={fs(18)} color={COLORS.cream} />
-                            </TouchableOpacity>
-                        </Animated.View>
-                    </View>
-
+                            <Animated.View style={{ transform: [{ scale: pressScale }] }}>
+                                <TouchableOpacity
+                                    style={[styles.fab, !canContinue && styles.fabDisabled]}
+                                    onPress={handleContinue}
+                                    disabled={!canContinue}
+                                    activeOpacity={0.85}
+                                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                                >
+                                    <AntDesign name="arrow-right" size={fs(18)} color={COLORS.cream} />
+                                </TouchableOpacity>
+                            </Animated.View>
+                        </View>
+                    </ScrollView>
                     <View style={styles.underlineTrack}>
                         <Animated.View
                             style={[
@@ -155,13 +163,13 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.bg,
         paddingHorizontal: scale(24),
-        paddingTop: scale(20),
+        paddingTop: scale(100),
     },
     dots: {
         flexDirection: 'row',
         justifyContent: 'center',
         gap: scale(6),
-        marginBottom: scale(10),
+        marginBottom: scale(0),
     },
     dotInactive: {
         width: scale(8),
@@ -176,10 +184,10 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.dark,
     },
     content: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         paddingBottom: scale(200),
+        marginTop: vScale(80),
     },
     avatarWrap: {
         width: scale(140),

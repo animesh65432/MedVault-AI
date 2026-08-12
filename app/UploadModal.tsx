@@ -68,11 +68,6 @@ const UploadModal: React.FC = () => {
             copyToCacheDirectory: true,
         });
 
-        console.log(
-            'DocumentPicker result:',
-            JSON.stringify(result, null, 2)
-        );
-
         if (!result.canceled) {
             const asset = result.assets[0];
 

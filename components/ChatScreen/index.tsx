@@ -1,4 +1,5 @@
 import { NetworkContext } from "@/context/Netwrok";
+import { UserNameContext } from "@/context/UserName";
 import { GetDocumentById, runSqlRaw } from "@/db/document";
 import { insertChatMessage, loadChatMessages } from "@/db/message";
 import { useCheckMessageType } from "@/hooks/use-CheckMessageType";
@@ -23,6 +24,7 @@ type Props = {
 
 const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
     const db = useSQLiteContext();
+    const { userName } = useContext(UserNameContext)
     const { isOnline } = useContext(NetworkContext)
     const [currentDocumentData, setCurrentDocumentData] = useState<any>(null);
     const [AllMessageLoading, setAllMessageLoading] = useState(false);
@@ -56,7 +58,6 @@ const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
         const tempId = Date.now();
         const historyMessages = makeHistoryPayload(messages);
         try {
-
             setMessages((prevMessages) => [
                 ...prevMessages,
                 {
@@ -73,6 +74,8 @@ const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
 
             const messageType = await CheckMessageType(message, currentDocument);
 
+            console.log("Message Type:", messageType);
+
             let answerText: string | undefined;
             let hasMore = false;
             let showMoreTable = "";
@@ -82,6 +85,8 @@ const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
 
             if (messageType === "DATABASE_QUERY") {
                 const data = await MakesqlRaw(message, historyMessages);
+
+                console.log("SQL Data:", data);
 
                 console.log("SQL Data:", data);
                 if (!data?.sql || data.sql.trim() === "") {
@@ -98,6 +103,7 @@ const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
                     answerText = await ExplainDocumentsWithAiReponse(
                         message,
                         docs,
+                        userName,
                         historyMessages
                     );
 
@@ -113,12 +119,13 @@ const Chat: React.FC<Props> = ({ currentDocument, documentId }) => {
                     answerText = await ExplainDocumentsWithAiReponse(
                         message,
                         currentDocumentData,
+                        userName,
                         historyMessages
                     );
                 }
             }
             else {
-                answerText = await GenralAiResponse(message, historyMessages);
+                answerText = await GenralAiResponse(message, userName, historyMessages);
             }
 
             const finalAnswer = answerText ?? "Something went wrong. Please try again.";

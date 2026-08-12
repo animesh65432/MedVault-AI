@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         paddingHorizontal: scale(24),
-        paddingTop: vScale(30),
+        paddingTop: vScale(100),
         paddingBottom: vScale(32),
         gap: vScale(0),
     },
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         alignItems: 'center',
+        marginTop: vScale(15),
     },
     title: {
         color: '#234338',
@@ -101,6 +102,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Aeonik-Medium',
         width: '95%',
         alignSelf: 'center',
+        marginTop: vScale(8),
     },
     image: {
         alignSelf: 'center',

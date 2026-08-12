@@ -27,7 +27,7 @@ const Navbar: React.FC<Props> = ({ title, IsDeleteLoading, onDelete }) => {
                 <Pressable
                     hitSlop={10}
                     disabled={IsDeleteLoading}
-                    onPress={() => router.back()}
+                    onPress={() => router.push("/")}
                 >
                     <MaterialIcons
                         name="arrow-back"

@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         paddingHorizontal: scale(24),
-        paddingTop: vScale(30),
-        paddingBottom: vScale(32),
+        paddingTop: vScale(100),
+        paddingBottom: vScale(132),
         gap: vScale(20),
     },
     dotsContainer: {

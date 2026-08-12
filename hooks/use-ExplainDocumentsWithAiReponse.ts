@@ -8,6 +8,7 @@ export const useExplainDocumentsWithAiReponse = () => {
     const ExplainDocumentsWithAiReponse = async (
         question: string,
         data: unknown,
+        userName: string,
         history: ChatMessagePayload[] = []
     ) => {
         try {
@@ -22,7 +23,8 @@ export const useExplainDocumentsWithAiReponse = () => {
                 body: JSON.stringify({
                     question,
                     data,
-                    history
+                    history,
+                    userName
                 }),
             });
 
