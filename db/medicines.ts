@@ -1,5 +1,5 @@
 import { SQLiteDatabase } from "expo-sqlite";
-import { MedicineDetails, MedicineReminder, MedicineWithDetailsTypes } from "../types";
+import { AlertMedicineDetails, MedicineReminder, MedicineWithDetailsTypes } from "../types";
 
 const parseTimings = (timings: string | null): string[] => {
     return timings ? timings.split(",").filter(Boolean) : [];
@@ -201,10 +201,10 @@ export const GetMedicinesCount = async (db: SQLiteDatabase): Promise<number> => 
 };
 
 
-export const GetMedicineDetailsById = async (
+export const GeAlertMedicineDetailsById = async (
     db: SQLiteDatabase,
     reminderId: number
-): Promise<MedicineDetails | null> => {
+): Promise<AlertMedicineDetails | null> => {
     try {
         const reminder = await db.getFirstAsync<MedicineReminder>(
             `SELECT  Id,  MedicineId, title, time, IsEnabled, repeat FROM Reminders WHERE Id = ?`,

@@ -1,6 +1,6 @@
 import { onSnooze, onTakeNow } from "@/db/dosage"
 import { useNotification } from "@/hooks/use-Notification"
-import { MedicineDetails } from '@/types'
+import { AlertMedicineDetails } from "@/types"
 import { vScale } from '@/utils/vScale'
 import { useRouter } from "expo-router"
 import { useSQLiteContext } from 'expo-sqlite'
@@ -14,10 +14,10 @@ import Navbar from './Navbar'
 
 
 type Props = {
-    medicineDetails: MedicineDetails
+    medicineDetails: AlertMedicineDetails
 }
 
-const MedicineDetailsComponent: React.FC<Props> = ({
+const AlertDetailsComponent: React.FC<Props> = ({
     medicineDetails,
 }) => {
     const db = useSQLiteContext();
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default MedicineDetailsComponent
+export default AlertDetailsComponent

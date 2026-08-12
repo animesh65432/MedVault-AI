@@ -57,7 +57,7 @@ function RootLayoutContent() {
     Notifications.getLastNotificationResponseAsync().then((response) => {
       const data = response?.notification.request.content.data;
       if (data?.reminderId) {
-        router.push(`/MedicineDetails/${data.reminderId}`);
+        router.push(`/AlertDetails/${data.reminderId}`);
       }
     });
 
@@ -65,7 +65,7 @@ function RootLayoutContent() {
       (response) => {
         const data = response.notification.request.content.data;
         if (data?.reminderId) {
-          router.push(`/MedicineDetails/${data.reminderId}`);
+          router.push(`/AlertDetails/${data.reminderId}`);
         }
       }
     );

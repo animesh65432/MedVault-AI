@@ -1,4 +1,4 @@
-import { MedicineDetails } from '@/types';
+import { AlertMedicineDetails } from '@/types';
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -6,7 +6,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 type Props = {
-    medicineDetails: MedicineDetails
+    medicineDetails: AlertMedicineDetails
 }
 
 const Hero: React.FC<Props> = ({ medicineDetails }) => {
