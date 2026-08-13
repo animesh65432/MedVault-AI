@@ -10,7 +10,7 @@ interface MedicineRowDB {
     duration: string | null;
 }
 
-type DocumentSummary = Pick<DocumentRow, 'Id' | 'title' | 'doctor_name' | 'date'>;
+type DocumentSummary = Pick<DocumentRow, 'Id' | 'title' | 'doctor_name' | 'date' | "SourceFilePath" | "IsPdf">;
 
 export interface ReminderRowDB {
     Id: number;
@@ -323,7 +323,7 @@ export const GetMedicineDetailId = async (
         const [document, timingRows, reminders, doseLogs] = await Promise.all([
             medicine.DocumentId
                 ? db.getFirstAsync<DocumentSummary>(
-                    `SELECT Id, title, doctor_name, date FROM Documents WHERE Id = ?`,
+                    `SELECT Id, title, doctor_name, SourceFilePath, IsPdf, date FROM Documents WHERE Id = ?`,
                     [medicine.DocumentId]
                 )
                 : Promise.resolve(null),
@@ -337,7 +337,7 @@ export const GetMedicineDetailId = async (
                 `SELECT Id, title, time, IsEnabled, repeat
                 FROM Reminders
                 WHERE MedicineId = ?
-                ORDER BY time DESC`,
+                ORDER BY time DESC LIMIT 30`,
                 [Id]
             ),
 

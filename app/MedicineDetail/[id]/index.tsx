@@ -42,6 +42,7 @@ const MedicineDetail: React.FC = () => {
 
     return <MedicineDetailComponent
         medicineDetail={medicineDetail}
+        setMedicineDetail={setMedicineDetail}
     />
 }
 

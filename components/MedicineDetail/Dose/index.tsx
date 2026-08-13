@@ -2,12 +2,10 @@ import { DoseLogRow } from '@/db/medicines'
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 type Props = {
     doseLog: DoseLogRow[]
-    onTakeNow?: (log: DoseLogRow) => void
-    onSnooze?: (log: DoseLogRow) => void
 }
 
 const STATUS_LABEL: Record<DoseLogRow["Status"], string> = {
@@ -17,65 +15,18 @@ const STATUS_LABEL: Record<DoseLogRow["Status"], string> = {
     pending: "Pending",
 }
 
-const isToday = (dateStr: string) => {
-    const d = new Date(dateStr)
-    const now = new Date()
-    return (
-        d.getFullYear() === now.getFullYear() &&
-        d.getMonth() === now.getMonth() &&
-        d.getDate() === now.getDate()
-    )
-}
-
 const formatTime = (dateStr: string) =>
     new Date(dateStr).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
 
-const Dose: React.FC<Props> = ({ doseLog, onTakeNow, onSnooze }) => {
+const Dose: React.FC<Props> = ({ doseLog }) => {
     if (!doseLog || doseLog.length === 0) return null
-
-    const todaysDoses = doseLog.filter(
-        (log) => isToday(log.ScheduledTime) && log.Status !== "taken"
-    )
-    const history = doseLog.filter(
-        (log) => !isToday(log.ScheduledTime) || log.Status === "taken"
-    )
 
     return (
         <View style={style.Container}>
-            {todaysDoses.length > 0 && (
-                <View style={style.section}>
-                    <Text style={style.sectionTitle}>Today's dose</Text>
-                    {todaysDoses.map((log) => (
-                        <View key={log.Id} style={style.doseCard}>
-                            <View style={style.doseCardTop}>
-                                <View>
-                                    <Text style={style.doseTime}>{formatTime(log.ScheduledTime)} dose</Text>
-                                    <Text style={style.doseStatus}>{STATUS_LABEL[log.Status]}</Text>
-                                </View>
-                            </View>
-                            <View style={style.actionRow}>
-                                <TouchableOpacity
-                                    style={style.takeButton}
-                                    onPress={() => onTakeNow?.(log)}
-                                >
-                                    <Text style={style.takeButtonText}>Take now</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={style.snoozeButton}
-                                    onPress={() => onSnooze?.(log)}
-                                >
-                                    <Text style={style.snoozeButtonText}>Snooze</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    ))}
-                </View>
-            )}
-
-            {history.length > 0 && (
+            {doseLog.length > 0 && (
                 <View style={style.section}>
                     <Text style={style.sectionTitle}>Dose history</Text>
-                    {history.map((log) => (
+                    {doseLog.map((log) => (
                         <View key={log.Id} style={style.historyRow}>
                             <Text style={style.historyDate}>{formatTime(log.ScheduledTime)}</Text>
                             <View style={[style.statusBadge, style[`badge_${log.Status}`]]}>
@@ -161,7 +112,7 @@ const style = StyleSheet.create({
     },
     historyDate: {
         fontFamily: "Aeonik-Regular",
-        fontSize: fs(13),
+        fontSize: fs(14),
         color: "#234338",
     },
     statusBadge: {

@@ -45,7 +45,7 @@ const style = StyleSheet.create({
     },
     BelowContainer: {
         flexDirection: "row",
-        gap: scale(20)
+        gap: scale(10)
     },
     nameContainer: {
         backgroundColor: "#0D483F",
