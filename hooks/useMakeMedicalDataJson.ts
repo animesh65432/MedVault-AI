@@ -20,6 +20,8 @@ export const useMakeMedicalDataJson = () => {
 
             const data = await response.json();
 
+            console.log("Response from makeMedicalDataJson:", data);
+
             if (!response.ok) {
                 throw new Error(data.error || `HTTP ${response.status}`);
             }

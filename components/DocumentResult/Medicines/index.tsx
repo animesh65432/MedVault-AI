@@ -62,6 +62,8 @@ const Medicines: React.FC<Props> = ({
         setMedicineIndexForReminder(null);
     }
 
+    console.log("Medicines rendered", medicines[0].duration_days);
+
     return (
         <View style={styles.container}>
             <View style={styles.titleRow}>
@@ -86,7 +88,7 @@ const Medicines: React.FC<Props> = ({
             <View style={styles.list}>
                 {medicines.length > 0 && medicines.map((med, index) => {
                     const hasDetails =
-                        med.dosage || med.frequency || med.duration || med.timing;
+                        med.dosage || med.frequency || med.duration_days || med.timing;
                     const hasReminders = med?.reminders?.length > 0;
                     return (
                         <Medicine

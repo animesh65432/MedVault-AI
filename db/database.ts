@@ -23,6 +23,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 title TEXT NOT NULL,
                 type TEXT NOT NULL,
                 IsPdf BOOLEAN NOT NULL DEFAULT 0,
+                risk_level TEXT CHECK(risk_level IN ("Normal","High")) DEFAULT "Normal",
 
                 -- common
                 patient_name TEXT,
@@ -120,7 +121,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 name TEXT NOT NULL,
                 dosage TEXT,
                 frequency TEXT,
-                duration TEXT,
+                duration_days INTEGER,
                 FOREIGN KEY (DocumentId) REFERENCES Documents(Id) ON DELETE CASCADE
             );
 

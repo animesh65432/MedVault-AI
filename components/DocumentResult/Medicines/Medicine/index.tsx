@@ -1,5 +1,5 @@
 import { Medicine as MedicineType } from "@/types";
-import { DosageUnitOptions, DurationUnitOptions } from "@/utils/contensnt";
+import { DosageUnitOptions } from "@/utils/contensnt";
 import { FrequencyOptions } from "@/utils/frequencyOptions";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
@@ -25,8 +25,7 @@ type Props = {
 const Medicine: React.FC<Props> = ({ onToogleReminderModal, onRemoveMedicine, onAddMedicine, onUpdateMedicine, index, isEditable, med, hasDetails, hasReminders }) => {
     const [dosageValue, setDosageValue] = useState(med.dosage ? med.dosage.split(" ")[0] : "");
     const [dosageUnit, setDosageUnit] = useState(med.dosage ? med.dosage.split(" ")[1] : DosageUnitOptions[0].value);
-    const [durationValue, setDurationValue] = useState(med.duration ? med.duration.split(" ")[0] : "");
-    const [durationUnit, setDurationUnit] = useState(med.duration ? med.duration.split(" ")[1] : DurationUnitOptions[0].value);
+    const [durationValue, setDurationValue] = useState<number | null>(med.duration_days);
     const [timings, setTimings] = useState<string[]>(med.timing || []);
     const [isFrequencyFocus, setIsFrequencyFocus] = useState(false);
 
@@ -129,6 +128,7 @@ const Medicine: React.FC<Props> = ({ onToogleReminderModal, onRemoveMedicine, on
                                 setDosageUnit(item.value);
                                 onUpdateMedicine(index, "dosage", `${dosageValue} ${item.value}`.trim());
                             }}
+                            placeholderStyle={styles.dropdownPlaceholder}
                         />
                     </View>
                     <Dropdown
@@ -152,29 +152,15 @@ const Medicine: React.FC<Props> = ({ onToogleReminderModal, onRemoveMedicine, on
                     />
                     <View style={styles.splitField}>
                         <TextInput
-                            value={durationValue}
+                            value={String(durationValue || "")}
                             onChangeText={(text) => {
-                                setDurationValue(text);
-                                onUpdateMedicine(index, "duration", `${text} ${durationUnit}`.trim());
+                                setDurationValue(text ? parseInt(text) : null);
+                                onUpdateMedicine(index, "duration_days", `${text} ${durationValue}`.trim());
                             }}
                             placeholder="Duration"
                             placeholderTextColor="#B4B2A9"
                             keyboardType="numeric"
                             style={styles.splitFieldInput}
-                        />
-                        <Dropdown
-                            style={styles.unitDropdown}
-                            selectedTextStyle={styles.dropdownSelectedText}
-                            itemTextStyle={styles.pickerItemText}
-                            containerStyle={styles.dropdownContainer}
-                            data={DurationUnitOptions}
-                            labelField="label"
-                            valueField="value"
-                            value={durationUnit}
-                            onChange={(item) => {
-                                setDurationUnit(item.value);
-                                onUpdateMedicine(index, "duration", `${durationValue} ${item.value}`.trim());
-                            }}
                         />
                     </View>
                     <View style={styles.fieldWrap}>
@@ -208,7 +194,7 @@ const Medicine: React.FC<Props> = ({ onToogleReminderModal, onRemoveMedicine, on
                     <View style={styles.pillRow}>
                         {!!med.dosage && <Pill text={med.dosage} />}
                         {!!med.frequency && <Pill text={med.frequency} />}
-                        {!!med.duration && <Pill text={med.duration} />}
+                        {!!med.duration_days && <Pill text={String(med.duration_days)} />}
                         {!!med.timing && med.timing.length > 0 && <Pill text={med.timing.join(", ")} />}
                     </View>
                 )

@@ -27,7 +27,7 @@ export interface Medicine {
     name: string;
     dosage: string;
     frequency: "once_daily" | "twice_daily" | "thrice_daily" | "weekly" | "as_needed";
-    duration: string;
+    duration_days: number | null;
     timing: string[];
     reminders: Reminder[];
 }
@@ -52,6 +52,7 @@ export interface BillingItem {
 export interface BaseDocument {
     title: string;
     type: TypeOfDocumenet;
+    risk_level: "Normal" | "High";
 }
 
 
