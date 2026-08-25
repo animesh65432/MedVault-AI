@@ -1,5 +1,6 @@
 import { Medicine as MedicineType } from "@/types";
 import { DosageUnitOptions } from "@/utils/contensnt";
+import { fixdays } from '@/utils/fixdays';
 import { FrequencyOptions } from "@/utils/frequencyOptions";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
@@ -155,7 +156,7 @@ const Medicine: React.FC<Props> = ({ onToogleReminderModal, onRemoveMedicine, on
                             value={String(durationValue || "")}
                             onChangeText={(text) => {
                                 setDurationValue(text ? parseInt(text) : null);
-                                onUpdateMedicine(index, "duration_days", `${text} ${durationValue}`.trim());
+                                onUpdateMedicine(index, "duration_days", text);
                             }}
                             placeholder="Duration"
                             placeholderTextColor="#B4B2A9"
@@ -194,7 +195,7 @@ const Medicine: React.FC<Props> = ({ onToogleReminderModal, onRemoveMedicine, on
                     <View style={styles.pillRow}>
                         {!!med.dosage && <Pill text={med.dosage} />}
                         {!!med.frequency && <Pill text={med.frequency} />}
-                        {!!med.duration_days && <Pill text={String(med.duration_days)} />}
+                        {!!med.duration_days && <Pill text={fixdays(med.duration_days)} />}
                         {!!med.timing && med.timing.length > 0 && <Pill text={med.timing.join(", ")} />}
                     </View>
                 )

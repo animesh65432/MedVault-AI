@@ -62,8 +62,6 @@ const Medicines: React.FC<Props> = ({
         setMedicineIndexForReminder(null);
     }
 
-    console.log("Medicines rendered", medicines[0].duration_days);
-
     return (
         <View style={styles.container}>
             <View style={styles.titleRow}>

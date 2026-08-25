@@ -1,6 +1,7 @@
 import { deleteMedicine, updateMedicine } from "@/db/medicines"
 import { MedicineWithDetailsTypes } from "@/types"
-import { DosageUnitOptions, DurationUnitOptions } from "@/utils/contensnt"
+import { DosageUnitOptions } from "@/utils/contensnt"
+import { fixdays } from "@/utils/fixdays"
 import { FrequencyOptions } from "@/utils/frequencyOptions"
 import { fs } from "@/utils/fs"
 import { scale } from "@/utils/scale"
@@ -53,13 +54,11 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
 
     const [frequency, setFrequency] = useState(medicine.frequency ?? "")
 
-    const [durationInitialValue, durationInitialUnit] = splitValueUnit(medicine.duration)
-    const [durationValue, setDurationValue] = useState(durationInitialValue)
-    const [durationUnit, setDurationUnit] = useState(durationInitialUnit || "days")
+    const [durationValue, setDurationValue] = useState<number | null>(medicine.duration_days)
 
     const [timings, setTimings] = useState<string[]>(medicine.timing || [])
 
-    const hasDetails = medicine.dosage || medicine.frequency || medicine.duration
+    const hasDetails = medicine.dosage || medicine.frequency || medicine.duration_days
 
     const resetDraft = () => {
         setName(medicine.name)
@@ -67,9 +66,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
         setDosageValue(dv)
         setDosageUnit(du || "mg")
         setFrequency(medicine.frequency ?? "")
-        const [drv, dru] = splitValueUnit(medicine.duration)
-        setDurationValue(drv)
-        setDurationUnit(dru || "days")
+        setDurationValue(null)
     }
 
     const toggleTiming = (value: string) => {
@@ -109,7 +106,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
                 name: name.trim(),
                 dosage: dosageValue.trim() ? `${dosageValue.trim()}${dosageUnit}` : "",
                 frequency: frequency.trim(),
-                duration: durationValue.trim() ? `${durationValue.trim()} ${durationUnit}` : "",
+                duration_days: durationValue,
                 timing: timings,
             }
 
@@ -234,23 +231,14 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
 
                             <View style={styles.splitField}>
                                 <TextInput
-                                    value={durationValue}
-                                    onChangeText={setDurationValue}
+                                    value={String(durationValue || "")}
+                                    onChangeText={(text) => {
+                                        setDurationValue(text ? parseInt(text) : null)
+                                    }}
                                     placeholder="Duration"
                                     placeholderTextColor="#B4B2A9"
                                     keyboardType="numeric"
                                     style={styles.splitFieldInput}
-                                />
-                                <Dropdown
-                                    style={styles.unitDropdown}
-                                    selectedTextStyle={styles.dropdownSelectedText}
-                                    itemTextStyle={styles.pickerItemText}
-                                    containerStyle={styles.dropdownContainer}
-                                    data={DurationUnitOptions}
-                                    labelField="label"
-                                    valueField="value"
-                                    value={durationUnit}
-                                    onChange={(item) => setDurationUnit(item.value)}
                                 />
                             </View>
                             <View style={styles.fieldWrap}>
@@ -285,7 +273,7 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
                         <View style={styles.pillRow}>
                             {!!medicine.dosage && <Pill text={medicine.dosage} />}
                             {!!medicine.frequency && <Pill text={medicine.frequency} />}
-                            {!!medicine.duration && <Pill text={medicine.duration} />}
+                            {!!medicine.duration_days && <Pill text={fixdays(medicine.duration_days)} />}
                             {medicine.timing.length > 0 ? <Pill text={medicine.timing.join(" , ")} /> : null}
                         </View>
                     )

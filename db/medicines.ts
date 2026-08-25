@@ -7,7 +7,7 @@ interface MedicineRowDB {
     name: string;
     dosage: string | null;
     frequency: string | null;
-    duration: string | null;
+    duration_days: number | null;
 }
 
 type DocumentSummary = Pick<DocumentRow, 'Id' | 'title' | 'doctor_name' | 'date' | "SourceFilePath" | "IsPdf">;
@@ -71,7 +71,7 @@ export const GetPrescriptionMedicines = async (
                 m.name,
                 m.dosage,
                 m.frequency,
-                m.duration,
+                m.duration_days,
                 d.date AS prescribedDate,
                 d.doctor_name AS doctorName,
                 d.clinic_name AS clinicName,
@@ -110,7 +110,7 @@ export const GetAllMedicines = async (
                 m.name,
                 m.dosage,
                 m.frequency,
-                m.duration,
+                m.duration_days,
                 d.date AS prescribedDate,
                 d.doctor_name AS doctorName,
                 d.clinic_name AS clinicName,
@@ -148,8 +148,8 @@ export const updateMedicine = async (
 ): Promise<void> => {
     try {
         await db.runAsync(
-            "UPDATE Medicines SET name = ?, dosage = ?, frequency = ?, duration = ? WHERE Id = ?",
-            [medicine.name, medicine.dosage, medicine.frequency, medicine.duration, medicine.Id]
+            "UPDATE Medicines SET name = ?, dosage = ?, frequency = ?, duration_days = ? WHERE Id = ?",
+            [medicine.name, medicine.dosage, medicine.frequency, medicine.duration_days, medicine.Id]
         );
         await db.runAsync("DELETE FROM MedicineTiming WHERE MedicineId = ?", [medicine.Id]);
         await insertTimings(db, medicine.Id, medicine.timing);
@@ -164,7 +164,7 @@ export const CreateMedicine = async (
         name: string;
         dosage?: string | null;
         frequency?: string | null;
-        duration?: string | null;
+        duration_days?: number | null;
         DocumentId?: number;
         timing?: string[];
     }
@@ -173,23 +173,23 @@ export const CreateMedicine = async (
         let result;
         if (medicine.DocumentId) {
             result = await db.runAsync(
-                "INSERT INTO Medicines (DocumentId, name, dosage, frequency, duration) VALUES (?, ?, ?, ?, ?)",
+                "INSERT INTO Medicines (DocumentId, name, dosage, frequency, duration_days) VALUES (?, ?, ?, ?, ?)",
                 [
                     medicine.DocumentId,
                     medicine.name,
                     medicine.dosage ?? null,
                     medicine.frequency ?? null,
-                    medicine.duration ?? null,
+                    medicine.duration_days ?? null,
                 ]
             );
         } else {
             result = await db.runAsync(
-                "INSERT INTO Medicines (name, dosage, frequency, duration) VALUES (?, ?, ?, ?)",
+                "INSERT INTO Medicines (name, dosage, frequency, duration_days) VALUES (?, ?, ?, ?)",
                 [
                     medicine.name,
                     medicine.dosage ?? null,
                     medicine.frequency ?? null,
-                    medicine.duration ?? null,
+                    medicine.duration_days ?? null,
                 ]
             );
         }
@@ -256,10 +256,10 @@ export const GetAlertMedicineDetailsById = async (
             name: string;
             dosage: string | null;
             frequency: string | null;
-            duration: string | null;
+            duration_days: number | null;
             DocumentId: number | null;
         }>(
-            `SELECT Id, name, dosage, frequency, duration, DocumentId
+            `SELECT Id, name, dosage, frequency, duration_days, DocumentId
             FROM Medicines
             WHERE Id = ?`,
             [medicineId]
@@ -313,7 +313,7 @@ export const GetMedicineDetailId = async (
 ): Promise<MedicineDetail | null> => {
     try {
         const medicine = await db.getFirstAsync<MedicineRowDB>(
-            `SELECT Id, DocumentId, name, dosage, frequency, duration
+            `SELECT Id, DocumentId, name, dosage, frequency, duration_days
             FROM Medicines WHERE Id = ?`,
             [Id]
         );

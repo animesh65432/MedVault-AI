@@ -1,4 +1,5 @@
 import { MedicineDetail as MedicineDetailTypes } from "@/db/medicines"
+import { fixdays } from "@/utils/fixdays"
 import { fs } from "@/utils/fs"
 import { scale } from "@/utils/scale"
 import React from "react"
@@ -13,7 +14,7 @@ const Header: React.FC<Props> = ({ medicineDetail }) => {
         <View style={style.Container}>
             <Text style={style.title}>{medicineDetail.medicine.name}</Text>
             <View style={style.BelowContainer}>
-                {medicineDetail.medicine.name &&
+                {medicineDetail.medicine.dosage &&
                     <View style={style.nameContainer}>
                         <Text style={style.name}>{medicineDetail.medicine.dosage}</Text>
                     </View>
@@ -23,9 +24,9 @@ const Header: React.FC<Props> = ({ medicineDetail }) => {
                         <Text style={style.name}>{medicineDetail.medicine.frequency}</Text>
                     </View>
                 }
-                {medicineDetail.medicine.duration &&
+                {medicineDetail.medicine.duration_days &&
                     <View style={style.nameContainer}>
-                        <Text style={style.name}>{medicineDetail.medicine.duration}</Text>
+                        <Text style={style.name}>{fixdays(medicineDetail.medicine.duration_days)}</Text>
                     </View>
                 }
             </View>

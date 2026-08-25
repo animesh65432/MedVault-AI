@@ -6,9 +6,9 @@ import { SQLiteDatabase } from "expo-sqlite";
 
 async function insertMedicine(db: SQLiteDatabase, documentId: number, med: Medicine) {
     const result = await db.runAsync(
-        `INSERT INTO Medicines (DocumentId, name, dosage, frequency, duration)
-         VALUES (?, ?, ?, ?, ?)`,
-        [documentId, med.name, med.dosage ?? null, med.frequency ?? null, med.duration ?? null]
+        `INSERT INTO Medicines (DocumentId, name, dosage, frequency, duration_days)
+        VALUES (?, ?, ?, ?, ?)`,
+        [documentId, med.name, med.dosage ?? null, med.frequency ?? null, med.duration_days ? Number(med.duration_days) : null]
     );
     const medicineId = result.lastInsertRowId;
 

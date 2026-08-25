@@ -90,7 +90,6 @@ const MedicineDetail: React.FC<Props> = ({ medicineDetail, setMedicineDetail }) 
             });
         }
     }
-
     return (
         <View style={style.Container}>
             <Navbar />

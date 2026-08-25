@@ -179,8 +179,6 @@ const MedicinesComponent: React.FC = () => {
         setIsAddMedicineModalOpen((prev) => !prev)
     }
 
-
-
     return (
         <View style={styles.container}>
             <Navbar />

@@ -121,7 +121,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 name TEXT NOT NULL,
                 dosage TEXT,
                 frequency TEXT,
-                duration_days INTEGER,
+                duration_days INTEGER DEFAULT NULL,
                 FOREIGN KEY (DocumentId) REFERENCES Documents(Id) ON DELETE CASCADE
             );
 
@@ -225,7 +225,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 name,
                 dosage,
                 frequency,
-                duration,
+                duration_days,
                 content='Medicines',
                 content_rowid='Id'
             );
@@ -356,20 +356,20 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
 
             -- Medicines -> MedicinesSearch
             CREATE TRIGGER IF NOT EXISTS medicines_ai AFTER INSERT ON Medicines BEGIN
-                INSERT INTO MedicinesSearch(rowid, name, dosage, frequency, duration)
-                VALUES (new.Id, new.name, new.dosage, new.frequency, new.duration);
+                INSERT INTO MedicinesSearch(rowid, name, dosage, frequency, duration_days)
+                VALUES (new.Id, new.name, new.dosage, new.frequency, new.duration_days);
             END;
 
             CREATE TRIGGER IF NOT EXISTS medicines_ad AFTER DELETE ON Medicines BEGIN
-                INSERT INTO MedicinesSearch(MedicinesSearch, rowid, name, dosage, frequency, duration)
-                VALUES('delete', old.Id, old.name, old.dosage, old.frequency, old.duration);
+                INSERT INTO MedicinesSearch(MedicinesSearch, rowid, name, dosage, frequency, duration_days)
+                VALUES('delete', old.Id, old.name, old.dosage, old.frequency, old.duration_days);
             END;
 
             CREATE TRIGGER IF NOT EXISTS medicines_au AFTER UPDATE ON Medicines BEGIN
-                INSERT INTO MedicinesSearch(MedicinesSearch, rowid, name, dosage, frequency, duration)
-                VALUES('delete', old.Id, old.name, old.dosage, old.frequency, old.duration);
-                INSERT INTO MedicinesSearch(rowid, name, dosage, frequency, duration)
-                VALUES (new.Id, new.name, new.dosage, new.frequency, new.duration);
+                INSERT INTO MedicinesSearch(MedicinesSearch, rowid, name, dosage, frequency, duration_days)
+                VALUES('delete', old.Id, old.name, old.dosage, old.frequency, old.duration_days);
+                INSERT INTO MedicinesSearch(rowid, name, dosage, frequency, duration_days)
+                VALUES (new.Id, new.name, new.dosage, new.frequency, new.duration_days);
             END;
 
             -- LabTests -> LabTestsSearch
@@ -403,6 +403,8 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 INSERT INTO BillingItemsSearch(BillingItemsSearch, rowid, name, price) VALUES('delete', old.Id, old.name, old.price);
                 INSERT INTO BillingItemsSearch(rowid, name, price) VALUES (new.Id, new.name, new.price);
             END;
+
+            CREATE INDEX IF NOT EXISTS idx_documents_risk_level ON Documents(risk_level);
         `);
 
             console.log('Database schema created or verified successfully.');

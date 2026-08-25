@@ -381,7 +381,7 @@ export interface MedicineWithDetailsTypes {
     name: string;
     dosage: string | null;
     frequency: string | null;
-    duration: string | null;
+    duration_days: number | null;
     prescribedDate: string;
     doctorName: string | null;
     clinicName: string | null;
@@ -426,7 +426,7 @@ export type AlertMedicineDetails = {
     name: string;
     dosage: string | null;
     frequency: string | null;
-    duration: string | null;
+    duration_days: number | null;
     DocumentId: number | null;
     doctor_name: string | null;
     date: string | null;
