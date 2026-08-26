@@ -1,4 +1,5 @@
 import { GetPatientSummary } from '@/db/patient_summary';
+import { useGenratePdf } from "@/hooks/use-GenratePdf";
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
@@ -13,7 +14,7 @@ import {
     View
 } from 'react-native';
 
-export default function PatientSummaryCard() {
+export default function GenrateSummaryCard() {
     const db = useSQLiteContext();
     const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -22,37 +23,12 @@ export default function PatientSummaryCard() {
         if (loading) return;
         setLoading(true);
         setProgress(0);
-
         try {
             const PatientSummary = await GetPatientSummary(db)
-
-            console.log('Patient Summary:', PatientSummary);
-
-            setProgress(20);
-            setTimeout(() => {
-                setProgress(20);
-            }, 1500);
-            // Step 2: fetch high-risk documents
             setProgress(50);
-            // const highRiskDocs = await GetHighRiskDocuments(db);
-            setTimeout(() => {
-                setProgress(20);
-            }, 2500);
-            // Step 3: render HTML template
-            setProgress(75);
-            // const html = buildSummaryHtml({ medicines, highRiskDocs });
-            setTimeout(() => {
-                setProgress(20);
-            }, 3500);
-            // Step 4: convert to PDF
-            setProgress(95);
-            // const filePath = await generatePdfFromHtml(html);
-
-            setTimeout(() => {
-                setProgress(20);
-            }, 4500);
+            const response = await useGenratePdf(PatientSummary);
             setProgress(100);
-            // await shareOrOpenPdf(filePath);
+            console.log('PDF generated at:', response);
         } catch (error) {
             console.error('Error generating patient summary:', error);
         } finally {

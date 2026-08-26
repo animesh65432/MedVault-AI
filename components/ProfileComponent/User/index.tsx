@@ -1,13 +1,15 @@
 import { UserNameContext } from '@/context/UserName'
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
+import { vScale } from '@/utils/vScale'
+import { LinearGradient } from 'expo-linear-gradient'
 import React, { useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const COLORS = {
-    dark: '#1B3B36',
-    ring: '#CFE0D3'
+    dark: '#0D483F',
+    lime: '#D9F99D',
 };
 
 const formatMemberSince = (date: Date | null): string => {
@@ -23,19 +25,20 @@ const User: React.FC = () => {
 
     return (
         <View style={styles.AvatarContainer}>
-            <View style={styles.avatarCircle}>
-                {userName.trim().length === 0 ? (
-                    <AntDesign
-                        name="user"
-                        size={scale(34)}
-                        color={COLORS.dark}
-                    />
-                ) : (
-                    <Text style={styles.avatarInitial}>
-                        {userName.trim().charAt(0).toUpperCase()}
-                    </Text>
-                )}
-            </View>
+            <LinearGradient
+                colors={['#0D483F', '#234338']}
+                style={styles.avatarRing}
+            >
+                <View style={styles.avatarCircle}>
+                    {userName.trim().length === 0 ? (
+                        <AntDesign name="user" size={scale(30)} color={COLORS.dark} />
+                    ) : (
+                        <Text style={styles.avatarInitial}>
+                            {userName.trim().charAt(0).toUpperCase()}
+                        </Text>
+                    )}
+                </View>
+            </LinearGradient>
             <Text style={styles.UserName}>{userName}</Text>
             {Created && (
                 <Text style={styles.CreatedAt}>Member since {formatMemberSince(Created)}</Text>
@@ -47,38 +50,43 @@ const User: React.FC = () => {
 const styles = StyleSheet.create({
     AvatarContainer: {
         alignSelf: "center",
-        display: "flex",
-        flexDirection: "column",
         alignItems: "center",
-        gap: scale(6)
+        gap: vScale(8),
     },
-    avatarCircle: {
-        width: scale(88),
-        height: scale(88),
-        borderRadius: scale(44),
-        backgroundColor: '#EAF1EA',
+    avatarRing: {
+        width: scale(94),
+        height: scale(94),
+        borderRadius: scale(47),
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: '#000',
+        shadowColor: '#0D483F',
         shadowOffset: { width: 0, height: scale(4) },
-        shadowOpacity: 0.08,
+        shadowOpacity: 0.18,
         shadowRadius: scale(10),
-        elevation: 2,
+        elevation: 3,
+    },
+    avatarCircle: {
+        width: scale(84),
+        height: scale(84),
+        borderRadius: scale(42),
+        backgroundColor: COLORS.lime,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     avatarInitial: {
-        fontSize: fs(34),
-        fontWeight: '700',
+        fontSize: fs(32),
+        fontFamily: 'Aeonik-Bold',
         color: COLORS.dark,
     },
     UserName: {
         fontSize: fs(22),
         fontFamily: 'Aeonik-Medium',
-        color: "#003730"
+        color: "#0D1F1C",
     },
     CreatedAt: {
-        fontSize: fs(14),
-        color: "#23423B",
-        fontFamily: 'Aeonik-Regular'
+        fontSize: fs(13),
+        color: "#5C6B63",
+        fontFamily: 'Aeonik-Regular',
     }
 })
 
