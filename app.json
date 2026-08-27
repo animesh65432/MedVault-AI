@@ -16,7 +16,7 @@
     "android": {
       "package": "com.dutta12.MedVaultAI",
       "adaptiveIcon": {
-        "backgroundColor": "#23423B",
+        "backgroundColor": "#1C3932",
         "foregroundImage": "./assets/images/icon.png",
         "monochromeImage": "./assets/images/icon.png"
       },
@@ -30,11 +30,11 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/icon.png",
-          "backgroundColor": "#FFFFFF",
-          "imageWidth": 180,
+          "image": "./assets/images/splash-Icon.png",
+          "backgroundColor": "#1C3932",
+          "imageWidth": 100,
           "dark": {
-            "backgroundColor": "#FFFFFF"
+            "backgroundColor": "#1C3932"
           }
         }
       ],

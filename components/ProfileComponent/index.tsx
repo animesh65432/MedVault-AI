@@ -26,6 +26,7 @@ import LogoutModal from './LogOutModel';
 
 export default function ProfileScreen() {
     const db = useSQLiteContext()
+    const { userName, Created } = useContext(UserNameContext)
     const [visible, setVisible] = useState(false)
     const router = useRouter()
     const { setUserName, setCreated } = useContext(UserNameContext)
@@ -81,11 +82,11 @@ export default function ProfileScreen() {
                     style={styles.avatarRing}
                 >
                     <View style={styles.avatarInner}>
-                        <Text style={styles.avatarLetter}>K</Text>
+                        <Text style={styles.avatarLetter}>{userName.split("")[0]}</Text>
                     </View>
                 </LinearGradient>
-                <Text style={styles.name}>Kiran</Text>
-                <Text style={styles.memberSince}>Member since August 2026</Text>
+                <Text style={styles.name}>{userName}</Text>
+                <Text style={styles.memberSince}>Member since {Created?.toDateString()}</Text>
             </View>
             <View style={styles.statsRow}>
                 <TouchableOpacity
@@ -180,14 +181,13 @@ const styles = StyleSheet.create({
         width: scale(86),
         height: scale(86),
         borderRadius: scale(43),
-        backgroundColor: '#EEF6A2',
         justifyContent: 'center',
         alignItems: 'center',
     },
     avatarLetter: {
         fontFamily: 'Aeonik-Bold',
         fontSize: fs(32),
-        color: '#0D483F',
+        color: 'white',
     },
     name: {
         fontFamily: 'Aeonik-Bold',
