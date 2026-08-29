@@ -1,12 +1,10 @@
 import { OnboardingContext } from '@/context';
 import { UserNameContext } from "@/context/UserName";
+import OnboardingStyles from '@blazejkustra/react-native-onboarding';
 import React, { useContext, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
-import NameInputScreen from './NameInputScreen';
-import ThreeWelcome from './ThreeWelcome';
-import TwoWelCome from './Twowelcome';
-import WelCome from './welcome';
+import Intro from './Intro';
 
 const Onboarding: React.FC = () => {
     const { OnChangeUserName } = useContext(UserNameContext)
@@ -30,45 +28,24 @@ const Onboarding: React.FC = () => {
 
     return (
         <View style={styles.container}>
-            <PagerView
-                ref={pagerRef}
-                style={styles.pager}
-                initialPage={0}
-                onPageSelected={(e) => setActiveIndex(e.nativeEvent.position)}
-            >
-                <View key="1" style={styles.page}>
-                    <WelCome handlePageChange={handlePageChange} />
-                </View>
-                <View key="2" style={styles.page}>
-                    <TwoWelCome handlePageChange={handlePageChange} />
-                </View>
-                <View key="3" style={styles.page}>
-                    <ThreeWelcome handlePageChange={handlePageChange} />
-                </View>
-                <View key="4" style={styles.page}>
-                    <NameInputScreen
-                        isActive={activeIndex === 3}
-                        onContinue={handleNameSubmit}
-                    />
-                </View>
-            </PagerView>
+            <OnboardingStyles
+                introPanel={Intro}
+                steps={[]}
+                onComplete={async () => {
+                    console.log('Onboarding completed!')
+                }}
+                onSkip={() => console.log('Onboarding skipped')}
+                onStepChange={(step) => console.log('Current step:', step)}
+            />
         </View>
+
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#FFFFFD",
-        height: "100%",
-        width: "100%",
-    },
-    pager: {
-        flex: 1,
-    },
-    page: {
-        flex: 1,
-    },
+    }
 })
 
 export default Onboarding
