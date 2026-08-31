@@ -23,9 +23,16 @@ type Props = {
     onToogleReminderModal: (index: number) => void;
 }
 
-const Medicine: React.FC<Props> = ({ onToogleReminderModal, onRemoveMedicine, onAddMedicine, onUpdateMedicine, index, isEditable, med, hasDetails, hasReminders }) => {
-    const [dosageValue, setDosageValue] = useState(med.dosage ? med.dosage.split(" ")[0] : "");
-    const [dosageUnit, setDosageUnit] = useState(med.dosage ? med.dosage.split(" ")[1] : DosageUnitOptions[0].value);
+const Medicine: React.FC<Props> = ({ onToogleReminderModal, onRemoveMedicine, onUpdateMedicine, index, isEditable, med, hasDetails, hasReminders }) => {
+    const dosageMatch = med.dosage?.match(/^([\d.]+)\s*([a-zA-Z]+)$/);
+
+    const [dosageValue, setDosageValue] = useState(
+        dosageMatch?.[1] ?? ""
+    );
+
+    const [dosageUnit, setDosageUnit] = useState(
+        dosageMatch?.[2] ?? DosageUnitOptions[0].value
+    );
     const [durationValue, setDurationValue] = useState<number | null>(med.duration_days);
     const [timings, setTimings] = useState<string[]>(med.timing || []);
     const [isFrequencyFocus, setIsFrequencyFocus] = useState(false);

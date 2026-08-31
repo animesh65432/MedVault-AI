@@ -1,11 +1,12 @@
 import { Onboarding } from "@/components";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import NameInputScreen from "@/components/Onboarding/NameInputScreen";
 import { toastConfig } from "@/components/toastConfig";
 import { AlarmContext, AlarmProvider } from "@/context/Alarm";
 import { NetworkProvider } from "@/context/Netwrok";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { RecentSearchProvider } from "@/context/RecentSearch";
-import { UserNameProvider } from "@/context/UserName";
+import { UserNameContext, UserNameProvider } from "@/context/UserName";
 import { migrateDbIfNeeded } from "@/db/database";
 import { registerForNotifications } from "@/utils/notifications";
 import { useFonts } from "expo-font";
@@ -35,6 +36,7 @@ export const unstable_settings = {
 
 function RootLayoutContent() {
   const router = useRouter();
+  const { userName, OnChangeUserName } = useContext(UserNameContext);
   const { OnChangeIsAlarmActive } = useContext(AlarmContext);
   const { IsonboardingComplete } = useContext(OnboardingContext);
 
@@ -75,6 +77,17 @@ function RootLayoutContent() {
 
   if (!IsonboardingComplete) {
     return <Onboarding />;
+  }
+
+  if (IsonboardingComplete && userName.length === 0) {
+    return (
+      <NameInputScreen
+        onContinue={async (name) => {
+          await OnChangeUserName(name);
+        }}
+        isActive={true}
+      />
+    );
   }
 
   return (

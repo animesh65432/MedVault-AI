@@ -70,13 +70,6 @@ export default function NameInputScreen({
         <KeyboardAvoidingView
             style={styles.container}
         >
-            <View style={styles.dots}>
-                <View style={styles.dotInactive} />
-                <View style={styles.dotInactive} />
-                <View style={styles.dotInactive} />
-                <View style={styles.dotActive} />
-            </View>
-
             <View style={styles.content}>
                 <View style={styles.avatarWrap}>
                     <View style={styles.ringOuter} />
