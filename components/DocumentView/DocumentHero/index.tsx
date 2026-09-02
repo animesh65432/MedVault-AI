@@ -1,4 +1,5 @@
 
+import { usePdfThumbnail } from "@/hooks/usePdfThumbnail"
 import { fs } from "@/utils/fs"
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
@@ -13,7 +14,9 @@ type Props = {
 }
 
 const DocumentHero: React.FC<Props> = ({ isPdf, sourceFilePath }) => {
-    if (isPdf) {
+    const { thumbUri, thumbFailed } = usePdfThumbnail(sourceFilePath)
+
+    if (thumbFailed && isPdf) {
         return (
             <View style={styles.pdfHero}>
                 <View style={styles.pdfIconWrap}>
@@ -25,7 +28,7 @@ const DocumentHero: React.FC<Props> = ({ isPdf, sourceFilePath }) => {
 
     return (
         <ImageBackground
-            source={{ uri: sourceFilePath }}
+            source={{ uri: `${isPdf ? thumbUri : sourceFilePath}` }}
             style={styles.heroImage}
             imageStyle={{ opacity: 0.9, borderRadius: scale(20) }}
         >

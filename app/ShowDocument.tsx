@@ -5,6 +5,7 @@ import { useCheckIsMedicalRelated } from "@/hooks/useCheckIsMedicalRelated";
 import { useImageTextExtractor } from '@/hooks/useImageTextExtractor';
 import { usemakeclassifymedical } from "@/hooks/usemakeclassifymedical";
 import { useMakeMedicalDataJson } from "@/hooks/useMakeMedicalDataJson";
+import { usePdfThumbnail } from "@/hooks/usePdfThumbnail";
 import { DocumentType } from "@/types";
 import { first } from '@/utils/first';
 import { scale } from '@/utils/scale';
@@ -24,7 +25,6 @@ import Toast from 'react-native-toast-message';
 import MaterialIcons from 'react-native-vector-icons/AntDesign';
 
 
-
 const ShowDocument = () => {
     const [IsProcessing, setIsProcessing] = useState(false);
     const { isOnline } = useContext(NetworkContext)
@@ -35,6 +35,7 @@ const ShowDocument = () => {
     const { CheckIsMedicalOrNot } = useCheckIsMedicalRelated()
     const { makeclassifymedical } = usemakeclassifymedical()
     const { makeMedicalDataJson } = useMakeMedicalDataJson()
+    const { thumbUri, thumbFailed } = usePdfThumbnail(fileUri as string)
 
     const isPdf = first(fileType) === 'application/pdf';
 
@@ -164,6 +165,13 @@ const ShowDocument = () => {
         />;
     }
 
+    if (isPdf && thumbFailed) {
+        return <View style={styles.pdfPlaceholder}>
+            <MaterialIcons name="file-pdf" size={scale(64)} color="#064E3B" />
+            <Text style={styles.pdfLabel}>PDF Document</Text>
+        </View>
+    }
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
@@ -178,10 +186,11 @@ const ShowDocument = () => {
 
                 <View style={styles.previewCard}>
                     {isPdf ? (
-                        <View style={styles.pdfPlaceholder}>
-                            <MaterialIcons name="picture-as-pdf" size={scale(64)} color="#064E3B" />
-                            <Text style={styles.pdfLabel}>PDF Document</Text>
-                        </View>
+                        <Image
+                            source={{ uri: thumbUri ?? undefined }}
+                            style={styles.image}
+                            resizeMode="contain"
+                        />
                     ) : (
                         <Image
                             source={{ uri: first(fileUri) }}
