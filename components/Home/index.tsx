@@ -2,15 +2,12 @@ import { GetRemindersCount } from "@/db/alerts";
 import { GetDocumentsCount } from "@/db/document";
 import { GetMedicinesCount } from "@/db/medicines";
 import { CountTypes } from "@/types";
-import { scale } from '@/utils/scale';
-import { vScale } from '@/utils/vScale';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useCallback, useState } from 'react';
 import { StyleSheet, View } from "react-native";
 import EmptyStats from "./EmptyStats";
 import NonEmptyStats from "./NonEmptyStats";
-import Title from './Title';
 
 
 const HomeLayOut = () => {
@@ -50,9 +47,6 @@ const HomeLayOut = () => {
 
     return (
         <View style={styles.container}>
-            <Title
-                DocumentCount={counts.documentsCount}
-            />
             {counts.documentsCount > 0 ?
                 <NonEmptyStats
                     documentsCount={counts.documentsCount}
@@ -68,11 +62,7 @@ const HomeLayOut = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        paddingHorizontal: scale(20),
-        paddingTop: vScale(40),
-        paddingBottom: vScale(32),
-        gap: vScale(20),
+        flex: 1
     }
 })
 

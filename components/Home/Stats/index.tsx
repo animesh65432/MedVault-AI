@@ -1,3 +1,4 @@
+import AnimatedCounter from "@/components/AnimatedCounter"
 import { CountTypes } from "@/types"
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
@@ -16,12 +17,16 @@ const Stats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, reminders
                 style={styles.statBox}
                 onPress={() => router.push("/Search")}
             >
-                <Fontisto
-                    name="file-1"
-                    size={scale(24)}
-                    color="#23423B"
+                <View style={styles.IconContainer}>
+                    <Fontisto
+                        name="file-1"
+                        size={scale(24)}
+                        color="#23423B"
+                    />
+                </View>
+                <AnimatedCounter
+                    targetValue={documentsCount}
                 />
-                <Text style={styles.count}>{documentsCount}</Text>
                 <Text style={styles.label}>Documents</Text>
             </TouchableOpacity>
             <View style={styles.divider} />
@@ -29,12 +34,16 @@ const Stats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, reminders
                 style={styles.statBox}
                 onPress={() => router.push("/Medicines")}
             >
-                <FontAwesome5
-                    name="pills"
-                    size={scale(24)}
-                    color="#23423B"
+                <View style={styles.IconContainer}>
+                    <FontAwesome5
+                        name="pills"
+                        size={scale(24)}
+                        color="#23423B"
+                    />
+                </View>
+                <AnimatedCounter
+                    targetValue={medicinesCount}
                 />
-                <Text style={styles.count}>{medicinesCount}</Text>
                 <Text style={styles.label}>Medicines</Text>
             </TouchableOpacity>
 
@@ -44,12 +53,16 @@ const Stats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, reminders
                 style={styles.statBox}
                 onPress={() => router.push("/(tabs)/Alerts")}
             >
-                <Entypo
-                    name="bell"
-                    size={scale(24)}
-                    color="#23423B"
+                <View style={styles.IconContainer}>
+                    <Entypo
+                        name="bell"
+                        size={scale(24)}
+                        color="#23423B"
+                    />
+                </View>
+                <AnimatedCounter
+                    targetValue={remindersCount}
                 />
-                <Text style={styles.count}>{remindersCount}</Text>
                 <Text style={styles.label}>Alerts</Text>
             </TouchableOpacity>
         </View>
@@ -60,7 +73,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#FAFAF8",
+        backgroundColor: "#23423B",
         borderRadius: scale(16),
         paddingVertical: vScale(16),
         paddingHorizontal: scale(12),
@@ -68,24 +81,29 @@ const styles = StyleSheet.create({
     statBox: {
         flex: 1,
         alignItems: "center",
-        gap: vScale(4)
+        gap: vScale(4),
     },
     divider: {
         width: 1,
-        height: vScale(36),
+        height: vScale(56),
         backgroundColor: "#E0E0DC",
     },
     count: {
         fontFamily: "Aeonik-Medium",
         fontSize: scale(18),
-        color: "#23423B",
+        color: "white",
     },
     label: {
         fontFamily: "Aeonik-Regular",
         fontSize: scale(12),
-        color: "#5A7A74",
+        color: "white",
         textAlign: "center",
     },
+    IconContainer: {
+        backgroundColor: "#EEF6A2",
+        padding: scale(10),
+        borderRadius: scale(10)
+    }
 })
 
 export default Stats

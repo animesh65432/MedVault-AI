@@ -3,6 +3,7 @@ import { vScale } from "@/utils/vScale";
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Animated, { FadeInDown } from "react-native-reanimated";
 import Entypo from 'react-native-vector-icons/Entypo';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
@@ -50,18 +51,30 @@ const Steps: React.FC = () => {
     const router = useRouter()
 
     const handlePress = (category: DocumentCategory) => {
+        router.push(`/Search`)
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>
-                What can you Upload?
-            </Text>
+        <Animated.View
+            style={styles.container}
+            entering={FadeInDown
+                .duration(400)
+                .delay(600)
+            }
+        >
+            <View style={styles.titleAndDescriptionContainer}>
+                <Text style={styles.title}>
+                    What can you Upload?
+                </Text>
+                <Text style={styles.description}>
+                    store and manage all your medical documents
+                </Text>
+            </View>
             <View style={styles.stepContainer}>
-                {STEPS.map((step) => (
+                {STEPS.map((step, index) => (
                     <TouchableOpacity
                         key={step.title}
-                        style={styles.step}
+                        style={index === 2 ? styles.step : [styles.step, styles.stepBottomLine]}
                         activeOpacity={0.6}
                         onPress={() => handlePress(step.title)}
                     >
@@ -72,10 +85,16 @@ const Steps: React.FC = () => {
                             <Text style={styles.stepTitle}>{step.title}</Text>
                             <Text style={styles.stepDescription}>{step.description}</Text>
                         </View>
+                        <Entypo
+                            name="chevron-thin-right"
+                            size={scale(20)}
+                            color="#23423B"
+                            style={styles.arrowIcon}
+                        />
                     </TouchableOpacity>
                 ))}
             </View>
-        </View>
+        </Animated.View>
     )
 }
 
@@ -84,7 +103,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         marginRight: 'auto',
         gap: vScale(16),
-        marginTop: vScale(20),
+        marginTop: vScale(10),
+        width: '100%',
     },
     title: {
         fontFamily: 'Aeonik-Medium',
@@ -92,6 +112,7 @@ const styles = StyleSheet.create({
         color: '#23423B',
         textAlign: 'center',
         lineHeight: vScale(26),
+        marginRight: "auto",
     },
     titleText: {
         fontFamily: 'Aeonik-Medium',
@@ -102,7 +123,20 @@ const styles = StyleSheet.create({
     },
     stepContainer: {
         flexDirection: 'column',
-        gap: vScale(12),
+        gap: vScale(14),
+        backgroundColor: '#F5F5F5',
+        width: '100%',
+        padding: scale(16),
+        borderRadius: scale(12),
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 6,
+
+        elevation: 4,
     },
     step: {
         flexDirection: 'row',
@@ -128,6 +162,26 @@ const styles = StyleSheet.create({
         color: '#5A7A74',
         marginTop: vScale(2),
     },
+    description: {
+        fontFamily: 'Aeonik-Regular',
+        fontSize: scale(13),
+        color: '#5A7A74',
+        textAlign: 'center',
+        lineHeight: vScale(18),
+        marginRight: "auto",
+    },
+    titleAndDescriptionContainer: {
+        flexDirection: 'column',
+        gap: vScale(2),
+    },
+    arrowIcon: {
+        marginLeft: 'auto',
+    },
+    stepBottomLine: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#E0E0E0',
+        paddingVertical: vScale(5),
+    }
 })
 
 export default Steps

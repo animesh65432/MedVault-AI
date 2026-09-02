@@ -7,7 +7,6 @@ import { useSQLiteContext } from "expo-sqlite";
 import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Documents from "../../Documents";
-import SeeAllDocuments from "../SeeAllDocuments";
 
 const RecentDocuments = () => {
     const [IsLoading, setIsLoading] = useState<boolean>(false)
@@ -17,7 +16,7 @@ const RecentDocuments = () => {
     async function fetchRecentDocuments() {
         setIsLoading(true)
         try {
-            const documents = await GetDocuments(db, "DESC", 2, 0)
+            const documents = await GetDocuments(db, "DESC", 1, 0)
             setRecentDocuments(documents)
         } catch (error) {
             console.error("Failed to fetch recent documents:", error)
@@ -51,7 +50,6 @@ const RecentDocuments = () => {
                     IsHome={true}
                 />
             }
-            <SeeAllDocuments />
         </View>
     )
 }

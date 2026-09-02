@@ -1,6 +1,0 @@
-{
-  "version": "2",
-  "generator": "@lottiefiles/creator@1.94.0",
-  "animations": [{ "id": "Main Scene" }],
-  "initial": { "animation": "Main Scene" }
-}

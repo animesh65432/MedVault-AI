@@ -23,7 +23,7 @@ const InputBox = () => {
                 color="#5A7A74"
             />
             <Text style={styles.placeholder}>
-                Search your medical history
+                Search your medical history...
             </Text>
         </TouchableOpacity>
     )

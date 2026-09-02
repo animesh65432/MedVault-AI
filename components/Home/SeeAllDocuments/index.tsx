@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         paddingVertical: vScale(4),
     },
     text: {
-        fontFamily: "Aeonik-Medium",
+        fontFamily: "Aeonik-Regular",
         fontSize: scale(15),
         color: "#23423B"
     },
