@@ -29,7 +29,7 @@ export default function ProfileScreen() {
     const { userName, Created } = useContext(UserNameContext)
     const [visible, setVisible] = useState(false)
     const router = useRouter()
-    const { setUserName, setCreated } = useContext(UserNameContext)
+    const { setUserName, setCreated, OnChangeProfilePic, profilePic } = useContext(UserNameContext)
     const { OnChangeIsAlarmActive } = useContext(AlarmContext)
     const { setOnboardingCompleteAndCache } = useContext(OnboardingContext)
     const [counts, setCounts] = useState<CountTypes>({
@@ -73,18 +73,25 @@ export default function ProfileScreen() {
         setOnboardingCompleteAndCache(false)
     }
 
-
     return (
         <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
             <View style={styles.header}>
-                <LinearGradient
-                    colors={['#0D483F', '#234338']}
-                    style={styles.avatarRing}
-                >
-                    <View style={styles.avatarInner}>
-                        <Text style={styles.avatarLetter}>{userName.split("")[0]}</Text>
-                    </View>
-                </LinearGradient>
+                {profilePic ? <></> :
+                    <LinearGradient
+                        colors={['#0D483F', '#234338']}
+                        style={styles.avatarRing}
+                    >
+                        <View style={styles.avatarInner}>
+                            <Text style={styles.avatarLetter}>{userName.split("")[0]}</Text>
+                        </View>
+                        <View style={styles.cameraButton}>
+                            <Ionicons
+                                name="camera-outline"
+                                size={scale(14)}
+                            />
+                        </View>
+                    </LinearGradient>
+                }
                 <Text style={styles.name}>{userName}</Text>
                 <Text style={styles.memberSince}>Member since {Created?.toDateString()}</Text>
             </View>
@@ -255,5 +262,18 @@ const styles = StyleSheet.create({
     },
     menuLabelDanger: {
         color: '#C24A4A',
+    },
+    cameraButton: {
+        position: 'absolute',
+        right: -scale(2),
+        bottom: scale(1),
+        width: scale(28),
+        height: scale(28),
+        borderRadius: scale(14),
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: "#E4E9E6",
     },
 });

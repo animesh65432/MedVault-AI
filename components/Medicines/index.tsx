@@ -39,14 +39,13 @@ const MedicinesComponent: React.FC = () => {
     const [IsLoadIngMore, setIsLoadingMore] = useState<boolean>(false)
     const [HasMore, setHasMore] = useState<boolean>(true)
     const [IsAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState<boolean>(false)
-    const [Count, setCount] = useState(0)
     const [medicines, setMedicines] = useState<MedicineWithDetailsTypes[]>([])
-    const [activeTab, setActiveTab] = useState<MedicinesTab>("prescription")
+    const [activeTab, setActiveTab] = useState<MedicinesTab>("Documents")
     const skipNextFocusReload = useRef(false)
 
     const fetchMedicineList = useCallback(
         async (tab: MedicinesTab, pageNum: number) => {
-            return tab === "prescription"
+            return tab === "Documents"
                 ? await GetPrescriptionMedicines(db, pageNum, Limit)
                 : await GetAllMedicines(db, pageNum, Limit)
         },
@@ -55,7 +54,7 @@ const MedicinesComponent: React.FC = () => {
 
     const fetchCount = useCallback(
         async (tab: MedicinesTab) => {
-            return tab === "prescription"
+            return tab === "Documents"
                 ? await GetPrescriptionMedicinesCount(db)
                 : await GetMedicinesCount(db)
         },
@@ -66,11 +65,7 @@ const MedicinesComponent: React.FC = () => {
         async (tab: MedicinesTab) => {
             setIsLoading(true)
             try {
-                const [count, result] = await Promise.all([
-                    fetchCount(tab),
-                    fetchMedicineList(tab, 1),
-                ])
-                setCount(count)
+                const result = await fetchMedicineList(tab, 1)
                 setMedicines((prev) => {
                     const resultIds = new Set(result.map((m) => m.Id))
                     const keepFromPrev = prev.filter((m) => !resultIds.has(m.Id))
@@ -152,7 +147,6 @@ const MedicinesComponent: React.FC = () => {
     async function refreshCount() {
         try {
             const count = await fetchCount(activeTab)
-            setCount(count)
         } catch (error) {
             console.log("Error refreshing count:", error)
         }
@@ -179,6 +173,8 @@ const MedicinesComponent: React.FC = () => {
         setIsAddMedicineModalOpen((prev) => !prev)
     }
 
+    console.log(rows.length, "rows.length")
+
     return (
         <View style={styles.container}>
             <Navbar />
@@ -189,8 +185,8 @@ const MedicinesComponent: React.FC = () => {
                 />
                 {!IsLoadIng &&
                     <SectionHeader
-                        title={activeTab === "prescription" ? "Prescriptions" : "All Medicines"}
-                        count={Count}
+                        title={activeTab === "Documents" ? "Documents" : "All Medicines"}
+                        count={rows.length}
                     />
                 }
                 {IsLoadIng ?
@@ -238,7 +234,7 @@ const MedicinesComponent: React.FC = () => {
                     />
                 }
             </View>
-            {activeTab !== "prescription" && (
+            {activeTab !== "Documents" && (
                 <FAB onPress={OnToggoleAddMedicine} />
             )}
             {

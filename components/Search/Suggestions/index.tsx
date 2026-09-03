@@ -2,31 +2,15 @@ import { SearchSuggestion } from '@/types'
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
-import { Feather } from '@expo/vector-icons'
-import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native'
 import Empty from '../Empty'
+import Suggestion from './Suggestion'
 
 type Props = {
     SearchSuggestions: SearchSuggestion[]
 }
-
-function renderSnippet(snippet: string) {
-    const parts = snippet.split(/(⟪.*?⟫)/g)
-    return parts.map((part, i) => {
-        if (part.startsWith('⟪') && part.endsWith('⟫')) {
-            return (
-                <Text key={i} style={styles.highlight}>
-                    {part.slice(1, -1)}
-                </Text>
-            )
-        }
-        return <Text key={i}>{part}</Text>
-    })
-}
-
 const Suggestions: React.FC<Props> = ({ SearchSuggestions }) => {
     const router = useRouter()
 
@@ -42,41 +26,9 @@ const Suggestions: React.FC<Props> = ({ SearchSuggestions }) => {
             showsVerticalScrollIndicator={true}
         >
             {SearchSuggestions.map((item) => (
-                <Pressable
+                <Suggestion
                     key={item.documentId}
-                    style={({ pressed }) => [
-                        styles.row,
-                        pressed && styles.rowPressed,
-                    ]}
-                    onPress={() => router.push(`/document/${item.documentId}`)}
-                >
-                    <View style={styles.iconWrapper}>
-                        {item.IsPdf ? (
-                            <View style={styles.pdfPlaceholder}>
-                                <Feather name="file-text" size={fs(28)} color="#234338" />
-                            </View>
-                        ) : (
-                            <Image
-                                source={{ uri: item.SourceFilePath }}
-                                style={styles.Image}
-                            />
-                        )}
-                    </View>
-                    <View style={styles.rowContent}>
-                        <View style={styles.rowHeader}>
-                            <Text style={styles.title} numberOfLines={1}>
-                                {item.title}
-                            </Text>
-                            {item.date && (
-                                <Text style={styles.date}>{item.date}</Text>
-                            )}
-                        </View>
-                        <Text style={styles.field}>{item.field}</Text>
-                        <Text style={styles.snippet} numberOfLines={2}>
-                            {renderSnippet(item.snippet)}
-                        </Text>
-                    </View>
-                </Pressable>
+                    suggestion={item} />
             ))}
         </ScrollView>
     )

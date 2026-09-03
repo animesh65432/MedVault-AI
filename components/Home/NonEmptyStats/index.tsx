@@ -2,7 +2,7 @@ import { CountTypes } from "@/types"
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
 import React from 'react'
-import { ImageBackground, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import InputBox from "../InputBox"
 import RecentDocuments from "../RecentDocuments"
 import Stats from "../Stats"
@@ -12,10 +12,6 @@ import Header from "./Header"
 const NonEmptyStats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, remindersCount }) => {
     return (
         <View style={styles.container}>
-            <ImageBackground
-                style={styles.backgroundImage}
-                source={require('../../../assets/images/background-image.png')}
-            />
             <Header />
             <Stats
                 documentsCount={documentsCount}

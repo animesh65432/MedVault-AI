@@ -59,6 +59,7 @@ const FieldRows: React.FC<Props> = ({ items, isEditable, onValueChange }) => {
 const styles = StyleSheet.create({
     container: {
         gap: scale(10),
+        marginTop: scale(10),
     },
     row: {
         flexDirection: "row",

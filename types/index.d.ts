@@ -398,7 +398,7 @@ export interface MedicineTag {
     tone?: "accent" | "neutral";
 }
 
-export type MedicinesTab = "prescription" | "all";
+export type MedicinesTab = "Documents" | "all";
 
 export type AddMedicineTypes = {
     name: string;

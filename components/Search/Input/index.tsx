@@ -35,7 +35,7 @@ const InputBox: React.FC<Props> = ({ searchQuery, setSearchQuery }) => {
                 onChangeText={onChangeText}
                 onSubmitEditing={onSubmitEditing}
                 value={searchQuery}
-                placeholder="Search your medical history"
+                placeholder="Search by document,doctor,hospital ..."
                 placeholderTextColor="#5A7A74"
                 returnKeyType="search"
             />

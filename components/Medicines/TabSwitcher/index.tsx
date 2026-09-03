@@ -10,7 +10,7 @@ interface TabSwitcherProps {
 }
 
 const TABS: { key: MedicinesTab; label: string }[] = [
-    { key: "prescription", label: "By Prescription" },
+    { key: "Documents", label: "By Documents" },
     { key: "all", label: "All Medicines" },
 ]
 

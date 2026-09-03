@@ -36,9 +36,9 @@ export const unstable_settings = {
 
 function RootLayoutContent() {
   const router = useRouter();
-  const { userName, OnChangeUserName } = useContext(UserNameContext);
+  const { userName, OnChangeUserName, isHydrated: userNameHydrated } = useContext(UserNameContext);
   const { OnChangeIsAlarmActive } = useContext(AlarmContext);
-  const { IsonboardingComplete } = useContext(OnboardingContext);
+  const { IsonboardingComplete, isHydrated: onboardingHydrated } = useContext(OnboardingContext);
 
   async function CheckNotifications() {
     try {
@@ -74,6 +74,10 @@ function RootLayoutContent() {
 
     return () => subscription.remove();
   }, [router]);
+
+  if (!onboardingHydrated || !userNameHydrated) {
+    return null;
+  }
 
   if (!IsonboardingComplete) {
     return <Onboarding />;

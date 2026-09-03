@@ -1,6 +1,7 @@
 import { FILTER_OPTIONS } from '@/utils/contensnt'
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
+import { Feather, Fontisto } from '@expo/vector-icons'
 import { useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import CustomCalender from '../../CustomCalender'
@@ -155,15 +156,21 @@ const Filters: React.FC<Props> = ({
                 </View>
                 <View style={styles.chipWrap}>
                     {visibleFilters.map((filter) => {
-                        const isSelected = SelectedCategories.includes(filter)
+                        const isSelected = SelectedCategories.includes(filter.name)
                         return (
                             <Pressable
-                                key={filter}
-                                onPress={() => toggleFilter(filter)}
+                                key={filter.name}
+                                onPress={() => toggleFilter(filter.name)}
                                 style={[styles.chip, isSelected && styles.chipSelected]}
                             >
+                                <Feather
+                                    name={filter.icon}
+                                    size={scale(14)}
+                                    color={isSelected ? '#FFFFFF' : '#23423B'}
+                                    style={{ marginRight: scale(6) }}
+                                />
                                 <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
-                                    {filter}
+                                    {filter.name}
                                 </Text>
                             </Pressable>
                         )
@@ -183,7 +190,16 @@ const Filters: React.FC<Props> = ({
             <View style={styles.dateSectionConatainer}>
                 <View style={styles.Browse_By_Date_Container}>
                     <Text style={styles.title}>Browse by date</Text>
-                    <Pressable onPress={openCustomPicker} hitSlop={scale(8)}>
+                    <Pressable
+                        onPress={openCustomPicker}
+                        hitSlop={scale(8)}
+                        style={styles.CustomLabelWrapper}
+                    >
+                        <Fontisto
+                            name="date"
+                            size={scale(14)}
+                            color={`#23423B`}
+                        />
                         <Text style={[styles.custom_range, isCustomSelected && styles.customRangeActive]}>
                             {isCustomSelected ? customLabel : 'Custom Range'}
                         </Text>
@@ -203,9 +219,18 @@ const Filters: React.FC<Props> = ({
                                 onPress={() => selectPreset(range)}
                                 style={[styles.datePill, isSelected && styles.datePillSelected]}
                             >
-                                <Text style={[styles.pillLabel, isSelected && styles.pillLabelSelected]}>
-                                    Period
-                                </Text>
+                                <View
+                                    style={{ flexDirection: 'row', alignItems: 'center', gap: scale(6) }}
+                                >
+                                    <Fontisto
+                                        name="date"
+                                        size={scale(14)}
+                                        color={isSelected ? "white" : `#23423B`}
+                                    />
+                                    <Text style={[styles.pillLabel, isSelected && styles.pillLabelSelected]}>
+                                        Period
+                                    </Text>
+                                </View>
                                 <Text style={[styles.dateText, isSelected && styles.dateTextSelected]}>
                                     {range.label}
                                 </Text>
@@ -221,9 +246,16 @@ const Filters: React.FC<Props> = ({
                                 onPress={() => selectPreset(range)}
                                 style={[styles.datePill, isSelected && styles.datePillSelected]}
                             >
-                                <Text style={[styles.pillLabel, isSelected && styles.pillLabelSelected]}>
-                                    Year
-                                </Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: scale(6) }}>
+                                    <Fontisto
+                                        name="date"
+                                        size={scale(14)}
+                                        color={isSelected ? "white" : `#23423B`}
+                                    />
+                                    <Text style={[styles.pillLabel, isSelected && styles.pillLabelSelected]}>
+                                        Year
+                                    </Text>
+                                </View>
                                 <Text style={[styles.dateText, isSelected && styles.dateTextSelected]}>
                                     {range.label}
                                 </Text>
@@ -283,6 +315,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#23423B33',
         backgroundColor: '#FFFFFF',
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
     },
     chipSelected: {
         backgroundColor: '#23423B',
@@ -333,7 +368,7 @@ const styles = StyleSheet.create({
         color: '#5A7A74',
     },
     dateSectionConatainer: {
-        gap: scale(10),
+        gap: scale(5),
     },
     Browse_By_Date_Container: {
         flexDirection: 'row',
@@ -354,7 +389,7 @@ const styles = StyleSheet.create({
         gap: scale(8),
     },
     datePill: {
-        paddingVertical: scale(6),
+        paddingVertical: scale(4),
         paddingHorizontal: scale(14),
         borderRadius: scale(10),
         borderWidth: 1,
@@ -362,10 +397,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#FAFAF8',
         alignItems: 'flex-start',
         minWidth: scale(72),
+        gap: scale(5),
     },
     pillLabel: {
         fontFamily: 'Aeonik-Medium',
-        fontSize: scale(9),
+        fontSize: fs(12),
         color: '#708090',
         textTransform: 'uppercase',
         letterSpacing: 0.5,
@@ -387,6 +423,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Aeonik-Medium',
         color: '#23423B',
         textDecorationLine: 'underline',
+    },
+    CustomLabelWrapper: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(6),
     }
 })
 

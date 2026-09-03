@@ -1,11 +1,10 @@
-import { scale } from "@/utils/scale"
-import { vScale } from "@/utils/vScale"
-import Feather from "@expo/vector-icons/Feather"
-import { LinearGradient } from "expo-linear-gradient"
-import { useRouter } from "expo-router"
-import React from "react"
-import { StyleSheet, TouchableOpacity } from "react-native"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { scale } from "@/utils/scale";
+import { vScale } from "@/utils/vScale";
+import { useRouter } from "expo-router";
+import LottieView from "lottie-react-native";
+import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = {
     currentDocument: "false" | "true"
@@ -32,17 +31,17 @@ const ChatBotAI: React.FC<Props> = ({ currentDocument, documentId }) => {
             activeOpacity={0.85}
             style={[
                 styles.Container,
-                { bottom: vScale(70) + insets.bottom }
+                currentDocument === "true"
+                    ? { bottom: vScale(70) + insets.bottom + vScale(60) }
+                    : { bottom: vScale(70) + insets.bottom }
             ]}
         >
-            <LinearGradient
-                colors={["#2E5748", "#0D1F1C"]}
-                style={styles.Gradient}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-            >
-                <Feather name="message-circle" size={scale(28)} color="#EEF6A2" />
-            </LinearGradient>
+            <LottieView
+                source={require("../assets/animations/animation.json")}
+                autoPlay
+                loop
+                style={styles.animation}
+            />
         </TouchableOpacity>
     )
 }
@@ -54,18 +53,11 @@ const styles = StyleSheet.create({
         width: scale(70),
         height: scale(70),
         borderRadius: scale(35),
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.25,
-        shadowRadius: scale(8),
-        elevation: 8, // Android shadow
     },
-    Gradient: {
-        width: "100%",
-        height: "100%",
-        borderRadius: scale(35),
-        alignItems: "center",
-        justifyContent: "center",
+    animation: {
+        width: scale(110),
+        height: vScale(110),
+        marginLeft: scale(-35)
     },
 })
 

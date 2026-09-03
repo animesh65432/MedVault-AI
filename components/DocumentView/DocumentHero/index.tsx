@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: vScale(140),
         justifyContent: "flex-end",
+        elevation: 4,
     },
     heroGradient: {
         height: vScale(80),
