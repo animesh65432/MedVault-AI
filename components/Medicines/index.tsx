@@ -1,4 +1,4 @@
-import { GetAllMedicines, GetMedicinesCount, GetPrescriptionMedicines, GetPrescriptionMedicinesCount } from "@/db/medicines"
+import { GetAllMedicines, GetDocumentHasMedicinesCount, GetMedicinesCount, GetPrescriptionMedicines } from "@/db/medicines"
 import { MedicinesTab, MedicineWithDetailsTypes } from "@/types"
 import { vScale } from "@/utils/vScale"
 import { useFocusEffect } from "expo-router"
@@ -36,6 +36,7 @@ const MedicinesComponent: React.FC = () => {
     const [DocumentId, setDocumentId] = useState<number | null>(null)
     const [IsLoadIng, setIsLoading] = useState<boolean>(false)
     const [Page, setPage] = useState<number>(1)
+    const [count, setCount] = useState<number>(0)
     const [IsLoadIngMore, setIsLoadingMore] = useState<boolean>(false)
     const [HasMore, setHasMore] = useState<boolean>(true)
     const [IsAddMedicineModalOpen, setIsAddMedicineModalOpen] = useState<boolean>(false)
@@ -55,7 +56,7 @@ const MedicinesComponent: React.FC = () => {
     const fetchCount = useCallback(
         async (tab: MedicinesTab) => {
             return tab === "Documents"
-                ? await GetPrescriptionMedicinesCount(db)
+                ? await GetDocumentHasMedicinesCount(db)
                 : await GetMedicinesCount(db)
         },
         [db]
@@ -133,7 +134,7 @@ const MedicinesComponent: React.FC = () => {
                 out.push({
                     type: "divider",
                     key: `div-${key}`,
-                    label: `PRESCRIBED ${meds[0].prescribedDate ?? "Unknown date"}`,
+                    label: `PRESCRIBED ${meds[0].doctorName ?? "Unknown date"}`,
                     DocumentId: meds[0].DocumentId,
                 })
             }
@@ -173,8 +174,6 @@ const MedicinesComponent: React.FC = () => {
         setIsAddMedicineModalOpen((prev) => !prev)
     }
 
-    console.log(rows.length, "rows.length")
-
     return (
         <View style={styles.container}>
             <Navbar />
@@ -186,7 +185,7 @@ const MedicinesComponent: React.FC = () => {
                 {!IsLoadIng &&
                     <SectionHeader
                         title={activeTab === "Documents" ? "Documents" : "All Medicines"}
-                        count={rows.length}
+                        count={0}
                     />
                 }
                 {IsLoadIng ?

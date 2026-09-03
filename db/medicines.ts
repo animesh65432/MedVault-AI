@@ -204,19 +204,21 @@ export const CreateMedicine = async (
     }
 };
 
-export const GetPrescriptionMedicinesCount = async (db: SQLiteDatabase): Promise<number> => {
+export const GetDocumentHasMedicinesCount = async (
+    db: SQLiteDatabase
+): Promise<number> => {
     try {
         const row = await db.getFirstAsync<{ count: number }>(
             `
             SELECT COUNT(DISTINCT d.Id) AS count
             FROM Documents d
             JOIN Medicines m ON m.DocumentId = d.Id
-            WHERE d.type = 'Prescription'
             `
         );
+
         return row?.count ?? 0;
     } catch (error) {
-        console.error("Error counting prescription medicines:", error);
+        console.error("Error counting documents with medicines:", error);
         return 0;
     }
 };
@@ -224,11 +226,8 @@ export const GetPrescriptionMedicinesCount = async (db: SQLiteDatabase): Promise
 export const GetMedicinesCount = async (db: SQLiteDatabase): Promise<number> => {
     try {
         const row = await db.getFirstAsync<{ count: number }>(
-            `
-            SELECT COUNT(*) AS count
-            FROM Medicines
-            `
-        );
+            `SELECT COUNT(DISTINCT name) AS count FROM Medicines
+            `);
         return row?.count ?? 0;
     } catch (error) {
         console.error("Error counting medicines:", error);
