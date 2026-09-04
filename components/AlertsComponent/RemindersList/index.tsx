@@ -1,4 +1,4 @@
-import DocumentsSkeleton from '@/components/DocumentsSkeleton';
+import RowSkeleton from '@/components/Skeleton/Row';
 import { ReminderWithMedicine } from '@/types';
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
@@ -29,7 +29,7 @@ const RemindersList: React.FC<Props> = ({ OnDeleteReminder, IsLoading, Reminders
     };
 
     if (IsLoading) {
-        return <DocumentsSkeleton
+        return <RowSkeleton
             count={4}
         />
     }

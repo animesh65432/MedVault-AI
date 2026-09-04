@@ -390,6 +390,7 @@ export interface MedicineWithDetailsTypes {
     courseLabel?: string;
     DocumentId?: number;
     timing: string[];
+    documentTitle: string;
 }
 
 export interface MedicineTag {

@@ -75,6 +75,7 @@ export const GetPrescriptionMedicines = async (
                 d.date AS prescribedDate,
                 d.doctor_name AS doctorName,
                 d.clinic_name AS clinicName,
+                d.title AS documentTitle,
                 d.Id AS DocumentId,
                 GROUP_CONCAT(mt.timing) AS timings
             FROM Medicines m
@@ -104,6 +105,17 @@ export const GetAllMedicines = async (
         const offset = (page - 1) * limit;
 
         const rows = await db.getAllAsync<MedicineWithDetailsTypes & { timings: string | null }>(`
+            WITH LatestPerName AS (
+                SELECT
+                    m.Id,
+                    m.name,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY m.name
+                        ORDER BY d.date DESC, m.Id DESC
+                    ) AS rn
+                FROM Medicines m
+                LEFT JOIN Documents d ON d.Id = m.DocumentId
+            )
             SELECT
                 m.Id,
                 m.DocumentId,
@@ -114,12 +126,12 @@ export const GetAllMedicines = async (
                 d.date AS prescribedDate,
                 d.doctor_name AS doctorName,
                 d.clinic_name AS clinicName,
-                d.Id AS DocumentId,
-                GROUP_CONCAT(mt.timing) AS timings
+                GROUP_CONCAT(DISTINCT mt.timing) AS timings
             FROM Medicines m
+            JOIN LatestPerName lpn ON lpn.Id = m.Id AND lpn.rn = 1
             LEFT JOIN Documents d ON d.Id = m.DocumentId
             LEFT JOIN MedicineTiming mt ON mt.MedicineId = m.Id
-            GROUP BY m.Id
+            GROUP BY m.name
             ORDER BY d.date DESC, m.Id ASC
             LIMIT ? OFFSET ?
         `, [limit, offset]);

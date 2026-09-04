@@ -1,3 +1,4 @@
+import RowSkeleton from "@/components/Skeleton/Row"
 import { GetAllMedicines, GetDocumentHasMedicinesCount, GetMedicinesCount, GetPrescriptionMedicines } from "@/db/medicines"
 import { MedicinesTab, MedicineWithDetailsTypes } from "@/types"
 import { vScale } from "@/utils/vScale"
@@ -5,10 +6,9 @@ import { useFocusEffect } from "expo-router"
 import { useSQLiteContext } from "expo-sqlite"
 import React, { useCallback, useMemo, useRef, useState } from "react"
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native"
-import DocumentsSkeleton from "../DocumentsSkeleton"
 import AddMedicine from "./AddMedicine"
 import AddMedicineModal from "./AddMedicineModal"
-import DateDivider from "./DateDivider"
+import Divider from "./Divider"
 import Empty from "./Empty"
 import FAB from "./Fab"
 import MedicineCard from "./MedicineCard"
@@ -17,7 +17,7 @@ import SectionHeader from "./SectionHeader"
 import TabSwitcher from "./TabSwitcher"
 
 type ListRow =
-    | { type: "divider"; key: string; label: string, DocumentId: number }
+    | { type: "divider"; key: string; label: string, DocumentId: number, date: Date }
     | { type: "medicine"; key: string; medicine: MedicineWithDetailsTypes }
 
 const Limit = 10
@@ -66,13 +66,14 @@ const MedicinesComponent: React.FC = () => {
         async (tab: MedicinesTab) => {
             setIsLoading(true)
             try {
-                const result = await fetchMedicineList(tab, 1)
+                const [count, result] = await Promise.all([fetchCount(tab), fetchMedicineList(tab, 1)])
                 setMedicines((prev) => {
                     const resultIds = new Set(result.map((m) => m.Id))
                     const keepFromPrev = prev.filter((m) => !resultIds.has(m.Id))
                     return dedupeById([...result, ...keepFromPrev])
                 })
                 setPage(1)
+                setCount(count)
                 setHasMore(result.length === Limit)
             } catch (error) {
                 console.log("Error fetching medicines:", error)
@@ -134,8 +135,9 @@ const MedicinesComponent: React.FC = () => {
                 out.push({
                     type: "divider",
                     key: `div-${key}`,
-                    label: `PRESCRIBED ${meds[0].doctorName ?? "Unknown date"}`,
+                    label: `${meds[0].doctorName ?? meds[0].clinicName ?? meds[0].documentTitle}`,
                     DocumentId: meds[0].DocumentId,
+                    date: new Date(meds[0].prescribedDate),
                 })
             }
             for (const med of meds) {
@@ -148,6 +150,7 @@ const MedicinesComponent: React.FC = () => {
     async function refreshCount() {
         try {
             const count = await fetchCount(activeTab)
+            setCount(count)
         } catch (error) {
             console.log("Error refreshing count:", error)
         }
@@ -185,11 +188,11 @@ const MedicinesComponent: React.FC = () => {
                 {!IsLoadIng &&
                     <SectionHeader
                         title={activeTab === "Documents" ? "Documents" : "All Medicines"}
-                        count={0}
+                        count={count}
                     />
                 }
                 {IsLoadIng ?
-                    <DocumentsSkeleton
+                    <RowSkeleton
                         count={4}
                     /> :
                     <FlatList
@@ -212,7 +215,8 @@ const MedicinesComponent: React.FC = () => {
                         renderItem={({ item }) =>
                             item.type === "divider" ? (
                                 <>
-                                    <DateDivider
+                                    <Divider
+                                        date={item.date}
                                         label={item.label}
                                     />
                                     <AddMedicine

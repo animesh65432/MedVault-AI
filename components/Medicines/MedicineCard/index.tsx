@@ -7,6 +7,7 @@ import { fs } from "@/utils/fs"
 import { scale } from "@/utils/scale"
 import { TimingOptions } from "@/utils/timing"
 import Feather from "@expo/vector-icons/Feather"
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import { router } from "expo-router"
 import { useSQLiteContext } from "expo-sqlite"
 import React, { useState } from "react"
@@ -144,9 +145,16 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
                             autoFocus
                         />
                     ) : (
-                        <Text style={styles.medName} numberOfLines={2}>
-                            {medicine.name || "Unnamed medicine"}
-                        </Text>
+                        <View style={styles.titleContainer}>
+                            <MaterialCommunityIcons
+                                name="pill"
+                                size={scale(18)}
+                                color="black"
+                            />
+                            <Text style={styles.medName} numberOfLines={2}>
+                                {medicine.name || "Unnamed medicine"}
+                            </Text>
+                        </View>
                     )}
 
                     <View style={styles.actionsRow}>
@@ -321,13 +329,14 @@ const styles = StyleSheet.create({
         borderColor: "#E5E4DD",
         borderRadius: scale(12),
         padding: scale(12),
-        gap: scale(8),
+        gap: scale(8)
     },
     cardTop: {
+        display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center",
-        gap: scale(8),
+        justifyContent: "space-between",
+        width: "100%",
     },
     medName: {
         fontSize: fs(13.5),
@@ -340,7 +349,8 @@ const styles = StyleSheet.create({
         fontFamily: "Aeonik-Medium",
         color: "#0D1F1C",
         flex: 1,
-        padding: 0,
+        padding: 0
+
     },
     actionsRow: {
         flexDirection: "row",
@@ -357,7 +367,7 @@ const styles = StyleSheet.create({
         borderRadius: scale(20),
         paddingHorizontal: scale(8),
         paddingVertical: scale(4),
-        flexShrink: 0,
+        flexShrink: 0
     },
     chipActive: {
         backgroundColor: "#23423B",
@@ -532,6 +542,12 @@ const styles = StyleSheet.create({
         fontSize: fs(13),
         fontFamily: "Aeonik-Medium",
         color: "#EEF6A2",
+    },
+    titleContainer: {
+        display: "flex",
+        flexDirection: "row",
+        gap: scale(4),
+        width: "90%",
     },
 })
 

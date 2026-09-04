@@ -1,4 +1,5 @@
 import { scale } from "@/utils/scale";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
@@ -21,6 +22,11 @@ const AddMedicine: React.FC<Props> = ({ DocumentId, IsAddMedicineModalOpen, setI
             style={styles.container}
             onPress={handleAddMedicine}
         >
+            <MaterialIcons
+                name="add"
+                size={scale(16)}
+                color="white"
+            />
             <Text style={styles.text}>Add Medicine</Text>
         </TouchableOpacity>
     )
@@ -35,6 +41,11 @@ const styles = StyleSheet.create({
         marginLeft: "auto",
         marginTop: scale(8),
         marginBottom: scale(8),
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: scale(4),
     },
     text: {
         fontFamily: "Aeonik-Medium",
