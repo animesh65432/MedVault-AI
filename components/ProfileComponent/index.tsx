@@ -10,11 +10,13 @@ import { resetAllData } from '@/utils/resetAllData';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useCallback, useContext, useState } from 'react';
 import {
+    Image,
     ScrollView,
     StyleSheet,
     Text,
@@ -56,6 +58,17 @@ export default function ProfileScreen() {
         }
     }
 
+    const PickProfilePic = async () => {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            allowsEditing: false,
+            quality: 0.8,
+        });
+        if (!result.canceled) {
+            OnChangeProfilePic(result.assets[0].uri)
+        }
+    }
+
     useFocusEffect(
         useCallback(() => {
             fetchCounts();
@@ -73,10 +86,30 @@ export default function ProfileScreen() {
         setOnboardingCompleteAndCache(false)
     }
 
+    console.log("ProfilePic", profilePic)
+
     return (
         <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
             <View style={styles.header}>
-                {profilePic ? <></> :
+                {profilePic ?
+                    <View
+                        style={styles.avatarRing}
+                    >
+                        <Image
+                            source={{ uri: profilePic }}
+                            style={styles.image}
+                            resizeMode="cover"
+                        />
+                        <View style={styles.cameraButton}>
+                            <Ionicons
+                                onPress={PickProfilePic}
+                                name="camera-outline"
+                                size={scale(19)}
+                                color="#234338"
+                            />
+                        </View>
+                    </View>
+                    :
                     <LinearGradient
                         colors={['#0D483F', '#234338']}
                         style={styles.avatarRing}
@@ -86,6 +119,7 @@ export default function ProfileScreen() {
                         </View>
                         <View style={styles.cameraButton}>
                             <Ionicons
+                                onPress={PickProfilePic}
                                 name="camera-outline"
                                 size={scale(14)}
                             />
@@ -276,4 +310,10 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#E4E9E6",
     },
+    image: {
+        width: scale(96),
+        height: scale(96),
+        borderRadius: scale(48),
+        marginBottom: vScale(14),
+    }
 });

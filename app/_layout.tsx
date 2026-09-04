@@ -50,10 +50,11 @@ function RootLayoutContent() {
   }
 
   useEffect(() => {
-    if (IsonboardingComplete) {
+    if (IsonboardingComplete && userName.length > 0) {
       CheckNotifications();
     }
-  }, [IsonboardingComplete]);
+  }, [IsonboardingComplete, userName]);
+
 
   useEffect(() => {
     Notifications.getLastNotificationResponseAsync().then((response) => {

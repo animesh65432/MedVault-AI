@@ -20,7 +20,7 @@ const Intro = ({ onPressStart }: Props) => {
                 <Image
                     source={require('../../../assets/images/Intro.png')}
                     style={styles.image}
-                    resizeMode="stretch"
+                    resizeMode="contain"
                 />
             </View>
             <View style={styles.DescriptionContainer}>
@@ -39,10 +39,10 @@ const Intro = ({ onPressStart }: Props) => {
 
                 <View style={styles.subtitleContainer}>
                     <Text style={styles.subtitle}>
-                        Keep all your medical documents
+                        Your health records,
                     </Text>
                     <Text style={styles.subtitleText}>
-                        in one place.
+                        finally organized.
                     </Text>
                 </View>
 
@@ -63,16 +63,16 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        gap: scale(20),
+        gap: scale(20)
     },
     image: {
-        width: scale(380),
+        width: scale(320),
         height: "95%",
         alignSelf: 'center',
         marginTop: "auto",
     },
     title: {
-        fontSize: scale(20),
+        fontSize: scale(24),
         textAlign: 'center',
         fontFamily: 'Aeonik-Medium'
     },
@@ -81,10 +81,10 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: scale(4),
+        gap: scale(8)
     },
     subtitle: {
-        fontSize: fs(28),
+        fontSize: fs(32),
         textAlign: 'center',
         fontFamily: 'Aeonik-Medium',
     },
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: scale(40),
         height: vScale(56),
-        borderRadius: scale(10),
+        borderRadius: scale(10)
     },
     buttonText: {
         color: 'white',
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: scale(10),
+        marginTop: vScale(20)
     },
     LogoContainer: {
         width: scale(60),
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     subtitleText: {
-        fontSize: fs(28),
+        fontSize: fs(32),
         textAlign: 'center',
         fontFamily: 'Aeonik-Medium',
         color: '#1F4D43',
