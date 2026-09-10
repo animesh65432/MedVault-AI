@@ -41,6 +41,7 @@
     "expo-intent-launcher": "~13.0.8",
     "expo-linear-gradient": "~15.0.8",
     "expo-linking": "~8.0.12",
+    "expo-llm-mediapipe": "^0.6.0",
     "expo-notifications": "~0.32.17",
     "expo-pdf-text-extract": "^1.1.0",
     "expo-print": "~15.0.8",

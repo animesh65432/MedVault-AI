@@ -1,5 +1,4 @@
 import { OnboardingContext } from '@/context';
-import { UserNameContext } from "@/context/UserName";
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import OnboardingStyles from '@blazejkustra/react-native-onboarding';
@@ -8,14 +7,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Intro from './Intro';
 
 const Onboarding: React.FC = () => {
-    const { OnChangeUserName } = useContext(UserNameContext)
     const { setOnboardingCompleteAndCache } = useContext(OnboardingContext)
-
-    const handleNameSubmit = async (name: string) => {
-        await OnChangeUserName(name);
-        await setOnboardingCompleteAndCache(true);
-    };
-
     const OnPressforSkip = async () => {
         await setOnboardingCompleteAndCache(true);
     }

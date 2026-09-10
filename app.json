@@ -40,7 +40,8 @@
       ],
       "expo-font",
       "expo-sqlite",
-      "expo-build-properties"
+      "expo-build-properties",
+      "expo-llm-mediapipe"
     ],
     "experiments": {
       "typedRoutes": true,

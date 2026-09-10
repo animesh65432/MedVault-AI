@@ -66,9 +66,6 @@ const Steps: React.FC = () => {
                 <Text style={styles.title}>
                     What can you Upload?
                 </Text>
-                <Text style={styles.description}>
-                    store and manage all your medical documents
-                </Text>
             </View>
             <View style={styles.stepContainer}>
                 {STEPS.map((step, index) => (

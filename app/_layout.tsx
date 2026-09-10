@@ -1,7 +1,9 @@
 import { Onboarding } from "@/components";
+import ChooseModel from "@/components/ChooseModel";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import NameInputScreen from "@/components/Onboarding/NameInputScreen";
 import { toastConfig } from "@/components/toastConfig";
+import { AiModelContext, AiModelProvider } from "@/context/AiModel";
 import { AlarmContext, AlarmProvider } from "@/context/Alarm";
 import { NetworkProvider } from "@/context/Netwrok";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
@@ -39,6 +41,7 @@ function RootLayoutContent() {
   const { userName, OnChangeUserName, isHydrated: userNameHydrated } = useContext(UserNameContext);
   const { OnChangeIsAlarmActive } = useContext(AlarmContext);
   const { IsonboardingComplete, isHydrated: onboardingHydrated } = useContext(OnboardingContext);
+  const { IsDownLoadCardShow } = useContext(AiModelContext);
 
   async function CheckNotifications() {
     try {
@@ -95,6 +98,10 @@ function RootLayoutContent() {
     );
   }
 
+  if (IsonboardingComplete && userName.length > 0 && !IsDownLoadCardShow) {
+    return <ChooseModel />;
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Stack screenOptions={{ headerShown: false }}>
@@ -149,23 +156,25 @@ export default function RootLayout() {
       <SQLiteProvider
         databaseName="my-database.db"
         onInit={migrateDbIfNeeded}
-      ><NetworkProvider>
-          <RecentSearchProvider>
-            <OnboardingProvider>
-              <KeyboardProvider>
-                <AlarmProvider>
-                  <UserNameProvider>
-                    <RootLayoutContent />
-                    <Toast
-                      config={toastConfig}
-                    />
-                    <StatusBar style="auto" />
-                  </UserNameProvider>
-                </AlarmProvider>
-              </KeyboardProvider>
-            </OnboardingProvider>
-          </RecentSearchProvider>
-        </NetworkProvider>
+      ><AiModelProvider>
+          <NetworkProvider>
+            <RecentSearchProvider>
+              <OnboardingProvider>
+                <KeyboardProvider>
+                  <AlarmProvider>
+                    <UserNameProvider>
+                      <RootLayoutContent />
+                      <Toast
+                        config={toastConfig}
+                      />
+                      <StatusBar style="auto" />
+                    </UserNameProvider>
+                  </AlarmProvider>
+                </KeyboardProvider>
+              </OnboardingProvider>
+            </RecentSearchProvider>
+          </NetworkProvider>
+        </AiModelProvider>
       </SQLiteProvider>
     </ErrorBoundary>
   );
