@@ -1,8 +1,10 @@
+import { AiModelContext } from "@/context/AiModel";
 import { useDeviceCompatibility } from "@/hooks/useDeviceCompatibility";
+import { } from "@/utils/copyPhotoToPermanentStorage";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import Feather from "@expo/vector-icons/Feather";
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import {
     StyleSheet,
     Text,
@@ -13,18 +15,12 @@ import Animated, {
     FadeInLeft,
 } from "react-native-reanimated";
 
-type ModelType = "remote" | "on-device";
-
 const ChooseModel: React.FC = () => {
     const { supported, loading } = useDeviceCompatibility();
-
-    const [selectedModel, setSelectedModel] = useState<ModelType>("remote");
-
+    const { modelType, setModelType, downloadModel, downloadProgress, isDownloading } = useContext(AiModelContext)
     const onDeviceAvailable = supported;
-
     return (
         <View style={styles.Container}>
-
             <Animated.View
                 entering={FadeInLeft.duration(400)}
             >
@@ -48,12 +44,12 @@ const ChooseModel: React.FC = () => {
                 >
                     <TouchableOpacity
                         activeOpacity={0.85}
-                        onPress={() =>
-                            setSelectedModel("remote")
-                        }
+                        onPress={() => {
+                            setModelType("remote");
+                        }}
                         style={[
                             styles.card,
-                            selectedModel === "remote" &&
+                            modelType === "remote" &&
                             styles.selectedCard,
                         ]}
                     >
@@ -66,7 +62,7 @@ const ChooseModel: React.FC = () => {
                                 />
                             </View>
 
-                            {selectedModel === "remote" && (
+                            {modelType === "remote" && (
                                 <View style={styles.check}>
                                     <Feather
                                         name="check"
@@ -111,8 +107,6 @@ const ChooseModel: React.FC = () => {
                     </TouchableOpacity>
                 </Animated.View>
 
-
-
                 <Animated.View
                     entering={FadeInLeft
                         .delay(200)
@@ -124,11 +118,11 @@ const ChooseModel: React.FC = () => {
                         }
                         disabled={!onDeviceAvailable}
                         onPress={() =>
-                            setSelectedModel("on-device")
+                            setModelType("on-device")
                         }
                         style={[
                             styles.card,
-                            selectedModel === "on-device" &&
+                            modelType === "on-device" &&
                             styles.selectedCard,
                             !onDeviceAvailable &&
                             styles.disabledCard,
@@ -147,7 +141,7 @@ const ChooseModel: React.FC = () => {
                                 />
                             </View>
 
-                            {selectedModel === "on-device" &&
+                            {modelType === "on-device" &&
                                 onDeviceAvailable && (
                                     <View style={styles.check}>
                                         <Feather
@@ -201,27 +195,59 @@ const ChooseModel: React.FC = () => {
                             </Text>
                         </View>
 
-                        <View style={styles.featureRow}>
-                            <Feather
-                                name="download"
-                                size={scale(16)}
-                                color={
-                                    onDeviceAvailable
-                                        ? "#6E827B"
-                                        : "#9AA7A3"
-                                }
-                            />
+                        {!isDownloading &&
 
-                            <Text
-                                style={[
-                                    styles.featureText,
-                                    !onDeviceAvailable &&
-                                    styles.disabledText,
-                                ]}
+                            <TouchableOpacity
+                                style={styles.featureRow}
+                                onPress={() => {
+                                    if (onDeviceAvailable) {
+                                        downloadModel();
+                                    }
+                                }}
+                                disabled={!onDeviceAvailable}
                             >
-                                3.14 GB download
-                            </Text>
-                        </View>
+                                <Feather
+                                    name="download"
+                                    size={scale(16)}
+                                    color={
+                                        onDeviceAvailable
+                                            ? "#6E827B"
+                                            : "#9AA7A3"
+                                    }
+                                />
+
+                                <Text
+                                    style={[
+                                        styles.featureText,
+                                        !onDeviceAvailable &&
+                                        styles.disabledText,
+                                    ]}
+                                >
+                                    3 GB download
+                                </Text>
+                            </TouchableOpacity>
+                        }
+                        {isDownloading &&
+                            <View style={styles.progressContainer}>
+                                <View style={styles.progressHeader}>
+                                    <Text style={styles.progressLabel}>
+                                        Downloading model...
+                                    </Text>
+                                    <Text style={styles.progressPercent}>
+                                        {downloadProgress}%
+                                    </Text>
+                                </View>
+
+                                <View style={styles.progressTrack}>
+                                    <View
+                                        style={[
+                                            styles.progressFill,
+                                            { width: `${downloadProgress}%` },
+                                        ]}
+                                    />
+                                </View>
+                            </View>
+                        }
 
                         <View style={styles.statusContainer}>
                             {loading ? (
@@ -275,6 +301,11 @@ const ChooseModel: React.FC = () => {
                     </TouchableOpacity>
                 </Animated.View>
 
+                <TouchableOpacity
+                    style={styles.buttonContainer}
+                >
+                    <Text style={styles.buttonText}>Continue</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -428,6 +459,56 @@ const styles = StyleSheet.create({
 
     disabledText: {
         color: "#8A9692",
+    },
+    buttonContainer: {
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginTop: vScale(20),
+        fontFamily: "Aeonik-Medium",
+        backgroundColor: "#23423B",
+        paddingVertical: vScale(10),
+        paddingHorizontal: scale(20),
+        borderRadius: scale(8),
+    },
+    buttonText: {
+        color: "#FFFFFF",
+        fontSize: scale(16),
+        fontFamily: "Aeonik-Medium",
+    },
+    progressContainer: {
+        marginTop: vScale(13),
+    },
+
+    progressHeader: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+
+    progressLabel: {
+        fontSize: scale(14),
+        color: "#425A54",
+        fontFamily: "Aeonik-Regular",
+    },
+
+    progressPercent: {
+        fontSize: scale(13),
+        color: "#23423B",
+        fontFamily: "Aeonik-Medium",
+    },
+
+    progressTrack: {
+        marginTop: vScale(6),
+        height: scale(6),
+        borderRadius: scale(3),
+        backgroundColor: "#E4EAE7",
+        overflow: "hidden",
+    },
+
+    progressFill: {
+        height: "100%",
+        borderRadius: scale(3),
+        backgroundColor: "#23423B",
     },
 });
 

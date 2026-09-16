@@ -18,10 +18,16 @@ import * as SplashScreen from 'expo-splash-screen';
 import { SQLiteProvider } from "expo-sqlite";
 import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect } from 'react';
+import { initExecutorch } from 'react-native-executorch';
+import { ExpoResourceFetcher } from 'react-native-executorch-expo-resource-fetcher';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import 'react-native-reanimated';
 import Toast from "react-native-toast-message";
+
+initExecutorch({
+  resourceFetcher: ExpoResourceFetcher
+});
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -41,7 +47,7 @@ function RootLayoutContent() {
   const { userName, OnChangeUserName, isHydrated: userNameHydrated } = useContext(UserNameContext);
   const { OnChangeIsAlarmActive } = useContext(AlarmContext);
   const { IsonboardingComplete, isHydrated: onboardingHydrated } = useContext(OnboardingContext);
-  const { IsDownLoadCardShow } = useContext(AiModelContext);
+  const { isDownloadCardShown, isModelDownloaded, setIsDownloadCardShown } = useContext(AiModelContext);
 
   async function CheckNotifications() {
     try {
@@ -92,15 +98,17 @@ function RootLayoutContent() {
       <NameInputScreen
         onContinue={async (name) => {
           await OnChangeUserName(name);
+          setIsDownloadCardShown(true);
         }}
         isActive={true}
       />
     );
   }
 
-  if (IsonboardingComplete && userName.length > 0 && !IsDownLoadCardShow) {
+  if (!isDownloadCardShown && IsonboardingComplete && userName.length > 0 && !isModelDownloaded) {
     return <ChooseModel />;
   }
+
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -156,7 +164,8 @@ export default function RootLayout() {
       <SQLiteProvider
         databaseName="my-database.db"
         onInit={migrateDbIfNeeded}
-      ><AiModelProvider>
+      >
+        <AiModelProvider>
           <NetworkProvider>
             <RecentSearchProvider>
               <OnboardingProvider>

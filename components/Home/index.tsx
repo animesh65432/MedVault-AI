@@ -1,16 +1,18 @@
+import { AiModelContext } from "@/context/AiModel";
 import { GetRemindersCount } from "@/db/alerts";
 import { GetDocumentsCount } from "@/db/document";
 import { GetMedicinesCount } from "@/db/medicines";
 import { CountTypes } from "@/types";
 import { useFocusEffect } from '@react-navigation/native';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { StyleSheet, View } from "react-native";
 import EmptyStats from "./EmptyStats";
 import NonEmptyStats from "./NonEmptyStats";
 
 const HomeLayOut = () => {
     const db = useSQLiteContext();
+    const { loadModel, generate, modelType } = useContext(AiModelContext);
     const [counts, setCounts] = useState<CountTypes>({
         documentsCount: 0,
         medicinesCount: 0,
@@ -30,6 +32,8 @@ const HomeLayOut = () => {
                 remindersCount,
             });
 
+            await loadModel();
+
         } catch (error) {
             console.error("Failed to fetch counts:", error);
         }
@@ -43,7 +47,6 @@ const HomeLayOut = () => {
             };
         }, [])
     );
-
     return (
         <View style={styles.container}>
             {counts.documentsCount > 0 ?

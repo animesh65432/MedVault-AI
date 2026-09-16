@@ -16,13 +16,6 @@ type Props = {
 const Intro = ({ onPressStart }: Props) => {
     return (
         <View style={styles.container}>
-            <View style={styles.ImageContainer}>
-                <Image
-                    source={require('../../../assets/images/Intro.png')}
-                    style={styles.image}
-                    resizeMode="contain"
-                />
-            </View>
             <View style={styles.DescriptionContainer}>
                 <View style={styles.LogoTextContainer}>
                     <Image

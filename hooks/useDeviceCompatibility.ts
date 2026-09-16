@@ -27,8 +27,8 @@ export function useDeviceCompatibility(): DeviceCompatibility {
                 DeviceInfo.getFreeDiskStorage(),
             ]);
 
-            const ram = totalMemory / (1024 ** 3);
-            const storage = freeStorage / (1024 ** 3);
+            const ram = Math.ceil(totalMemory / (1024 ** 3));
+            const storage = Math.ceil(freeStorage / (1024 ** 3));
 
             setRamGB(ram);
             setFreeStorageGB(storage);

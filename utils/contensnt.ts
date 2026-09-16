@@ -1,4 +1,5 @@
 import { SourceConfig } from "@/types";
+import { GEMMA4_E2B_MM } from "react-native-executorch";
 
 export const SOURCES: SourceConfig[] = [
     { ftsTable: "DocumentsSearch", baseTable: "Documents", label: "in Document", snippetCol: -1, directDocId: true },
@@ -46,3 +47,14 @@ export const DurationUnitOptions = [
     { label: "weeks", value: "weeks" },
     { label: "months", value: "months" },
 ]
+
+
+export const LocalDefaultModel = {
+    modelName: "gemma4_e2b_multimodal",
+    family: "gemma4",
+    tokenizerPath: GEMMA4_E2B_MM.tokenizerSource,
+    modelPath: GEMMA4_E2B_MM.modelSource,
+    tokenizerConfigPath: GEMMA4_E2B_MM.tokenizerConfigSource,
+    parameters: 2.0,
+    vision: true
+}
