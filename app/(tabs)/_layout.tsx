@@ -1,4 +1,5 @@
 import { HapticTab } from '@/components/haptic-tab';
+import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs, useRouter } from 'expo-router';
@@ -23,7 +24,11 @@ function UploadTabButton({ onPress }: { onPress: () => void }) {
       style={styles.uploadWrapper}
     >
       <View style={styles.uploadButton}>
-        <Ionicons name="add" size={30} color={COLORS.uploadIcon} />
+        <Ionicons
+          name="add"
+          size={scale(30)}
+          color={COLORS.uploadIcon}
+        />
       </View>
     </TouchableOpacity>
   );
@@ -143,7 +148,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -(BUTTON_SIZE / 1),
   },
   uploadButton: {
     width: BUTTON_SIZE,

@@ -4,8 +4,12 @@ import { useState } from "react";
 export const useImageTextExtractor = () => {
     const [error, setError] = useState<string | null>(null);
 
-    const extractTextFromImageUri = async (uri: string, mimeType = "image/jpeg") => {
+    const extractTextFromImageUri = async (
+        uri: string,
+        mimeType = "image/jpeg"
+    ) => {
         setError(null);
+
         try {
             const formData = new FormData();
 
@@ -24,15 +28,26 @@ export const useImageTextExtractor = () => {
             });
 
             const data = await res.json();
-            console.log("OCR Response:", data);
-            if (!data.success) throw new Error(data.error ?? "Unknown error");
+
+            if (!res.ok || !data.success) {
+                const message =
+                    data.message ||
+                    data.error ||
+                    "OCR request failed";
+
+                setError(message);
+            }
+
             return data.text as string;
 
         } catch (err: any) {
+            console.log("OCR Error:", err);
 
-            console.log(err);
+            const message =
+                err?.message ||
+                "Something went wrong while extracting text.";
 
-            setError(err.message);
+            setError(message);
 
             return null;
         }

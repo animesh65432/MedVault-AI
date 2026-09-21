@@ -1,184 +1,140 @@
-import { scale } from "@/utils/scale";
-import { vScale } from "@/utils/vScale";
-import { useRouter } from 'expo-router';
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Animated, { FadeInDown } from "react-native-reanimated";
-import Entypo from 'react-native-vector-icons/Entypo';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-
-type IconLibrary = 'Fontisto' | 'Entypo'
-
-export type DocumentCategory = 'Prescription' | 'Lab Reports' | 'Medical Records'
+import { scale } from '@/utils/scale'
+import { vScale } from '@/utils/vScale'
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import Entypo from 'react-native-vector-icons/Entypo'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 interface StepItem {
-    iconLib: IconLibrary
-    iconName: string
-    title: DocumentCategory
-    description: string
+    label: string
+    bg: string
+    color: string
+    renderIcon: (color: string, size: number) => React.ReactNode
 }
 
 const STEPS: StepItem[] = [
     {
-        iconLib: 'Fontisto',
-        iconName: 'prescription',
-        title: 'Prescription',
-        description: 'Keep track of your prescription',
+        label: 'Prescription',
+        bg: '#EAF3DE',
+        color: '#3B6D11',
+        renderIcon: (color, size) => (
+            <FontAwesome5 name="prescription" size={size} color={color} />
+        ),
     },
     {
-        iconLib: 'Entypo',
-        iconName: 'lab-flask',
-        title: 'Lab Reports',
-        description: 'Access your lab test results',
+        label: 'Lab report',
+        bg: '#F0E7FA',
+        color: '#534AB7',
+        renderIcon: (color, size) => (
+            <Entypo name="lab-flask" size={size} color={color} />
+        ),
     },
     {
-        iconLib: 'Fontisto',
-        iconName: 'file-1',
-        title: 'Medical Records',
-        description: 'Store your medical documents',
+        label: 'Scan / X-ray',
+        bg: '#E6F1FB',
+        color: '#185FA5',
+        renderIcon: (color, size) => (
+            <MaterialCommunityIcons name="radiology-box-outline" size={size} color={color} />
+        ),
+    },
+    {
+        label: 'Bill',
+        bg: '#FAECE7',
+        color: '#993C1D',
+        renderIcon: (color, size) => (
+            <FontAwesome5 name="receipt" size={size} color={color} />
+        ),
+    },
+    {
+        label: 'Discharge',
+        bg: '#E1F5EE',
+        color: '#0F6E56',
+        renderIcon: (color, size) => (
+            <FontAwesome5 name="hospital" size={size} color={color} />
+        ),
+    },
+    {
+        label: 'Other',
+        bg: '#F1EFE8',
+        color: '#5F5E5A',
+        renderIcon: (color, size) => (
+            <Entypo name="dots-three-horizontal" size={size} color={color} />
+        ),
     },
 ]
 
-const StepIcon: React.FC<{ iconLib: IconLibrary; iconName: string }> = ({
-    iconLib,
-    iconName,
-}) => {
-    const props = { name: iconName, size: scale(24), color: '#23423B' }
-    return iconLib === 'Entypo' ? <Entypo {...props} /> : <Fontisto {...props} />
-}
-
 const Steps: React.FC = () => {
-    const router = useRouter()
-
-    const handlePress = (category: DocumentCategory) => {
-        router.push(`/Search`)
-    }
-
     return (
-        <Animated.View
-            style={styles.container}
-            entering={FadeInDown
-                .duration(400)
-                .delay(600)
-            }
-        >
-            <View style={styles.titleAndDescriptionContainer}>
-                <Text style={styles.title}>
-                    What can you Upload?
-                </Text>
+        <View style={styles.Container}>
+            <View style={styles.titleAndSubtitle}>
+                <Text style={styles.title}>What can you add?</Text>
+                <Text style={styles.description}>Store and organize any kind of medical document.</Text>
             </View>
-            <View style={styles.stepContainer}>
-                {STEPS.map((step, index) => (
-                    <TouchableOpacity
-                        key={step.title}
-                        style={index === 2 ? styles.step : [styles.step, styles.stepBottomLine]}
-                        activeOpacity={0.6}
-                        onPress={() => handlePress(step.title)}
-                    >
-                        <View style={styles.iconWrapper}>
-                            <StepIcon iconLib={step.iconLib} iconName={step.iconName} />
+
+            <View style={styles.grid}>
+                {STEPS.map((step) => (
+                    <View key={step.label} style={styles.tile}>
+                        <View style={[styles.iconCircle, { backgroundColor: step.bg }]}>
+                            {step.renderIcon(step.color, scale(16))}
                         </View>
-                        <View style={styles.stepTextContainer}>
-                            <Text style={styles.stepTitle}>{step.title}</Text>
-                            <Text style={styles.stepDescription}>{step.description}</Text>
-                        </View>
-                        <Entypo
-                            name="chevron-thin-right"
-                            size={scale(20)}
-                            color="#23423B"
-                            style={styles.arrowIcon}
-                        />
-                    </TouchableOpacity>
+                        <Text style={styles.tileLabel} numberOfLines={1}>
+                            {step.label}
+                        </Text>
+                    </View>
                 ))}
             </View>
-        </Animated.View>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'column',
-        marginRight: 'auto',
-        gap: vScale(16),
-        marginTop: vScale(10),
-        width: '100%',
+    Container: {
+        padding: scale(13),
+        borderRadius: scale(16),
+        width: "100%",
+        gap: vScale(10)
+    },
+    titleAndSubtitle: {
+        gap: vScale(4)
     },
     title: {
-        fontFamily: 'Aeonik-Medium',
-        fontSize: scale(20),
-        color: '#23423B',
-        textAlign: 'center',
-        lineHeight: vScale(26),
-        marginRight: "auto",
-    },
-    titleText: {
-        fontFamily: 'Aeonik-Medium',
-        fontSize: scale(40),
-        color: '#23423B',
-        textAlign: 'center',
-        lineHeight: vScale(26),
-    },
-    stepContainer: {
-        flexDirection: 'column',
-        gap: vScale(14),
-        backgroundColor: '#F5F5F5',
-        width: '100%',
-        padding: scale(16),
-        borderRadius: scale(12),
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 6,
-
-        elevation: 4,
-    },
-    step: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: scale(10),
-    },
-    iconWrapper: {
-        width: scale(32),
-        alignItems: 'center',
-    },
-    stepTextContainer: {
-        flexDirection: "column"
-    },
-    stepTitle: {
-        fontFamily: 'Aeonik-Medium',
         fontSize: scale(15),
-        color: '#23423B',
-        lineHeight: vScale(20),
-    },
-    stepDescription: {
-        fontFamily: 'Aeonik-Regular',
-        fontSize: scale(13),
-        color: '#5A7A74',
-        marginTop: vScale(2),
+        fontFamily: "Aeonik-Medium",
+        color: "#0D483F"
     },
     description: {
-        fontFamily: 'Aeonik-Regular',
         fontSize: scale(13),
-        color: '#5A7A74',
+        fontFamily: "Aeonik-Medium",
+        color: "#7A7A6E"
+    },
+    grid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        rowGap: vScale(10),
+    },
+    tile: {
+        width: '31%',
+        backgroundColor: '#FFFFFF',
+        borderRadius: scale(14),
+        paddingVertical: vScale(12),
+        paddingHorizontal: scale(6),
+        alignItems: 'center',
+    },
+    iconCircle: {
+        width: scale(32),
+        height: scale(32),
+        borderRadius: scale(9),
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: vScale(8),
+    },
+    tileLabel: {
+        fontSize: scale(11),
+        fontFamily: 'Aeonik-Medium',
+        color: '#2C2C2A',
         textAlign: 'center',
-        lineHeight: vScale(18),
-        marginRight: "auto",
     },
-    titleAndDescriptionContainer: {
-        flexDirection: 'column',
-        gap: vScale(2),
-    },
-    arrowIcon: {
-        marginLeft: 'auto',
-    },
-    stepBottomLine: {
-        borderBottomWidth: 1,
-        borderBottomColor: '#E0E0E0',
-        paddingVertical: vScale(5),
-    }
 })
-
 export default Steps

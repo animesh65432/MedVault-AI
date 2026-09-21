@@ -20,14 +20,13 @@ export const useMakeMedicalDataJson = () => {
 
             const data = await response.json();
 
-            console.log("Response from makeMedicalDataJson:", data);
+            if (!response.ok || !data.success) {
+                const message =
+                    data.message ||
+                    data.error ||
+                    "OCR request failed";
 
-            if (!response.ok) {
-                throw new Error(data.error || `HTTP ${response.status}`);
-            }
-
-            if (!data.success) {
-                throw new Error(data.error || "Unknown error");
+                setError(message);
             }
 
             return data.data as DocumentType

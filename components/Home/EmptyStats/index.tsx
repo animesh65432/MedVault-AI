@@ -1,12 +1,11 @@
-import UpLoad from '@/components/UploadButtom'
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
 import React from "react"
-import { Image, StyleSheet, View } from "react-native"
-import Animated, { ZoomIn } from 'react-native-reanimated'
-import Description from './DesScription'
+import { StyleSheet, View } from "react-native"
 import Header from './Header'
-import Steps from './Steps'
+import HeroSection from "./HeroSection"
+import Steps from "./Steps"
+import UploadButtom from "./UploadButtom"
 
 const EmptyStats: React.FC = () => {
     return (
@@ -14,20 +13,8 @@ const EmptyStats: React.FC = () => {
             style={styles.container}
         >
             <Header />
-            <Animated.View
-                entering={ZoomIn
-                    .duration(500)
-                    .delay(150)
-                }
-            >
-                <Image
-                    style={styles.image}
-                    source={require("../../../assets/images/empty-stats.png")}
-                    resizeMode="cover"
-                />
-            </Animated.View>
-            <Description />
-            <UpLoad />
+            <HeroSection />
+            <UploadButtom />
             <Steps />
         </View>
     )
@@ -36,10 +23,11 @@ const EmptyStats: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        gap: vScale(10),
+        gap: vScale(5),
         paddingHorizontal: scale(20),
         paddingTop: vScale(40),
         paddingBottom: vScale(32),
+        backgroundColor: "#F6F5EE"
     },
     image: {
         width: scale(250),

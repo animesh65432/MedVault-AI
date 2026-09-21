@@ -31,10 +31,10 @@ const ShowDocument = () => {
     const { fileUri, fileName, fileType } = useLocalSearchParams();
     const router = useRouter();
     const [Document, SetDocument] = useState<DocumentType | null>(null)
-    const { extractTextFromImageUri } = useImageTextExtractor()
-    const { CheckIsMedicalOrNot } = useCheckIsMedicalRelated()
-    const { makeclassifymedical } = usemakeclassifymedical()
-    const { makeMedicalDataJson } = useMakeMedicalDataJson()
+    const { extractTextFromImageUri, error: extractTextErrorMessage } = useImageTextExtractor()
+    const { CheckIsMedicalOrNot, error: MedicalOrNotError } = useCheckIsMedicalRelated()
+    const { makeclassifymedical, error: makeclassifymedicalError } = usemakeclassifymedical()
+    const { makeMedicalDataJson, error: makeMedicalDataJsonError } = useMakeMedicalDataJson()
     const { thumbUri, thumbFailed } = usePdfThumbnail(fileUri as string)
 
     const isPdf = first(fileType) === 'application/pdf';
@@ -50,7 +50,6 @@ const ShowDocument = () => {
         setIsProcessing(true);
 
         let extractedText = "";
-
         if (!isOnline) {
             Toast.show({
                 type: "error",
@@ -61,16 +60,17 @@ const ShowDocument = () => {
             return;
         }
 
+
         try {
+
             extractedText = !isPdf
                 ? (await extractTextFromImageUri(first(fileUri) as string)) || ""
                 : await extractText(first(fileUri) as string);
         } catch (error) {
-            console.error(error);
             Toast.show({
                 type: "error",
-                text1: "Couldn't read this document",
-                text2: error instanceof Error ? error.message : "Please try a clearer photo or a different file.",
+                text1: extractTextErrorMessage || "Couldn't read this document",
+                text2: "Please try again",
             });
             setIsProcessing(false);
             return;
@@ -105,8 +105,8 @@ const ShowDocument = () => {
             console.warn("Error checking if document is medical:", error);
             Toast.show({
                 type: "error",
-                text1: "Couldn't verify this document",
-                text2: error instanceof Error ? error.message : "Please check your connection and try again.",
+                text1: MedicalOrNotError || "Couldn't determine if this is a medical document",
+                text2: "Please try again"
             });
             setIsProcessing(false);
             return;
@@ -132,10 +132,10 @@ const ShowDocument = () => {
 
             SetDocument(medicalData);
         } catch (error) {
-            console.error(error);
+            console.log(error);
             Toast.show({
                 type: "error",
-                text1: "Couldn't extract document details",
+                text1: makeclassifymedicalError || "Couldn't process this medical document",
                 text2: error instanceof Error ? error.message : "Please try again.",
             });
         } finally {

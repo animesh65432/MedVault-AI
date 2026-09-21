@@ -22,10 +22,16 @@ export const usemakeclassifymedical = () => {
                 error: string;
                 category: string,
                 success: boolean,
+                message: string
             };
 
-            if (!data.success) {
-                throw new Error(data.error ?? "Unknown error");
+            if (!response.ok || !data.success) {
+                const message =
+                    data.message ||
+                    data.error ||
+                    "OCR request failed";
+
+                throw new Error(message);
             }
 
             return data.category

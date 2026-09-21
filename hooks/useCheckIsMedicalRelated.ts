@@ -5,8 +5,6 @@ export const useCheckIsMedicalRelated = () => {
     const [error, setError] = useState<string | null>(null);
 
     const CheckIsMedicalOrNot = async (textOcr: string): Promise<boolean> => {
-        setError(null);
-
         const response = await fetch(CheckIsMedicalRealatedOrNot, {
             method: "POST",
             headers: {
@@ -16,18 +14,20 @@ export const useCheckIsMedicalRelated = () => {
             body: JSON.stringify({ textOcr }),
         });
 
-        if (!response.ok) {
-            throw new Error(`Classification request failed (${response.status})`);
-        }
-
         const data = await response.json();
 
-        if (!data.success) {
-            throw new Error(data.error ?? "Unknown classification error");
+        if (!response.ok || !data.success) {
+            const message =
+                data.message ||
+                data.error ||
+                "OCR request failed";
+
+            setError(message);
         }
 
+
         if (typeof data.isMedical !== "boolean") {
-            throw new Error("Malformed response from classifier");
+            setError("Someting went wrong please try again later.");
         }
 
         return data.isMedical;
