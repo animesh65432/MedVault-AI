@@ -15,6 +15,13 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+interface UploadOption {
+    icon: React.ReactNode
+    label: string
+    description: string
+    bg: string
+    onPress: () => void
+}
 
 const UploadModal: React.FC = () => {
     const router = useRouter();
@@ -81,24 +88,26 @@ const UploadModal: React.FC = () => {
             });
         }
     };
-
-    const options = [
+    const options: UploadOption[] = [
         {
-            icon: <MaterialIcons name="camera-alt" size={scale(24)} color="#064E3B" />,
+            icon: <MaterialIcons name="camera-alt" size={scale(20)} color="#3B6D11" />,
             label: 'Take Photo',
             description: 'Use camera to capture',
+            bg: '#EAF3DE',
             onPress: takePhoto,
         },
         {
-            icon: <MaterialIcons name="photo-library" size={scale(24)} color="#064E3B" />,
+            icon: <MaterialIcons name="photo-library" size={scale(20)} color="#534AB7" />,
             label: 'Upload from Gallery',
             description: 'Choose an image from your library',
+            bg: '#F0E7FA',
             onPress: pickImage,
         },
         {
-            icon: <AntDesign name="file-pdf" size={scale(24)} color="#064E3B" />,
+            icon: <AntDesign name="file-pdf" size={scale(20)} color="#185FA5" />,
             label: 'Choose PDF File',
             description: 'Select a PDF document',
+            bg: '#E6F1FB',
             onPress: pickPdf,
         },
     ];
@@ -107,13 +116,19 @@ const UploadModal: React.FC = () => {
         <View style={styles.overlay}>
             <Pressable style={StyleSheet.absoluteFill} onPress={() => router.back()} />
 
-            <Animated.View
-                style={styles.modal}
-            >
+            <Animated.View style={styles.modal}>
+                <View style={styles.handle} />
+
                 <View style={styles.header}>
-                    <Text style={styles.title}>Upload Document</Text>
-                    <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
-                        <MaterialIcons name="close" size={scale(22)} color="#222" />
+                    <View style={styles.headerText}>
+                        <Text style={styles.title}>Upload Document</Text>
+                        <Text style={styles.descriptionText}>Choose how you'd like to add it.</Text>
+                    </View>
+                    <TouchableOpacity
+                        style={styles.closeButton}
+                        onPress={() => router.back()}
+                    >
+                        <MaterialIcons name="close" size={scale(18)} color="#5F5E5A" />
                     </TouchableOpacity>
                 </View>
 
@@ -121,15 +136,17 @@ const UploadModal: React.FC = () => {
                     <TouchableOpacity
                         key={index}
                         style={styles.button}
-                        activeOpacity={0.85}
+                        activeOpacity={0.7}
                         onPress={opt.onPress}
                     >
-                        <View style={styles.iconContainer}>{opt.icon}</View>
+                        <View style={[styles.iconContainer, { backgroundColor: opt.bg }]}>
+                            {opt.icon}
+                        </View>
                         <View style={styles.labelContainer}>
                             <Text style={styles.buttonText}>{opt.label}</Text>
                             <Text style={styles.description}>{opt.description}</Text>
                         </View>
-                        <AntDesign name="right" size={scale(16)} color="#9CA3AF" />
+                        <AntDesign name="right" size={scale(15)} color="#C7C5B8" />
                     </TouchableOpacity>
                 ))}
 
@@ -148,70 +165,97 @@ const UploadModal: React.FC = () => {
 const styles = StyleSheet.create({
     overlay: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.45)',
+        backgroundColor: 'rgba(13,20,17,0.55)',
         justifyContent: 'flex-end',
     },
     modal: {
-        backgroundColor: '#fff',
-        borderTopLeftRadius: scale(24),
-        borderTopRightRadius: scale(24),
-        padding: scale(20),
-        paddingBottom: vScale(76),
+        backgroundColor: '#FFFFFF',
+        borderTopLeftRadius: scale(28),
+        borderTopRightRadius: scale(28),
+        paddingHorizontal: scale(20),
+        paddingTop: vScale(10),
+        paddingBottom: vScale(32),
+    },
+    handle: {
+        width: scale(36),
+        height: vScale(4),
+        borderRadius: 2,
+        backgroundColor: '#E5E3D8',
+        alignSelf: 'center',
+        marginBottom: vScale(16),
     },
     header: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'space-between',
-        marginBottom: vScale(20),
+        marginBottom: vScale(6),
+    },
+    headerText: {
+        flexDirection: 'column',
+        gap: vScale(4),
     },
     closeButton: {
-        padding: scale(4),
+        width: scale(28),
+        height: scale(28),
+        borderRadius: scale(14),
+        backgroundColor: '#F1EFE8',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     title: {
-        fontSize: scale(20),
+        fontSize: scale(17),
         fontFamily: 'Aeonik-Bold',
-        color: '#111',
+        color: '#0D483F',
+    },
+    descriptionText: {
+        fontFamily: 'Aeonik-Regular',
+        fontSize: scale(12),
+        color: '#8A8A7C',
     },
     button: {
         marginTop: vScale(10),
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: scale(16),
-        paddingVertical: vScale(14),
-        borderRadius: scale(14),
-        borderColor: '#6B8E8B',
-        borderWidth: 1,
+        paddingHorizontal: scale(12),
+        paddingVertical: vScale(12),
+        borderRadius: scale(16),
+        // no border here on purpose — bordered rows read as input fields,
+        // not tappable list actions
     },
     iconContainer: {
-        width: scale(36),
+        width: scale(44),
+        height: scale(44),
+        borderRadius: scale(13),
         alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
     },
     labelContainer: {
         flex: 1,
-        marginLeft: scale(10),
+        marginLeft: scale(14),
     },
     buttonText: {
         fontFamily: 'Aeonik-Medium',
-        fontSize: scale(15),
-        color: '#111',
+        fontSize: scale(14),
+        color: '#2C2C2A',
     },
     description: {
         fontFamily: 'Aeonik-Regular',
-        fontSize: scale(12),
-        color: '#6B7280',
+        fontSize: scale(11),
+        color: '#8A8A7C',
         marginTop: vScale(2),
     },
     cancelButton: {
-        marginTop: vScale(16),
+        marginTop: vScale(18),
         paddingVertical: vScale(14),
         borderRadius: scale(14),
-        backgroundColor: '#F3F4F6',
+        backgroundColor: '#F1EFE8',
         alignItems: 'center',
     },
     cancelText: {
         fontFamily: 'Aeonik-Medium',
         fontSize: scale(15),
-        color: '#374151',
+        color: '#5F5E5A',
     },
 });
 

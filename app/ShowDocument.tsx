@@ -22,7 +22,8 @@ import {
     View,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import MaterialIcons from 'react-native-vector-icons/AntDesign';
+import { default as AntDesign, default as MaterialIcons } from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
 const ShowDocument = () => {
@@ -167,7 +168,7 @@ const ShowDocument = () => {
 
     if (isPdf && thumbFailed) {
         return <View style={styles.pdfPlaceholder}>
-            <MaterialIcons name="file-pdf" size={scale(64)} color="#064E3B" />
+            <MaterialIcons name="file-pdf" size={scale(64)} color="#0D483F" />
             <Text style={styles.pdfLabel}>PDF Document</Text>
         </View>
     }
@@ -177,9 +178,12 @@ const ShowDocument = () => {
             <View style={styles.container}>
 
                 <View style={styles.header}>
-                    <Text style={styles.headerTitle}>Confirm Upload</Text>
+                    <View>
+                        <Text style={styles.headerTitle}>Confirm Upload</Text>
+                        <Text style={styles.headerSubtitle}>Review before saving to your vault</Text>
+                    </View>
                     <TouchableOpacity style={styles.closeBtn} onPress={() => router.back()}>
-                        <MaterialIcons name="close" size={scale(22)} color="#222" />
+                        <MaterialIcons name="close" size={scale(16)} color="#5F5E5A" />
                     </TouchableOpacity>
                 </View>
 
@@ -189,20 +193,40 @@ const ShowDocument = () => {
                         <Image
                             source={{ uri: thumbUri ?? undefined }}
                             style={styles.image}
-                            resizeMode="contain"
+                            resizeMode="cover"
                         />
                     ) : (
                         <Image
                             source={{ uri: first(fileUri) }}
                             style={styles.image}
-                            resizeMode="contain"
+                            resizeMode="cover"
                         />
                     )}
                 </View>
 
-                <Text style={styles.fileName} numberOfLines={1}>
-                    {first(fileName) || 'Document'}
-                </Text>
+                <View style={styles.titleAndDescription}>
+                    <View style={styles.IconWrapper}>
+                        {isPdf ? (
+                            <FontAwesome
+                                name="file-pdf-o"
+                                size={scale(18)}
+                                color="#8A8A7C"
+                            />
+                        ) : (
+                            <FontAwesome
+                                name="photo"
+                                size={scale(18)}
+                                color="#8A8A7C"
+                            />
+                        )}
+                    </View>
+                    <View style={styles.fileMeta}>
+                        <Text style={styles.fileName} numberOfLines={1}>
+                            {first(fileName) || 'Document'}
+                        </Text>
+                        <Text style={styles.fileSubtext}>Captured just now · type detected after upload</Text>
+                    </View>
+                </View>
 
                 <View style={styles.actions}>
                     <TouchableOpacity
@@ -210,7 +234,13 @@ const ShowDocument = () => {
                         activeOpacity={0.85}
                         onPress={handleUpload}
                     >
-                        <MaterialIcons name="check-circle" size={scale(20)} color="#fff" />
+                        <View style={styles.UploadIconWrapper}>
+                            <AntDesign
+                                name="check"
+                                size={scale(18)}
+                                color="#0D483F"
+                            />
+                        </View>
                         <Text style={styles.uploadText}>Looks Good, Upload</Text>
                     </TouchableOpacity>
 
@@ -219,7 +249,7 @@ const ShowDocument = () => {
                         activeOpacity={0.85}
                         onPress={handleRetake}
                     >
-                        <MaterialIcons name="replay" size={scale(20)} color="#064E3B" />
+                        <MaterialIcons name="replay" size={scale(18)} color="#5F5E5A" />
                         <Text style={styles.retakeText}>Retake</Text>
                     </TouchableOpacity>
                 </View>
@@ -243,24 +273,40 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: vScale(24),
+        marginBottom: vScale(20),
     },
     headerTitle: {
         fontFamily: 'Aeonik-Bold',
         fontSize: scale(20),
-        color: '#111',
+        color: '#0D483F',
+    },
+    headerSubtitle: {
+        fontFamily: 'Aeonik-Regular',
+        fontSize: scale(12),
+        color: '#8A8A7C',
+        marginTop: vScale(2),
     },
     closeBtn: {
-        padding: scale(4),
+        width: scale(32),
+        height: scale(32),
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "#F1EFE8",
+        borderRadius: scale(16),
     },
     previewCard: {
         width: '100%',
-        height: vScale(340),
+        height: vScale(280),
         borderRadius: scale(18),
         overflow: 'hidden',
-        backgroundColor: '#F1F5F4',
-        borderWidth: 1,
-        borderColor: '#D1E0DC',
+        backgroundColor: '#F1EFE8',
+        borderWidth: 0.5,
+        borderColor: '#E5E3D8',
+        shadowColor: '#0D483F',
+        shadowOpacity: 0.1,
+        shadowRadius: 14,
+        shadowOffset: { width: 0, height: 6 },
+        elevation: 4,
     },
     image: {
         width: '100%',
@@ -275,69 +321,84 @@ const styles = StyleSheet.create({
     pdfLabel: {
         fontFamily: 'Aeonik-Medium',
         fontSize: scale(15),
-        color: '#064E3B',
+        color: '#0D483F',
     },
-    imageOverlay: {
-        position: 'absolute',
-        bottom: vScale(12),
-        left: 0,
-        right: 0,
-        alignItems: 'center',
-    },
-    overlayPill: {
+    titleAndDescription: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: scale(4),
-        backgroundColor: 'rgba(0,0,0,0.45)',
-        paddingHorizontal: scale(12),
-        paddingVertical: vScale(5),
-        borderRadius: scale(20),
+        gap: scale(10),
+        paddingVertical: vScale(14),
     },
-    overlayText: {
-        fontFamily: 'Aeonik-Regular',
-        fontSize: scale(12),
-        color: '#fff',
+    IconWrapper: {
+        width: scale(40),
+        height: scale(40),
+        backgroundColor: "#F1EFE8",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: scale(12),
+        flexShrink: 0,
+    },
+    fileMeta: {
+        flex: 1,
+        gap: vScale(2),
     },
     fileName: {
         fontFamily: 'Aeonik-Medium',
         fontSize: scale(14),
-        color: '#6B7280',
-        marginTop: vScale(12),
-        marginBottom: vScale(24),
-        textAlign: 'center',
+        color: '#2C2C2A',
+    },
+    fileSubtext: {
+        fontFamily: 'Aeonik-Regular',
+        fontSize: scale(11),
+        color: '#8A8A7C',
     },
     actions: {
         gap: vScale(12),
+        marginTop: vScale(4),
     },
     uploadButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        gap: scale(8),
-        backgroundColor: '#064E3B',
-        paddingVertical: vScale(16),
-        borderRadius: scale(14),
+        gap: scale(12),
+        backgroundColor: '#0D483F',
+        borderRadius: scale(999),
+        height: vScale(52),
+        paddingHorizontal: scale(6),
+        shadowColor: '#0D483F',
+        shadowOpacity: 0.18,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 4 },
+        elevation: 3,
     },
     uploadText: {
-        fontFamily: 'Aeonik-Bold',
-        fontSize: scale(16),
+        flex: 1,
+        fontFamily: 'Aeonik-Medium',
+        fontSize: scale(15),
         color: '#fff',
+    },
+    UploadIconWrapper: {
+        width: scale(38),
+        height: scale(38),
+        backgroundColor: "#D9F99D",
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: scale(19),
     },
     retakeButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         gap: scale(8),
-        borderWidth: 1,
-        borderColor: '#064E3B',
-        paddingVertical: vScale(16),
-        borderRadius: scale(14),
-        backgroundColor: '#fff',
+        height: vScale(52),
+        borderRadius: scale(999),
+        backgroundColor: '#F1EFE8',
+        // filled neutral pill, not outlined — an outline next to a solid
+        // primary button reads as disabled rather than "secondary action"
     },
     retakeText: {
-        fontFamily: 'Aeonik-Bold',
-        fontSize: scale(16),
-        color: '#064E3B',
+        fontFamily: 'Aeonik-Medium',
+        fontSize: scale(15),
+        color: '#5F5E5A',
     },
 });
 
