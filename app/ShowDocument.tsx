@@ -1,3 +1,4 @@
+import DocumentResult from '@/components/DocumentResult';
 import DocumentScanning from '@/components/DocumentScaning';
 import { NetworkContext } from '@/context/Netwrok';
 import { useCheckIsMedicalRelated } from "@/hooks/useCheckIsMedicalRelated";
@@ -13,9 +14,16 @@ import { extractText } from "expo-pdf-text-extract";
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useContext, useState } from 'react';
 import {
-    StyleSheet
+    Image,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
+import { default as AntDesign, default as MaterialIcons } from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
 const ShowDocument = () => {
@@ -43,6 +51,7 @@ const ShowDocument = () => {
         setIsProcessing(true);
 
         let extractedText = "";
+
         if (!isOnline) {
             Toast.show({
                 type: "error",
@@ -53,13 +62,15 @@ const ShowDocument = () => {
             return;
         }
 
-
         try {
-
             extractedText = !isPdf
                 ? (await extractTextFromImageUri(first(fileUri) as string)) || ""
                 : await extractText(first(fileUri) as string);
+
+            console.log("Extracted text:", extractedText.length);
+
         } catch (error) {
+            console.log("Error extracting text:", error);
             Toast.show({
                 type: "error",
                 text1: extractTextErrorMessage || "Couldn't read this document",
@@ -68,6 +79,8 @@ const ShowDocument = () => {
             setIsProcessing(false);
             return;
         }
+
+        console.log("Extracted text length:", extractedText.length);
 
         if (!extractedText || extractedText.trim().length === 0) {
             Toast.show({
@@ -78,6 +91,8 @@ const ShowDocument = () => {
             setIsProcessing(false);
             return;
         }
+
+        console.log("Extracted text:", extractedText);
 
         if (isTextTooLarge(extractedText)) {
             console.warn("Document is too large to process.");
@@ -140,7 +155,7 @@ const ShowDocument = () => {
         router.back();
     };
 
-    if (true) {
+    if (IsProcessing) {
         return <DocumentScanning
             fileUri={first(fileUri) as string}
             fileName={first(fileName) as string}
@@ -148,6 +163,107 @@ const ShowDocument = () => {
         />
     }
 
+    if (Document && !IsProcessing) {
+        return <DocumentResult
+            isPdf={isPdf}
+            fileUri={first(fileUri) as string}
+            fileName={first(fileName) as string}
+            Document={Document}
+            SetDocument={SetDocument}
+        />;
+    }
+
+    if (isPdf && thumbFailed) {
+        return <View style={styles.pdfPlaceholder}>
+            <MaterialIcons name="file-pdf" size={scale(64)} color="#0D483F" />
+            <Text style={styles.pdfLabel}>PDF Document</Text>
+        </View>
+    }
+
+    return (
+        <SafeAreaView style={styles.safeArea}>
+            <View style={styles.container}>
+
+                <View style={styles.header}>
+                    <View>
+                        <Text style={styles.headerTitle}>Confirm Upload</Text>
+                        <Text style={styles.headerSubtitle}>Review before saving to your vault</Text>
+                    </View>
+                    <TouchableOpacity style={styles.closeBtn} onPress={() => router.back()}>
+                        <MaterialIcons name="close" size={scale(16)} color="#5F5E5A" />
+                    </TouchableOpacity>
+                </View>
+
+
+                <View style={styles.previewCard}>
+                    {isPdf ? (
+                        <Image
+                            source={{ uri: thumbUri ?? undefined }}
+                            style={styles.image}
+                            resizeMode="cover"
+                        />
+                    ) : (
+                        <Image
+                            source={{ uri: first(fileUri) }}
+                            style={styles.image}
+                            resizeMode="cover"
+                        />
+                    )}
+                </View>
+
+                <View style={styles.titleAndDescription}>
+                    <View style={styles.IconWrapper}>
+                        {isPdf ? (
+                            <FontAwesome
+                                name="file-pdf-o"
+                                size={scale(18)}
+                                color="#8A8A7C"
+                            />
+                        ) : (
+                            <FontAwesome
+                                name="photo"
+                                size={scale(18)}
+                                color="#8A8A7C"
+                            />
+                        )}
+                    </View>
+                    <View style={styles.fileMeta}>
+                        <Text style={styles.fileName} numberOfLines={1}>
+                            {first(fileName) || 'Document'}
+                        </Text>
+                        <Text style={styles.fileSubtext}>Captured just now · type detected after upload</Text>
+                    </View>
+                </View>
+
+                <View style={styles.actions}>
+                    <TouchableOpacity
+                        style={styles.uploadButton}
+                        activeOpacity={0.85}
+                        onPress={handleUpload}
+                    >
+                        <View style={styles.UploadIconWrapper}>
+                            <AntDesign
+                                name="check"
+                                size={scale(18)}
+                                color="#0D483F"
+                            />
+                        </View>
+                        <Text style={styles.uploadText}>Looks Good, Upload</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.retakeButton}
+                        activeOpacity={0.85}
+                        onPress={handleRetake}
+                    >
+                        <MaterialIcons name="replay" size={scale(18)} color="#5F5E5A" />
+                        <Text style={styles.retakeText}>Retake</Text>
+                    </TouchableOpacity>
+                </View>
+
+            </View>
+        </SafeAreaView>
+    );
 };
 
 const styles = StyleSheet.create({
