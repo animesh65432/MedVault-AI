@@ -3,7 +3,6 @@ import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
 import React from 'react'
 import { StyleSheet, View } from "react-native"
-import InputBox from "../InputBox"
 import RecentDocuments from "../RecentDocuments"
 import Stats from "../Stats"
 import AskAi from "./AskAi"
@@ -12,13 +11,14 @@ import Header from "./Header"
 const NonEmptyStats: React.FC<CountTypes> = ({ documentsCount, medicinesCount, remindersCount }) => {
     return (
         <View style={styles.container}>
-            <Header />
+            <Header
+                remindersCount={remindersCount}
+            />
             <Stats
                 documentsCount={documentsCount}
                 medicinesCount={medicinesCount}
                 remindersCount={remindersCount}
             />
-            <InputBox />
             <AskAi />
             <RecentDocuments />
         </View>

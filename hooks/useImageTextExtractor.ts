@@ -29,8 +29,6 @@ export const useImageTextExtractor = () => {
 
             const data = await res.json();
 
-            console.log("data", data)
-
             if (!res.ok || !data.success) {
                 const message =
                     data.message ||

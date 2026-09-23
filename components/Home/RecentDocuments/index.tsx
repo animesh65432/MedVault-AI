@@ -7,7 +7,7 @@ import { useRouter } from "expo-router";
 import { useSQLiteContext } from "expo-sqlite";
 import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Documents from "../../Documents";
+import Documents from "./Documents";
 
 const RecentDocuments = () => {
     const router = useRouter()
@@ -56,7 +56,6 @@ const RecentDocuments = () => {
                 /> :
                 <Documents
                     documents={recentDocuments}
-                    IsHome={true}
                 />
             }
         </View>
@@ -68,10 +67,10 @@ const style = StyleSheet.create({
         flexDirection: "column",
     },
     title: {
-        fontSize: scale(18),
+        fontSize: scale(20),
         fontFamily: "Aeonik-Medium",
-        color: "#23423B",
-        marginBottom: scale(20)
+        color: "#0D483F",
+        marginBottom: scale(25)
     },
     titleAndSeeAllContainer: {
         flexDirection: "row",
@@ -79,9 +78,9 @@ const style = StyleSheet.create({
         alignItems: "center",
     },
     SeeAllText: {
-        fontSize: scale(14),
+        fontSize: scale(15),
         fontFamily: "Aeonik-Medium",
-        color: "#23423B",
+        color: "#0D483F",
         textDecorationLine: 'underline'
     }
 })

@@ -1,32 +1,65 @@
-import { UserNameContext } from '@/context/UserName'
-import { fs } from '@/utils/fs'
-import { GetFirstName } from "@/utils/getfirstName"
-import { getGreeting } from "@/utils/getGreeting"
-import { scale } from '@/utils/scale'
-import React, { useContext } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Icon from 'react-native-vector-icons/Feather'
+import { UserNameContext } from '@/context/UserName';
+import { fs } from '@/utils/fs';
+import { scale } from '@/utils/scale';
+import { vScale } from '@/utils/vScale';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useRouter } from 'expo-router';
+import React, { useContext } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const Header: React.FC = () => {
-    const { userName } = useContext(UserNameContext)
-    const date = new Date();
+type Props = {
+    remindersCount: number;
+}
 
-    const formattedDate = date.toLocaleDateString("en-US", {
-        weekday: "long",
-        day: "numeric",
-        month: "short",
-    });
+const Header: React.FC<Props> = ({ remindersCount }) => {
+    const router = useRouter();
+    const { profilePic, userName } = useContext(UserNameContext);
+
+    const getFirstName = (name: string, maxLength = 20): string => {
+        const firstName = name.trim().split(/\s+/)[0] ?? '';
+
+        if (!firstName) return '';
+
+        const formatted =
+            firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+
+        return formatted.length > maxLength
+            ? `${formatted.slice(0, maxLength - 1)}…`
+            : formatted;
+    };
+
 
     return (
         <View style={styles.container}>
-            <Text style={styles.greeting}>{getGreeting()},</Text>
-            <Text style={styles.Name}>{GetFirstName(userName)} 👋</Text>
-            <View style={styles.dateContainer}>
-                <Text style={styles.date}>{formattedDate} . your vault is up to date </Text>
-                <View style={styles.clickContainer}>
-                    <Icon name="check" size={scale(16)} color="white" />
+            <View style={styles.NameContainer}>
+                <View>
+                    {profilePic ? <Image
+                        source={{ uri: profilePic }}
+                        style={styles.ProfilePic}
+                    /> :
+                        <Image
+                            source={require("../../../../assets/images/default-user.jpeg")}
+                            style={styles.ProfilePic}
+                        />
+                    }
                 </View>
+                <Text style={styles.greeting}>Hello,{getFirstName(userName)}</Text>
             </View>
+            <TouchableOpacity
+                style={styles.NotificationIconContainer}
+                onPress={() => router.push("/Alerts")}
+            >
+                {remindersCount > 0 ?
+                    <View
+                        style={styles.dotIcon}
+                    /> : null
+                }
+                <Ionicons
+                    name="notifications"
+                    size={scale(18)}
+                    color="#0D483F"
+                />
+            </TouchableOpacity>
         </View>
     )
 }
@@ -35,39 +68,43 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         display: 'flex',
-        flexDirection: 'column',
-        gap: scale(0),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
     },
     greeting: {
-        fontSize: fs(18),
-        fontFamily: 'Aeonik-Regular',
-        color: '#23423B',
-        marginBottom: scale(2),
-    },
-    Name: {
-        fontSize: fs(22),
+        fontSize: fs(19),
         fontFamily: 'Aeonik-Medium',
-        color: '#23423B',
+        color: '#0D483F'
     },
-    date: {
-        fontSize: fs(13),
-        fontFamily: 'Aeonik-thin',
-        color: '#23423B',
-        marginTop: scale(4),
-    },
-    dateContainer: {
+    NameContainer: {
         display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: scale(4),
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(10)
     },
-    clickContainer: {
-        backgroundColor: "#87AE73",
-        padding: scale(2),
-        borderRadius: scale(14),
+    ProfilePic: {
+        width: scale(35),
+        height: vScale(35),
+        borderRadius: scale(20)
+    },
+    NotificationIconContainer: {
+        backgroundColor: "#e7e7e4",
+        padding: scale(9),
+        borderRadius: scale(16),
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative"
+    },
+    dotIcon: {
+        position: "absolute",
+        top: scale(4),
+        right: scale(4),
+        width: scale(8),
+        height: scale(8),
+        borderRadius: scale(4),
+        backgroundColor: "#0D483F"
     }
 })
 export default Header
