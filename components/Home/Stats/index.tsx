@@ -62,7 +62,7 @@ const Stats: React.FC<CountTypes> = ({
             >
                 <View style={styles.topRow}>
                     {medicinesCount < 10 ?
-                        <Text style={styles.CounterText}> {0}{documentsCount}</Text> :
+                        <Text style={styles.CounterText}> {0}{medicinesCount}</Text> :
                         <AnimatedCounter
                             targetValue={medicinesCount}
                         />

@@ -69,7 +69,7 @@ const style = StyleSheet.create({
     title: {
         fontSize: scale(20),
         fontFamily: "Aeonik-Medium",
-        color: "#0D483F",
+        color: "black",
         marginBottom: scale(25)
     },
     titleAndSeeAllContainer: {
@@ -80,8 +80,7 @@ const style = StyleSheet.create({
     SeeAllText: {
         fontSize: scale(15),
         fontFamily: "Aeonik-Medium",
-        color: "#0D483F",
-        textDecorationLine: 'underline'
+        color: "#5c5f5f",
     }
 })
 
