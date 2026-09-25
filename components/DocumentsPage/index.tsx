@@ -7,11 +7,12 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useSQLiteContext } from 'expo-sqlite';
 import React, { useCallback, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
+import Navbar from "./Navbar";
 
 
 const PAGE_SIZE = 10
 
-const Search: React.FC = () => {
+const DocumentsPage: React.FC = () => {
     const [page, setPage] = useState<number>(1)
     const [hasMore, setHasMore] = useState<boolean>(true)
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -100,6 +101,7 @@ const Search: React.FC = () => {
 
     return (
         <View style={styles.container}>
+            <Navbar />
             <ScrollView
                 style={styles.wrapper}
                 onScroll={handleScroll}
@@ -136,4 +138,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Search
+export default DocumentsPage

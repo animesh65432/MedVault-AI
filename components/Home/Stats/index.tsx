@@ -25,7 +25,7 @@ const Stats: React.FC<CountTypes> = ({
             <TouchableOpacity
                 activeOpacity={0.85}
                 style={styles.statBox}
-                onPress={() => router.push("/Search")}
+                onPress={() => router.push("/Documents")}
             >
                 <View style={styles.topRow}>
                     {documentsCount < 10 ?

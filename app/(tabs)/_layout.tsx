@@ -2,14 +2,13 @@ import { HapticTab } from '@/components/haptic-tab';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { Ionicons } from '@expo/vector-icons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs, useRouter } from 'expo-router';
-import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const COLORS = {
   background: '#23423B',
   border: '#2D534A',
-  active: '#23423B',
+  active: '#EEF6A2',
   inactive: '#6E827B',
   uploadBg: '#EEF6A2',
   uploadIcon: '#23423B',
@@ -22,18 +21,40 @@ function UploadTabButton({ onPress }: { onPress: () => void }) {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.85}
-      style={styles.uploadWrapper}
+      style={styles.uploadButton}
     >
-      <View style={styles.uploadButton}>
-        <Ionicons
-          name="add"
-          size={scale(30)}
-          color={COLORS.uploadIcon}
-        />
-      </View>
+      <Ionicons
+        name="add"
+        size={scale(30)}
+        color={COLORS.uploadIcon}
+      />
     </TouchableOpacity>
   );
 }
+
+function TabIcon({
+  focused,
+  iconName,
+  label,
+}: {
+  focused: boolean;
+  iconName: keyof typeof Ionicons.glyphMap;
+  label: string;
+}) {
+  return (
+    <View style={[styles.tabIconWrap, focused && styles.focusedTabIconWrap]}>
+      <Ionicons
+        name={iconName}
+        size={scale(22)}
+        color={focused ? COLORS.active : COLORS.inactive}
+      />
+      {focused && (
+        <Text style={styles.tabIconLabel}>{label}</Text>
+      )}
+    </View>
+  );
+}
+
 
 export default function TabLayout() {
   const router = useRouter();
@@ -53,26 +74,12 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: "",
           tabBarIcon: ({ focused }) => (
-            <Ionicons
-              size={scale(24)}
-              name={focused ? 'home' : 'home-outline'}
-              color={focused ? COLORS.active : COLORS.inactive}
-            />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="Documents"
-        options={{
-          title: 'Docs',
-          tabBarIcon: ({ focused }) => (
-            <FontAwesome
-              name={focused ? 'file-text' : 'file-text-o'}
-              size={scale(24)}
-              color={focused ? COLORS.active : COLORS.inactive}
+            <TabIcon
+              focused={focused}
+              iconName={focused ? 'home' : 'home-outline'}
+              label="Home"
             />
           ),
         }}
@@ -91,48 +98,44 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="Alerts"
+        name="Documents"
         options={{
-          title: 'Alerts',
+          title: '',
           tabBarIcon: ({ focused }) => (
-            <Ionicons
-              size={scale(24)}
-              name={focused ? 'notifications' : 'notifications-outline'}
-              color={focused ? COLORS.active : COLORS.inactive}
+            <TabIcon
+              focused={focused}
+              iconName={focused ? 'folder' : 'folder-open'}
+              label="Documents"
             />
           ),
         }}
       />
 
-      <Tabs.Screen
-        name="Profile"
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              size={scale(24)}
-              name={focused ? 'person' : 'person-outline'}
-              color={focused ? COLORS.active : COLORS.inactive}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Medicines"
-        options={{
-          href: null,
-        }}
-      />
+      <Tabs.Screen name="Alerts" options={{ href: null }} />
+      <Tabs.Screen name="Profile" options={{ href: null }} />
+      <Tabs.Screen name="Medicines" options={{ href: null }} />
     </Tabs>
   );
 }
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: Platform.OS === 'ios' ? 104 : vScale(130),
+    height: vScale(75),
     paddingTop: vScale(10),
-    paddingBottom: Platform.OS === 'ios' ? vScale(100) : vScale(60),
-    overflow: 'visible',
+    paddingBottom: vScale(10),
+    width: '80%',
+    bottom: vScale(80),
+    alignSelf: 'center',
+    borderRadius: scale(50),
+    backgroundColor: COLORS.background,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    overflow: 'hidden',
+    elevation: 8,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   tabBarItem: {
     flex: 1,
@@ -144,11 +147,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
     marginTop: 4,
-  },
-  uploadWrapper: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   uploadButton: {
     width: BUTTON_SIZE,
@@ -162,5 +160,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.35,
     shadowRadius: 10,
     elevation: 8,
+  },
+  tabIconWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: scale(6),
+    width: '100%',
+  },
+  tabIconLabel: {
+    fontFamily: 'Aeonik-Medium',
+    fontSize: scale(12),
+    color: COLORS.active,
+  },
+  focusedTabIconWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: "center",
+    gap: scale(6),
+    width: scale(100),
   },
 });

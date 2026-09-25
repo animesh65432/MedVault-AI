@@ -1,4 +1,3 @@
-import { DocIcon } from "@/components/DocIcon"
 import { usePdfThumbnail } from "@/hooks/usePdfThumbnail"
 import { DocumentRow } from "@/types"
 import { fs } from "@/utils/fs"
@@ -73,14 +72,6 @@ const Document: React.FC<Props> = ({ doc }) => {
                     />
                 )}
                 <View />
-                <View style={styles.documentType}>
-                    <DocIcon
-                        type={doc.type}
-                    />
-                    <Text style={styles.documentTypeText}>
-                        {doc.type}
-                    </Text>
-                </View>
             </View>
         </TouchableOpacity>
     )
@@ -88,7 +79,7 @@ const Document: React.FC<Props> = ({ doc }) => {
 
 const styles = StyleSheet.create({
     card: {
-        width: "60%",
+        width: "45%",
         backgroundColor: "#FAFAF8",
         elevation: 1,
         shadowColor: "#23423B",
@@ -97,11 +88,12 @@ const styles = StyleSheet.create({
             height: 2,
         },
         shadowOpacity: 0.05,
-        shadowRadius: 5
+        shadowRadius: 5,
+        borderRadius: scale(10)
     },
     previewContainer: {
         width: "100%",
-        height: vScale(200),
+        height: vScale(160),
         borderRadius: scale(12),
         overflow: "hidden",
         backgroundColor: "red",
