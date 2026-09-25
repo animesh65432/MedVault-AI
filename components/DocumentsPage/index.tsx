@@ -123,7 +123,6 @@ const styles = StyleSheet.create({
         paddingTop: vScale(40),
         paddingHorizontal: scale(20),
         display: "flex",
-        flexDirection: "column",
         gap: vScale(14)
     },
     content: {

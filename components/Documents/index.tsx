@@ -40,8 +40,8 @@ const Documents: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
     container: {
-        display: "flex",
-        flexDirection: "row",
+        flexDirection: 'row',
+        flexWrap: 'wrap',
         columnGap: scale(12),
         rowGap: vScale(14)
     },

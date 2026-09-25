@@ -1,11 +1,13 @@
+import { usePdfThumbnail } from '@/hooks/usePdfThumbnail';
 import { vScale } from '@/utils/vScale';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 type ScanFrameImageProps = {
     fileUri: string;
+    IsPdf: boolean;
     frameWidthRatio?: number;
     frameHeightRatio?: number;
 };
@@ -15,14 +17,31 @@ const CORNER_SIZE = vScale(28);
 const CORNER_THICKNESS = 3;
 const CORNER_RADIUS = 12;
 
+const PDF_FALLBACK_IMAGE = require('@/assets/images/pdf.jpeg');
+
 const ScanFrameImage: React.FC<ScanFrameImageProps> = ({
     fileUri,
     frameWidthRatio = 0.8,
     frameHeightRatio = 0.62,
+    IsPdf = false,
 }) => {
+    const { thumbUri, thumbFailed } = usePdfThumbnail(fileUri, IsPdf);
     const router = useRouter();
     const scanAnim = useRef(new Animated.Value(0)).current;
     const frameHeight = vScale(400) * frameHeightRatio;
+
+    // Local fallback flag — catches cases where the hook reports success
+    // (thumbUri is set) but the URI actually fails to load at render time
+    // (stale cache path, deleted temp file, corrupt render, etc.)
+    const [renderFailed, setRenderFailed] = useState(false);
+
+    // Reset the local failure flag whenever the source file changes, so a
+    // previous failure doesn't stick around and hide a valid new thumbnail.
+    useEffect(() => {
+        setRenderFailed(false);
+    }, [fileUri, thumbUri]);
+
+    const showPdfFallback = !IsPdf ? false : !thumbUri || thumbFailed || renderFailed;
 
     useEffect(() => {
         const loop = Animated.loop(
@@ -47,11 +66,32 @@ const ScanFrameImage: React.FC<ScanFrameImageProps> = ({
 
     return (
         <View style={styles.container}>
-            <Image
-                style={StyleSheet.absoluteFillObject}
-                source={{ uri: fileUri }}
-                resizeMode="cover"
-            />
+            {IsPdf ? (
+                showPdfFallback ? (
+                    <View style={styles.fallbackImageContainer}>
+                        <Image
+                            style={styles.fallbackImage}
+                            source={PDF_FALLBACK_IMAGE}
+                            resizeMode="contain"
+                        />
+                    </View>
+                ) : (
+                    <Image
+                        style={StyleSheet.absoluteFillObject}
+                        source={{ uri: thumbUri as string }}
+                        resizeMode="cover"
+                        onError={() => setRenderFailed(true)}
+                    />
+                )
+            ) : (
+                <Image
+                    style={StyleSheet.absoluteFillObject}
+                    source={{ uri: fileUri }}
+                    resizeMode="cover"
+                    onError={() => setRenderFailed(true)}
+                />
+            )}
+
             <View style={styles.dimOverlay} pointerEvents="none" />
 
             <TouchableOpacity
@@ -59,11 +99,7 @@ const ScanFrameImage: React.FC<ScanFrameImageProps> = ({
                 onPress={() => router.back()}
                 hitSlop={{ top: 12, bottom: 8, left: 8, right: 8 }}
             >
-                <AntDesign
-                    name="arrow-left"
-                    size={vScale(24)}
-                    color="#8A8A7C"
-                />
+                <AntDesign name="arrow-left" size={vScale(24)} color="#8A8A7C" />
             </TouchableOpacity>
 
             <View
@@ -79,10 +115,7 @@ const ScanFrameImage: React.FC<ScanFrameImageProps> = ({
                 <View style={[styles.corner, styles.cornerBR]} />
 
                 <Animated.View
-                    style={[
-                        styles.scanLine,
-                        { transform: [{ translateY: scanAnim }] },
-                    ]}
+                    style={[styles.scanLine, { transform: [{ translateY: scanAnim }] }]}
                 />
                 <View style={styles.WhiteOverlay} pointerEvents="none" />
             </View>
@@ -99,6 +132,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         overflow: 'hidden',
         backgroundColor: '#000',
+        paddingHorizontal: vScale(20),
+        paddingVertical: vScale(40),
     },
     dimOverlay: {
         ...StyleSheet.absoluteFillObject,
@@ -169,6 +204,17 @@ const styles = StyleSheet.create({
         padding: vScale(8),
         borderRadius: vScale(28),
     },
+    fallbackImageContainer: {
+        flex: 1,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    fallbackImage: {
+        width: vScale(420),
+        height: vScale(420),
+        resizeMode: "stretch",
+    }
 });
 
 export default ScanFrameImage;

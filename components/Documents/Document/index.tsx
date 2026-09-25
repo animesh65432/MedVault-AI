@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     previewContainer: {
         width: "100%",
         height: vScale(160),
-        borderRadius: scale(12),
         overflow: "hidden",
         backgroundColor: "red",
         position: "relative"

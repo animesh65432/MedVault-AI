@@ -7,10 +7,11 @@ type Props = {
     fileType: string;
 }
 
-const DocumentScanning: React.FC<Props> = ({ fileUri, fileName, fileType }) => {
+const DocumentScanning: React.FC<Props> = ({ fileUri, fileType }) => {
     return (
         <DocumentImage
             fileUri={fileUri}
+            IsPdf={fileType === "application/pdf" ? true : false}
         />
 
     );
