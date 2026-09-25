@@ -45,7 +45,7 @@ const RecentDocuments = () => {
                     Recent Documents
                 </Text>
                 <TouchableOpacity
-                    onPress={() => router.push("/Search")}
+                    onPress={() => router.push("/Documents")}
                 >
                     <Text style={style.SeeAllText}>See All</Text>
                 </TouchableOpacity>
@@ -70,7 +70,7 @@ const style = StyleSheet.create({
         fontSize: scale(20),
         fontFamily: "Aeonik-Medium",
         color: "black",
-        marginBottom: scale(25)
+        marginBottom: scale(10)
     },
     titleAndSeeAllContainer: {
         flexDirection: "row",

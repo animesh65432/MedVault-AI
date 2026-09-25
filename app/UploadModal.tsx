@@ -88,6 +88,7 @@ const UploadModal: React.FC = () => {
             });
         }
     };
+
     const options: UploadOption[] = [
         {
             icon: <MaterialIcons name="camera-alt" size={scale(20)} color="#3B6D11" />,
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: scale(28),
         paddingHorizontal: scale(20),
         paddingTop: vScale(10),
-        paddingBottom: vScale(32),
+        paddingBottom: vScale(72),
     },
     handle: {
         width: scale(36),

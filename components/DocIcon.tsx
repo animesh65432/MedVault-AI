@@ -22,7 +22,7 @@ const TYPE_ICON: Record<DocumentRow['type'], { lib: IconLib; name: string }> = {
 
 export const DocIcon: React.FC<{ type: DocumentRow['type'] }> = ({ type }) => {
     const config = TYPE_ICON[type] ?? TYPE_ICON["Other"]
-    const props = { name: config.name, size: scale(20), color: "#23423B" }
+    const props = { name: config.name, size: scale(20), color: "white" }
 
     if (config.lib === 'Entypo') return <Entypo {...props} />
     if (config.lib === 'FontAwesome5') return <FontAwesome5 {...props} />

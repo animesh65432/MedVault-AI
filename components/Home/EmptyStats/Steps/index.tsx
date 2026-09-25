@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         padding: scale(13),
         borderRadius: scale(16),
         width: "100%",
-        gap: vScale(10)
+        gap: vScale(20)
     },
     titleAndSubtitle: {
         gap: vScale(4)

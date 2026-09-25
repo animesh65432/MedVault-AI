@@ -22,7 +22,7 @@ type Props = {
 };
 
 const Medicines: React.FC<Props> = ({
-    medicines,
+    medicines = [],
     isEditable,
     onUpdateMedicine,
     onRemoveMedicine,

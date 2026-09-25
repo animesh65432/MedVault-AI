@@ -2,6 +2,7 @@ import { HapticTab } from '@/components/haptic-tab';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { Ionicons } from '@expo/vector-icons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs, useRouter } from 'expo-router';
 import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -55,7 +56,7 @@ export default function TabLayout() {
           title: 'Home',
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              size={24}
+              size={scale(24)}
               name={focused ? 'home' : 'home-outline'}
               color={focused ? COLORS.active : COLORS.inactive}
             />
@@ -64,13 +65,13 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="Search"
+        name="Documents"
         options={{
-          title: 'Search',
+          title: 'Docs',
           tabBarIcon: ({ focused }) => (
-            <Ionicons
-              size={24}
-              name={focused ? 'search' : 'search-outline'}
+            <FontAwesome
+              name={focused ? 'file-text' : 'file-text-o'}
+              size={scale(24)}
               color={focused ? COLORS.active : COLORS.inactive}
             />
           ),
@@ -95,7 +96,7 @@ export default function TabLayout() {
           title: 'Alerts',
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              size={24}
+              size={scale(24)}
               name={focused ? 'notifications' : 'notifications-outline'}
               color={focused ? COLORS.active : COLORS.inactive}
             />
@@ -109,7 +110,7 @@ export default function TabLayout() {
           title: 'Profile',
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              size={24}
+              size={scale(24)}
               name={focused ? 'person' : 'person-outline'}
               color={focused ? COLORS.active : COLORS.inactive}
             />

@@ -22,12 +22,13 @@ const EmptyStats: React.FC = () => {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         alignItems: 'center',
         gap: vScale(5),
         paddingHorizontal: scale(20),
         paddingTop: vScale(40),
         paddingBottom: vScale(32),
-        backgroundColor: "#F6F5EE"
+        backgroundColor: "#F6F5EE",
     },
     image: {
         width: scale(250),

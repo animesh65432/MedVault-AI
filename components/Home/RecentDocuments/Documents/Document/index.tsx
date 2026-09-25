@@ -1,5 +1,7 @@
+import { DocIcon } from "@/components/DocIcon"
 import { usePdfThumbnail } from "@/hooks/usePdfThumbnail"
 import { DocumentRow } from "@/types"
+import { formatDate } from "@/utils/formatDate"
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
 import { useRouter } from "expo-router"
@@ -13,7 +15,7 @@ type Props = {
 
 const Document: React.FC<Props> = ({ document }) => {
     const router = useRouter()
-    const { thumbUri, thumbFailed } = usePdfThumbnail(document.SourceFilePath)
+    const { thumbUri, thumbFailed } = usePdfThumbnail(document.SourceFilePath, document.IsPdf)
     const [loadError, setLoadError] = useState(false)
 
     const hasImage = document.IsPdf
@@ -25,16 +27,17 @@ const Document: React.FC<Props> = ({ document }) => {
     const content = (
         <>
             <View style={[styles.doc_type_container, { backgroundColor: "#0D483F" }]}>
+                <DocIcon
+                    type={document.type}
+                />
                 <Text style={styles.doc_type_text}>{document.type}</Text>
             </View>
             <Text style={styles.title}>{document.title}</Text>
-            <Text style={styles.date}>{document.date}</Text>
+            <Text style={styles.date}>{formatDate(document.date ?? "")}</Text>
         </>
     )
-
     return (
         <TouchableOpacity
-            style={styles.wrap}
             onPress={() => router.push({
                 pathname: "/document/[id]",
                 params: { id: String(document.Id) },
@@ -59,10 +62,13 @@ const Document: React.FC<Props> = ({ document }) => {
                         color="#0D483F"
                     />
                     <View style={[styles.doc_type_container]}>
+                        <DocIcon
+                            type={document.type}
+                        />
                         <Text style={styles.doc_type_text}>{document.type}</Text>
                     </View>
                     <Text style={styles.FallbackText}>{document.title}</Text>
-                    <Text style={styles.FallbackDate}>{document.date}</Text>
+                    <Text style={styles.FallbackDate}>{formatDate(document.date)}</Text>
                 </View>
             )}
         </TouchableOpacity>
@@ -70,15 +76,12 @@ const Document: React.FC<Props> = ({ document }) => {
 }
 
 const styles = StyleSheet.create({
-    wrap: {
-        aspectRatio: 1,
-    },
     tile: {
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
         padding: scale(10),
-        width: scale(180),
-        height: vScale(240),
+        width: "100%",
+        height: vScale(190),
     },
     tileImage: {
         borderRadius: 10
@@ -142,6 +145,10 @@ const styles = StyleSheet.create({
         paddingVertical: 1,
         borderRadius: 6,
         backgroundColor: '#0D483F',
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(4),
     },
     doc_type_text: {
         fontSize: scale(14),
@@ -152,15 +159,16 @@ const styles = StyleSheet.create({
     FallbackText: {
         fontFamily: 'Aeonik-Medium',
         fontSize: scale(13),
-        color: '#686864',
+        color: '#1d1d1d',
         textAlign: 'center',
         marginTop: vScale(48),
     },
     FallbackDate: {
-        fontFamily: 'Aeonik-Regular',
+        fontFamily: 'Aeonik-Medium',
         fontSize: scale(11),
         color: '#8A8A7C',
-        textAlign: 'center',
+        marginLeft: "auto",
+        marginTop: vScale(4),
     }
 })
 

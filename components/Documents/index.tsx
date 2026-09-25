@@ -7,12 +7,10 @@ import Document from "./Document"
 
 type Props = {
     documents: DocumentRow[]
-    IsHome?: boolean
 }
 
 const Documents: React.FC<Props> = ({
-    documents,
-    IsHome = false,
+    documents
 }) => {
     if (documents.length === 0) {
         return (
@@ -27,12 +25,7 @@ const Documents: React.FC<Props> = ({
     return (
         <View
             style={[
-                styles.container,
-                {
-                    marginBottom: IsHome
-                        ? vScale(20)
-                        : vScale(100),
-                },
+                styles.container
             ]}
         >
             {documents.map((doc) => (
@@ -50,7 +43,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         columnGap: scale(12),
-        rowGap: vScale(14),
+        rowGap: vScale(14)
     },
     emptyContainer: {
         paddingVertical: vScale(20),

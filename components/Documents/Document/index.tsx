@@ -1,3 +1,4 @@
+import { DocIcon } from "@/components/DocIcon"
 import { usePdfThumbnail } from "@/hooks/usePdfThumbnail"
 import { DocumentRow } from "@/types"
 import { fs } from "@/utils/fs"
@@ -11,7 +12,7 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    View,
+    View
 } from "react-native"
 
 type Props = {
@@ -26,14 +27,6 @@ const Document: React.FC<Props> = ({ doc }) => {
         doc.IsPdf
     )
 
-    const date =
-        doc.date && doc.date.trim().length > 0
-            ? doc.date
-            : null
-
-    const hasTitle =
-        doc.title && doc.title.trim().length > 0
-
     return (
         <TouchableOpacity
             style={styles.card}
@@ -42,14 +35,13 @@ const Document: React.FC<Props> = ({ doc }) => {
                 router.push(`/document/${doc.Id}`)
             }
         >
-            {/* Preview */}
             <View style={styles.previewContainer}>
                 {doc.IsPdf ? (
                     thumbUri ? (
                         <Image
                             source={{ uri: thumbUri }}
                             style={styles.previewImage}
-                            resizeMode="cover"
+                            resizeMode="stretch"
                         />
                     ) : thumbFailed ? (
                         <View style={styles.pdfPlaceholder}>
@@ -77,58 +69,18 @@ const Document: React.FC<Props> = ({ doc }) => {
                             uri: doc.SourceFilePath,
                         }}
                         style={styles.previewImage}
-                        resizeMode="cover"
+                        resizeMode="stretch"
                     />
                 )}
-
-                {/* Document type badge */}
-                <View
-                    style={[
-                        styles.typeBadge,
-                        doc.IsPdf
-                            ? styles.pdfBadge
-                            : styles.imageBadge,
-                    ]}
-                >
-                    <Text
-                        style={[
-                            styles.typeBadgeText,
-                            doc.IsPdf
-                                ? styles.pdfBadgeText
-                                : styles.imageBadgeText,
-                        ]}
-                    >
-                        {doc.IsPdf ? "PDF" : "JPG"}
+                <View />
+                <View style={styles.documentType}>
+                    <DocIcon
+                        type={doc.type}
+                    />
+                    <Text style={styles.documentTypeText}>
+                        {doc.type}
                     </Text>
                 </View>
-            </View>
-
-            {/* Information */}
-            <View style={styles.info}>
-                <Text
-                    style={styles.documentType}
-                    numberOfLines={1}
-                >
-                    {doc.type}
-                </Text>
-
-                {hasTitle && (
-                    <Text
-                        style={styles.title}
-                        numberOfLines={2}
-                    >
-                        {doc.title}
-                    </Text>
-                )}
-
-                {date && (
-                    <Text
-                        style={styles.date}
-                        numberOfLines={1}
-                    >
-                        {date}
-                    </Text>
-                )}
             </View>
         </TouchableOpacity>
     )
@@ -136,38 +88,30 @@ const Document: React.FC<Props> = ({ doc }) => {
 
 const styles = StyleSheet.create({
     card: {
-        width: "48%",
+        width: "60%",
         backgroundColor: "#FAFAF8",
-        borderRadius: scale(16),
-        padding: scale(10),
-
-        // Android
         elevation: 1,
-
-        // iOS
         shadowColor: "#23423B",
         shadowOffset: {
             width: 0,
             height: 2,
         },
         shadowOpacity: 0.05,
-        shadowRadius: 5,
+        shadowRadius: 5
     },
-
-    /* ---------------- Preview ---------------- */
-
     previewContainer: {
         width: "100%",
-        height: vScale(145),
+        height: vScale(200),
         borderRadius: scale(12),
         overflow: "hidden",
-        backgroundColor: "#EEF3F1",
-        position: "relative",
+        backgroundColor: "red",
+        position: "relative"
     },
 
     previewImage: {
         width: "100%",
         height: "100%",
+        position: "absolute",
     },
 
     loadingContainer: {
@@ -257,8 +201,25 @@ const styles = StyleSheet.create({
     documentType: {
         fontFamily: "Aeonik-Medium",
         fontSize: scale(14),
-        color: "#23423B",
+        backgroundColor: "#23423B",
         marginBottom: vScale(4),
+        padding: scale(2),
+        paddingLeft: scale(12),
+        paddingRight: scale(12),
+        borderRadius: scale(16),
+        alignSelf: "flex-start",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(6),
+        position: "absolute",
+        top: vScale(10),
+        left: scale(10),
+    },
+    documentTypeText: {
+        fontFamily: "Aeonik-Medium",
+        fontSize: scale(14),
+        color: "#FFFFFF",
     },
 
     title: {
@@ -274,6 +235,7 @@ const styles = StyleSheet.create({
         color: "#8AA19C",
         marginTop: vScale(5),
     },
+
 })
 
 export default Document

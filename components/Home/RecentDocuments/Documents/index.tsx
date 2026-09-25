@@ -31,11 +31,9 @@ const Documents: React.FC<Props> = ({ documents }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        gap: scale(10),
+        flexDirection: "column",
+        gap: scale(10)
     }
 })
 

@@ -1,5 +1,7 @@
+import { DocIcon } from "@/components/DocIcon"
 import { usePdfThumbnail } from "@/hooks/usePdfThumbnail"
 import { DocumentRow } from "@/types"
+import { formatDate } from "@/utils/formatDate"
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
 import { FontAwesome } from "@expo/vector-icons"
@@ -21,7 +23,6 @@ const OneDocument: React.FC<Props> = ({ document }) => {
         : (!!document.SourceFilePath && !loadError)
 
     const source = document.IsPdf ? thumbUri : document.SourceFilePath
-
     return (
         <TouchableOpacity
             style={styles.wrap}
@@ -40,16 +41,22 @@ const OneDocument: React.FC<Props> = ({ document }) => {
                 >
                     <View style={styles.overlay} />
                     <View style={styles.doc_type_container}>
+                        <DocIcon
+                            type={document.type}
+                        />
                         <Text style={styles.doc_type_text}>{document.type}</Text>
                     </View>
                     <View style={styles.overlayTextWrap}>
                         <Text style={styles.title} numberOfLines={2}>{document.title}</Text>
-                        <Text style={styles.date}>{document.date}</Text>
+                        <Text style={styles.date}>{formatDate(document.date)}</Text>
                     </View>
                 </ImageBackground>
             ) : (
                 <View style={[styles.tile, styles.fallback]}>
                     <View style={styles.doc_type_container}>
+                        <DocIcon
+                            type={document.type}
+                        />
                         <Text style={styles.doc_type_text}>{document.type}</Text>
                     </View>
 
@@ -153,6 +160,10 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         backgroundColor: '#0D483F',
         zIndex: 1,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(8)
     },
     doc_type_text: {
         fontSize: scale(14),
