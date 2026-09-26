@@ -29,7 +29,6 @@ const HomeLayOut = () => {
                 medicinesCount,
                 remindersCount,
             });
-
         } catch (error) {
             console.error("Failed to fetch counts:", error);
         }

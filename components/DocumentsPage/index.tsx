@@ -1,4 +1,5 @@
 import Documents from "@/components/Documents";
+import DocumentsSkeleton from "@/components/DocumentsSkeleton";
 import { GetDocuments, HasAnyDocuments } from "@/db/document";
 import { DocumentRow } from "@/types";
 import { scale } from "@/utils/scale";
@@ -10,7 +11,7 @@ import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View }
 import Navbar from "./Navbar";
 
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 20
 
 const DocumentsPage: React.FC = () => {
     const [page, setPage] = useState<number>(1)
@@ -24,8 +25,13 @@ const DocumentsPage: React.FC = () => {
         startDate: null,
         endDate: null,
     })
+    const [Scrolled, SetScrolled] = useState<boolean>(false)
     const [hasAnyDocuments, setHasAnyDocuments] = useState<boolean | null>(null)
     const [documents, setdocuments] = useState<DocumentRow[]>([])
+    const [sectionPositions, setSectionPositions] = useState<
+        { date: string; y: number }[]
+    >([])
+    const [currentDate, setCurrentDate] = useState<string | null>(null)
     const db = useSQLiteContext()
 
     async function fetchDocuments(reset: boolean) {
@@ -98,36 +104,49 @@ const DocumentsPage: React.FC = () => {
         }
     }
 
-
     return (
         <View style={styles.container}>
-            <Navbar />
-            <ScrollView
-                style={styles.wrapper}
-                onScroll={handleScroll}
-            >
-                <Documents
-                    documents={documents}
+            {!Scrolled &&
+                <Navbar />
+            }
+            {isLoading && documents.length === 0 ?
+                <DocumentsSkeleton
+                    count={20}
                 />
-            </ScrollView>
+                :
+                <ScrollView
+                    style={styles.wrapper}
+                    contentContainerStyle={{
+                        paddingBottom: 0,
+                    }}
+                    onScroll={(event) => {
+                        const scrollY = event.nativeEvent.contentOffset.y
+                        SetScrolled(scrollY > 0)
+                        handleScroll(event)
+                    }}
+                >
+                    <Documents
+                        documents={documents}
+                    />
+                </ScrollView>
+            }
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     wrapper: {
-        flex: 1
+        flex: 1,
+        height: "100%",
     },
     container: {
         flex: 1,
-        paddingTop: vScale(40),
-        paddingHorizontal: scale(20),
         display: "flex",
         gap: vScale(14)
     },
     content: {
         flexDirection: "column",
-        gap: vScale(14),
+        gap: vScale(8),
         paddingBottom: vScale(32),
         paddingTop: vScale(10),
         paddingHorizontal: scale(20),

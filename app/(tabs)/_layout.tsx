@@ -120,6 +120,7 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabBar: {
+    position: 'absolute',
     height: vScale(75),
     paddingTop: vScale(10),
     paddingBottom: vScale(10),
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center',
+    marginHorizontal: scale(40),
   },
   tabBarItem: {
     flex: 1,

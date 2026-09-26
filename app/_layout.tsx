@@ -103,7 +103,11 @@ function RootLayoutContent() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack screenOptions={{ headerShown: false }}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Stack.Screen name="(tabs)" />
         <Stack.Screen
           name="UploadModal"

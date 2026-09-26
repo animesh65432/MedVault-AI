@@ -42,11 +42,12 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        columnGap: scale(12),
-        rowGap: vScale(14)
+        columnGap: scale(10),
+        rowGap: vScale(10),
+        justifyContent: "center"
     },
     emptyContainer: {
-        paddingVertical: vScale(20),
+        paddingVertical: vScale(10),
         alignItems: "center",
         justifyContent: "center",
     },

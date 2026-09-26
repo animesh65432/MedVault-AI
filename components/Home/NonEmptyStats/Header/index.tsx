@@ -1,3 +1,4 @@
+import UserIcon from '@/components/UserIcon';
 import { UserNameContext } from '@/context/UserName';
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
@@ -5,7 +6,7 @@ import { vScale } from '@/utils/vScale';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
 import React, { useContext } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type Props = {
     remindersCount: number;
@@ -32,17 +33,7 @@ const Header: React.FC<Props> = ({ remindersCount }) => {
     return (
         <View style={styles.container}>
             <View style={styles.NameContainer}>
-                <View>
-                    {profilePic ? <Image
-                        source={{ uri: profilePic }}
-                        style={styles.ProfilePic}
-                    /> :
-                        <Image
-                            source={require("../../../../assets/images/default-user.jpeg")}
-                            style={styles.ProfilePic}
-                        />
-                    }
-                </View>
+                <UserIcon />
                 <Text style={styles.greeting}>Hello,{getFirstName(userName)}</Text>
             </View>
             <TouchableOpacity

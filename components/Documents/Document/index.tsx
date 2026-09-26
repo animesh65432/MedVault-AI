@@ -79,7 +79,7 @@ const Document: React.FC<Props> = ({ doc }) => {
 
 const styles = StyleSheet.create({
     card: {
-        width: "45%",
+        width: "30%",
         backgroundColor: "#FAFAF8",
         elevation: 1,
         shadowColor: "#23423B",
@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
         width: "100%",
         height: vScale(160),
         overflow: "hidden",
-        backgroundColor: "red",
         position: "relative"
     },
 
@@ -111,8 +110,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "#EEF3F1",
     },
-
-    /* ---------------- PDF fallback ---------------- */
 
     pdfPlaceholder: {
         flex: 1,
