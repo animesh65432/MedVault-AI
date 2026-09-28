@@ -1,25 +1,32 @@
+import React, { useCallback, useRef, useState } from 'react';
 import Documents from "@/components/Documents";
 import DocumentsSkeleton from "@/components/DocumentsSkeleton";
-import { GetDocuments } from "@/db/document";
+import { GetDocuments, HasAnyDocuments } from "@/db/document";
 import { DocumentRow } from "@/types";
+import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import { useFocusEffect } from '@react-navigation/native';
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useCallback, useRef, useState } from 'react';
-import { Animated, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
+import { Animated, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import Navbar from "./Navbar";
 
 const PAGE_SIZE = 20
-const HIDE_THRESHOLD = 4
+const HIDE_THRESHOLD = 4 // px of downward scroll before hiding — lower = more sensitive
 
 const DocumentsPage: React.FC = () => {
     const [page, setPage] = useState<number>(1)
     const [hasMore, setHasMore] = useState<boolean>(true)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const isLoadingMoreRef = useRef(false)
+    const [SelectedDate, setSelectedDate] = useState<{ startDate: Date | null; endDate: Date | null }>({
+        startDate: null,
+        endDate: null,
+    })
+    const [hasAnyDocuments, setHasAnyDocuments] = useState<boolean | null>(null)
     const [documents, setdocuments] = useState<DocumentRow[]>([])
     const db = useSQLiteContext()
 
+    // --- navbar hide/show ---
     const [navbarHeight, setNavbarHeight] = useState(0)
     const translateY = useRef(new Animated.Value(0)).current
     const lastScrollY = useRef(0)
@@ -28,7 +35,7 @@ const DocumentsPage: React.FC = () => {
     const showNavbar = () => {
         if (isNavbarVisible.current) return
         isNavbarVisible.current = true
-        Animated.timing(translateY, { toValue: 0, duration: 100, useNativeDriver: true }).start()
+        Animated.timing(translateY, { toValue: 0, duration: 180, useNativeDriver: true }).start()
     }
 
     const hideNavbar = () => {
@@ -36,7 +43,7 @@ const DocumentsPage: React.FC = () => {
         isNavbarVisible.current = false
         Animated.timing(translateY, { toValue: -navbarHeight, duration: 180, useNativeDriver: true }).start()
     }
-
+    // --- end navbar hide/show ---
 
     async function fetchDocuments(reset: boolean) {
         if (reset) setIsLoading(true)
@@ -44,10 +51,7 @@ const DocumentsPage: React.FC = () => {
         try {
             const targetPage = reset ? 1 : page
             const offset = (targetPage - 1) * PAGE_SIZE
-            const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, [], {
-                startDate: null,
-                endDate: null,
-            })
+            const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, [], SelectedDate)
             setdocuments(prev => reset ? rows : [...prev, ...rows])
             setHasMore(rows.length === PAGE_SIZE)
             if (reset) setPage(1)
@@ -65,10 +69,7 @@ const DocumentsPage: React.FC = () => {
         const nextPage = page + 1
         try {
             const offset = (nextPage - 1) * PAGE_SIZE
-            const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, [], {
-                startDate: null,
-                endDate: null,
-            })
+            const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, [], SelectedDate)
             setdocuments(prev => [...prev, ...rows])
             setHasMore(rows.length === PAGE_SIZE)
             setPage(nextPage)
@@ -79,11 +80,21 @@ const DocumentsPage: React.FC = () => {
         }
     }
 
+    async function fetchHasAnyDocuments() {
+        try {
+            const result = await HasAnyDocuments(db)
+            setHasAnyDocuments(result)
+        } catch (error) {
+            console.error("Failed to fetch documents:", error)
+        }
+    }
+
     useFocusEffect(
         useCallback(() => {
+            fetchHasAnyDocuments();
             const timeout = setTimeout(() => fetchDocuments(true), 300)
             return () => clearTimeout(timeout)
-        }, [])
+        }, [SelectedDate])
     );
 
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -92,25 +103,26 @@ const DocumentsPage: React.FC = () => {
         const diff = currentY - lastScrollY.current
 
         if (currentY <= 0) {
-            showNavbar()
+            showNavbar() // always visible at the very top
         } else if (diff > 0 && Math.abs(diff) > HIDE_THRESHOLD) {
-            hideNavbar()
+            hideNavbar() // scrolling down
         } else if (diff < 0) {
-            showNavbar()
+            showNavbar() // scrolling up — even 1px triggers it
         }
 
         lastScrollY.current = currentY
 
-        if (contentOffset.y + layoutMeasurement.height >= contentSize.height - 20) {
+        if (currentOffset.y + layoutMeasurement.height >= contentSize.height - 20) {
             loadMore()
         }
     }
+
     return (
         <View style={styles.container}>
             <Animated.View
                 style={[styles.navbarWrapper, { transform: [{ translateY }] }]}
                 onLayout={(e: LayoutChangeEvent) => {
-                    if (navbarHeight === 0) setNavbarHeight(e.nativeEvent.layout.height + 10)
+                    if (navbarHeight === 0) setNavbarHeight(e.nativeEvent.layout.height)
                 }}
             >
                 <Navbar />
@@ -144,9 +156,6 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         zIndex: 10,
-        backgroundColor: "white",
-        width: "100%",
-        paddingVertical: vScale(10),
     },
 })
 

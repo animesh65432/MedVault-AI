@@ -11,6 +11,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'white',
   }
 });

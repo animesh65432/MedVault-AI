@@ -3,7 +3,7 @@ import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs, useRouter } from 'expo-router';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const COLORS = {
   background: '#23423B',
@@ -48,9 +48,6 @@ function TabIcon({
         size={scale(22)}
         color={focused ? COLORS.active : COLORS.inactive}
       />
-      {focused && (
-        <Text style={styles.tabIconLabel}>{label}</Text>
-      )}
     </View>
   );
 }
@@ -124,7 +121,7 @@ const styles = StyleSheet.create({
     height: vScale(75),
     paddingTop: vScale(10),
     paddingBottom: vScale(10),
-    width: '80%',
+    width: '70%',
     bottom: vScale(80),
     alignSelf: 'center',
     borderRadius: scale(50),
@@ -136,7 +133,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginHorizontal: scale(40),
+    marginHorizontal: scale(55),
   },
   tabBarItem: {
     flex: 1,
