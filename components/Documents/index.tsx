@@ -1,74 +1,120 @@
 import { DocumentRow } from "@/types";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+    FlatList,
+    NativeScrollEvent,
+    NativeSyntheticEvent,
+    StyleSheet,
+    Text,
+    View,
+    ViewToken,
+} from "react-native";
 import Document from "./Document";
 
 type Props = {
-    documents: DocumentRow[]
-}
+    documents: DocumentRow[];
+    onScroll: (
+        event: NativeSyntheticEvent<NativeScrollEvent>
+    ) => void;
+    navbarHeight: number;
+    SetCurrentDate: React.Dispatch<React.SetStateAction<string>>;
+    CurrentDate: string;
+};
 
 const Documents: React.FC<Props> = ({
-    documents
+    documents,
+    onScroll,
+    navbarHeight,
+    SetCurrentDate
 }) => {
+
+    const onViewableItemsChanged = ({
+        viewableItems,
+    }: {
+        viewableItems: ViewToken<DocumentRow>[];
+    }) => {
+        if (viewableItems.length === 0) return;
+
+        const top = viewableItems[0];
+
+        if (top.item && top.item.date) {
+            SetCurrentDate(top.item.date);
+        }
+    };
+
     if (documents.length === 0) {
         return (
             <View style={styles.emptyContainer}>
-                <View style={styles.EmptyContainer}>
-                    <AntDesign name="folder" size={scale(24)} color="#082e28" />
+                <View style={styles.emptyContent}>
+                    <AntDesign
+                        name="folder"
+                        size={scale(24)}
+                        color="#082e28"
+                    />
+
                     <Text style={styles.emptyText}>
                         No documents yet
                     </Text>
                 </View>
             </View>
-        )
+        );
     }
 
     return (
-        <View
-            style={[
-                styles.container
-            ]}
-        >
-            {documents.map((doc) => (
+        <FlatList
+            data={documents}
+            renderItem={({ item }) => (
                 <Document
-                    key={doc.Id}
-                    doc={doc}
+                    doc={item}
+                    SetCurrentDate={SetCurrentDate}
                 />
-            ))}
-        </View>
-    )
-}
+            )}
+            keyExtractor={(item) => String(item.Id)}
+            numColumns={3}
+            onScroll={onScroll}
+            scrollEventThrottle={16}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={[styles.listContent, { paddingTop: navbarHeight + vScale(10) }]}
+            columnWrapperStyle={styles.columnWrapper}
+            removeClippedSubviews={true}
+            onViewableItemsChanged={onViewableItemsChanged}
+        />
+    );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        columnGap: scale(10),
-        rowGap: vScale(10),
-        justifyContent: "center"
+    listContent: {
+        paddingHorizontal: scale(10),
+        paddingBottom: vScale(20),
     },
+
+    columnWrapper: {
+        justifyContent: "center",
+        columnGap: scale(10),
+        marginBottom: vScale(10),
+    },
+
     emptyContainer: {
-        paddingVertical: vScale(10),
+        flex: 1,
         alignItems: "center",
         justifyContent: "center",
+    },
+
+    emptyContent: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: scale(10),
     },
 
     emptyText: {
         fontFamily: "Aeonik-Medium",
         fontSize: scale(18),
-        color: "black"
+        color: "black",
     },
-    EmptyContainer: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: scale(10),
-        paddingTop: vScale(250)
-    },
-})
+});
 
-export default Documents
+export default Documents;

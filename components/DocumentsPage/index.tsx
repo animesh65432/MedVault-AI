@@ -2,11 +2,12 @@ import Documents from "@/components/Documents";
 import DocumentsSkeleton from "@/components/DocumentsSkeleton";
 import { GetDocuments } from "@/db/document";
 import { DocumentRow } from "@/types";
+import { formatDate } from "@/utils/formatDate";
 import { vScale } from "@/utils/vScale";
 import { useFocusEffect } from '@react-navigation/native';
 import { useSQLiteContext } from 'expo-sqlite';
 import React, { useCallback, useRef, useState } from 'react';
-import { Animated, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
+import { Animated, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, Text, View } from 'react-native';
 import Navbar from "./Navbar";
 
 const PAGE_SIZE = 20
@@ -14,6 +15,7 @@ const HIDE_THRESHOLD = 4
 
 const DocumentsPage: React.FC = () => {
     const [page, setPage] = useState<number>(1)
+    const [CurrentDate, SetCurrentDate] = useState<string>('')
     const [hasMore, setHasMore] = useState<boolean>(true)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const isLoadingMoreRef = useRef(false)
@@ -23,18 +25,18 @@ const DocumentsPage: React.FC = () => {
     const [navbarHeight, setNavbarHeight] = useState(0)
     const translateY = useRef(new Animated.Value(0)).current
     const lastScrollY = useRef(0)
-    const isNavbarVisible = useRef(true)
+    const [isNavbarVisible, setIsNavbarVisible] = useState(true)
 
     const showNavbar = () => {
-        if (isNavbarVisible.current) return
-        isNavbarVisible.current = true
-        Animated.timing(translateY, { toValue: 0, duration: 100, useNativeDriver: true }).start()
+        if (isNavbarVisible) return
+        setIsNavbarVisible(true)
+        Animated.timing(translateY, { toValue: 0, duration: 40, useNativeDriver: true }).start()
     }
 
     const hideNavbar = () => {
-        if (!isNavbarVisible.current || navbarHeight === 0) return
-        isNavbarVisible.current = false
-        Animated.timing(translateY, { toValue: -navbarHeight, duration: 180, useNativeDriver: true }).start()
+        if (!isNavbarVisible || navbarHeight === 0) return
+        setIsNavbarVisible(false)
+        Animated.timing(translateY, { toValue: -navbarHeight, duration: 50, useNativeDriver: true }).start()
     }
 
 
@@ -105,31 +107,38 @@ const DocumentsPage: React.FC = () => {
             loadMore()
         }
     }
+
+
     return (
         <View style={styles.container}>
             <Animated.View
                 style={[styles.navbarWrapper, { transform: [{ translateY }] }]}
                 onLayout={(e: LayoutChangeEvent) => {
-                    if (navbarHeight === 0) setNavbarHeight(e.nativeEvent.layout.height + 10)
+                    if (navbarHeight === 0) setNavbarHeight(e.nativeEvent.layout.height + 5)
                 }}
             >
                 <Navbar />
             </Animated.View>
+            {
+                !isNavbarVisible && (
+                    <View style={styles.TopStickyDate}>
+                        <View style={styles.DateContainer}>
+                            <Text>{formatDate(CurrentDate)}</Text>
+                        </View>
+                    </View>
+                )
+            }
 
             {isLoading && documents.length === 0 ? (
                 <DocumentsSkeleton count={20} />
             ) : (
-                <ScrollView
-                    style={styles.wrapper}
-                    contentContainerStyle={{
-                        paddingTop: navbarHeight,
-                        paddingBottom: 0,
-                    }}
+                <Documents
+                    documents={documents}
                     onScroll={handleScroll}
-                    scrollEventThrottle={16}
-                >
-                    <Documents documents={documents} />
-                </ScrollView>
+                    navbarHeight={navbarHeight}
+                    SetCurrentDate={SetCurrentDate}
+                    CurrentDate={CurrentDate}
+                />
             )}
         </View>
     )
@@ -147,6 +156,28 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         width: "100%",
         paddingVertical: vScale(10),
+    },
+    TopStickyDate: {
+        position: "absolute",
+        top: vScale(50),
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        elevation: 1000,
+
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    DateContainer: {
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 20,
+        backgroundColor: "white",
+
+        elevation: 10,
     },
 })
 

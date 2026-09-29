@@ -15,10 +15,11 @@ import {
 } from "react-native"
 
 type Props = {
-    doc: DocumentRow
+    doc: DocumentRow;
+    SetCurrentDate: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Document: React.FC<Props> = ({ doc }) => {
+const Document: React.FC<Props> = ({ doc, SetCurrentDate }) => {
     const router = useRouter()
 
     const { thumbUri, thumbFailed } = usePdfThumbnail(
@@ -26,13 +27,24 @@ const Document: React.FC<Props> = ({ doc }) => {
         doc.IsPdf
     )
 
+    const handlePress = () => {
+        if (doc.date) {
+            router.push(`/document/${doc.Id}`)
+        }
+    }
+
+    const handleLongPress = () => {
+        if (doc.date) {
+            SetCurrentDate(doc.date);
+        }
+    }
+
     return (
         <TouchableOpacity
             style={styles.card}
             activeOpacity={0.8}
-            onPress={() =>
-                router.push(`/document/${doc.Id}`)
-            }
+            onPress={handlePress}
+            onLongPress={handleLongPress}
         >
             <View style={styles.previewContainer}>
                 {doc.IsPdf ? (
