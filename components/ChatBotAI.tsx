@@ -1,7 +1,7 @@
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from "expo-router";
-import LottieView from "lottie-react-native";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -33,14 +33,13 @@ const ChatBotAI: React.FC<Props> = ({ currentDocument, documentId }) => {
                 styles.Container,
                 currentDocument === "true"
                     ? { bottom: vScale(70) + insets.bottom + vScale(60) }
-                    : { bottom: vScale(70) + insets.bottom }
+                    : { bottom: vScale(100) + insets.bottom }
             ]}
         >
-            <LottieView
-                source={require("../assets/animations/animation.json")}
-                autoPlay
-                loop
-                style={styles.animation}
+            <Ionicons
+                name="chatbubble-outline"
+                size={scale(24)}
+                color="black"
             />
         </TouchableOpacity>
     )
@@ -53,6 +52,7 @@ const styles = StyleSheet.create({
         width: scale(70),
         height: scale(70),
         borderRadius: scale(35),
+        backgroundColor: "#23423B"
     },
     animation: {
         width: scale(110),
