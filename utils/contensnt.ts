@@ -12,7 +12,6 @@ export const SOURCES: SourceConfig[] = [
     { ftsTable: "DocumentProceduresSearch", baseTable: "DocumentProcedures", label: "in Procedures", snippetCol: -1, directDocId: false },
 ]
 export const FILTER_OPTIONS = [
-    { name: "All Records", icon: "layers" },
     { name: "Prescription", icon: "file-plus" },
     { name: "Prescription Receipt", icon: "shopping-bag" },
     { name: "Lab Report", icon: "thermometer" },

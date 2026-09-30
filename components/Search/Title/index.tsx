@@ -7,13 +7,12 @@ type Props = {
     SearchSuggestionsLength: number
 }
 
-const Title: React.FC<Props> = ({ searchQuery, SearchSuggestionsLength }) => {
+const Title: React.FC<Props> = ({ searchQuery }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>
                 Results For "{searchQuery}"
             </Text>
-            <Text style={styles.length}>{SearchSuggestionsLength} items found</Text>
         </View>
     )
 }
@@ -31,11 +30,6 @@ const styles = StyleSheet.create({
         fontSize: scale(16),
         fontFamily: "Aeonik-Medium",
         color: "black",
-    },
-    length: {
-        fontSize: scale(14),
-        fontFamily: "Aeonik-Regular",
-        color: "#5F5E5A",
     }
 })
 

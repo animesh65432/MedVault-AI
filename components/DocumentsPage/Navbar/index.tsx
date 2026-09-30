@@ -2,16 +2,24 @@ import UserIcon from '@/components/UserIcon';
 import { scale } from '@/utils/scale';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 const Navbar: React.FC = () => {
+    const router = useRouter();
+
+    const handle_redirect = () => {
+        router.push("/SearchDocuments")
+    }
+
     return (
         <View style={styles.Container}>
             <Feather
                 name="search"
                 size={scale(24)}
                 color="#5c5f5f"
+                onPress={handle_redirect}
             />
             <MaterialIcons
                 name="add"

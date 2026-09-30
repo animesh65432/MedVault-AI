@@ -129,6 +129,15 @@ function RootLayoutContent() {
             gestureEnabled: true,
           }}
         />
+        <Stack.Screen
+          name="SearchDocuments"
+          options={{
+            presentation: 'modal',
+            animation: "slide_from_right",
+            headerShown: false,
+            gestureEnabled: true,
+          }}
+        />
       </Stack>
     </GestureHandlerRootView>
   );

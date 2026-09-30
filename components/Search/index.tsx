@@ -7,8 +7,6 @@ import { useLocalSearchParams } from "expo-router";
 import { useSQLiteContext } from 'expo-sqlite';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
-import ChatBotAI from "../ChatBotAI";
-import Empty from './Empty';
 import Input from './Input';
 import NonEmpty from "./NonEmpty";
 import Filters from "./NonEmpty/Filters";
@@ -25,7 +23,7 @@ const Search: React.FC = () => {
     const [hasMore, setHasMore] = useState<boolean>(true)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const isLoadingMoreRef = useRef(false)
-    const [SelectedCategories, setSelectedCategories] = useState<string[]>(["All Records"])
+    const [SelectedCategories, setSelectedCategories] = useState<string[]>([])
     const [SelectedDate, setSelectedDate] = useState<{
         startDate: Date | null;
         endDate: Date | null;
@@ -37,9 +35,17 @@ const Search: React.FC = () => {
     const [hasAnyDocuments, setHasAnyDocuments] = useState<boolean | null>(null)
     const [searchQuery, setSearchQuery] = useState<string>("")
     const [documents, setdocuments] = useState<DocumentRow[]>([])
-    const db = useSQLiteContext()
+    const db = useSQLiteContext();
 
     async function fetchDocuments(reset: boolean) {
+        if (SelectedCategories.length === 0 && SelectedDate.startDate === null && SelectedDate.endDate === null) {
+            console.log(SelectedCategories)
+            console.log("No query, skipping fetchDocuments", SelectedCategories.length === 0)
+            return;
+        }
+
+        console.log(SelectedCategories, "fetchDocuments called with reset:")
+
         if (reset) {
             setIsLoading(true)
         }
@@ -52,6 +58,8 @@ const Search: React.FC = () => {
             const offset = (targetPage - 1) * PAGE_SIZE
             const CateGories = SelectedCategories.filter(category => category !== "All Records")
             const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, CateGories, SelectedDate)
+
+            console.log("Fetched documents:", rows)
 
             setdocuments(prev => reset ? rows : [...prev, ...rows])
             setHasMore(rows.length === PAGE_SIZE)
@@ -75,8 +83,7 @@ const Search: React.FC = () => {
         const nextPage = page + 1
         try {
             const offset = (nextPage - 1) * PAGE_SIZE
-            const CateGories = SelectedCategories.filter(category => category !== "All Records")
-            const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, CateGories, SelectedDate)
+            const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, SelectedCategories, SelectedDate)
             setdocuments(prev => [...prev, ...rows])
             setHasMore(rows.length === PAGE_SIZE)
             setPage(nextPage)
@@ -135,8 +142,6 @@ const Search: React.FC = () => {
         }
     }, [Types])
 
-    const FilterCateGories = SelectedCategories.filter(category => category !== "All Records")
-    const hasQuery = searchQuery.trim().length > 0 || FilterCateGories.length > 0 || SelectedDate.startDate !== null || SelectedDate.endDate !== null;
     const IsSearchIng = searchQuery.trim().length > 0;
 
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -145,8 +150,6 @@ const Search: React.FC = () => {
             loadMore()
         }
     }
-
-
     return (
         <View style={styles.wrapper}>
             <View style={styles.InputWrapper}>
@@ -155,12 +158,12 @@ const Search: React.FC = () => {
                     setSearchQuery={setSearchQuery}
                 />
             </View>
-            {searchQuery.trim().length !== 0 &&
-                <RecentSearch
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                />
-            }
+
+            <RecentSearch
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+            />
+
             {
                 searchQuery.trim().length > 0 &&
                 <Title
@@ -191,9 +194,7 @@ const Search: React.FC = () => {
                         />
                     }
                     {documents.length === 0 ? (
-                        <Empty
-                            hasQuery={hasQuery}
-                        />
+                        <></>
                     ) : (
                         <NonEmpty
                             documents={documents}
@@ -203,11 +204,6 @@ const Search: React.FC = () => {
                     )}
                 </ScrollView>
             }
-            {!IsSearchIng &&
-                <ChatBotAI
-                    currentDocument="false"
-                />
-            }
         </View>
     )
 }
@@ -216,6 +212,7 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         paddingTop: vScale(45),
+        backgroundColor: "white"
     },
     container: {
         flex: 1,

@@ -126,7 +126,7 @@ const DocumentsPage: React.FC = () => {
                 style={[styles.TopStickyDate, { opacity: pillOpacity }]}
             >
                 <View style={styles.DateContainer}>
-                    <Text>{formatDate(CurrentDate)}</Text>
+                    <Text style={styles.date_text}>{formatDate(CurrentDate)}</Text>
                 </View>
             </Animated.View>
 
@@ -176,6 +176,11 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: "white",
         elevation: 10,
+    },
+    date_text: {
+        fontSize: 14,
+        fontFamily: "Aeonik-Medium",
+        color: "#23423B",
     },
 });
 

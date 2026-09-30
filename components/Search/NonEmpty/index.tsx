@@ -1,8 +1,7 @@
-import Documents from "@/components/Documents";
 import DocumentsSkeleton from "@/components/DocumentsSkeleton";
 import { DocumentRow } from "@/types";
 import { scale } from "@/utils/scale";
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 type Props = {
     documents: DocumentRow[];
@@ -22,10 +21,6 @@ const NonEmpty: React.FC<Props> = ({ documents = [], isLoading, isLoadingMore })
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Recent Documents</Text>
-            <Documents
-                documents={documents}
-            />
             {isLoadingMore && (
                 <DocumentsSkeleton
                     count={3}

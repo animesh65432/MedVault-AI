@@ -2,7 +2,6 @@ import { SearchSuggestion } from '@/types'
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
-import { useRouter } from 'expo-router'
 import React from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import Empty from '../Empty'
@@ -12,7 +11,6 @@ type Props = {
     SearchSuggestions: SearchSuggestion[]
 }
 const Suggestions: React.FC<Props> = ({ SearchSuggestions }) => {
-    const router = useRouter()
 
     if (SearchSuggestions.length === 0) {
         return <Empty hasQuery={true} />
