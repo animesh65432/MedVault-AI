@@ -1,3 +1,4 @@
+import ChatBotAI from "@/components/ChatBotAI";
 import Documents from "@/components/Documents";
 import DocumentsSkeleton from "@/components/DocumentsSkeleton";
 import { GetDocuments } from "@/db/document";
@@ -142,6 +143,9 @@ const DocumentsPage: React.FC = () => {
                     onEndReached={loadMore}
                 />
             )}
+            <ChatBotAI
+                currentDocument="false"
+            />
         </View>
     );
 };
@@ -154,7 +158,6 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         zIndex: 100,
-        elevation: 10,
         backgroundColor: "white",
         width: "100%",
         paddingVertical: vScale(10),

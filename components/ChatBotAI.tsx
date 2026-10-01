@@ -1,64 +1,79 @@
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
-import Ionicons from '@expo/vector-icons/Ionicons';
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = {
-    currentDocument: "false" | "true"
-    documentId?: Number
-}
+    currentDocument: "false" | "true";
+    documentId?: number;
+};
+
+const SIZE = scale(56);
 
 const ChatBotAI: React.FC<Props> = ({ currentDocument, documentId }) => {
-    const insets = useSafeAreaInsets()
-    const router = useRouter()
+    const insets = useSafeAreaInsets();
+    const router = useRouter();
 
     const redirect_to_chat = () => {
         router.push({
             pathname: "/Chat",
             params: {
                 currentDocument,
-                documentId: documentId?.toString() || undefined
-            }
-        })
-    }
+                documentId: documentId?.toString(),
+            },
+        });
+    };
+
+    const bottom =
+        currentDocument === "true"
+            ? vScale(70) + insets.bottom + vScale(60)
+            : vScale(100) + insets.bottom;
 
     return (
-        <TouchableOpacity
+        <Pressable
             onPress={redirect_to_chat}
-            activeOpacity={0.85}
-            style={[
-                styles.Container,
-                currentDocument === "true"
-                    ? { bottom: vScale(70) + insets.bottom + vScale(60) }
-                    : { bottom: vScale(100) + insets.bottom }
+            accessibilityRole="button"
+            accessibilityLabel="Open AI chat assistant"
+            style={({ pressed }) => [
+                styles.container,
+                { bottom },
+                pressed && styles.pressed,
             ]}
         >
             <Ionicons
-                name="chatbubble-outline"
+                name="chatbubble-ellipses"
                 size={scale(24)}
-                color="black"
+                color="#D9F99D"
             />
-        </TouchableOpacity>
-    )
-}
+        </Pressable>
+    );
+};
 
 const styles = StyleSheet.create({
-    Container: {
+    container: {
         position: "absolute",
         right: scale(20),
-        width: scale(70),
-        height: scale(70),
-        borderRadius: scale(35),
-        backgroundColor: "#23423B"
-    },
-    animation: {
-        width: scale(110),
-        height: vScale(110),
-        marginLeft: scale(-35)
-    },
-})
+        width: SIZE,
+        height: SIZE,
+        borderRadius: SIZE / 2,
+        backgroundColor: "#23423B",
+        justifyContent: "center",
+        alignItems: "center",
 
-export default ChatBotAI
+        // soft, tinted shadow
+        elevation: 6,
+        shadowColor: "#23423B",
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 4 },
+    },
+    pressed: {
+        transform: [{ scale: 0.94 }],
+        opacity: 0.9,
+    },
+});
+
+export default ChatBotAI;

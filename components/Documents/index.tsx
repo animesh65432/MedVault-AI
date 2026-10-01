@@ -83,7 +83,7 @@ const Documents: React.FC<Props> = ({
             showsVerticalScrollIndicator={false}
             contentContainerStyle={[
                 styles.listContent,
-                { paddingTop: navbarHeight + vScale(10) },
+                { paddingTop: navbarHeight },
             ]}
             columnWrapperStyle={styles.columnWrapper}
             removeClippedSubviews
@@ -100,22 +100,26 @@ const styles = StyleSheet.create({
     listContent: {
         paddingHorizontal: scale(10),
         paddingBottom: vScale(20),
+        backgroundColor: "white"
     },
     columnWrapper: {
         justifyContent: "center",
         columnGap: scale(10),
         marginBottom: vScale(10),
+        backgroundColor: "white"
     },
     emptyContainer: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: "white"
     },
     emptyContent: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
         gap: scale(10),
+        backgroundColor: "white"
     },
     emptyText: {
         fontFamily: "Aeonik-Medium",
