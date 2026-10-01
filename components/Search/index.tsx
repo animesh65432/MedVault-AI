@@ -6,7 +6,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useLocalSearchParams } from "expo-router";
 import { useSQLiteContext } from 'expo-sqlite';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
+import { NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import Input from './Input';
 import NonEmpty from "./NonEmpty";
 import Filters from "./NonEmpty/Filters";
@@ -43,9 +43,6 @@ const Search: React.FC = () => {
             console.log("No query, skipping fetchDocuments", SelectedCategories.length === 0)
             return;
         }
-
-        console.log(SelectedCategories, "fetchDocuments called with reset:")
-
         if (reset) {
             setIsLoading(true)
         }
@@ -142,6 +139,13 @@ const Search: React.FC = () => {
         }
     }, [Types])
 
+    useEffect(() => {
+        if (SelectedCategories.length === 0 && SelectedDate.startDate === null && SelectedDate.endDate === null) {
+            setdocuments([])
+            return;
+        }
+    }, [SelectedCategories, SelectedDate])
+
     const IsSearchIng = searchQuery.trim().length > 0;
 
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -178,12 +182,8 @@ const Search: React.FC = () => {
                 />
             }
             {!IsSearchIng &&
-                <ScrollView
-                    style={styles.container}
-                    contentContainerStyle={styles.content}
-                    showsVerticalScrollIndicator={true}
-                    onScroll={handleScroll}
-                    scrollEventThrottle={16}
+                <View
+                    style={styles.content}
                 >
                     {hasAnyDocuments &&
                         <Filters
@@ -193,16 +193,15 @@ const Search: React.FC = () => {
                             setSelectedDate={setSelectedDate}
                         />
                     }
-                    {documents.length === 0 ? (
-                        <></>
-                    ) : (
+                    {documents.length !== 0 &&
                         <NonEmpty
                             documents={documents}
                             isLoading={isLoading}
                             isLoadingMore={isLoadingMoreRef.current}
+                            onScroll={handleScroll}
                         />
-                    )}
-                </ScrollView>
+                    }
+                </View>
             }
         </View>
     )
@@ -214,10 +213,8 @@ const styles = StyleSheet.create({
         paddingTop: vScale(45),
         backgroundColor: "white"
     },
-    container: {
-        flex: 1,
-    },
     content: {
+        flex: 1,
         flexDirection: "column",
         gap: vScale(14),
         paddingBottom: vScale(32),

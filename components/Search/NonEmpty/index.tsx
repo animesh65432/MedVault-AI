@@ -1,47 +1,58 @@
 import DocumentsSkeleton from "@/components/DocumentsSkeleton";
 import { DocumentRow } from "@/types";
 import { scale } from "@/utils/scale";
-import { StyleSheet, View } from 'react-native';
+import { FlatList, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from "react-native";
+import Document from "./Documents/Document";
 
 type Props = {
     documents: DocumentRow[];
     isLoading: boolean;
     isLoadingMore: boolean;
+    onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }
 
-const NonEmpty: React.FC<Props> = ({ documents = [], isLoading, isLoadingMore }) => {
+const NonEmpty: React.FC<Props> = ({
+    documents = [],
+    isLoading,
+    isLoadingMore,
+    onScroll
+}) => {
 
     if (isLoading) {
-        return (
-            <DocumentsSkeleton
-                count={5}
-            />
-        )
+        return <DocumentsSkeleton count={5} />
     }
 
     return (
-        <View style={styles.container}>
-            {isLoadingMore && (
-                <DocumentsSkeleton
-                    count={3}
-                />
+        <FlatList
+            style={styles.container}
+            data={documents}
+            columnWrapperStyle={styles.ContentStyles}
+            keyExtractor={(item) => item.Id.toString()}
+            renderItem={({ item }) => (
+                <Document doc={item} />
             )}
-        </View>
+            numColumns={3}
+            ListFooterComponent={
+                isLoadingMore
+                    ? <DocumentsSkeleton count={3} />
+                    : null
+            }
+            ItemSeparatorComponent={() => (
+                <View style={{ height: scale(10) }} />
+            )}
+            showsVerticalScrollIndicator={false}
+            onScroll={onScroll}
+        />
     )
 }
 
 const styles = StyleSheet.create({
-    title: {
-        color: '#708090',
-        fontFamily: 'Aeonik-Medium',
-        fontSize: scale(14),
-        marginBottom: scale(12),
-        textTransform: "uppercase"
-    },
     container: {
         flex: 1,
-        paddingTop: scale(10),
     },
+    ContentStyles: {
+        gap: scale(10),
+    }
 })
 
 export default NonEmpty

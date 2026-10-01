@@ -4,6 +4,7 @@ import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useRouter } from "expo-router";
 import React, { useContext, useState } from "react";
 import { StyleSheet, TextInput, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -16,6 +17,7 @@ type Props = {
 const InputBox: React.FC<Props> = ({ searchQuery, setSearchQuery }) => {
     const [showModelSpeechToText, setShowModelSpeechToText] = useState(false)
     const { addRecentSearch } = useContext(RecentSearchContext)
+    const router = useRouter()
 
     const onChangeText = (text: string) => {
         setSearchQuery(text)
@@ -28,14 +30,13 @@ const InputBox: React.FC<Props> = ({ searchQuery, setSearchQuery }) => {
         }
     }
 
-    console.log("showModelSpeechToText", showModelSpeechToText)
-
     return (
         <View style={styles.container}>
             <AntDesign
                 name="arrow-left"
                 size={scale(22)}
                 color="#23423B"
+                onPress={() => router.back()}
             />
             <TextInput
                 style={styles.input}
