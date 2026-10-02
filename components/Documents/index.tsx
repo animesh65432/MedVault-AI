@@ -26,6 +26,8 @@ type Props = {
     CurrentDate?: string;
     isLoadingMore: boolean;
     onEndReached?: () => void;
+    selectedIds: number[];
+    setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
 const Documents: React.FC<Props> = ({
@@ -35,6 +37,8 @@ const Documents: React.FC<Props> = ({
     SetCurrentDate,
     isLoadingMore,
     onEndReached,
+    selectedIds,
+    setSelectedIds
 }) => {
     const onViewableItemsChanged = useRef(
         ({ viewableItems }: { viewableItems: ViewToken<DocumentRow>[] }) => {
@@ -51,9 +55,14 @@ const Documents: React.FC<Props> = ({
 
     const renderItem = useCallback(
         ({ item }: { item: DocumentRow }) => (
-            <Document doc={item} SetCurrentDate={SetCurrentDate} />
+            <Document
+                doc={item}
+                SetCurrentDate={SetCurrentDate}
+                selectedIds={selectedIds}
+                setSelectedIds={setSelectedIds}
+            />
         ),
-        [SetCurrentDate]
+        [SetCurrentDate, selectedIds]
     );
 
     const keyExtractor = useCallback(

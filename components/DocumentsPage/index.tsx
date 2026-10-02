@@ -1,26 +1,32 @@
+import { COLORS } from "@/app/(tabs)/_layout";
 import ChatBotAI from "@/components/ChatBotAI";
 import Documents from "@/components/Documents";
 import DocumentsSkeleton from "@/components/DocumentsSkeleton";
 import { GetDocuments } from "@/db/document";
 import { DocumentRow } from "@/types";
 import { formatDate } from "@/utils/formatDate";
+import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Animated, LayoutChangeEvent, StyleSheet, Text, View } from "react-native";
+import BelowNavbar from "./BelowNavbar";
 import Navbar from "./Navbar";
+
 
 const PAGE_SIZE = 20;
 
 const DocumentsPage: React.FC = () => {
     const db = useSQLiteContext();
-
+    const navigation = useNavigation();
+    const [selectedIds, setSelectedIds] = useState<number[]>([]);
     const [CurrentDate, SetCurrentDate] = useState<string>("");
     const [documents, setdocuments] = useState<DocumentRow[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
     const [navbarHeight, setNavbarHeight] = useState<number>(0);
+    const selectionMode = selectedIds.length > 0;
 
     const pageRef = useRef(1);
     const hasMoreRef = useRef(true);
@@ -109,6 +115,14 @@ const DocumentsPage: React.FC = () => {
         }, [fetchDocuments])
     );
 
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarStyle: selectionMode
+                ? { display: "none" }
+                : styles.tabBar,
+        });
+    }, [selectionMode]);
+
     return (
         <View style={styles.container}>
             <Animated.View
@@ -141,11 +155,21 @@ const DocumentsPage: React.FC = () => {
                     SetCurrentDate={SetCurrentDate}
                     isLoadingMore={isLoadingMore}
                     onEndReached={loadMore}
+                    selectedIds={selectedIds}
+                    setSelectedIds={setSelectedIds}
                 />
             )}
             <ChatBotAI
                 currentDocument="false"
             />
+            {selectionMode &&
+                <BelowNavbar
+                    count={selectedIds.length}
+                    onClose={() => setSelectedIds([])}
+                    onShare={() => { }}
+                    onDelete={() => { }}
+                />
+            }
         </View>
     );
 };
@@ -185,6 +209,25 @@ const styles = StyleSheet.create({
         fontFamily: "Aeonik-Medium",
         color: "#23423B",
     },
+    tabBar: {
+        position: 'absolute',
+        height: vScale(75),
+        paddingTop: vScale(10),
+        paddingBottom: vScale(10),
+        width: '70%',
+        bottom: vScale(80),
+        alignSelf: 'center',
+        borderRadius: scale(50),
+        backgroundColor: COLORS.background,
+        borderWidth: 1,
+        borderColor: COLORS.border,
+        overflow: 'hidden',
+        elevation: 8,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginHorizontal: scale(55),
+    }
 });
 
 export default DocumentsPage;

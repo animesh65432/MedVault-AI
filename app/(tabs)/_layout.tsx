@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Tabs, useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-const COLORS = {
+export const COLORS = {
   background: '#23423B',
   border: '#2D534A',
   active: '#EEF6A2',

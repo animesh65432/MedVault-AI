@@ -1,10 +1,10 @@
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 type Props = {
     currentDocument: "false" | "true";
@@ -30,7 +30,7 @@ const ChatBotAI: React.FC<Props> = ({ currentDocument, documentId }) => {
     const bottom =
         currentDocument === "true"
             ? vScale(70) + insets.bottom + vScale(60)
-            : vScale(100) + insets.bottom;
+            : vScale(160) + insets.bottom;
 
     return (
         <Pressable
@@ -44,10 +44,11 @@ const ChatBotAI: React.FC<Props> = ({ currentDocument, documentId }) => {
             ]}
         >
             <Ionicons
-                name="chatbubble-ellipses"
+                name="chatbox"
                 size={scale(24)}
                 color="#D9F99D"
             />
+
         </Pressable>
     );
 };

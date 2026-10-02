@@ -11,15 +11,17 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    View
+    View,
 } from "react-native"
 
 type Props = {
-    doc: DocumentRow;
-    SetCurrentDate: React.Dispatch<React.SetStateAction<string>>;
+    doc: DocumentRow
+    selectedIds: number[]
+    setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>
+    SetCurrentDate?: React.Dispatch<React.SetStateAction<string>>
 }
 
-const Document: React.FC<Props> = ({ doc, SetCurrentDate }) => {
+const Document: React.FC<Props> = ({ doc, selectedIds, setSelectedIds }) => {
     const router = useRouter()
 
     const { thumbUri, thumbFailed } = usePdfThumbnail(
@@ -27,64 +29,92 @@ const Document: React.FC<Props> = ({ doc, SetCurrentDate }) => {
         doc.IsPdf
     )
 
+    const selectionMode = selectedIds.length > 0
+    const isSelected = selectedIds.includes(doc.Id)
+
+    const toggleSelect = () => {
+        setSelectedIds((prev) =>
+            prev.includes(doc.Id)
+                ? prev.filter((id) => id !== doc.Id)
+                : [...prev, doc.Id]
+        )
+    }
+
     const handlePress = () => {
+        if (selectionMode) {
+            toggleSelect()
+            return
+        }
         if (doc.date) {
             router.push(`/document/${doc.Id}`)
         }
     }
 
-    const handleLongPress = () => {
-        if (doc.date) {
-            SetCurrentDate(doc.date);
+    const renderPreview = () => {
+        if (!doc.IsPdf) {
+            return (
+                <Image
+                    source={{ uri: doc.SourceFilePath }}
+                    style={styles.previewImage}
+                    resizeMode="cover"
+                />
+            )
         }
+
+        if (thumbUri) {
+            return (
+                <Image
+                    source={{ uri: thumbUri }}
+                    style={styles.previewImage}
+                    resizeMode="cover"
+                />
+            )
+        }
+
+        if (thumbFailed) {
+            return (
+                <View style={styles.pdfPlaceholder}>
+                    <View style={styles.pdfIcon}>
+                        <Text style={styles.pdfIconText}>PDF</Text>
+                    </View>
+                    <Text style={styles.previewFallbackText}>
+                        Preview unavailable
+                    </Text>
+                </View>
+            )
+        }
+
+        return (
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="small" color="#23423B" />
+            </View>
+        )
     }
 
     return (
         <TouchableOpacity
-            style={styles.card}
+            style={[styles.card, isSelected && styles.cardSelected]}
             activeOpacity={0.8}
             onPress={handlePress}
-            onLongPress={handleLongPress}
+            onLongPress={toggleSelect}
+            delayLongPress={300}
         >
-            <View style={styles.previewContainer}>
-                {doc.IsPdf ? (
-                    thumbUri ? (
-                        <Image
-                            source={{ uri: thumbUri }}
-                            style={styles.previewImage}
-                            resizeMode="stretch"
-                        />
-                    ) : thumbFailed ? (
-                        <View style={styles.pdfPlaceholder}>
-                            <View style={styles.pdfIcon}>
-                                <Text style={styles.pdfIconText}>
-                                    PDF
-                                </Text>
-                            </View>
-
-                            <Text style={styles.previewFallbackText}>
-                                Preview unavailable
-                            </Text>
-                        </View>
-                    ) : (
-                        <View style={styles.loadingContainer}>
-                            <ActivityIndicator
-                                size="small"
-                                color="#23423B"
-                            />
-                        </View>
-                    )
-                ) : (
-                    <Image
-                        source={{
-                            uri: doc.SourceFilePath,
-                        }}
-                        style={styles.previewImage}
-                        resizeMode="stretch"
-                    />
-                )}
-                <View />
+            <View
+                style={[
+                    styles.previewContainer,
+                    isSelected && styles.previewSelected,
+                ]}
+            >
+                {renderPreview()}
             </View>
+
+            {selectionMode && (
+                <View
+                    style={[styles.circle, isSelected && styles.circleSelected]}
+                >
+                    {isSelected && <Text style={styles.checkText}>✓</Text>}
+                </View>
+            )}
         </TouchableOpacity>
     )
 }
@@ -95,21 +125,25 @@ const styles = StyleSheet.create({
         backgroundColor: "#FAFAF8",
         elevation: 1,
         shadowColor: "#23423B",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
         shadowRadius: 5,
-        borderRadius: scale(10)
+        borderRadius: scale(10),
     },
+    cardSelected: {
+        backgroundColor: "#DDE8E4",
+    },
+
     previewContainer: {
         width: "100%",
         height: vScale(160),
         overflow: "hidden",
-        position: "relative"
+        position: "relative",
+        borderRadius: scale(10),
     },
-
+    previewSelected: {
+        transform: [{ scale: 0.86 }],
+    },
     previewImage: {
         width: "100%",
         height: "100%",
@@ -129,7 +163,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "#EEF6A2",
     },
-
     pdfIcon: {
         width: scale(42),
         height: scale(42),
@@ -139,103 +172,41 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginBottom: vScale(7),
     },
-
     pdfIconText: {
         fontFamily: "Aeonik-Medium",
         fontSize: scale(11),
         color: "#FFFFFF",
         letterSpacing: 0.5,
     },
-
     previewFallbackText: {
         fontFamily: "Aeonik-Regular",
         fontSize: scale(9),
         color: "#23423B",
     },
 
-    /* ---------------- Badge ---------------- */
+    /* ---------------- Selection ---------------- */
 
-    typeBadge: {
+    circle: {
         position: "absolute",
         top: scale(8),
-        right: scale(8),
-
-        paddingHorizontal: scale(7),
-        paddingVertical: vScale(3),
-
-        borderRadius: scale(6),
-        borderWidth: 1,
-    },
-
-    pdfBadge: {
-        backgroundColor: "#23423B",
-        borderColor: "#23423B",
-    },
-
-    imageBadge: {
-        backgroundColor: "#FAFAF8",
-        borderColor: "#D5E0DD",
-    },
-
-    typeBadgeText: {
-        fontFamily: "Aeonik-Medium",
-        fontSize: fs(9),
-        letterSpacing: 0.4,
-    },
-
-    pdfBadgeText: {
-        color: "#FFFFFF",
-    },
-
-    imageBadgeText: {
-        color: "#5A7A74",
-    },
-
-    /* ---------------- Information ---------------- */
-
-    info: {
-        paddingHorizontal: scale(3),
-        paddingTop: vScale(10),
-    },
-
-    documentType: {
-        fontFamily: "Aeonik-Medium",
-        fontSize: scale(14),
-        backgroundColor: "#23423B",
-        marginBottom: vScale(4),
-        padding: scale(2),
-        paddingLeft: scale(12),
-        paddingRight: scale(12),
-        borderRadius: scale(16),
-        alignSelf: "flex-start",
-        display: "flex",
-        flexDirection: "row",
+        left: scale(8),
+        width: scale(22),
+        height: scale(22),
+        borderRadius: scale(11),
+        borderWidth: 2,
+        borderColor: "#FFFFFF",
+        backgroundColor: "rgba(0,0,0,0.25)",
         alignItems: "center",
-        gap: scale(6),
-        position: "absolute",
-        top: vScale(10),
-        left: scale(10),
+        justifyContent: "center",
     },
-    documentTypeText: {
+    circleSelected: {
+        backgroundColor: "#23423B",
+    },
+    checkText: {
         fontFamily: "Aeonik-Medium",
-        fontSize: scale(14),
+        fontSize: fs(12),
         color: "#FFFFFF",
     },
-
-    title: {
-        fontFamily: "Aeonik-Regular",
-        fontSize: scale(12),
-        lineHeight: scale(16),
-        color: "#5A7A74",
-    },
-
-    date: {
-        fontFamily: "Aeonik-Regular",
-        fontSize: scale(11),
-        color: "#8AA19C",
-        marginTop: vScale(5),
-    },
-
 })
 
 export default Document
