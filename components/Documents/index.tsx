@@ -108,14 +108,11 @@ const Documents: React.FC<Props> = ({
 const styles = StyleSheet.create({
     listContent: {
         paddingHorizontal: scale(10),
-        paddingBottom: vScale(20),
-        backgroundColor: "white"
+        paddingBottom: vScale(20)
     },
     columnWrapper: {
-        justifyContent: "center",
         columnGap: scale(10),
         marginBottom: vScale(10),
-        backgroundColor: "white"
     },
     emptyContainer: {
         flex: 1,
@@ -127,8 +124,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        gap: scale(10),
-        backgroundColor: "white"
+        gap: scale(10)
     },
     emptyText: {
         fontFamily: "Aeonik-Medium",

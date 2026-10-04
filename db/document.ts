@@ -3,6 +3,14 @@ import { SOURCES } from "@/utils/contensnt";
 import { toLocalDateString } from "@/utils/toLocalDateString";
 import { SQLiteDatabase } from "expo-sqlite";
 
+async function deleteChildRowsBulk(
+    db: SQLiteDatabase,
+    documentIds: number[]
+) {
+    for (const documentId of documentIds) {
+        await deleteChildRows(db, documentId);
+    }
+}
 
 async function insertMedicine(db: SQLiteDatabase, documentId: number, med: Medicine) {
     const result = await db.runAsync(
@@ -651,6 +659,26 @@ export const delete_document = async (db: SQLiteDatabase, documentId: number): P
     await db.withTransactionAsync(async () => {
         await deleteChildRows(db, documentId);
         await db.runAsync(`DELETE FROM Documents WHERE Id = ?`, [documentId]);
+    });
+};
+
+export const delete_documents = async (
+    db: SQLiteDatabase,
+    documentIds: number[]
+): Promise<void> => {
+
+    if (documentIds.length === 0) return;
+
+    await db.withTransactionAsync(async () => {
+
+        await deleteChildRowsBulk(db, documentIds);
+
+        for (const documentId of documentIds) {
+            await db.runAsync(
+                `DELETE FROM Documents WHERE Id = ?`,
+                [documentId]
+            );
+        }
     });
 };
 

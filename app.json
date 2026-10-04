@@ -8,13 +8,11 @@
     "scheme": "MedVaultAI",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.dutta12.MedVaultAI",
       "newArchEnabled": true
     },
-
     "android": {
       "package": "com.dutta12.MedVaultAI",
       "adaptiveIcon": {
@@ -27,10 +25,8 @@
       "newArchEnabled": true,
       "softwareKeyboardLayoutMode": "pan"
     },
-
     "plugins": [
       "expo-router",
-
       [
         "expo-splash-screen",
         {
@@ -42,32 +38,35 @@
           }
         }
       ],
-
       "expo-font",
       "expo-sqlite",
       "expo-build-properties",
-
       [
         "expo-speech-recognition",
         {
           "microphonePermission": "Allow this app to access the microphone for speech-to-text.",
           "speechRecognitionPermission": "Allow this app to recognize your speech."
         }
+      ],
+      [
+        "react-native-share",
+        {
+          "ios": [],
+          "android": [],
+          "enableBase64ShareAndroid": false
+        }
       ]
     ],
-
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": false
     },
-
     "extra": {
       "router": {},
       "eas": {
         "projectId": "aa3b8872-7d4f-42fb-b5b3-1d205b4026d9"
       }
     },
-
     "owner": "animesh2"
   }
 }

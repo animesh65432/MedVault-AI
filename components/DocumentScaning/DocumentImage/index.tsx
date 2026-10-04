@@ -72,14 +72,14 @@ const ScanFrameImage: React.FC<ScanFrameImageProps> = ({
                         <Image
                             style={styles.fallbackImage}
                             source={PDF_FALLBACK_IMAGE}
-                            resizeMode="contain"
+                            resizeMode="stretch"
                         />
                     </View>
                 ) : (
                     <Image
                         style={StyleSheet.absoluteFillObject}
                         source={{ uri: thumbUri as string }}
-                        resizeMode="cover"
+                        resizeMode="stretch"
                         onError={() => setRenderFailed(true)}
                     />
                 )
@@ -87,7 +87,7 @@ const ScanFrameImage: React.FC<ScanFrameImageProps> = ({
                 <Image
                     style={StyleSheet.absoluteFillObject}
                     source={{ uri: fileUri }}
-                    resizeMode="cover"
+                    resizeMode="stretch"
                     onError={() => setRenderFailed(true)}
                 />
             )}

@@ -2,10 +2,11 @@ import { COLORS } from "@/app/(tabs)/_layout";
 import ChatBotAI from "@/components/ChatBotAI";
 import Documents from "@/components/Documents";
 import DocumentsSkeleton from "@/components/DocumentsSkeleton";
-import { GetDocuments } from "@/db/document";
+import { delete_documents, GetDocuments } from "@/db/document";
 import { DocumentRow } from "@/types";
 import { formatDate } from "@/utils/formatDate";
 import { scale } from "@/utils/scale";
+import { shareDocuments } from "@/utils/shareDocuments";
 import { vScale } from "@/utils/vScale";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
@@ -121,7 +122,24 @@ const DocumentsPage: React.FC = () => {
                 ? { display: "none" }
                 : styles.tabBar,
         });
+
+        return () => {
+            navigation.setOptions({
+                tabBarStyle: styles.tabBar,
+            });
+        }
     }, [selectionMode]);
+
+    const handleShare = async () => {
+        const selected = documents.filter((d) => selectedIds.includes(d.Id))
+        await shareDocuments(selected)
+    }
+
+    const handleDelete = async () => {
+        delete_documents(db, selectedIds)
+        setSelectedIds([])
+        fetchDocuments()
+    }
 
     return (
         <View style={styles.container}>
@@ -166,8 +184,8 @@ const DocumentsPage: React.FC = () => {
                 <BelowNavbar
                     count={selectedIds.length}
                     onClose={() => setSelectedIds([])}
-                    onShare={() => { }}
-                    onDelete={() => { }}
+                    onShare={handleShare}
+                    onDelete={handleDelete}
                 />
             }
         </View>
@@ -175,7 +193,10 @@ const DocumentsPage: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-    container: { flex: 1 },
+    container: {
+        flex: 1,
+        backgroundColor: "white"
+    },
     navbarWrapper: {
         position: "absolute",
         top: 0,
