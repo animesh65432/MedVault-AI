@@ -110,6 +110,17 @@ function RootLayoutContent() {
       >
         <Stack.Screen name="(tabs)" />
         <Stack.Screen
+          name="RecordModel"
+          options={{
+            presentation: 'transparentModal',
+            animation: 'fade',
+            headerShown: false,
+            contentStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+        />
+        <Stack.Screen
           name="UploadModal"
           options={{
             presentation: 'transparentModal',
@@ -131,6 +142,15 @@ function RootLayoutContent() {
         />
         <Stack.Screen
           name="SearchDocuments"
+          options={{
+            presentation: 'modal',
+            animation: "slide_from_right",
+            headerShown: false,
+            gestureEnabled: true,
+          }}
+        />
+        <Stack.Screen
+          name="CreateRecord"
           options={{
             presentation: 'modal',
             animation: "slide_from_right",

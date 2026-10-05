@@ -9,13 +9,17 @@ type Props = {
     isLoading: boolean;
     isLoadingMore: boolean;
     onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+    selectedIds: number[]
+    setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>
 }
 
 const NonEmpty: React.FC<Props> = ({
     documents = [],
     isLoading,
     isLoadingMore,
-    onScroll
+    onScroll,
+    selectedIds,
+    setSelectedIds
 }) => {
 
     if (isLoading) {
@@ -29,7 +33,11 @@ const NonEmpty: React.FC<Props> = ({
             columnWrapperStyle={styles.ContentStyles}
             keyExtractor={(item) => item.Id.toString()}
             renderItem={({ item }) => (
-                <Document doc={item} />
+                <Document
+                    doc={item}
+                    selectedIds={selectedIds}
+                    setSelectedIds={setSelectedIds}
+                />
             )}
             numColumns={3}
             ListFooterComponent={

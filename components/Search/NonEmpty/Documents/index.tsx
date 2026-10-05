@@ -5,14 +5,21 @@ import { StyleSheet, View } from 'react-native'
 import Document from './Document'
 
 type Props = {
-    documents: DocumentRow[]
+    documents: DocumentRow[];
+    selectedIds: number[]
+    setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>
 }
 
-const Documents: React.FC<Props> = ({ documents }) => {
+const Documents: React.FC<Props> = ({ documents, selectedIds, setSelectedIds }) => {
     return (
         <View style={styles.container}>
             {documents.map((doc) => (
-                <Document key={doc.Id} doc={doc} />
+                <Document
+                    key={doc.Id}
+                    doc={doc}
+                    selectedIds={selectedIds}
+                    setSelectedIds={setSelectedIds}
+                />
             ))}
         </View>
     )

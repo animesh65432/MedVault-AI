@@ -9,8 +9,8 @@ import { StyleSheet, View } from 'react-native';
 const Navbar: React.FC = () => {
     const router = useRouter();
 
-    const handle_redirect = () => {
-        router.push("/SearchDocuments")
+    const handle_redirect = (route: "/SearchDocuments" | "/RecordModel") => {
+        router.push(route)
     }
 
     return (
@@ -19,12 +19,13 @@ const Navbar: React.FC = () => {
                 name="search"
                 size={scale(24)}
                 color="#5c5f5f"
-                onPress={handle_redirect}
+                onPress={() => handle_redirect("/SearchDocuments")}
             />
             <MaterialIcons
                 name="add"
                 size={scale(28)}
                 color="#5c5f5f"
+                onPress={() => handle_redirect("/RecordModel")}
             />
             <UserIcon />
         </View>

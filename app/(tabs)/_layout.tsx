@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     paddingTop: vScale(10),
     paddingBottom: vScale(10),
     width: '70%',
-    bottom: vScale(80),
+    bottom: vScale(60),
     alignSelf: 'center',
     borderRadius: scale(50),
     backgroundColor: COLORS.background,

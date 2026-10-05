@@ -1,12 +1,15 @@
-import { GetDocuments, GetSearchSuggestions, HasAnyDocuments } from "@/db/document";
+import { COLORS } from "@/app/(tabs)/_layout";
+import { GetDocuments, GetSearchSuggestions, delete_documents } from "@/db/document";
 import { DocumentRow, SearchSuggestion } from "@/types";
 import { scale } from "@/utils/scale";
+import { shareDocuments } from "@/utils/shareDocuments";
 import { vScale } from "@/utils/vScale";
 import { useFocusEffect } from '@react-navigation/native';
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useSQLiteContext } from 'expo-sqlite';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
+import BelowNavbar from "../DocumentsPage/BelowNavbar";
 import Input from './Input';
 import NonEmpty from "./NonEmpty";
 import Filters from "./NonEmpty/Filters";
@@ -18,6 +21,7 @@ const PAGE_SIZE = 10
 
 const Search: React.FC = () => {
     const { types } = useLocalSearchParams();
+    const [selectedIds, setSelectedIds] = useState<number[]>([]);
     const Types = useMemo(() => (types ? JSON.parse(types as string) : []), [types]);
     const [page, setPage] = useState<number>(1)
     const [hasMore, setHasMore] = useState<boolean>(true)
@@ -32,10 +36,11 @@ const Search: React.FC = () => {
         endDate: null,
     })
     const [SearchSuggestions, setSearchSuggestions] = useState<SearchSuggestion[]>([])
-    const [hasAnyDocuments, setHasAnyDocuments] = useState<boolean | null>(null)
     const [searchQuery, setSearchQuery] = useState<string>("")
     const [documents, setdocuments] = useState<DocumentRow[]>([])
     const db = useSQLiteContext();
+    const navigation = useNavigation();
+    const selectionMode = selectedIds.length > 0;
 
     async function fetchDocuments(reset: boolean) {
         if (SelectedCategories.length === 0 && SelectedDate.startDate === null && SelectedDate.endDate === null) {
@@ -91,18 +96,8 @@ const Search: React.FC = () => {
         }
     }
 
-    async function fetchHasAnyDocuments() {
-        try {
-            const result = await HasAnyDocuments(db)
-            setHasAnyDocuments(result)
-        } catch (error) {
-            console.error("Failed to fetch documents:", error)
-        }
-    }
-
     useFocusEffect(
         useCallback(() => {
-            fetchHasAnyDocuments();
             const timeout = setTimeout(() => fetchDocuments(true), 300)
             return () => clearTimeout(timeout)
         }, [SelectedCategories, SelectedDate])
@@ -146,6 +141,20 @@ const Search: React.FC = () => {
         }
     }, [SelectedCategories, SelectedDate])
 
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarStyle: selectionMode
+                ? { display: "none" }
+                : styles.tabBar,
+        });
+
+        return () => {
+            navigation.setOptions({
+                tabBarStyle: styles.tabBar,
+            });
+        }
+    }, [selectionMode]);
+
     const IsSearchIng = searchQuery.trim().length > 0;
 
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -154,6 +163,18 @@ const Search: React.FC = () => {
             loadMore()
         }
     }
+    const handleShare = async () => {
+        const selected = documents.filter((d) => selectedIds.includes(d.Id))
+        await shareDocuments(selected)
+    }
+
+    const handleDelete = async () => {
+        delete_documents(db, selectedIds)
+        setSelectedIds([])
+        fetchDocuments(true)
+    }
+
+
     return (
         <View style={styles.wrapper}>
             <View style={styles.InputWrapper}>
@@ -185,16 +206,17 @@ const Search: React.FC = () => {
                 <View
                     style={styles.content}
                 >
-                    {hasAnyDocuments &&
-                        <Filters
-                            SelectedCategories={SelectedCategories}
-                            setSelectedCategories={setSelectedCategories}
-                            SelectedDate={SelectedDate}
-                            setSelectedDate={setSelectedDate}
-                        />
-                    }
+                    <Filters
+                        SelectedCategories={SelectedCategories}
+                        setSelectedCategories={setSelectedCategories}
+                        SelectedDate={SelectedDate}
+                        setSelectedDate={setSelectedDate}
+                    />
+
                     {documents.length !== 0 &&
                         <NonEmpty
+                            selectedIds={selectedIds}
+                            setSelectedIds={setSelectedIds}
                             documents={documents}
                             isLoading={isLoading}
                             isLoadingMore={isLoadingMoreRef.current}
@@ -202,6 +224,14 @@ const Search: React.FC = () => {
                         />
                     }
                 </View>
+            }
+            {selectionMode &&
+                <BelowNavbar
+                    count={selectedIds.length}
+                    onClose={() => setSelectedIds([])}
+                    onShare={handleShare}
+                    onDelete={handleDelete}
+                />
             }
         </View>
     )
@@ -223,6 +253,25 @@ const styles = StyleSheet.create({
     },
     InputWrapper: {
         paddingHorizontal: scale(20),
+    },
+    tabBar: {
+        position: 'absolute',
+        height: vScale(75),
+        paddingTop: vScale(10),
+        paddingBottom: vScale(10),
+        width: '70%',
+        bottom: vScale(80),
+        alignSelf: 'center',
+        borderRadius: scale(50),
+        backgroundColor: COLORS.background,
+        borderWidth: 1,
+        borderColor: COLORS.border,
+        overflow: 'hidden',
+        elevation: 8,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginHorizontal: scale(55),
     }
 })
 
