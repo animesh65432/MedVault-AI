@@ -10,7 +10,7 @@ import EmptyStats from "./EmptyStats";
 import NonEmptyStats from "./NonEmptyStats";
 
 const HomeLayOut = () => {
-    const db = useSQLiteContext();
+    const db = useSQLiteContext()
     const [counts, setCounts] = useState<CountTypes>({
         documentsCount: 0,
         medicinesCount: 0,

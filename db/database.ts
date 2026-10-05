@@ -18,8 +18,15 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
             await db.execAsync(`
             PRAGMA foreign_keys = ON;
 
+            CREATE TABLE IF NOT EXISTS Records(
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                Name STRING NOT NULL,
+                Description STRING NOT NULL
+            );
+
             CREATE TABLE IF NOT EXISTS Documents (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                RecordId INTEGER,
                 title TEXT NOT NULL,
                 type TEXT NOT NULL,
                 IsPdf BOOLEAN NOT NULL DEFAULT 0,
@@ -69,11 +76,13 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 SourceFilePath TEXT NOT NULL,
-                Hash TEXT NOT NULL UNIQUE
+                Hash TEXT NOT NULL UNIQUE,
+                FOREIGN KEY (RecordId) REFERENCES Records(Id) ON DELETE CASCADE
             );
 
             CREATE INDEX IF NOT EXISTS idx_documents_type ON Documents(type);
             CREATE INDEX IF NOT EXISTS idx_documents_date ON Documents(date);
+            CREATE INDEX IF NOT EXISTS idx_documents_record_id ON Documents(RecordId);
 
             CREATE TABLE IF NOT EXISTS DocumentTags (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
