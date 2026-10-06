@@ -310,7 +310,7 @@ export const GetSearchSuggestions = async (
     db: SQLiteDatabase,
     query: string,
     perSourceLimit = 3,
-    totalLimit = 6
+    totalLimit = 10
 ): Promise<SearchSuggestion[]> => {
     const q = query.trim()
     if (!q) return []

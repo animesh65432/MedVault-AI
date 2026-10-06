@@ -150,7 +150,16 @@ function RootLayoutContent() {
           }}
         />
         <Stack.Screen
-          name="(CreateRecord)"
+          name="CreateRecord"
+          options={{
+            presentation: 'modal',
+            animation: "slide_from_right",
+            headerShown: false,
+            gestureEnabled: true,
+          }}
+        />
+        <Stack.Screen
+          name="AddDocuments"
           options={{
             presentation: 'modal',
             animation: "slide_from_right",

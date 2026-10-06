@@ -1,11 +1,13 @@
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import Entypo from '@expo/vector-icons/Entypo';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Navabr from './Navabr';
 
 const CreateRecordPage: React.FC = () => {
+    const router = useRouter()
     const [UserInput, setUserInput] = useState<{
         title: string,
         description: string
@@ -13,6 +15,7 @@ const CreateRecordPage: React.FC = () => {
         title: "",
         description: ""
     })
+
 
     return (
         <View style={styles.container}>
@@ -45,6 +48,7 @@ const CreateRecordPage: React.FC = () => {
 
             <TouchableOpacity
                 style={styles.Select_PhotosContainer}
+                onPress={() => router.push("/AddDocuments")}
             >
                 <View>
                     <Entypo

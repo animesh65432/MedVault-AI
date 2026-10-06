@@ -30,7 +30,7 @@ const CreateRecord: React.FC = () => {
                 <TouchableOpacity
                     style={styles.card}
                     activeOpacity={0.8}
-                    onPress={() => router.push("/(CreateRecord)")}
+                    onPress={() => router.push("/CreateRecord")}
                 >
                     <View style={styles.cardIcon}>
                         <AntDesign name="plus" size={scale(18)} color="#FFFFFF" />

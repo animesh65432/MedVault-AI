@@ -112,10 +112,12 @@ const Search: React.FC = () => {
         let cancelled = false
 
         const timeout = setTimeout(async () => {
+            if (cancelled) return
+
             try {
-                const search_documents = await GetSearchSuggestions(db, searchQuery)
+                const results = await GetSearchSuggestions(db, searchQuery)
                 if (!cancelled) {
-                    setSearchSuggestions(search_documents)
+                    setSearchSuggestions(results)
                 }
             } catch (error) {
                 console.log("Failed to fetch search documents:", error)
@@ -126,7 +128,7 @@ const Search: React.FC = () => {
             cancelled = true
             clearTimeout(timeout)
         }
-    }, [searchQuery])
+    }, [searchQuery, db])
 
     useEffect(() => {
         if (Types.length > 0) {
@@ -199,6 +201,7 @@ const Search: React.FC = () => {
 
             {IsSearchIng
                 && <Suggestions
+                    IsLoading={searchQuery.trim().length > 0 && SearchSuggestions.length === 0}
                     SearchSuggestions={SearchSuggestions}
                 />
             }
