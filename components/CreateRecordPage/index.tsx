@@ -108,6 +108,7 @@ export const styles = StyleSheet.create({
     selectPhotosText: {
         fontFamily: "Aeonik-Medium",
         fontSize: scale(18),
+        color: "#23423B"
     }
 })
 

@@ -1,3 +1,4 @@
+import { selectedType } from "@/components/AddDocumentsPage";
 import { SourceConfig } from "@/types";
 import { GEMMA4_E2B_MM } from "react-native-executorch";
 
@@ -57,3 +58,18 @@ export const LocalDefaultModel = {
     parameters: 2.0,
     vision: true
 }
+
+export const TypesOfDocuments: { label: string, value: selectedType }[] = [
+    { label: "Prescription", value: "Prescription" },
+    { label: "Prescription Receipt", value: "Prescription Receipt" },
+    { label: "Lab Report", value: "Lab Report" },
+    { label: "Radiology Report", value: "Radiology Report" },
+    { label: "Medical Bill", value: "Medical Bill" },
+    { label: "Discharge Summary", value: "Discharge Summary" },
+    { label: "Referral Letter", value: "Referral Letter" },
+    { label: "Insurance Document", value: "Insurance Document" },
+    { label: "Consent Form", value: "Consent Form" },
+    { label: "Medical History Record", value: "Medical History Record" },
+    { label: "Other", value: "Other" },
+    { label: "All Types", value: "All Types" },
+]
