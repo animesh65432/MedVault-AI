@@ -19,7 +19,12 @@ const Navbar: React.FC = () => {
                 name="search"
                 size={scale(24)}
                 color="#5c5f5f"
-                onPress={() => handle_redirect("/SearchDocuments")}
+                onPress={() => router.push({
+                    pathname: "/SearchDocuments",
+                    params: {
+                        ShowResults: "true"
+                    }
+                })}
             />
             <MaterialIcons
                 name="add"

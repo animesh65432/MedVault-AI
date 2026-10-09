@@ -3,8 +3,8 @@ import { DocumentRow, TypeOfDocumenet } from "@/types"
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import { useSQLiteContext } from "expo-sqlite"
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Animated, StyleSheet, View } from 'react-native'
 import Documents from "./Documents"
 import Filter from "./Filter"
 import Navabr from './Navbar'
@@ -16,8 +16,10 @@ const PAGE_SIZE = 20;
 const AddDocumentsPage: React.FC = () => {
     const db = useSQLiteContext();
     const [selected, setSelected] = useState<selectedType>("All Types");
+    const scrollY = useRef(new Animated.Value(0)).current;
+    const [navbarHeight, setNavbarHeight] = useState(0);
+    const [filterHeight, setFilterHeight] = useState(0);
     const [documents, setdocuments] = useState<DocumentRow[]>([]);
-    const [CurrentDate, SetCurrentDate] = useState<string>("");
     const [SelectedDocuments, setSelectedDocuments] = useState<DocumentRow[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [selectedIds, setSelectedIds] = useState<number[]>([])
@@ -54,6 +56,12 @@ const AddDocumentsPage: React.FC = () => {
         if (!hasMoreRef.current || isLoadingMoreRef.current) return;
         isLoadingMoreRef.current = true;
 
+        let defaultSelected: selectedType[] = [];
+
+        if (selected !== "All Types") {
+            defaultSelected = [selected]
+        }
+
         const nextPage = pageRef.current + 1;
         try {
             const rows = await GetDocuments(
@@ -61,7 +69,7 @@ const AddDocumentsPage: React.FC = () => {
                 "DESC",
                 PAGE_SIZE,
                 (nextPage - 1) * PAGE_SIZE,
-                [],
+                defaultSelected,
                 { startDate: null, endDate: null }
             );
             setdocuments((prev) => [...prev, ...rows]);
@@ -74,25 +82,67 @@ const AddDocumentsPage: React.FC = () => {
         }
     }, [db]);
 
+    const onScroll = useMemo(
+        () =>
+            Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+                useNativeDriver: true,
+            }),
+        [scrollY]
+    );
+
+    const filterOffset = useMemo(
+        () => Animated.diffClamp(scrollY, 0, Math.max(filterHeight, 1)),
+        [scrollY, filterHeight]
+    );
+
+    const translateY = useMemo(
+        () => Animated.multiply(filterOffset, -1),
+        [filterOffset]
+    );
+
+    const filterOpacity = useMemo(
+        () =>
+            filterOffset.interpolate({
+                inputRange: [0, Math.max(filterHeight, 1)],
+                outputRange: [1, 0],
+                extrapolate: "clamp",
+            }),
+        [filterOffset, filterHeight]
+    );
+
     return (
         <View style={styles.container}>
-            <Navabr
-                SelectedDocuments={SelectedDocuments}
-            />
-            <Filter
-                selected={selected}
-                setSelected={setSelected}
-            />
+            <View
+                style={styles.navbarWrapper}
+                onLayout={(e) => setNavbarHeight(e.nativeEvent.layout.height)}
+            >
+                <Navabr SelectedDocuments={SelectedDocuments} />
+            </View>
+            <Animated.View
+                style={[
+                    styles.FilterWrapper,
+                    {
+                        top: navbarHeight,
+                        opacity: filterOpacity,
+                        transform: [{ translateY }],
+                    },
+                ]}
+                onLayout={(e) => {
+                    if (filterHeight === 0) setFilterHeight(e.nativeEvent.layout.height);
+                }}
+            >
+                <Filter />
+            </Animated.View>
             <Documents
                 documents={documents}
-                onScroll={loadMore}
-                navbarHeight={0}
-                SetCurrentDate={SetCurrentDate}
+                onScroll={onScroll}
                 isLoadingMore={isLoadingMoreRef.current}
                 selectedIds={selectedIds}
                 setSelectedIds={setSelectedIds}
                 SelectedDocuments={SelectedDocuments}
                 setSelectedDocuments={setSelectedDocuments}
+                NavbarHeight={navbarHeight + filterHeight}
+                onEndReached={loadMore}
             />
         </View>
     )
@@ -101,13 +151,26 @@ const AddDocumentsPage: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingVertical: vScale(40),
         paddingHorizontal: scale(20),
         backgroundColor: "white",
-        display: "flex",
-        flexDirection: "column",
-        gap: vScale(20)
-    }
-})
+    },
+    navbarWrapper: {
+        position: "absolute",
+        top: 0, left: 0, right: 0,
+        zIndex: 20,
+        backgroundColor: "white",
+        paddingTop: vScale(40),
+        paddingHorizontal: scale(20),
+    },
+    FilterWrapper: {
+        position: "absolute",
+        left: 0, right: 0,
+        zIndex: 10,
+        backgroundColor: "white",
+        paddingHorizontal: scale(20),
+        paddingTop: vScale(10),
+        paddingBottom: vScale(10),
+    },
+});
 
 export default AddDocumentsPage

@@ -144,7 +144,7 @@ function RootLayoutContent() {
           name="SearchDocuments"
           options={{
             presentation: 'modal',
-            animation: "slide_from_right",
+            animation: "fade_from_bottom",
             headerShown: false,
             gestureEnabled: true,
           }}

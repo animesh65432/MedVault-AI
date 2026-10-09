@@ -19,7 +19,11 @@ import Title from "./Title";
 
 const PAGE_SIZE = 10
 
-const Search: React.FC = () => {
+type Props = {
+    showResults: boolean
+}
+
+const Search: React.FC<Props> = ({ showResults }) => {
     const { types } = useLocalSearchParams();
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
     const Types = useMemo(() => (types ? JSON.parse(types as string) : []), [types]);
@@ -104,7 +108,7 @@ const Search: React.FC = () => {
     );
 
     useEffect(() => {
-        if (searchQuery.trim().length === 0) {
+        if (searchQuery.trim().length === 0 && !showResults) {
             setSearchSuggestions([])
             return
         }
@@ -176,7 +180,6 @@ const Search: React.FC = () => {
         fetchDocuments(true)
     }
 
-
     return (
         <View style={styles.wrapper}>
             <View style={styles.InputWrapper}>
@@ -185,14 +188,15 @@ const Search: React.FC = () => {
                     setSearchQuery={setSearchQuery}
                 />
             </View>
-
-            <RecentSearch
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-            />
+            {showResults &&
+                <RecentSearch
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                />
+            }
 
             {
-                searchQuery.trim().length > 0 &&
+                searchQuery.trim().length > 0 && showResults &&
                 <Title
                     searchQuery={searchQuery}
                     SearchSuggestionsLength={SearchSuggestions.length}
@@ -200,35 +204,49 @@ const Search: React.FC = () => {
             }
 
             {IsSearchIng
-                && <Suggestions
-                    IsLoading={searchQuery.trim().length > 0 && SearchSuggestions.length === 0}
+                && showResults && <Suggestions
                     SearchSuggestions={SearchSuggestions}
                 />
             }
-            {!IsSearchIng &&
-                <View
-                    style={styles.content}
-                >
+
+            <View
+                style={styles.content}
+            >
+                {showResults &&
+                    <>
+                        {!IsSearchIng &&
+                            <Filters
+                                SelectedCategories={SelectedCategories}
+                                setSelectedCategories={setSelectedCategories}
+                                SelectedDate={SelectedDate}
+                                setSelectedDate={setSelectedDate}
+                            />
+                        }
+                    </>
+                }
+
+                {!showResults &&
                     <Filters
                         SelectedCategories={SelectedCategories}
                         setSelectedCategories={setSelectedCategories}
                         SelectedDate={SelectedDate}
                         setSelectedDate={setSelectedDate}
                     />
+                }
 
-                    {documents.length !== 0 &&
-                        <NonEmpty
-                            selectedIds={selectedIds}
-                            setSelectedIds={setSelectedIds}
-                            documents={documents}
-                            isLoading={isLoading}
-                            isLoadingMore={isLoadingMoreRef.current}
-                            onScroll={handleScroll}
-                        />
-                    }
-                </View>
-            }
-            {selectionMode &&
+
+                {documents.length !== 0 && showResults &&
+                    <NonEmpty
+                        selectedIds={selectedIds}
+                        setSelectedIds={setSelectedIds}
+                        documents={documents}
+                        isLoading={isLoading}
+                        isLoadingMore={isLoadingMoreRef.current}
+                        onScroll={handleScroll}
+                    />
+                }
+            </View>
+            {showResults && selectionMode &&
                 <BelowNavbar
                     count={selectedIds.length}
                     onClose={() => setSelectedIds([])}

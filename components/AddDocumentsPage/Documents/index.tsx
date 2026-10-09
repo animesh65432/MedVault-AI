@@ -9,8 +9,7 @@ import {
     FlatList,
     StyleSheet,
     Text,
-    View,
-    ViewToken,
+    View
 } from "react-native";
 import Document from "./Document";
 
@@ -21,37 +20,26 @@ const AnimatedFlatList = Animated.createAnimatedComponent(
 type Props = {
     documents: DocumentRow[];
     onScroll: any;
-    navbarHeight: number;
-    SetCurrentDate: React.Dispatch<React.SetStateAction<string>>;
-    CurrentDate?: string;
     isLoadingMore: boolean;
     onEndReached?: () => void;
     selectedIds: number[];
     setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
     SelectedDocuments: DocumentRow[];
     setSelectedDocuments: React.Dispatch<React.SetStateAction<DocumentRow[]>>;
+    NavbarHeight: number;
 };
 
 const Documents: React.FC<Props> = ({
     documents,
     onScroll,
-    navbarHeight,
-    SetCurrentDate,
     isLoadingMore,
     onEndReached,
     selectedIds,
     setSelectedDocuments,
     SelectedDocuments,
-    setSelectedIds
+    setSelectedIds,
+    NavbarHeight
 }) => {
-    const onViewableItemsChanged = useRef(
-        ({ viewableItems }: { viewableItems: ViewToken<DocumentRow>[] }) => {
-            const top = viewableItems[0];
-            if (top?.item?.date) {
-                SetCurrentDate(top.item.date);
-            }
-        }
-    ).current;
 
     const viewabilityConfig = useRef({
         itemVisiblePercentThreshold: 50,
@@ -67,7 +55,7 @@ const Documents: React.FC<Props> = ({
                 setSelectedIds={setSelectedIds}
             />
         ),
-        [SetCurrentDate, selectedIds, SelectedDocuments]
+        [selectedIds, SelectedDocuments]
     );
 
     const keyExtractor = useCallback(
@@ -97,11 +85,10 @@ const Documents: React.FC<Props> = ({
             showsVerticalScrollIndicator={false}
             contentContainerStyle={[
                 styles.listContent,
-                { paddingTop: navbarHeight },
+                { paddingTop: NavbarHeight + vScale(10) },
             ]}
             columnWrapperStyle={styles.columnWrapper}
             removeClippedSubviews
-            onViewableItemsChanged={onViewableItemsChanged}
             viewabilityConfig={viewabilityConfig}
             onEndReached={onEndReached}
             onEndReachedThreshold={0.5}

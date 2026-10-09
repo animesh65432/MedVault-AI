@@ -5,32 +5,15 @@ import { vScale } from '@/utils/vScale'
 import React from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import Empty from '../Empty'
-import Skeleton from './Skeleton'
 import Suggestion from './Suggestion'
 
 type Props = {
     SearchSuggestions: SearchSuggestion[];
-    IsLoading: boolean;
 }
-const Suggestions: React.FC<Props> = ({ SearchSuggestions, IsLoading }) => {
-    if (SearchSuggestions.length === 0 && !IsLoading) {
+const Suggestions: React.FC<Props> = ({ SearchSuggestions }) => {
+    if (SearchSuggestions.length === 0) {
         return <Empty hasQuery={true} />
     }
-    if (IsLoading) {
-        return <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.content}
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={true}
-        >
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-        </ScrollView>
-    }
-
     return (
         <ScrollView
             style={styles.container}

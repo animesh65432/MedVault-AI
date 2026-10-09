@@ -1,23 +1,11 @@
-import { TypeOfDocumenet } from "@/types";
-import { TypesOfDocuments } from '@/utils/contensnt';
 import { scale } from '@/utils/scale';
 import Feather from '@expo/vector-icons/Feather';
+import { useRouter } from "expo-router";
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
-import { selectedType } from "../index";
 
-type DropdownItem = {
-    label: string;
-    value: TypeOfDocumenet;
-};
-
-type Props = {
-    selected: selectedType;
-    setSelected: React.Dispatch<React.SetStateAction<selectedType>>;
-}
-
-const Filter: React.FC<Props> = ({ selected, setSelected }) => {
+const Filter: React.FC = () => {
+    const router = useRouter()
     return (
         <View style={styles.container}>
             <View style={styles.iconContainer}>
@@ -25,27 +13,12 @@ const Filter: React.FC<Props> = ({ selected, setSelected }) => {
                     name="search"
                     size={scale(18)}
                     color="#23423B"
-                />
-            </View>
-            <Dropdown
-                style={styles.dropdown}
-                containerStyle={styles.dropdownList}
-                placeholderStyle={styles.text}
-                selectedTextStyle={styles.text}
-                itemTextStyle={styles.text}
-                data={TypesOfDocuments}
-                labelField="label"
-                valueField="value"
-                maxHeight={scale(250)}
-                value={selected}
-                onChange={(item: DropdownItem) => setSelected(item.value)}
-            />
-
-            <View style={styles.iconContainer}>
-                <Feather
-                    name="calendar"
-                    size={scale(16)}
-                    color="#1f2020"
+                    onPress={() => router.push({
+                        pathname: "/SearchDocuments",
+                        params: {
+                            ShowResults: "false"
+                        }
+                    })}
                 />
             </View>
         </View>
@@ -75,7 +48,7 @@ const styles = StyleSheet.create({
         borderRadius: scale(10),
         paddingHorizontal: scale(10),
         borderBlockColor: "#1f2020",
-        minWidth: scale(250),
+        minWidth: scale(250)
     },
     dropdownList: {
         borderRadius: scale(10),

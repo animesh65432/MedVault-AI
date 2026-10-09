@@ -46,6 +46,7 @@ const InputBox: React.FC<Props> = ({ searchQuery, setSearchQuery }) => {
                 placeholder="Search by document,doctor,hospital ..."
                 placeholderTextColor="#5A7A74"
                 returnKeyType="search"
+                autoFocus
             />
             {searchQuery.length === 0 &&
                 <FontAwesome

@@ -1,9 +1,16 @@
-import Search from '@/components/Search'
-import React from 'react'
+import Search from '@/components/Search';
+import { useLocalSearchParams } from "expo-router";
+import React from 'react';
 
 const SearchDocuments: React.FC = () => {
+    const { ShowResults } = useLocalSearchParams<{
+        ShowResults: string;
+    }>();
+    const showResults = ShowResults === "true";
     return (
-        <Search />
+        <Search
+            showResults={showResults}
+        />
     )
 }
 
