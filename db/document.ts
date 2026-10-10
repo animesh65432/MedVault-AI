@@ -309,7 +309,7 @@ export const HasAnyDocuments = async (db: SQLiteDatabase): Promise<boolean> => {
 export const GetSearchSuggestions = async (
     db: SQLiteDatabase,
     query: string,
-    perSourceLimit = 3,
+    perSourceLimit = 10,
     totalLimit = 10
 ): Promise<SearchSuggestion[]> => {
     const q = query.trim()

@@ -2,6 +2,7 @@ import { FILTER_OPTIONS } from '@/utils/contensnt'
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
 import { Feather, Fontisto } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
 import { useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import CustomCalender from '../../CustomCalender'
@@ -61,14 +62,18 @@ type Props = {
     SelectedCategories: string[]
     setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>
     SelectedDate: SelectedDateRange
-    setSelectedDate: React.Dispatch<React.SetStateAction<SelectedDateRange>>
+    setSelectedDate: React.Dispatch<React.SetStateAction<SelectedDateRange>>;
+    showResults: boolean
 }
 
 const Filters: React.FC<Props> = ({
     SelectedCategories,
     setSelectedDate,
-    setSelectedCategories
+    setSelectedCategories,
+    showResults,
+    SelectedDate
 }) => {
+    const router = useRouter()
     const [showCustomCalender, setShowCustomCalender] = useState(false)
     const [selectedRangeId, setSelectedRangeId] = useState<string | null>(null)
     const [customStart, setCustomStart] = useState<Date | null>(null)
@@ -95,6 +100,15 @@ const Filters: React.FC<Props> = ({
     }
 
     const applyRange = (range: DateRange | null) => {
+        if (!showResults) {
+            router.push({
+                pathname: "/AddDocuments",
+                params: {
+                    startDate: range?.start.toISOString() ?? null,
+                    endDate: range?.end.toISOString() ?? null
+                }
+            })
+        }
         setSelectedRangeId(range?.id ?? null)
         setSelectedDate({
             startDate: range?.start ?? null,
@@ -115,6 +129,16 @@ const Filters: React.FC<Props> = ({
         if (!start || !end) {
             return
         }
+        if (!showResults) {
+            router.push({
+                pathname: "/AddDocuments",
+                params: {
+                    startDate: start.toISOString(),
+                    endDate: end.toISOString()
+                }
+            })
+        }
+
         setCustomStart(start)
         setCustomEnd(end)
         applyRange({
@@ -154,37 +178,79 @@ const Filters: React.FC<Props> = ({
                         Clear All
                     </Text>
                 </View>
-                <View style={styles.chipWrap}>
-                    {visibleFilters.map((filter) => {
-                        const isSelected = SelectedCategories.includes(filter.name)
-                        return (
-                            <Pressable
-                                key={filter.name}
-                                onPress={() => toggleFilter(filter.name)}
-                                style={[styles.chip, isSelected && styles.chipSelected]}
-                            >
-                                <Feather
-                                    name={filter.icon}
-                                    size={scale(14)}
-                                    color={isSelected ? '#FFFFFF' : '#23423B'}
-                                    style={{ marginRight: scale(6) }}
-                                />
-                                <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
-                                    {filter.name}
-                                </Text>
-                            </Pressable>
-                        )
-                    })}
+                {showResults &&
+                    <View style={styles.chipWrap}>
+                        {visibleFilters.map((filter) => {
+                            const isSelected = SelectedCategories.includes(filter.name)
+                            return (
+                                <Pressable
+                                    key={filter.name}
+                                    onPress={() => toggleFilter(filter.name)}
+                                    style={[styles.chip, isSelected && styles.chipSelected]}
+                                >
+                                    <Feather
+                                        name={filter.icon}
+                                        size={scale(14)}
+                                        color={isSelected ? '#FFFFFF' : '#23423B'}
+                                        style={{ marginRight: scale(6) }}
+                                    />
+                                    <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
+                                        {filter.name}
+                                    </Text>
+                                </Pressable>
+                            )
+                        })}
 
-                    <Pressable
-                        onPress={() => setShowAllFilters((prev) => !prev)}
-                        style={[styles.chip, styles.moreChip]}
-                    >
-                        <Text style={styles.chipText}>
-                            {showAllFilters ? 'Show less' : `+${hiddenCount} more`}
-                        </Text>
-                    </Pressable>
-                </View>
+                        <Pressable
+                            onPress={() => setShowAllFilters((prev) => !prev)}
+                            style={[styles.chip, styles.moreChip]}
+                        >
+                            <Text style={styles.chipText}>
+                                {showAllFilters ? 'Show less' : `+${hiddenCount} more`}
+                            </Text>
+                        </Pressable>
+                    </View>
+                }
+                {!showResults &&
+                    <View style={styles.chipWrap}>
+                        {visibleFilters.map((filter) => {
+                            const isSelected = SelectedCategories.includes(filter.name)
+                            return (
+                                <Pressable
+                                    key={filter.name}
+                                    onPress={() =>
+                                        router.push({
+                                            pathname: "/AddDocuments",
+                                            params: {
+                                                SelectedCategoried: filter.name
+                                            }
+                                        })
+                                    }
+                                    style={[styles.chip, isSelected && styles.chipSelected]}
+                                >
+                                    <Feather
+                                        name={filter.icon}
+                                        size={scale(14)}
+                                        color={isSelected ? '#FFFFFF' : '#23423B'}
+                                        style={{ marginRight: scale(6) }}
+                                    />
+                                    <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
+                                        {filter.name}
+                                    </Text>
+                                </Pressable>
+                            )
+                        })}
+
+                        <Pressable
+                            onPress={() => setShowAllFilters((prev) => !prev)}
+                            style={[styles.chip, styles.moreChip]}
+                        >
+                            <Text style={styles.chipText}>
+                                {showAllFilters ? 'Show less' : `+${hiddenCount} more`}
+                            </Text>
+                        </Pressable>
+                    </View>
+                }
             </View>
 
             <View style={styles.dateSectionConatainer}>

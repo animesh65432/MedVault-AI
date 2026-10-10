@@ -47,8 +47,7 @@ const Search: React.FC<Props> = ({ showResults }) => {
     const selectionMode = selectedIds.length > 0;
 
     async function fetchDocuments(reset: boolean) {
-        if (SelectedCategories.length === 0 && SelectedDate.startDate === null && SelectedDate.endDate === null) {
-            console.log(SelectedCategories)
+        if (SelectedCategories.length === 0 && SelectedDate.startDate === null && SelectedDate.endDate === null && !showResults) {
             console.log("No query, skipping fetchDocuments", SelectedCategories.length === 0)
             return;
         }
@@ -64,9 +63,6 @@ const Search: React.FC<Props> = ({ showResults }) => {
             const offset = (targetPage - 1) * PAGE_SIZE
             const CateGories = SelectedCategories.filter(category => category !== "All Records")
             const rows = await GetDocuments(db, "DESC", PAGE_SIZE, offset, CateGories, SelectedDate)
-
-            console.log("Fetched documents:", rows)
-
             setdocuments(prev => reset ? rows : [...prev, ...rows])
             setHasMore(rows.length === PAGE_SIZE)
             if (reset) setPage(1)
@@ -84,7 +80,7 @@ const Search: React.FC<Props> = ({ showResults }) => {
     }
 
     async function loadMore() {
-        if (!hasMore || isLoadingMoreRef.current) return
+        if (!hasMore || isLoadingMoreRef.current || !showResults) return
         isLoadingMoreRef.current = true
         const nextPage = page + 1
         try {
@@ -180,12 +176,16 @@ const Search: React.FC<Props> = ({ showResults }) => {
         fetchDocuments(true)
     }
 
+    console.log("SelectedCategories", SelectedCategories)
+
+
     return (
         <View style={styles.wrapper}>
             <View style={styles.InputWrapper}>
                 <Input
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
+                    showResults={showResults}
                 />
             </View>
             {showResults &&
@@ -216,6 +216,7 @@ const Search: React.FC<Props> = ({ showResults }) => {
                     <>
                         {!IsSearchIng &&
                             <Filters
+                                showResults={showResults}
                                 SelectedCategories={SelectedCategories}
                                 setSelectedCategories={setSelectedCategories}
                                 SelectedDate={SelectedDate}
@@ -227,6 +228,7 @@ const Search: React.FC<Props> = ({ showResults }) => {
 
                 {!showResults &&
                     <Filters
+                        showResults={showResults}
                         SelectedCategories={SelectedCategories}
                         setSelectedCategories={setSelectedCategories}
                         SelectedDate={SelectedDate}

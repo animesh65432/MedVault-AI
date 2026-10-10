@@ -11,10 +11,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 type Props = {
     searchQuery: string,
-    setSearchQuery: React.Dispatch<React.SetStateAction<string>>
+    setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+    showResults: boolean;
 }
 
-const InputBox: React.FC<Props> = ({ searchQuery, setSearchQuery }) => {
+const InputBox: React.FC<Props> = ({ showResults, searchQuery, setSearchQuery }) => {
     const [showModelSpeechToText, setShowModelSpeechToText] = useState(false)
     const { addRecentSearch } = useContext(RecentSearchContext)
     const router = useRouter()
@@ -25,8 +26,16 @@ const InputBox: React.FC<Props> = ({ searchQuery, setSearchQuery }) => {
 
     const onSubmitEditing = async () => {
         const trimmed = searchQuery.trim()
-        if (trimmed.length > 0) {
+        if (trimmed.length > 0 && showResults) {
             addRecentSearch(trimmed)
+        }
+        else {
+            router.push({
+                pathname: (`/AddDocuments`),
+                params: {
+                    searchQuery: trimmed,
+                }
+            })
         }
     }
 
