@@ -3,14 +3,8 @@ import { DocumentRow } from "@/types";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import React, { useCallback, useRef } from "react";
-import {
-    Animated,
-    FlatList,
-    StyleSheet,
-    Text,
-    View
-} from "react-native";
+import React, { useCallback } from "react";
+import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
 import Document from "./Document";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(
@@ -38,13 +32,8 @@ const Documents: React.FC<Props> = ({
     setSelectedDocuments,
     SelectedDocuments,
     setSelectedIds,
-    NavbarHeight
+    NavbarHeight,
 }) => {
-
-    const viewabilityConfig = useRef({
-        itemVisiblePercentThreshold: 50,
-    }).current;
-
     const renderItem = useCallback(
         ({ item }: { item: DocumentRow }) => (
             <Document
@@ -63,17 +52,6 @@ const Documents: React.FC<Props> = ({
         []
     );
 
-    if (documents.length === 0) {
-        return (
-            <View style={styles.emptyContainer}>
-                <View style={styles.emptyContent}>
-                    <AntDesign name="folder" size={scale(24)} color="#082e28" />
-                    <Text style={styles.emptyText}>No documents yet</Text>
-                </View>
-            </View>
-        );
-    }
-
     return (
         <AnimatedFlatList
             data={documents}
@@ -85,13 +63,21 @@ const Documents: React.FC<Props> = ({
             showsVerticalScrollIndicator={false}
             contentContainerStyle={[
                 styles.listContent,
-                { paddingTop: NavbarHeight + vScale(10) },
+                { paddingTop: NavbarHeight },
+                documents.length === 0 && styles.emptyGrow,
             ]}
             columnWrapperStyle={styles.columnWrapper}
             removeClippedSubviews
-            viewabilityConfig={viewabilityConfig}
             onEndReached={onEndReached}
             onEndReachedThreshold={0.5}
+            ListEmptyComponent={
+                <View style={styles.emptyContainer}>
+                    <View style={styles.emptyContent}>
+                        <AntDesign name="folder" size={scale(24)} color="#082e28" />
+                        <Text style={styles.emptyText}>No documents yet</Text>
+                    </View>
+                </View>
+            }
             ListFooterComponent={isLoadingMore ? <DocumentsSkeleton count={3} /> : null}
         />
     );
@@ -99,7 +85,10 @@ const Documents: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
     listContent: {
-        paddingBottom: vScale(20)
+        paddingBottom: vScale(20),
+    },
+    emptyGrow: {
+        flexGrow: 1,
     },
     columnWrapper: {
         columnGap: scale(10),
@@ -109,13 +98,12 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "white"
     },
     emptyContent: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        gap: scale(10)
+        gap: scale(10),
     },
     emptyText: {
         fontFamily: "Aeonik-Medium",

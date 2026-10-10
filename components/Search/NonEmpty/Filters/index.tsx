@@ -171,12 +171,14 @@ const Filters: React.FC<Props> = ({
             <View style={styles.section}>
                 <View style={styles.titleRow}>
                     <Text style={styles.title}>Quick filters</Text>
-                    <Text
-                        style={styles.ClearAll}
-                        onPress={resetDate}
-                    >
-                        Clear All
-                    </Text>
+                    {showResults &&
+                        <Text
+                            style={styles.ClearAll}
+                            onPress={resetDate}
+                        >
+                            Clear All
+                        </Text>
+                    }
                 </View>
                 {showResults &&
                     <View style={styles.chipWrap}>

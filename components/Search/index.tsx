@@ -47,7 +47,7 @@ const Search: React.FC<Props> = ({ showResults }) => {
     const selectionMode = selectedIds.length > 0;
 
     async function fetchDocuments(reset: boolean) {
-        if (SelectedCategories.length === 0 && SelectedDate.startDate === null && SelectedDate.endDate === null && !showResults) {
+        if (SelectedCategories.length === 0 && SelectedDate.startDate === null && SelectedDate.endDate === null) {
             console.log("No query, skipping fetchDocuments", SelectedCategories.length === 0)
             return;
         }
@@ -174,10 +174,7 @@ const Search: React.FC<Props> = ({ showResults }) => {
         delete_documents(db, selectedIds)
         setSelectedIds([])
         fetchDocuments(true)
-    }
-
-    console.log("SelectedCategories", SelectedCategories)
-
+    };
 
     return (
         <View style={styles.wrapper}>
@@ -203,8 +200,8 @@ const Search: React.FC<Props> = ({ showResults }) => {
                 />
             }
 
-            {IsSearchIng
-                && showResults && <Suggestions
+            {IsSearchIng && showResults &&
+                <Suggestions
                     SearchSuggestions={SearchSuggestions}
                 />
             }
@@ -237,7 +234,7 @@ const Search: React.FC<Props> = ({ showResults }) => {
                 }
 
 
-                {documents.length !== 0 && showResults &&
+                {documents.length !== 0 && showResults && !IsSearchIng &&
                     <NonEmpty
                         selectedIds={selectedIds}
                         setSelectedIds={setSelectedIds}

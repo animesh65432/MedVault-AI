@@ -13,74 +13,94 @@ export type selectedType = TypeOfDocumenet | "All Types"
 
 const PAGE_SIZE = 20;
 
-const AddDocumentsPage: React.FC = () => {
+type Props = {
+    searchQuery: string | null;
+    startDate: string | null;
+    endDate: string | null;
+    SelectedCategoried: TypeOfDocumenet | null;
+}
+
+const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, SelectedCategoried }) => {
     const db = useSQLiteContext();
-    const [selected, setSelected] = useState<selectedType>("All Types");
+    const [category, setCategory] = useState<TypeOfDocumenet | null>(null);
+    const [input, setInput] = useState<string>("");
+    const [dates, setDates] = useState({
+        startDate: null as Date | null,
+        endDate: null as Date | null,
+    });
     const scrollY = useRef(new Animated.Value(0)).current;
     const [navbarHeight, setNavbarHeight] = useState(0);
     const [filterHeight, setFilterHeight] = useState(0);
     const [documents, setdocuments] = useState<DocumentRow[]>([]);
     const [SelectedDocuments, setSelectedDocuments] = useState<DocumentRow[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [selectedIds, setSelectedIds] = useState<number[]>([])
-    const pageRef = useRef(1);
+    const [selectedIds, setSelectedIds] = useState<number[]>([]);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+    const pageRef = useRef(0);
     const hasMoreRef = useRef(true);
     const isLoadingMoreRef = useRef(false);
-
-    const fetchDocuments = useCallback(async () => {
-        setIsLoading(true);
-        try {
-            let defaultSelected: selectedType[] = [];
-            if (selected !== "All Types") {
-                defaultSelected = [selected]
-            }
-            const rows = await GetDocuments(db, "DESC", PAGE_SIZE, 0, defaultSelected, {
-                startDate: null,
-                endDate: null,
-            });
-            setdocuments(rows);
-            pageRef.current = 1;
-            hasMoreRef.current = rows.length === PAGE_SIZE;
-        } catch (error) {
-            console.error("Failed to fetch documents:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [db, selected]);
+    const requestIdRef = useRef(0);
 
     useEffect(() => {
-        fetchDocuments();
-    }, [selected])
+        if (SelectedCategoried) setCategory(SelectedCategoried);
+    }, [SelectedCategoried]);
 
-    const loadMore = useCallback(async () => {
-        if (!hasMoreRef.current || isLoadingMoreRef.current) return;
-        isLoadingMoreRef.current = true;
+    useEffect(() => {
+        if (searchQuery) setInput(searchQuery);
+    }, [searchQuery]);
 
-        let defaultSelected: selectedType[] = [];
+    useEffect(() => {
+        if (startDate && endDate) {
+            setDates({ startDate: new Date(startDate), endDate: new Date(endDate) });
+        }
+    }, [startDate, endDate]);
 
-        if (selected !== "All Types") {
-            defaultSelected = [selected]
+    const load = useCallback(async (reset: boolean) => {
+        if (!reset && (!hasMoreRef.current || isLoadingMoreRef.current)) return;
+
+        const requestId = ++requestIdRef.current;
+        const page = reset ? 0 : pageRef.current;
+        const types: selectedType[] = category === null ? [] : [category];
+
+        if (reset) {
+            isLoadingMoreRef.current = false;
+            setIsLoadingMore(false);
+        } else {
+            isLoadingMoreRef.current = true;
+            setIsLoadingMore(true);
         }
 
-        const nextPage = pageRef.current + 1;
         try {
             const rows = await GetDocuments(
                 db,
                 "DESC",
                 PAGE_SIZE,
-                (nextPage - 1) * PAGE_SIZE,
-                defaultSelected,
-                { startDate: null, endDate: null }
+                page * PAGE_SIZE,
+                types,
+                dates
             );
-            setdocuments((prev) => [...prev, ...rows]);
+
+            if (requestId !== requestIdRef.current) return;
+
+            setdocuments(prev => (reset ? rows : [...prev, ...rows]));
+            pageRef.current = page + 1;
             hasMoreRef.current = rows.length === PAGE_SIZE;
-            pageRef.current = nextPage;
         } catch (error) {
-            console.error("Failed to load more documents:", error);
+            console.error("Failed to load documents:", error);
         } finally {
-            isLoadingMoreRef.current = false;
+            if (requestId === requestIdRef.current) {
+                isLoadingMoreRef.current = false;
+                setIsLoadingMore(false);
+            }
         }
-    }, [db]);
+    }, [db, category, dates]);
+
+    useEffect(() => {
+        scrollY.setValue(0);
+        load(true);
+    }, [load]);
+
+    const loadMore = useCallback(() => load(false), [load]);
 
     const onScroll = useMemo(
         () =>
@@ -131,12 +151,19 @@ const AddDocumentsPage: React.FC = () => {
                     if (filterHeight === 0) setFilterHeight(e.nativeEvent.layout.height);
                 }}
             >
-                <Filter />
+                <Filter
+                    searchQuery={searchQuery}
+                    startDate={dates.startDate ? dates.startDate.toISOString() : null}
+                    endDate={dates.endDate ? dates.endDate.toISOString() : null}
+                    SelectedCategoried={category}
+                    setCategory={setCategory}
+                    setDates={setDates}
+                />
             </Animated.View>
             <Documents
                 documents={documents}
                 onScroll={onScroll}
-                isLoadingMore={isLoadingMoreRef.current}
+                isLoadingMore={isLoadingMore}
                 selectedIds={selectedIds}
                 setSelectedIds={setSelectedIds}
                 SelectedDocuments={SelectedDocuments}
