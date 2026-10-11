@@ -19,6 +19,15 @@ const Navbar: React.FC = () => {
                     color="#23423B"
                 />
             </Pressable>
+            <Pressable
+                hitSlop={8}
+            >
+                <Entypo
+                    name="dots-three-vertical"
+                    size={scale(24)}
+                    color="#23423B"
+                />
+            </Pressable>
         </View>
     );
 };

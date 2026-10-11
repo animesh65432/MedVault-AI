@@ -15,13 +15,15 @@ import {
 
 type Props = {
     doc: DocumentRow;
-    selectedIds: number[];
-    setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
     SelectedDocuments: DocumentRow[];
     setSelectedDocuments: React.Dispatch<React.SetStateAction<DocumentRow[]>>;
 }
 
-const Document: React.FC<Props> = ({ SelectedDocuments, doc, setSelectedDocuments, selectedIds, setSelectedIds }) => {
+function ChckIfSelected(doc: DocumentRow, SelectedDocuments: DocumentRow[]) {
+    return SelectedDocuments.some((d) => d.Id === doc.Id);
+}
+
+const Document: React.FC<Props> = ({ SelectedDocuments, doc, setSelectedDocuments }) => {
     const { thumbUri, thumbFailed } = usePdfThumbnail(
         doc.SourceFilePath,
         doc.IsPdf
@@ -31,13 +33,10 @@ const Document: React.FC<Props> = ({ SelectedDocuments, doc, setSelectedDocument
         setSelectedDocuments((prev) => {
             return [...prev, doc]
         })
-        setSelectedIds((prev) => {
-            return [...prev, doc.Id]
-        })
     }
 
     const handlePress = () => {
-        if (selectedIds.length === 0 && SelectedDocuments.length === 0) {
+        if (SelectedDocuments.length === 0) {
             toogleSelect()
             return
         }
@@ -45,11 +44,6 @@ const Document: React.FC<Props> = ({ SelectedDocuments, doc, setSelectedDocument
             prev.includes(doc)
                 ? prev.filter((d) => d.Id !== doc.Id)
                 : [...prev, doc]
-        )
-        setSelectedIds((prev) =>
-            prev.includes(doc.Id)
-                ? prev.filter((id) => id !== doc.Id)
-                : [...prev, doc.Id]
         )
     }
 
@@ -93,6 +87,10 @@ const Document: React.FC<Props> = ({ SelectedDocuments, doc, setSelectedDocument
             </View>
         )
     }
+
+    const isSelected = ChckIfSelected(doc, SelectedDocuments);
+
+
     return (
         <TouchableOpacity
             style={[styles.card]}
@@ -110,7 +108,7 @@ const Document: React.FC<Props> = ({ SelectedDocuments, doc, setSelectedDocument
             <View
                 style={[styles.circle]}
             >
-                {selectedIds.includes(doc.Id) && <Text style={styles.checkText}>✓</Text>}
+                {isSelected && <Text style={styles.checkText}>✓</Text>}
             </View>
         </TouchableOpacity>
     )

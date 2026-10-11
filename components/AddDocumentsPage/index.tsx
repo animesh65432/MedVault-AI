@@ -34,7 +34,6 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
     const [filterHeight, setFilterHeight] = useState(0);
     const { SelectedDocuments, setSelectedDocuments } = useContext(SelectedDocumentsContext);
     const [documents, setdocuments] = useState<DocumentRow[]>([]);
-    const [selectedIds, setSelectedIds] = useState<number[]>([]);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
     const pageRef = useRef(0);
@@ -182,8 +181,6 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
                 documents={documents}
                 onScroll={onScroll}
                 isLoadingMore={isLoadingMore}
-                selectedIds={selectedIds}
-                setSelectedIds={setSelectedIds}
                 SelectedDocuments={SelectedDocuments}
                 setSelectedDocuments={setSelectedDocuments}
                 NavbarHeight={navbarHeight + filterHeight + 10}

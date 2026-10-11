@@ -16,8 +16,6 @@ type Props = {
     onScroll: any;
     isLoadingMore: boolean;
     onEndReached?: () => void;
-    selectedIds: number[];
-    setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
     SelectedDocuments: DocumentRow[];
     setSelectedDocuments: React.Dispatch<React.SetStateAction<DocumentRow[]>>;
     NavbarHeight: number;
@@ -28,10 +26,8 @@ const Documents: React.FC<Props> = ({
     onScroll,
     isLoadingMore,
     onEndReached,
-    selectedIds,
     setSelectedDocuments,
     SelectedDocuments,
-    setSelectedIds,
     NavbarHeight,
 }) => {
     const renderItem = useCallback(
@@ -40,11 +36,9 @@ const Documents: React.FC<Props> = ({
                 doc={item}
                 SelectedDocuments={SelectedDocuments}
                 setSelectedDocuments={setSelectedDocuments}
-                selectedIds={selectedIds}
-                setSelectedIds={setSelectedIds}
             />
         ),
-        [selectedIds, SelectedDocuments]
+        [SelectedDocuments]
     );
 
     const keyExtractor = useCallback(
