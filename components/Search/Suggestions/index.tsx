@@ -32,7 +32,6 @@ const Suggestions: React.FC<Props> = ({ SearchSuggestions }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         marginTop: vScale(16),
     },
     content: {

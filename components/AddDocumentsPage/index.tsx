@@ -1,4 +1,4 @@
-import { GetDocuments } from "@/db/document"
+import { GetDocuments, GetSearchByKeyword } from "@/db/document"
 import { DocumentRow, TypeOfDocumenet } from "@/types"
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
@@ -23,7 +23,7 @@ type Props = {
 const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, SelectedCategoried }) => {
     const db = useSQLiteContext();
     const [category, setCategory] = useState<TypeOfDocumenet | null>(null);
-    const [input, setInput] = useState<string>("");
+    const [input, setInput] = useState<string | null>(null);
     const [dates, setDates] = useState({
         startDate: null as Date | null,
         endDate: null as Date | null,
@@ -46,7 +46,9 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
     }, [SelectedCategoried]);
 
     useEffect(() => {
-        if (searchQuery) setInput(searchQuery);
+        if (searchQuery && searchQuery.trim().length > 0) {
+            setInput(searchQuery);
+        }
     }, [searchQuery]);
 
     useEffect(() => {
@@ -70,15 +72,29 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
             setIsLoadingMore(true);
         }
 
+        let rows: DocumentRow[] = [];
+
         try {
-            const rows = await GetDocuments(
-                db,
-                "DESC",
-                PAGE_SIZE,
-                page * PAGE_SIZE,
-                types,
-                dates
-            );
+            if (input && input.trim().length > 0) {
+                console.log(input)
+                rows = await GetSearchByKeyword(
+                    db,
+                    input.trim(),
+                    "DESC",
+                    PAGE_SIZE,
+                    page * PAGE_SIZE,
+                );
+            }
+            else {
+                rows = await GetDocuments(
+                    db,
+                    "DESC",
+                    PAGE_SIZE,
+                    page * PAGE_SIZE,
+                    types,
+                    dates
+                );
+            }
 
             if (requestId !== requestIdRef.current) return;
 
@@ -93,7 +109,7 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
                 setIsLoadingMore(false);
             }
         }
-    }, [db, category, dates]);
+    }, [db, category, dates, input]);
 
     useEffect(() => {
         scrollY.setValue(0);
@@ -152,12 +168,13 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
                 }}
             >
                 <Filter
-                    searchQuery={searchQuery}
+                    searchQuery={input}
                     startDate={dates.startDate ? dates.startDate.toISOString() : null}
                     endDate={dates.endDate ? dates.endDate.toISOString() : null}
                     SelectedCategoried={category}
                     setCategory={setCategory}
                     setDates={setDates}
+                    setInput={setInput}
                 />
             </Animated.View>
             <Documents

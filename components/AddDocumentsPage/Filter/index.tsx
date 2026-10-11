@@ -17,9 +17,10 @@ type Props = {
         startDate: Date | null;
         endDate: Date | null;
     }>>;
+    setInput: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const Filter: React.FC<Props> = ({ setDates, setCategory, SelectedCategoried, searchQuery, startDate, endDate }) => {
+const Filter: React.FC<Props> = ({ setInput, setDates, setCategory, SelectedCategoried, searchQuery, startDate, endDate }) => {
     const router = useRouter();
     return (
         <View style={styles.container}>
@@ -38,13 +39,19 @@ const Filter: React.FC<Props> = ({ setDates, setCategory, SelectedCategoried, se
             </View>
             {
                 searchQuery &&
-                <View
+                <TouchableOpacity
+                    onPress={() => setInput("")}
                     style={styles.chip}
                 >
+                    <AntDesign
+                        name="close"
+                        size={scale(14)}
+                        color="black"
+                    />
                     <Text style={styles.chiptext}>
                         {searchQuery}
                     </Text>
-                </View>
+                </TouchableOpacity>
             }
 
             {SelectedCategoried &&

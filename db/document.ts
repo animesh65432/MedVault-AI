@@ -3,6 +3,16 @@ import { SOURCES } from "@/utils/contensnt";
 import { toLocalDateString } from "@/utils/toLocalDateString";
 import { SQLiteDatabase } from "expo-sqlite";
 
+const buildMatchQuery = (input: string): string | null => {
+    const tokens = input
+        .trim()
+        .split(/\s+/)
+        .filter(t => /[\p{L}\p{N}]/u.test(t))
+        .map(t => `"${t.replace(/"/g, '""')}"*`);
+
+    return tokens.length > 0 ? tokens.join(' ') : null;
+};
+
 async function deleteChildRowsBulk(
     db: SQLiteDatabase,
     documentIds: number[]
@@ -275,24 +285,38 @@ export const GetSearchByKeyword = async (
     db: SQLiteDatabase,
     searchQuery: string,
     ORDER: "DESC" | "ASC",
-    LIMIT: number
+    LIMIT: number,
+    OFFSET: number
 ): Promise<DocumentRow[]> => {
+    const q = searchQuery.trim();
+    if (!q) return [];
+    const matchTerm = `"${q.replace(/"/g, '""')}"*`;
+
+    const subQueries = SOURCES.map(src =>
+        src.directDocId
+            ? `SELECT ${src.ftsTable}.rowid AS docId
+               FROM ${src.ftsTable}
+               WHERE ${src.ftsTable} MATCH ?`
+            : `SELECT ${src.baseTable}.DocumentId AS docId
+               FROM ${src.ftsTable}
+               JOIN ${src.baseTable} ON ${src.baseTable}.Id = ${src.ftsTable}.rowid
+               WHERE ${src.ftsTable} MATCH ?`
+    );
+
     try {
-        const rows = await db.getAllAsync<DocumentRow>(
+        return await db.getAllAsync<DocumentRow>(
             `SELECT Documents.*
-            FROM DocumentsSearch
-            JOIN Documents ON Documents.Id = DocumentsSearch.rowid
-            WHERE DocumentsSearch MATCH ?
-            ORDER BY COALESCE(Documents.date, Documents.CreatedAt) ${ORDER}
-            LIMIT ?`,
-            [searchQuery.trim() + '*', LIMIT]
-        )
-        return rows
+             FROM Documents
+             WHERE Documents.Id IN (${subQueries.join(' UNION ')})
+             ORDER BY COALESCE(Documents.date, Documents.CreatedAt) ${ORDER}, Documents.Id DESC
+             LIMIT ? OFFSET ?`,
+            [...SOURCES.map(() => matchTerm), LIMIT, OFFSET]
+        );
     } catch (error) {
-        console.error("Error searching documents:", error)
-        return []
+        console.error("Error searching documents:", error, { matchTerm });
+        return [];
     }
-}
+};
 
 export const HasAnyDocuments = async (db: SQLiteDatabase): Promise<boolean> => {
     try {
