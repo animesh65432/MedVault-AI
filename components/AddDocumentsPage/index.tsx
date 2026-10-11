@@ -1,9 +1,10 @@
+import { SelectedDocumentsContext } from "@/context/SelectedDocuments"
 import { GetDocuments, GetSearchByKeyword } from "@/db/document"
 import { DocumentRow, TypeOfDocumenet } from "@/types"
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import { useSQLiteContext } from "expo-sqlite"
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
 import Documents from "./Documents"
 import Filter from "./Filter"
@@ -31,8 +32,8 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
     const scrollY = useRef(new Animated.Value(0)).current;
     const [navbarHeight, setNavbarHeight] = useState(0);
     const [filterHeight, setFilterHeight] = useState(0);
+    const { SelectedDocuments, setSelectedDocuments } = useContext(SelectedDocumentsContext);
     const [documents, setdocuments] = useState<DocumentRow[]>([]);
-    const [SelectedDocuments, setSelectedDocuments] = useState<DocumentRow[]>([]);
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -185,7 +186,7 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
                 setSelectedIds={setSelectedIds}
                 SelectedDocuments={SelectedDocuments}
                 setSelectedDocuments={setSelectedDocuments}
-                NavbarHeight={navbarHeight + filterHeight}
+                NavbarHeight={navbarHeight + filterHeight + 10}
                 onEndReached={loadMore}
             />
         </View>

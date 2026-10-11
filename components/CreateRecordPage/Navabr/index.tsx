@@ -1,40 +1,11 @@
 import { scale } from '@/utils/scale';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
-import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-type NavbarProps = {
-    onEdit?: () => void;
-    onDelete?: () => void;
-};
-
-const Navbar: React.FC<NavbarProps> = ({
-    onEdit,
-    onDelete,
-}) => {
-    const router = useRouter();
-
+const Navbar: React.FC = () => {
     return (
         <View style={styles.container}>
-
-            <Pressable
-                style={({ pressed }) => [
-                    styles.iconButton,
-                    pressed && styles.pressed,
-                ]}
-                onPress={() => router.push("/Documents")}
-                hitSlop={8}
-            >
-                <AntDesign
-                    name="close"
-                    size={scale(22)}
-                    color="#23423B"
-                />
-            </Pressable>
-
-
             <Pressable
                 style={({ pressed }) => [
                     styles.iconButton,

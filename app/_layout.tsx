@@ -6,6 +6,7 @@ import { AlarmContext, AlarmProvider } from "@/context/Alarm";
 import { NetworkProvider } from "@/context/Netwrok";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { RecentSearchProvider } from "@/context/RecentSearch";
+import SelectedDocumentsProvider from "@/context/SelectedDocuments";
 import { UserNameContext, UserNameProvider } from "@/context/UserName";
 import { migrateDbIfNeeded } from "@/db/database";
 import { registerForNotifications } from "@/utils/notifications";
@@ -198,24 +199,25 @@ export default function RootLayout() {
         databaseName="my-database.db"
         onInit={migrateDbIfNeeded}
       >
-
-        <NetworkProvider>
-          <RecentSearchProvider>
-            <OnboardingProvider>
-              <KeyboardProvider>
-                <AlarmProvider>
-                  <UserNameProvider>
-                    <RootLayoutContent />
-                    <Toast
-                      config={toastConfig}
-                    />
-                    <StatusBar style="auto" />
-                  </UserNameProvider>
-                </AlarmProvider>
-              </KeyboardProvider>
-            </OnboardingProvider>
-          </RecentSearchProvider>
-        </NetworkProvider>
+        <KeyboardProvider>
+          <NetworkProvider>
+            <RecentSearchProvider>
+              <OnboardingProvider>
+                <SelectedDocumentsProvider>
+                  <AlarmProvider>
+                    <UserNameProvider>
+                      <RootLayoutContent />
+                      <Toast
+                        config={toastConfig}
+                      />
+                      <StatusBar style="auto" />
+                    </UserNameProvider>
+                  </AlarmProvider>
+                </SelectedDocumentsProvider>
+              </OnboardingProvider>
+            </RecentSearchProvider>
+          </NetworkProvider>
+        </KeyboardProvider>
       </SQLiteProvider>
     </ErrorBoundary>
   );

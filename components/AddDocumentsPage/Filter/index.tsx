@@ -1,6 +1,7 @@
 import { TypeOfDocumenet } from '@/types';
 import { formatDate } from "@/utils/formatDate";
 import { scale } from '@/utils/scale';
+import { vScale } from '@/utils/vScale';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import { useRouter } from "expo-router";
@@ -96,7 +97,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
-        gap: scale(10)
+        gap: scale(10),
+        paddingVertical: vScale(5),
     },
     iconContainer: {
         width: scale(35),

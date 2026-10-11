@@ -1,21 +1,18 @@
+import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Navabr from './Navabr';
 
 const CreateRecordPage: React.FC = () => {
+    const { SelectedDocuments } = useContext(SelectedDocumentsContext)
     const router = useRouter()
-    const [UserInput, setUserInput] = useState<{
-        title: string,
-        description: string
-    }>({
-        title: "",
-        description: ""
-    })
+    const [Title, setTitle] = useState<string>("")
 
+    console.log("SelectedDocuments", SelectedDocuments)
 
     return (
         <View style={styles.container}>
@@ -27,21 +24,7 @@ const CreateRecordPage: React.FC = () => {
                     placeholderTextColor={"#23423B"}
                     autoFocus
                     onChangeText={(text) => {
-                        setUserInput((prev) => ({
-                            ...prev,
-                            title: text,
-                        }));
-                    }}
-                />
-                <TextInput
-                    style={styles.descriptionContainer}
-                    placeholder='Add description...'
-                    placeholderTextColor={"#23423B"}
-                    onChangeText={(text) => {
-                        setUserInput((prev) => ({
-                            ...prev,
-                            description: text
-                        }));
+                        setTitle(text)
                     }}
                 />
             </View>
