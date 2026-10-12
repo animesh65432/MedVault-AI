@@ -89,13 +89,11 @@ const Document: React.FC<Props> = ({ doc, SelectedIds, setSelectedIds }) => {
                 {renderPreview()}
             </View>
 
-
             <View
                 style={[styles.circle, isSelected && styles.circleSelected]}
             >
                 {isSelected && <Text style={styles.checkText}>✓</Text>}
             </View>
-
 
         </TouchableOpacity>
     )

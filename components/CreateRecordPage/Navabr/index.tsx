@@ -17,7 +17,7 @@ const Navbar: React.FC<{ light: boolean }> = ({ light }) => {
                 <Entypo
                     name="check"
                     size={scale(24)}
-                    color="#23423B"
+                    color={"#fff"}
                 />
             </Pressable>
             <Pressable
@@ -35,14 +35,13 @@ const Navbar: React.FC<{ light: boolean }> = ({ light }) => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: scale(40),
-        paddingBottom: scale(8),
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: scale(16)
+        paddingHorizontal: scale(16),
+        paddingVertical: scale(12),
+        marginTop: scale(20),
     },
-
     actions: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
 
-        backgroundColor: '#EEF6F2',
+        backgroundColor: '#23423B',
     },
 
     deleteButton: {

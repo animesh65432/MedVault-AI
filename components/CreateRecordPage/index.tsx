@@ -49,60 +49,65 @@ const CreateRecordPage: React.FC = () => {
     const dateRange = getSelectedDocumentsDateRange(SelectedDocuments);
 
     return (
-        <ScrollView
-            style={styles.container}
-            contentContainerStyle={{ gap: vScale(20) }}
-        >
-            <View style={{ height: heroHeight }}>
-                {hasImage && (
-                    <>
-                        <Image
-                            source={{ uri: SelectedDocuments[0].SourceFilePath }}
-                            style={styles.RecordIntroImage}
-                            resizeMode="cover"
-                        />
-                        <View pointerEvents="none" style={styles.overlay} />
-                    </>
-                )}
-
+        <View style={{ flex: 1, backgroundColor: '#fff' }}>
+            <View
+                style={styles.stickyNav}
+                pointerEvents="box-none"
+            >
                 <Navabr light={hasImage} />
+            </View>
+            <ScrollView
+                style={styles.container}
+                contentContainerStyle={{ gap: vScale(20) }}
+            >
+                <View style={{ height: heroHeight }}>
+                    {hasImage && (
+                        <>
+                            <Image
+                                source={{ uri: SelectedDocuments[0].SourceFilePath }}
+                                style={styles.RecordIntroImage}
+                                resizeMode="stretch"
+                            />
+                            <View pointerEvents="none" style={styles.overlay} />
+                        </>
+                    )}
+                    <View style={styles.InputBoxContainer}>
+                        <TextInput
+                            style={[styles.titleContainer, { color: textColor }]}
+                            placeholder="Add a title"
+                            placeholderTextColor={hasImage ? "rgba(255,255,255,0.7)" : "#23423B"}
+                            autoFocus
+                            onChangeText={setTitle}
+                        />
+                    </View>
 
-                <View style={styles.InputBoxContainer}>
-                    <TextInput
-                        style={[styles.titleContainer, { color: textColor }]}
-                        placeholder="Add a title"
-                        placeholderTextColor={hasImage ? "rgba(255,255,255,0.7)" : "#23423B"}
-                        autoFocus
-                        onChangeText={setTitle}
-                    />
+                    <TouchableOpacity
+                        style={styles.Select_PhotosContainer}
+                        onPress={() => router.push("/AddDocuments")}
+                    >
+                        <Entypo name="camera" size={scale(28)} color="#23423B" />
+                        <Text style={styles.selectPhotosText}>Select Photos</Text>
+                    </TouchableOpacity>
+
+                    {SelectedDocuments.length > 0
+                        &&
+                        <View style={styles.descriptionContainer}>
+                            {dateRange &&
+                                <Text style={{ color: textColor }}>
+                                    {formatDate(dateRange.oldestDate)} - {formatDate(dateRange.newestDate)}
+                                </Text>
+                            }
+                        </View>
+                    }
                 </View>
 
-                <TouchableOpacity
-                    style={styles.Select_PhotosContainer}
-                    onPress={() => router.push("/AddDocuments")}
-                >
-                    <Entypo name="camera" size={scale(28)} color="#23423B" />
-                    <Text style={styles.selectPhotosText}>Select Photos</Text>
-                </TouchableOpacity>
-
-                {SelectedDocuments.length > 0
-                    &&
-                    <View style={styles.descriptionContainer}>
-                        {dateRange &&
-                            <Text style={{ color: textColor }}>
-                                {formatDate(dateRange.oldestDate)} - {formatDate(dateRange.newestDate)}
-                            </Text>
-                        }
-                    </View>
-                }
-            </View>
-
-            <Doucuments
-                documents={SelectedDocuments}
-                SelectedIds={SelectedIds}
-                setSelectedIds={setSelectedIds}
-            />
-        </ScrollView>
+                <Doucuments
+                    documents={SelectedDocuments}
+                    SelectedIds={SelectedIds}
+                    setSelectedIds={setSelectedIds}
+                />
+            </ScrollView>
+        </View>
     );
 };
 
@@ -112,12 +117,13 @@ export const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flexDirection: "column",
         gap: vScale(20),
+        position: "relative"
     },
     InputBoxContainer: {
         display: "flex",
         flexDirection: "column",
         gap: vScale(16),
-        marginTop: vScale(50),
+        marginTop: vScale(120),
         paddingHorizontal: scale(10)
     },
     titleContainer: {
@@ -171,6 +177,13 @@ export const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
+    },
+    stickyNav: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10,
     },
 })
 
