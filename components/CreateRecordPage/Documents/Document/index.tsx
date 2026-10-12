@@ -3,7 +3,6 @@ import { DocumentRow } from "@/types"
 import { fs } from "@/utils/fs"
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
-import { useRouter } from "expo-router"
 import React from "react"
 import {
     ActivityIndicator,
@@ -15,18 +14,16 @@ import {
 } from "react-native"
 
 type Props = {
-    doc: DocumentRow
+    doc: DocumentRow;
+    SelectedIds: number[];
+    setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-const Document: React.FC<Props> = ({ doc }) => {
-    const router = useRouter()
-
+const Document: React.FC<Props> = ({ doc, SelectedIds, setSelectedIds }) => {
     const { thumbUri, thumbFailed } = usePdfThumbnail(
         doc.SourceFilePath,
         doc.IsPdf
     )
-
-
     const renderPreview = () => {
         if (!doc.IsPdf) {
             return (
@@ -43,7 +40,7 @@ const Document: React.FC<Props> = ({ doc }) => {
                 <Image
                     source={{ uri: thumbUri }}
                     style={styles.previewImage}
-                    resizeMode="cover"
+                    resizeMode="stretch"
                 />
             )
         }
@@ -68,17 +65,38 @@ const Document: React.FC<Props> = ({ doc }) => {
         )
     }
 
+    const OnlongPress = () => {
+        if (SelectedIds.includes(doc.Id)) {
+            setSelectedIds((prev) => prev.filter((id) => id !== doc.Id))
+        } else {
+            setSelectedIds((prev) => [...prev, doc.Id])
+        }
+    }
+
+    const isSelected = SelectedIds.includes(doc.Id);
+
+
     return (
         <TouchableOpacity
             style={styles.card}
             activeOpacity={0.8}
             delayLongPress={300}
+            onLongPress={OnlongPress}
         >
             <View
                 style={styles.previewContainer}
             >
                 {renderPreview()}
             </View>
+
+
+            <View
+                style={[styles.circle, isSelected && styles.circleSelected]}
+            >
+                {isSelected && <Text style={styles.checkText}>✓</Text>}
+            </View>
+
+
         </TouchableOpacity>
     )
 }
@@ -100,7 +118,7 @@ const styles = StyleSheet.create({
 
     previewContainer: {
         width: "100%",
-        height: vScale(160),
+        height: vScale(200),
         overflow: "hidden",
         position: "relative",
         borderRadius: scale(10),

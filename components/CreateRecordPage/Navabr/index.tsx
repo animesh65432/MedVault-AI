@@ -3,7 +3,8 @@ import Entypo from '@expo/vector-icons/Entypo';
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<{ light: boolean }> = ({ light }) => {
+    const color = light ? "#fff" : "#23423B";
     return (
         <View style={styles.container}>
             <Pressable
@@ -25,7 +26,7 @@ const Navbar: React.FC = () => {
                 <Entypo
                     name="dots-three-vertical"
                     size={scale(24)}
-                    color="#23423B"
+                    color={color}
                 />
             </Pressable>
         </View>
@@ -34,12 +35,12 @@ const Navbar: React.FC = () => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: scale(10),
+        paddingTop: scale(40),
         paddingBottom: scale(8),
-
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        paddingHorizontal: scale(16)
     },
 
     actions: {

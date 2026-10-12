@@ -1,4 +1,6 @@
 import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
+import { DocumentRow } from '@/types';
+import { formatDate } from "@/utils/formatDate";
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -8,48 +10,70 @@ import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOp
 import Doucuments from "./Documents";
 import Navabr from './Navabr';
 
-const CreateRecordPage: React.FC = () => {
-    const { width, height } = Dimensions.get('window');
-    const { SelectedDocuments } = useContext(SelectedDocumentsContext)
-    const router = useRouter()
-    const [Title, setTitle] = useState<string>("")
-    const hasSelectedDocuments = SelectedDocuments.length > 0;
-    const seventyPercentHeight = height * 0.8;
+function getSelectedDocumentsDateRange(
+    documents: DocumentRow[]
+): { oldestDate: string; newestDate: string } | null {
+    if (documents.length === 0) return null;
 
-    console.log("SelectedDocuments", SelectedDocuments);
+    const getDate = (document: DocumentRow) =>
+        document.date ?? document.CreatedAt;
+
+    let oldestDate = getDate(documents[0]);
+    let newestDate = getDate(documents[0]);
+
+    for (const document of documents) {
+        const currentDate = getDate(document);
+
+        if (currentDate.localeCompare(oldestDate) < 0) {
+            oldestDate = currentDate;
+        }
+
+        if (currentDate.localeCompare(newestDate) > 0) {
+            newestDate = currentDate;
+        }
+    }
+
+    return { oldestDate, newestDate };
+}
+
+const CreateRecordPage: React.FC = () => {
+    const { height } = Dimensions.get('window');
+    const [SelectedIds, setSelectedIds] = useState<number[]>([]);
+    const { SelectedDocuments } = useContext(SelectedDocumentsContext);
+    const router = useRouter();
+    const [Title, setTitle] = useState<string>("");
+
+    const hasImage = SelectedDocuments.length > 0 && !SelectedDocuments[0].IsPdf;
+    const heroHeight = height * 0.8;
+    const textColor = hasImage ? "#fff" : "#23423B";
+    const dateRange = getSelectedDocumentsDateRange(SelectedDocuments);
 
     return (
         <ScrollView
             style={styles.container}
+            contentContainerStyle={{ gap: vScale(20) }}
         >
-            <View
-                style={{ height: seventyPercentHeight, position: "relative" }}
-            >
-                <Navabr />
-
-                {hasSelectedDocuments && !SelectedDocuments[0].IsPdf && (
+            <View style={{ height: heroHeight }}>
+                {hasImage && (
                     <>
                         <Image
                             source={{ uri: SelectedDocuments[0].SourceFilePath }}
                             style={styles.RecordIntroImage}
-                            resizeMode="stretch"
+                            resizeMode="cover"
                         />
-
-                        <View
-                            pointerEvents="none"
-                            style={styles.overlay}
-                        />
+                        <View pointerEvents="none" style={styles.overlay} />
                     </>
                 )}
+
+                <Navabr light={hasImage} />
+
                 <View style={styles.InputBoxContainer}>
                     <TextInput
-                        style={styles.titleContainer}
-                        placeholder='Add a title'
-                        placeholderTextColor={"#23423B"}
+                        style={[styles.titleContainer, { color: textColor }]}
+                        placeholder="Add a title"
+                        placeholderTextColor={hasImage ? "rgba(255,255,255,0.7)" : "#23423B"}
                         autoFocus
-                        onChangeText={(text) => {
-                            setTitle(text)
-                        }}
+                        onChangeText={setTitle}
                     />
                 </View>
 
@@ -57,22 +81,30 @@ const CreateRecordPage: React.FC = () => {
                     style={styles.Select_PhotosContainer}
                     onPress={() => router.push("/AddDocuments")}
                 >
-                    <View>
-                        <Entypo
-                            name="camera"
-                            size={scale(28)}
-                            color="#23423B"
-                        />
-                    </View>
+                    <Entypo name="camera" size={scale(28)} color="#23423B" />
                     <Text style={styles.selectPhotosText}>Select Photos</Text>
                 </TouchableOpacity>
+
+                {SelectedDocuments.length > 0
+                    &&
+                    <View style={styles.descriptionContainer}>
+                        {dateRange &&
+                            <Text style={{ color: textColor }}>
+                                {formatDate(dateRange.oldestDate)} - {formatDate(dateRange.newestDate)}
+                            </Text>
+                        }
+                    </View>
+                }
             </View>
+
             <Doucuments
                 documents={SelectedDocuments}
+                SelectedIds={SelectedIds}
+                setSelectedIds={setSelectedIds}
             />
         </ScrollView>
-    )
-}
+    );
+};
 
 export const styles = StyleSheet.create({
     container: {
@@ -86,21 +118,24 @@ export const styles = StyleSheet.create({
         flexDirection: "column",
         gap: vScale(16),
         marginTop: vScale(50),
-        paddingHorizontal: scale(20)
+        paddingHorizontal: scale(10)
     },
     titleContainer: {
         paddingHorizontal: scale(16),
         paddingVertical: vScale(12),
         fontFamily: "Aeonik-Medium",
         fontSize: scale(60),
+        color: "#23423B",
     },
     descriptionContainer: {
-        borderBlockColor: "#EEF6F2",
-        borderWidth: scale(1),
         paddingHorizontal: scale(16),
         paddingVertical: vScale(12),
         fontFamily: "Aeonik-Medium",
         fontSize: scale(18),
+        display: "flex",
+        marginHorizontal: "auto",
+        alignSelf: "flex-end",
+        marginTop: "auto"
     },
     Select_PhotosContainer: {
         display: "flex",
@@ -111,7 +146,10 @@ export const styles = StyleSheet.create({
         borderRadius: scale(16),
         paddingHorizontal: scale(16),
         paddingVertical: vScale(20),
-        marginTop: vScale(10)
+        marginTop: vScale(20),
+        width: "90%",
+        marginLeft: "auto",
+        marginRight: "auto",
     },
     selectPhotosText: {
         fontFamily: "Aeonik-Medium",

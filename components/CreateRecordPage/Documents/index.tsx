@@ -5,10 +5,12 @@ import { StyleSheet, View } from 'react-native'
 import Document from "./Document"
 
 type Props = {
-    documents: DocumentRow[]
+    documents: DocumentRow[];
+    SelectedIds: number[];
+    setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-const Documents: React.FC<Props> = ({ documents }) => {
+const Documents: React.FC<Props> = ({ documents, SelectedIds, setSelectedIds }) => {
     return (
         <View style={style.Container}>
             {
@@ -16,6 +18,8 @@ const Documents: React.FC<Props> = ({ documents }) => {
                     return <Document
                         doc={doc}
                         key={doc.Id}
+                        SelectedIds={SelectedIds}
+                        setSelectedIds={setSelectedIds}
                     />
                 })
             }
@@ -32,7 +36,7 @@ const style = StyleSheet.create({
         paddingHorizontal: scale(16),
         flexWrap: "wrap",
         marginBottom: scale(100),
-        marginTop: scale(50)
+        marginTop: scale(10)
     }
 })
 
