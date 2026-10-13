@@ -3,16 +3,6 @@ import { SOURCES } from "@/utils/contensnt";
 import { toLocalDateString } from "@/utils/toLocalDateString";
 import { SQLiteDatabase } from "expo-sqlite";
 
-const buildMatchQuery = (input: string): string | null => {
-    const tokens = input
-        .trim()
-        .split(/\s+/)
-        .filter(t => /[\p{L}\p{N}]/u.test(t))
-        .map(t => `"${t.replace(/"/g, '""')}"*`);
-
-    return tokens.length > 0 ? tokens.join(' ') : null;
-};
-
 async function deleteChildRowsBulk(
     db: SQLiteDatabase,
     documentIds: number[]

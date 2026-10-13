@@ -8,9 +8,10 @@ type Props = {
     documents: DocumentRow[];
     SelectedIds: number[];
     setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
+    SelectionMode: boolean;
 }
 
-const Documents: React.FC<Props> = ({ documents, SelectedIds, setSelectedIds }) => {
+const Documents: React.FC<Props> = ({ SelectionMode, documents, SelectedIds, setSelectedIds }) => {
     return (
         <View style={style.Container}>
             {
@@ -20,6 +21,7 @@ const Documents: React.FC<Props> = ({ documents, SelectedIds, setSelectedIds }) 
                         key={doc.Id}
                         SelectedIds={SelectedIds}
                         setSelectedIds={setSelectedIds}
+                        SelectionMode={SelectionMode}
                     />
                 })
             }

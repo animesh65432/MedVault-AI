@@ -3,6 +3,7 @@ import { DocumentRow } from "@/types"
 import { fs } from "@/utils/fs"
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
+import { useRouter } from "expo-router"
 import React from "react"
 import {
     ActivityIndicator,
@@ -17,9 +18,11 @@ type Props = {
     doc: DocumentRow;
     SelectedIds: number[];
     setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
+    SelectionMode: boolean;
 }
 
-const Document: React.FC<Props> = ({ doc, SelectedIds, setSelectedIds }) => {
+const Document: React.FC<Props> = ({ SelectionMode, doc, SelectedIds, setSelectedIds }) => {
+    const router = useRouter()
     const { thumbUri, thumbFailed } = usePdfThumbnail(
         doc.SourceFilePath,
         doc.IsPdf
@@ -73,6 +76,16 @@ const Document: React.FC<Props> = ({ doc, SelectedIds, setSelectedIds }) => {
         }
     }
 
+    const handlePress = () => {
+        if (SelectionMode) {
+            OnlongPress()
+            return
+        }
+        if (doc.date) {
+            router.push(`/document/${doc.Id}`)
+        }
+    }
+
     const isSelected = SelectedIds.includes(doc.Id);
 
 
@@ -82,18 +95,20 @@ const Document: React.FC<Props> = ({ doc, SelectedIds, setSelectedIds }) => {
             activeOpacity={0.8}
             delayLongPress={300}
             onLongPress={OnlongPress}
+            onPress={handlePress}
         >
             <View
                 style={styles.previewContainer}
             >
                 {renderPreview()}
             </View>
-
-            <View
-                style={[styles.circle, isSelected && styles.circleSelected]}
-            >
-                {isSelected && <Text style={styles.checkText}>✓</Text>}
-            </View>
+            {SelectionMode &&
+                <TouchableOpacity
+                    style={[styles.circle, isSelected && styles.circleSelected]}
+                >
+                    {isSelected && <Text style={styles.checkText}>✓</Text>}
+                </TouchableOpacity>
+            }
 
         </TouchableOpacity>
     )
@@ -120,6 +135,7 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         position: "relative",
         borderRadius: scale(10),
+        display: "flex"
     },
     previewSelected: {
         transform: [{ scale: 0.86 }],
@@ -162,6 +178,7 @@ const styles = StyleSheet.create({
         fontFamily: "Aeonik-Medium",
         fontSize: scale(12),
         color: "#23423B",
+        width: "80%",
     },
     circle: {
         position: "absolute",

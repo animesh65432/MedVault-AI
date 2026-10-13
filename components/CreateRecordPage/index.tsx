@@ -1,14 +1,20 @@
 import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
+import { CheckRecordExists, CreateRecord } from '@/db/Record';
+import { usePdfThumbnail } from '@/hooks/usePdfThumbnail';
 import { DocumentRow } from '@/types';
 import { formatDate } from "@/utils/formatDate";
+import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useRouter } from 'expo-router';
-import React, { useContext, useState } from 'react';
+import { useSQLiteContext } from 'expo-sqlite';
+import React, { useContext, useEffect, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Toast from 'react-native-toast-message';
 import Doucuments from "./Documents";
 import Navabr from './Navabr';
+import SelectionModeNavbar from './SelectionModeNavbar';
 
 function getSelectedDocumentsDateRange(
     documents: DocumentRow[]
@@ -38,15 +44,72 @@ function getSelectedDocumentsDateRange(
 
 const CreateRecordPage: React.FC = () => {
     const { height } = Dimensions.get('window');
+    const db = useSQLiteContext();
     const [SelectedIds, setSelectedIds] = useState<number[]>([]);
-    const { SelectedDocuments } = useContext(SelectedDocumentsContext);
+    const { SelectedDocuments, setSelectedDocuments } = useContext(SelectedDocumentsContext);
     const router = useRouter();
     const [Title, setTitle] = useState<string>("");
-
     const hasImage = SelectedDocuments.length > 0 && !SelectedDocuments[0].IsPdf;
+    const hasPdf = SelectedDocuments.length > 0 && !!SelectedDocuments[0].IsPdf;
+    const { thumbUri, thumbFailed } = usePdfThumbnail(SelectedDocuments[0]?.SourceFilePath ?? '', SelectedDocuments[0]?.IsPdf);
     const heroHeight = height * 0.8;
     const textColor = hasImage ? "#fff" : "#23423B";
     const dateRange = getSelectedDocumentsDateRange(SelectedDocuments);
+
+    const SelectionMode = SelectedIds.length > 0;
+
+    const removeSelectedDocuments = () => {
+        if (SelectedIds.length === 0) return;
+        const remainingDocuments = SelectedDocuments.filter(doc => !SelectedIds.includes(doc.Id));
+        setSelectedDocuments(remainingDocuments);
+        setSelectedIds([]);
+    }
+
+    useEffect(() => {
+        return () => {
+            setSelectedDocuments([]);
+        };
+    }, []);
+
+    const ShowdefultPdf = thumbFailed && hasPdf;
+
+    const handleCreateRecord = async () => {
+        if (Title.trim() === "") {
+            Toast.show({
+                type: "error",
+                text1: "Please enter a title for the record."
+            })
+            return;
+        }
+        else if (SelectedDocuments.length === 0) {
+            Toast.show({
+                type: "error",
+                text1: "didn't select any documents to create a record."
+            })
+            return;
+        }
+        try {
+            const recordExists = await CheckRecordExists(db, Title);
+            if (recordExists) {
+                Toast.show({
+                    type: "error",
+                    text1: "A record with this title already exists. Please choose a different title."
+                });
+                return;
+            }
+            await CreateRecord(db, Title, SelectedIds);
+            Toast.show({
+                type: "success",
+                text1: "Record created successfully!"
+            });
+        } catch (error) {
+            console.error("Failed to create record:", error);
+            Toast.show({
+                type: "error",
+                text1: "Failed to create record."
+            });
+        }
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -54,13 +117,29 @@ const CreateRecordPage: React.FC = () => {
                 style={styles.stickyNav}
                 pointerEvents="box-none"
             >
-                <Navabr light={hasImage} />
+                {
+                    SelectionMode &&
+                    <SelectionModeNavbar
+                        removeSelectedDocuments={removeSelectedDocuments}
+                    />
+                }
+                {!SelectionMode &&
+                    <Navabr
+                        handleCreateRecord={handleCreateRecord}
+                    />
+                }
             </View>
             <ScrollView
                 style={styles.container}
                 contentContainerStyle={{ gap: vScale(20) }}
             >
-                <View style={{ height: heroHeight }}>
+                <View
+                    style={{
+                        height: heroHeight,
+                        backgroundColor: ShowdefultPdf ? "#EEF6A2" : "transparent",
+                        position: "relative"
+                    }}
+                >
                     {hasImage && (
                         <>
                             <Image
@@ -71,6 +150,15 @@ const CreateRecordPage: React.FC = () => {
                             <View pointerEvents="none" style={styles.overlay} />
                         </>
                     )}
+                    {hasPdf && thumbUri && <>
+                        <Image
+                            source={{ uri: thumbUri }}
+                            style={styles.RecordIntroImage}
+                            resizeMode="stretch"
+                        />
+                        <View pointerEvents="none" style={styles.overlay} />
+                    </>
+                    }
                     <View style={styles.InputBoxContainer}>
                         <TextInput
                             style={[styles.titleContainer, { color: textColor }]}
@@ -88,6 +176,17 @@ const CreateRecordPage: React.FC = () => {
                         <Entypo name="camera" size={scale(28)} color="#23423B" />
                         <Text style={styles.selectPhotosText}>Select Photos</Text>
                     </TouchableOpacity>
+                    {
+                        ShowdefultPdf &&
+                        <View style={styles.pdfPlaceholder}>
+                            <View style={styles.pdfIcon}>
+                                <Text style={styles.pdfIconText}>PDF</Text>
+                            </View>
+                            <Text style={styles.previewFallbackText}>
+                                {SelectedDocuments[0].title}
+                            </Text>
+                        </View>
+                    }
 
                     {SelectedDocuments.length > 0
                         &&
@@ -100,11 +199,11 @@ const CreateRecordPage: React.FC = () => {
                         </View>
                     }
                 </View>
-
                 <Doucuments
                     documents={SelectedDocuments}
                     SelectedIds={SelectedIds}
                     setSelectedIds={setSelectedIds}
+                    SelectionMode={SelectionMode}
                 />
             </ScrollView>
         </View>
@@ -184,6 +283,33 @@ export const styles = StyleSheet.create({
         left: 0,
         right: 0,
         zIndex: 10,
+    },
+    pdfPlaceholder: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#EEF6A2",
+    },
+    pdfIcon: {
+        width: scale(142),
+        height: scale(142),
+        borderRadius: scale(17),
+        backgroundColor: "#23423B",
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: vScale(7),
+    },
+    pdfIconText: {
+        fontFamily: "Aeonik-Medium",
+        fontSize: fs(18),
+        color: "#FFFFFF",
+        letterSpacing: 0.5,
+    },
+    previewFallbackText: {
+        fontFamily: "Aeonik-Medium",
+        fontSize: scale(18),
+        color: "#23423B",
+        width: "80%",
     },
 })
 

@@ -1,0 +1,41 @@
+import { SQLiteDatabase } from "expo-sqlite";
+
+const AssignDocumentsToRecord = async (
+    db: SQLiteDatabase,
+    documentIds: number[],
+    recordId: number
+) => {
+    if (documentIds.length === 0) return;
+    const placeholders = documentIds.map(() => '?').join(',');
+    await db.runAsync(
+        `UPDATE Documents
+     SET RecordId = ?, UpdatedAt = CURRENT_TIMESTAMP
+     WHERE Id IN (${placeholders})`,
+        [recordId, ...documentIds]
+    );
+};
+
+export const CheckRecordExists = async (
+    db: SQLiteDatabase,
+    name: string
+): Promise<boolean> => {
+    const result = db.getFirstSync<{ count: number }>(
+        `SELECT COUNT(*) as count FROM Records WHERE Name = ?`,
+        [name]
+    );
+    return (result?.count ?? 0) > 0;
+};
+
+export const CreateRecord = async (
+    db: SQLiteDatabase,
+    name: string,
+    documentIds: number[]
+): Promise<number> => {
+    const result = await db.runAsync(
+        `INSERT INTO Records (Name) VALUES (?)`,
+        [name]
+    );
+
+    await AssignDocumentsToRecord(db, documentIds, result.lastInsertRowId);
+    return result.lastInsertRowId;
+};

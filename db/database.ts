@@ -20,8 +20,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
 
             CREATE TABLE IF NOT EXISTS Records(
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                Name STRING NOT NULL,
-                Description STRING NOT NULL
+                Name TEXT UNIQUE NOT NULL
             );
 
             CREATE TABLE IF NOT EXISTS Documents (

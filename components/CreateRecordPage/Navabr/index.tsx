@@ -1,10 +1,17 @@
 import { scale } from '@/utils/scale';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-const Navbar: React.FC<{ light: boolean }> = ({ light }) => {
-    const color = light ? "#fff" : "#23423B";
+type Props = {
+    handleCreateRecord: () => void;
+}
+
+const Navbar: React.FC<Props> = ({ handleCreateRecord }) => {
+    const router = useRouter();
+
     return (
         <View style={styles.container}>
             <Pressable
@@ -13,20 +20,28 @@ const Navbar: React.FC<{ light: boolean }> = ({ light }) => {
                     pressed && styles.pressed,
                 ]}
                 hitSlop={8}
+                onPress={() => router.push("/Documents")}
+            >
+                <AntDesign
+                    name="arrow-left"
+                    size={scale(24)}
+                    color="#fff"
+                />
+
+            </Pressable>
+
+            <Pressable
+                style={({ pressed }) => [
+                    styles.iconButton,
+                    pressed && styles.pressed,
+                ]}
+                hitSlop={8}
+                onPress={handleCreateRecord}
             >
                 <Entypo
                     name="check"
                     size={scale(24)}
                     color={"#fff"}
-                />
-            </Pressable>
-            <Pressable
-                hitSlop={8}
-            >
-                <Entypo
-                    name="dots-three-vertical"
-                    size={scale(24)}
-                    color={color}
                 />
             </Pressable>
         </View>
@@ -51,7 +66,7 @@ const styles = StyleSheet.create({
     iconButton: {
         width: scale(44),
         height: scale(44),
-        borderRadius: scale(14),
+        borderRadius: scale(24),
 
         alignItems: 'center',
         justifyContent: 'center',
