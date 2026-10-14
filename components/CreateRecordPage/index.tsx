@@ -97,7 +97,12 @@ const CreateRecordPage: React.FC = () => {
                 });
                 return;
             }
-            await CreateRecord(db, Title, SelectedIds);
+            const filteredDocumentIds = SelectedDocuments.map(doc => doc.Id);
+
+            await CreateRecord(db, Title, filteredDocumentIds);
+
+            router.push("/Documents")
+
             Toast.show({
                 type: "success",
                 text1: "Record created successfully!"

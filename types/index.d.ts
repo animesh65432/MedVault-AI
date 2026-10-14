@@ -445,3 +445,9 @@ export type MedicineReminder = {
     repeat: string;
     MedicineId: number;
 };
+
+export type RecordRow = {
+    Id: number;
+    Name: string;
+    Documents: DocumentRow[]
+}

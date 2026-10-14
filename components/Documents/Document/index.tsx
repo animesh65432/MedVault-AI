@@ -78,7 +78,7 @@ const Document: React.FC<Props> = ({ doc, selectedIds, setSelectedIds }) => {
                         <Text style={styles.pdfIconText}>PDF</Text>
                     </View>
                     <Text style={styles.previewFallbackText}>
-                        Preview unavailable
+                        {doc.title}
                     </Text>
                 </View>
             )
@@ -179,9 +179,11 @@ const styles = StyleSheet.create({
         letterSpacing: 0.5,
     },
     previewFallbackText: {
-        fontFamily: "Aeonik-Regular",
-        fontSize: scale(9),
+        fontFamily: "Aeonik-Medium",
+        fontSize: scale(13),
         color: "#23423B",
+        width: "80%",
+        textAlign: "center",
     },
 
     /* ---------------- Selection ---------------- */

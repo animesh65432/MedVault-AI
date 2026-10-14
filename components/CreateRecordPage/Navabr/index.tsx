@@ -11,7 +11,6 @@ type Props = {
 
 const Navbar: React.FC<Props> = ({ handleCreateRecord }) => {
     const router = useRouter();
-
     return (
         <View style={styles.container}>
             <Pressable

@@ -14,6 +14,10 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Animated, LayoutChangeEvent, StyleSheet, Text, View } from "react-native";
 import BelowNavbar from "./BelowNavbar";
 import Navbar from "./Navbar";
+import Records from "./Records";
+import Tabs from "./Tabs";
+
+export type TypeTabs = "Documents" | "Records"
 
 
 const PAGE_SIZE = 20;
@@ -21,13 +25,14 @@ const PAGE_SIZE = 20;
 const DocumentsPage: React.FC = () => {
     const db = useSQLiteContext();
     const navigation = useNavigation();
+    const [activeTab, setActiveTab] = useState<TypeTabs>("Documents");
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
     const [CurrentDate, SetCurrentDate] = useState<string>("");
     const [documents, setdocuments] = useState<DocumentRow[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
     const [navbarHeight, setNavbarHeight] = useState<number>(0);
-    const selectionMode = selectedIds.length > 0;
+    const selectionMode = selectedIds.length > 0 && activeTab === "Documents";
 
     const pageRef = useRef(1);
     const hasMoreRef = useRef(true);
@@ -69,6 +74,12 @@ const DocumentsPage: React.FC = () => {
     const fetchDocuments = useCallback(async () => {
         setIsLoading(true);
         try {
+
+            if (activeTab !== "Documents") {
+                setdocuments([]);
+                return;
+            }
+
             const rows = await GetDocuments(db, "DESC", PAGE_SIZE, 0, [], {
                 startDate: null,
                 endDate: null,
@@ -84,6 +95,12 @@ const DocumentsPage: React.FC = () => {
     }, [db]);
 
     const loadMore = useCallback(async () => {
+
+        if (activeTab !== "Documents") {
+            setdocuments([]);
+            return;
+        }
+
         if (!hasMoreRef.current || isLoadingMoreRef.current) return;
         isLoadingMoreRef.current = true;
         setIsLoadingMore(true);
@@ -140,7 +157,6 @@ const DocumentsPage: React.FC = () => {
         setSelectedIds([])
         fetchDocuments()
     }
-
     return (
         <View style={styles.container}>
             <Animated.View
@@ -152,6 +168,10 @@ const DocumentsPage: React.FC = () => {
                 }}
             >
                 <Navbar />
+                <Tabs
+                    activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                />
             </Animated.View>
 
             <Animated.View
@@ -163,20 +183,27 @@ const DocumentsPage: React.FC = () => {
                 </View>
             </Animated.View>
 
-            {isLoading && documents.length === 0 ? (
-                <DocumentsSkeleton count={20} />
-            ) : (
-                <Documents
-                    documents={documents}
-                    onScroll={onScroll}
-                    navbarHeight={navbarHeight}
-                    SetCurrentDate={SetCurrentDate}
-                    isLoadingMore={isLoadingMore}
-                    onEndReached={loadMore}
-                    selectedIds={selectedIds}
-                    setSelectedIds={setSelectedIds}
-                />
-            )}
+            {activeTab === "Documents" &&
+                <>
+                    {isLoading && documents.length === 0 ? (
+                        <DocumentsSkeleton count={20} />
+                    ) : (
+                        <Documents
+                            documents={documents}
+                            onScroll={onScroll}
+                            navbarHeight={navbarHeight}
+                            SetCurrentDate={SetCurrentDate}
+                            isLoadingMore={isLoadingMore}
+                            onEndReached={loadMore}
+                            selectedIds={selectedIds}
+                            setSelectedIds={setSelectedIds}
+                        />
+                    )}
+                </>
+            }
+            {activeTab === "Records" &&
+                <Records />
+            }
             <ChatBotAI
                 currentDocument="false"
             />
@@ -206,6 +233,9 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         width: "100%",
         paddingVertical: vScale(10),
+        display: "flex",
+        flexDirection: "column",
+        gap: vScale(10)
     },
     TopStickyDate: {
         position: "absolute",
