@@ -130,7 +130,7 @@ const DocumentsPage: React.FC = () => {
         useCallback(() => {
             const timeout = setTimeout(() => fetchDocuments(), 300);
             return () => clearTimeout(timeout);
-        }, [fetchDocuments])
+        }, [fetchDocuments, activeTab])
     );
 
     useEffect(() => {

@@ -1,3 +1,4 @@
+import { DocumentRow, RecordRow } from "@/types";
 import { SQLiteDatabase } from "expo-sqlite";
 
 const AssignDocumentsToRecord = async (
@@ -32,8 +33,6 @@ export const CreateRecord = async (
     documentIds: number[]
 ): Promise<number> => {
 
-    console.log("documentIds in CreateRecord:", documentIds);
-
     const result = await db.runAsync(
         `INSERT INTO Records (Name) VALUES (?)`,
         [name]
@@ -43,29 +42,32 @@ export const CreateRecord = async (
     return result.lastInsertRowId;
 };
 
-export const GetAllDocumentsForRecord = async (
-    db: SQLiteDatabase,
-    recordId: number
-): Promise<number[]> => {
-    const rows = await db.getAllAsync<{ Id: number }>(
-        `SELECT * FROM Documents WHERE RecordId = ?`,
-        [recordId]
-    );
-    return rows.map(row => row.Id);
-};
-
-export const GetRecords = async (
+export const GetSummaryRecords = async (
     db: SQLiteDatabase,
     order: "ASC" | "DESC" = "DESC",
     limit: number = 20,
-    offset: number = 0
-): Promise<[]> => {
+    offset: number = 0,
+    docsPerRecord: number = 3
+) => {
 
-    const rows = await db.getAllAsync(
-        `SELECT * FROM Documents WHERE RecordId IS NOT NULL`,
+    const records = await db.getAllAsync<RecordRow>(
+        `SELECT * FROM Records ORDER BY UpdatedAt ${order} LIMIT ? OFFSET ?`,
+        [limit, offset]
     );
 
-    console.log("Fetched Records:", rows);
+    const result = await Promise.all(
+        records.map(async (record) => ({
+            ...record,
+            documents: await db.getAllAsync<DocumentRow>(
+                `SELECT Id, RecordId, title, type, date, IsPdf, risk_level
+         FROM Documents
+         WHERE RecordId = ?
+         ORDER BY Id DESC
+         LIMIT ?`,
+                [record.Id, docsPerRecord]
+            ),
+        }))
+    );
 
-    return [];
+    return result;
 };
