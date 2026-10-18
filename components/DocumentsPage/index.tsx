@@ -157,6 +157,7 @@ const DocumentsPage: React.FC = () => {
         setSelectedIds([])
         fetchDocuments()
     }
+
     return (
         <View style={styles.container}>
             <Animated.View
@@ -168,10 +169,12 @@ const DocumentsPage: React.FC = () => {
                 }}
             >
                 <Navbar />
+
                 <Tabs
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}
                 />
+
             </Animated.View>
 
             <Animated.View
@@ -202,7 +205,9 @@ const DocumentsPage: React.FC = () => {
                 </>
             }
             {activeTab === "Records" &&
-                <Records />
+                <Records
+                    navbarHeight={navbarHeight}
+                />
             }
             <ChatBotAI
                 currentDocument="false"

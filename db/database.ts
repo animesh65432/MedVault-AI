@@ -22,12 +22,12 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 Name TEXT UNIQUE NOT NULL,
                 UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+                CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                PreviewDocIds TEXT NOT NULL DEFAULT '[]'
             );
 
             CREATE TABLE IF NOT EXISTS Documents (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                RecordId INTEGER,
                 title TEXT NOT NULL,
                 type TEXT NOT NULL,
                 IsPdf BOOLEAN NOT NULL DEFAULT 0,
@@ -77,13 +77,11 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 SourceFilePath TEXT NOT NULL,
-                Hash TEXT NOT NULL UNIQUE,
-                FOREIGN KEY (RecordId) REFERENCES Records(Id) ON DELETE CASCADE
+                Hash TEXT NOT NULL UNIQUE
             );
 
             CREATE INDEX IF NOT EXISTS idx_documents_type ON Documents(type);
             CREATE INDEX IF NOT EXISTS idx_documents_date ON Documents(date);
-            CREATE INDEX IF NOT EXISTS idx_documents_record_id ON Documents (RecordId, Id);
 
             CREATE TABLE IF NOT EXISTS DocumentTags (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -185,7 +183,6 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
 
             CREATE INDEX IF NOT EXISTS idx_billingitems_document_id ON BillingItems(DocumentId);
 
-
             -- ================= FTS5 SEARCH TABLES =================
 
             CREATE VIRTUAL TABLE IF NOT EXISTS DocumentsSearch USING fts5(
@@ -257,6 +254,40 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 content_rowid='Id'
             );
 
+            CREATE TABLE IF NOT EXISTS RecordDocuments (
+                RecordId INTEGER NOT NULL,
+                DocumentId INTEGER NOT NULL,
+                CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (RecordId, DocumentId),
+                FOREIGN KEY (RecordId) REFERENCES Records(Id) ON DELETE CASCADE,
+                FOREIGN KEY (DocumentId) REFERENCES Documents(Id) ON DELETE CASCADE
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_recorddocuments_record_recent
+            ON RecordDocuments(RecordId, CreatedAt DESC, DocumentId DESC);
+
+            -- ================= TRIGGERS WHEN USER DOCS =================
+
+            CREATE TRIGGER IF NOT EXISTS recorddocs_preview_ai
+            AFTER INSERT ON RecordDocuments BEGIN
+              UPDATE Records SET PreviewDocIds = (
+              SELECT COALESCE(json_group_array(DocumentId), '[]') FROM (
+              SELECT DocumentId FROM RecordDocuments
+              WHERE RecordId = new.RecordId
+              ORDER BY CreatedAt DESC, DocumentId DESC LIMIT 3
+            )) WHERE Id = new.RecordId;
+            END;
+            
+            CREATE TRIGGER IF NOT EXISTS recorddocs_preview_ad
+               AFTER DELETE ON RecordDocuments BEGIN
+               UPDATE Records SET PreviewDocIds = (
+                SELECT COALESCE(json_group_array(DocumentId), '[]') FROM (
+                SELECT DocumentId FROM RecordDocuments
+                WHERE RecordId = old.RecordId
+                ORDER BY CreatedAt DESC, DocumentId DESC LIMIT 3
+            )) WHERE Id = old.RecordId;
+            END;
+            
             CREATE TABLE IF NOT EXISTS ChatMessages (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 UserMessage TEXT NOT NULL,
@@ -286,9 +317,6 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
             CREATE INDEX IF NOT EXISTS idx_doselogs_scheduled_time ON DoseLogs(ScheduledTime);
             
             -- ================= SYNC TRIGGERS =================
-            -- External-content FTS5 tables do NOT auto-populate.
-            -- Every base table needs 3 triggers: insert, delete, update.
-            -- Pattern for update: delete old row from index, then insert new row.
 
             -- Documents -> DocumentsSearch
             CREATE TRIGGER IF NOT EXISTS documents_ai AFTER INSERT ON Documents BEGIN
@@ -428,4 +456,4 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
         console.error('Error during database migration:', error);
         throw error;
     }
-}
+};

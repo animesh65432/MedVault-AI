@@ -1,23 +1,47 @@
 import { GetSummaryRecords } from "@/db/Record";
-import { useSQLiteContext } from 'expo-sqlite';
-import React, { useEffect } from 'react';
-import { View } from "react-native";
+import { vScale } from "@/utils/vScale";
+import { useFocusEffect } from "@react-navigation/native";
+import { useSQLiteContext } from "expo-sqlite";
+import React, { useCallback, useState } from "react";
+import { FlatList } from "react-native";
+import Record from "./Record";
 
-const Records: React.FC = () => {
+type Props = {
+    navbarHeight: number
+};
+
+const Records: React.FC<Props> = ({ navbarHeight }) => {
+    const [records, setRecords] = useState([]);
     const db = useSQLiteContext();
 
-    async function fetchRecords() {
-        const result = await GetSummaryRecords(db);
-        console.log("Fetched records:", result);
-    }
+    useFocusEffect(
+        useCallback(() => {
+            (async () => {
+                try {
+                    const rows = await GetSummaryRecords(db);
+                    setRecords(rows);
+                } catch (e) {
+                    console.error("Failed to fetch records:", e);
+                }
+            })();
+        }, [db])
+    );
 
-    useEffect(() => {
-        fetchRecords();
-    }, [db])
+    console.log("records", records);
 
     return (
-        <View></View>
-    )
-}
+        <FlatList
+            data={records}
+            keyExtractor={(r) => String("")}
+            renderItem={({ item }) =>
+                <Record record={item} />
+            }
+            contentContainerStyle={{
+                paddingTop: navbarHeight,
+                gap: vScale(20),
+            }}
+        />
+    );
+};
 
-export default Records
+export default Records;

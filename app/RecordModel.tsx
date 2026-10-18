@@ -9,7 +9,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const CreateRecord: React.FC = () => {
     const router = useRouter()
-
     return (
         <View style={styles.overlay}>
             <Pressable style={StyleSheet.absoluteFill} onPress={() => router.back()} />

@@ -1,19 +1,18 @@
-import { DocumentRow, RecordRow } from "@/types";
+import { RecordTypes } from "@/types";
 import { SQLiteDatabase } from "expo-sqlite";
 
 const AssignDocumentsToRecord = async (
     db: SQLiteDatabase,
     documentIds: number[],
     recordId: number
-) => {
-    if (documentIds.length === 0) return;
-    const placeholders = documentIds.map(() => '?').join(',');
-    await db.runAsync(
-        `UPDATE Documents
-     SET RecordId = ?, UpdatedAt = CURRENT_TIMESTAMP
-     WHERE Id IN (${placeholders})`,
-        [recordId, ...documentIds]
-    );
+): Promise<void> => {
+    for (const documentId of documentIds) {
+        await db.runAsync(
+            `INSERT INTO RecordDocuments (RecordId, DocumentId)
+             VALUES (?, ?)`,
+            [recordId, documentId]
+        );
+    }
 };
 
 export const CheckRecordExists = async (
@@ -32,42 +31,47 @@ export const CreateRecord = async (
     name: string,
     documentIds: number[]
 ): Promise<number> => {
+    let recordId = 0;
 
-    const result = await db.runAsync(
-        `INSERT INTO Records (Name) VALUES (?)`,
-        [name]
-    );
+    await db.withExclusiveTransactionAsync(async (txn) => {
 
-    await AssignDocumentsToRecord(db, documentIds, result.lastInsertRowId);
-    return result.lastInsertRowId;
+        const result = await txn.runAsync(
+            `INSERT INTO Records (Name) VALUES (?)`,
+            [name]
+        );
+
+        recordId = result.lastInsertRowId;
+
+        await AssignDocumentsToRecord(
+            txn,
+            documentIds,
+            recordId
+        );
+    });
+
+    return recordId;
 };
 
 export const GetSummaryRecords = async (
     db: SQLiteDatabase,
     order: "ASC" | "DESC" = "DESC",
     limit: number = 20,
-    offset: number = 0,
-    docsPerRecord: number = 3
+    offset: number = 0
 ) => {
 
-    const records = await db.getAllAsync<RecordRow>(
+    const records = await db.getAllAsync<RecordTypes>(
         `SELECT * FROM Records ORDER BY UpdatedAt ${order} LIMIT ? OFFSET ?`,
         [limit, offset]
     );
 
-    const result = await Promise.all(
-        records.map(async (record) => ({
-            ...record,
-            documents: await db.getAllAsync<DocumentRow>(
-                `SELECT Id, RecordId, title, type, date, IsPdf, risk_level
-         FROM Documents
-         WHERE RecordId = ?
-         ORDER BY Id DESC
-         LIMIT ?`,
-                [record.Id, docsPerRecord]
-            ),
-        }))
-    );
+    console.log("records", records);
 
-    return result;
+    return [];
+};
+
+export const GetRecordsCount = async (db: SQLiteDatabase): Promise<number> => {
+    const result = db.getFirstSync<{ count: number }>(
+        `SELECT COUNT(*) as count FROM Records`
+    );
+    return result?.count ?? 0;
 };

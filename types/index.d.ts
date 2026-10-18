@@ -449,11 +449,17 @@ export type MedicineReminder = {
 interface RecordDocument extends DocumentRow {
     RecordId: number;
 }
+export type RecordTypes = {
+    Id: number;
+    Name: string;
+    UpdatedAt: string;
+    CreatedAt: string;
+}
 
 export type RecordRow = {
     Id: number;
     Name: string;
     UpdatedAt: Date;
     CreatedAt: Date;
-    Documents: DocumentRow[]
+    documents: DocumentRow[]
 }
