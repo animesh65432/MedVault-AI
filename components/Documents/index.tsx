@@ -7,6 +7,8 @@ import React, { useCallback, useRef } from "react";
 import {
     Animated,
     FlatList,
+    NativeScrollEvent,
+    NativeSyntheticEvent,
     StyleSheet,
     Text,
     View,
@@ -20,7 +22,7 @@ const AnimatedFlatList = Animated.createAnimatedComponent(
 
 type Props = {
     documents: DocumentRow[];
-    onScroll: any;
+    onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
     navbarHeight: number;
     SetCurrentDate: React.Dispatch<React.SetStateAction<string>>;
     CurrentDate?: string;

@@ -1,33 +1,30 @@
-import { RecordTypes } from "@/types";
+import { RecordSummaryWithDocuments } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Thumabnail from "./Thumbnail";
 
 type Props = {
-    record: RecordTypes;
+    record: RecordSummaryWithDocuments;
 };
 
 const Record: React.FC<Props> = ({ record }) => {
     return (
         <View style={style.RecordContainer}>
-            <View style={style.Thumbs}>
-                {/* {
-                    record.documents &&
-                    record.documents.length > 0 &&
-                    record.documents.map((doc) =>
-                        <RecordImage
-                            key={doc.Id}
-                            document={doc}
-                            IsPdf={doc.IsPdf}
-                            size={scale(70)}
-                        />
-                    )
-                } */}
+            <View style={style.RecordTop}>
+                <View style={style.Thumbs}>
+                    <Thumabnail
+                        docs={record.documents}
+                    />
+                </View>
+                <Text
+                    style={style.Name}
+                    numberOfLines={2}
+                >
+                    {record.Name}
+                </Text>
             </View>
-            <Text style={style.Name}>
-                {record.Name}
-            </Text>
         </View>
     );
 };
@@ -39,13 +36,10 @@ const style = StyleSheet.create({
         marginRight: "auto",
         elevation: 2,
         backgroundColor: "white",
-        borderRadius: scale(5),
-        padding: scale(10),
+        borderRadius: scale(40),
+        padding: scale(8),
         display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        gap: scale(10),
-        marginBottom: scale(10),
+        flexDirection: "column",
     },
     Thumbs: {
         flexDirection: "row",
@@ -67,7 +61,7 @@ const style = StyleSheet.create({
     },
     Name: {
         fontFamily: "Aeonik-Medium",
-        fontSize: fs(18),
+        fontSize: fs(17),
         color: "black",
     },
     Meta: {
@@ -75,6 +69,20 @@ const style = StyleSheet.create({
         fontSize: fs(12),
         color: "#6B7280",
     },
+    RecordTop: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(15)
+    },
+    date: {
+        fontFamily: "Aeonik-Medium",
+        fontSize: fs(14),
+        color: "#6B7280",
+        marginBottom: scale(4),
+        marginLeft: "auto",
+        marginRight: scale(10)
+    }
 });
 
 export default Record;

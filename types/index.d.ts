@@ -454,6 +454,7 @@ export type RecordTypes = {
     Name: string;
     UpdatedAt: string;
     CreatedAt: string;
+    PreviewDocIds: number[];
 }
 
 export type RecordRow = {
@@ -462,4 +463,12 @@ export type RecordRow = {
     UpdatedAt: Date;
     CreatedAt: Date;
     documents: DocumentRow[]
+}
+
+export type RecordSummaryWithDocuments = {
+    Id: number;
+    Name: string;
+    UpdatedAt: string;
+    CreatedAt: string;
+    documents: DocumentRow[];
 }

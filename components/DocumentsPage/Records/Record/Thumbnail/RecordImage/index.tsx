@@ -1,6 +1,5 @@
 import { usePdfThumbnail } from "@/hooks/usePdfThumbnail";
 import { DocumentRow } from "@/types";
-import { scale } from "@/utils/scale";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
@@ -9,19 +8,31 @@ type Props = {
     document: DocumentRow;
     IsPdf: boolean;
     size: number;
+    radius?: number;
 };
 
-const RecordImage: React.FC<Props> = ({ document, IsPdf, size = scale(70) }) => {
-    const { thumbUri, thumbFailed } = usePdfThumbnail(document.SourceFilePath, IsPdf);
-    const uri = IsPdf ? thumbUri : document.SourceFilePath;
-    const showFallback = !uri || (IsPdf && thumbFailed)
+const RecordImage: React.FC<Props> = ({ document: doc, IsPdf, size, radius = 8 }) => {
+    const { thumbUri, thumbFailed } = usePdfThumbnail(doc.SourceFilePath, IsPdf);
+    const uri = IsPdf ? thumbUri : doc.SourceFilePath;
+    const showFallback = !uri || (IsPdf && thumbFailed);
+
     return (
-        <View style={[style.Box, { width: size, height: size }]}>
+        <View
+            style={[
+                style.Box,
+                {
+                    width: size,
+                    height: size,
+                    borderRadius: radius,
+                    backgroundColor: IsPdf ? "#FDECEC" : "#E8F0FE",
+                },
+            ]}
+        >
             {showFallback ? (
                 <Ionicons
-                    name={IsPdf ? "document-text-outline" : "image-outline"}
-                    size={size * 0.4}
-                    color="#9AA0A6"
+                    name={IsPdf ? "document-text" : "image"}
+                    size={size * 0.5}
+                    color={IsPdf ? "#E5484D" : "#1A73E8"}
                 />
             ) : (
                 <Image source={{ uri: uri! }} style={style.Img} resizeMode="cover" />
@@ -32,8 +43,6 @@ const RecordImage: React.FC<Props> = ({ document, IsPdf, size = scale(70) }) => 
 
 const style = StyleSheet.create({
     Box: {
-        borderRadius: scale(8),
-        backgroundColor: "#F1F3F4",
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",

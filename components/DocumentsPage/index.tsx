@@ -206,7 +206,10 @@ const DocumentsPage: React.FC = () => {
             }
             {activeTab === "Records" &&
                 <Records
+                    onScroll={onScroll}
                     navbarHeight={navbarHeight}
+                    SetCurrentDate={SetCurrentDate}
+                    CurrentDate={CurrentDate}
                 />
             }
             <ChatBotAI

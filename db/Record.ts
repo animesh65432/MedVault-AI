@@ -1,4 +1,4 @@
-import { RecordTypes } from "@/types";
+import { DocumentRow, RecordSummaryWithDocuments, RecordTypes } from "@/types";
 import { SQLiteDatabase } from "expo-sqlite";
 
 const AssignDocumentsToRecord = async (
@@ -57,16 +57,92 @@ export const GetSummaryRecords = async (
     order: "ASC" | "DESC" = "DESC",
     limit: number = 20,
     offset: number = 0
-) => {
+): Promise<RecordSummaryWithDocuments[]> => {
 
-    const records = await db.getAllAsync<RecordTypes>(
-        `SELECT * FROM Records ORDER BY UpdatedAt ${order} LIMIT ? OFFSET ?`,
+
+    const records = await db.getAllAsync<
+        RecordTypes
+    >(
+        `SELECT *
+         FROM Records
+         ORDER BY UpdatedAt ${order === "ASC" ? "ASC" : "DESC"}
+         LIMIT ? OFFSET ?`,
         [limit, offset]
     );
 
-    console.log("records", records);
+    if (records.length === 0) {
+        return [];
+    }
 
-    return [];
+    const documentIds = [
+        ...new Set(
+            records.flatMap(record => {
+                const ids = record.PreviewDocIds;
+
+                if (Array.isArray(ids)) {
+                    return ids;
+                }
+
+                if (typeof ids === "string") {
+                    try {
+                        const parsed = JSON.parse(ids);
+                        return Array.isArray(parsed) ? parsed : [];
+                    } catch {
+                        return [];
+                    }
+                }
+
+                return [];
+            })
+        )
+    ];
+
+
+    let documents: DocumentRow[] = [];
+
+    if (documentIds.length > 0) {
+        const placeholders = documentIds.map(() => "?").join(",");
+
+        documents = await db.getAllAsync<DocumentRow>(
+            `SELECT *
+             FROM Documents
+             WHERE Id IN (${placeholders})`,
+            documentIds
+        );
+    }
+
+    const documentsMap = new Map(
+        documents.map(document => [document.Id, document])
+    );
+
+
+    return records.map(record => {
+        const ids = Array.isArray(record.PreviewDocIds)
+            ? record.PreviewDocIds
+            : typeof record.PreviewDocIds === "string"
+                ? (() => {
+                    try {
+                        const parsed = JSON.parse(record.PreviewDocIds);
+                        return Array.isArray(parsed) ? parsed : [];
+                    } catch {
+                        return [];
+                    }
+                })()
+                : [];
+
+        return {
+            Id: record.Id,
+            Name: record.Name,
+            UpdatedAt: record.UpdatedAt,
+            CreatedAt: record.CreatedAt,
+            documents: ids
+                .map((id: number) => documentsMap.get(id))
+                .filter(
+                    (document): document is DocumentRow =>
+                        document !== undefined
+                )
+        };
+    });
 };
 
 export const GetRecordsCount = async (db: SQLiteDatabase): Promise<number> => {

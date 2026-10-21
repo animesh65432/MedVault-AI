@@ -1,17 +1,22 @@
 import { GetSummaryRecords } from "@/db/Record";
+import { RecordSummaryWithDocuments } from "@/types";
 import { vScale } from "@/utils/vScale";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import React, { useCallback, useState } from "react";
-import { FlatList } from "react-native";
+import { Animated, FlatList, NativeScrollEvent, NativeSyntheticEvent, StyleSheet } from "react-native";
 import Record from "./Record";
 
+
 type Props = {
-    navbarHeight: number
+    navbarHeight: number;
+    onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+    SetCurrentDate: React.Dispatch<React.SetStateAction<string>>;
+    CurrentDate: string;
 };
 
-const Records: React.FC<Props> = ({ navbarHeight }) => {
-    const [records, setRecords] = useState([]);
+const Records: React.FC<Props> = ({ SetCurrentDate, CurrentDate, navbarHeight, onScroll }) => {
+    const [records, setRecords] = useState<RecordSummaryWithDocuments[]>([]);
     const db = useSQLiteContext();
 
     useFocusEffect(
@@ -27,21 +32,29 @@ const Records: React.FC<Props> = ({ navbarHeight }) => {
         }, [db])
     );
 
-    console.log("records", records);
+    const AnimatedFlatList =
+        Animated.createAnimatedComponent(FlatList<RecordSummaryWithDocuments>);
 
     return (
-        <FlatList
+        <AnimatedFlatList
             data={records}
-            keyExtractor={(r) => String("")}
+            onScroll={onScroll}
+            keyExtractor={(r) => String(r.Id)}
             renderItem={({ item }) =>
                 <Record record={item} />
             }
             contentContainerStyle={{
                 paddingTop: navbarHeight,
                 gap: vScale(20),
+                paddingBottom: vScale(180),
             }}
         />
     );
 };
+
+const styles = StyleSheet.create({
+    Container: {
+    }
+})
 
 export default Records;
