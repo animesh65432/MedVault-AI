@@ -1,8 +1,9 @@
 import { RecordSummaryWithDocuments } from "@/types";
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
+import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Thumabnail from "./Thumbnail";
 
 type Props = {
@@ -10,8 +11,12 @@ type Props = {
 };
 
 const Record: React.FC<Props> = ({ record }) => {
+    const router = useRouter()
     return (
-        <View style={style.RecordContainer}>
+        <TouchableOpacity
+            style={style.RecordContainer}
+            onPress={() => router.push(`/RecordDetails/${record.Id}`)}
+        >
             <View style={style.RecordTop}>
                 <View style={style.Thumbs}>
                     <Thumabnail
@@ -25,7 +30,7 @@ const Record: React.FC<Props> = ({ record }) => {
                     {record.Name}
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity >
     );
 };
 
@@ -73,7 +78,7 @@ const style = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        gap: scale(15)
+        gap: scale(7)
     },
     date: {
         fontFamily: "Aeonik-Medium",

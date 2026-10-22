@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 type Props = {
     currentDocument: "false" | "true";
@@ -41,8 +41,8 @@ const ChatBotAI: React.FC<Props> = ({ currentDocument, documentId }) => {
             pressed && styles.pressed,
         ]}
     >
-        <Ionicons
-            name="chatbox"
+        <FontAwesome5
+            name="robot"
             size={scale(24)}
             color="#D9F99D"
         />

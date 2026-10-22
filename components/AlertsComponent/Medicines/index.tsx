@@ -145,7 +145,8 @@ const Medicines: React.FC<Props> = ({ onBack, onConfirm }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: scale(16)
+        paddingHorizontal: scale(16),
+        paddingBottom: vScale(26),
     },
     header: {
         flexDirection: 'row',
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
     },
     footer: {
         position: 'absolute',
-        bottom: vScale(40),
+        bottom: vScale(80),
         left: scale(16),
         right: scale(16),
     },

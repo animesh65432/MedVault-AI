@@ -24,7 +24,7 @@ const RecordImage: React.FC<Props> = ({ document: doc, IsPdf, size, radius = 8 }
                     width: size,
                     height: size,
                     borderRadius: radius,
-                    backgroundColor: IsPdf ? "#FDECEC" : "#E8F0FE",
+                    backgroundColor: IsPdf ? "#23423B" : "#E8F0FE",
                 },
             ]}
         >
@@ -32,7 +32,7 @@ const RecordImage: React.FC<Props> = ({ document: doc, IsPdf, size, radius = 8 }
                 <Ionicons
                     name={IsPdf ? "document-text" : "image"}
                     size={size * 0.5}
-                    color={IsPdf ? "#E5484D" : "#1A73E8"}
+                    color={"#D9F99D"}
                 />
             ) : (
                 <Image source={{ uri: uri! }} style={style.Img} resizeMode="cover" />

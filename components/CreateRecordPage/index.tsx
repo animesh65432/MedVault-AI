@@ -107,6 +107,9 @@ const CreateRecordPage: React.FC = () => {
                 type: "success",
                 text1: "Record created successfully!"
             });
+
+            setSelectedDocuments([]);
+
         } catch (error) {
             console.error("Failed to create record:", error);
             Toast.show({

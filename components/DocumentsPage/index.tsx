@@ -20,7 +20,7 @@ import Tabs from "./Tabs";
 export type TypeTabs = "Documents" | "Records"
 
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 10;
 
 const DocumentsPage: React.FC = () => {
     const db = useSQLiteContext();
@@ -106,6 +106,7 @@ const DocumentsPage: React.FC = () => {
         setIsLoadingMore(true);
 
         const nextPage = pageRef.current + 1;
+
         try {
             const rows = await GetDocuments(
                 db,
@@ -209,7 +210,6 @@ const DocumentsPage: React.FC = () => {
                     onScroll={onScroll}
                     navbarHeight={navbarHeight}
                     SetCurrentDate={SetCurrentDate}
-                    CurrentDate={CurrentDate}
                 />
             }
             <ChatBotAI

@@ -1,5 +1,4 @@
 import { scale } from '@/utils/scale';
-import { useSQLiteContext } from 'expo-sqlite';
 import React from 'react';
 import {
     Pressable,
@@ -15,22 +14,7 @@ type Props = {
 };
 
 const Tabs: React.FC<Props> = ({ activeTab, setActiveTab }) => {
-    const db = useSQLiteContext();
     const tabs: TypeTabs[] = ['Documents', 'Records'];
-
-    // async function fetchRecords() {
-    //     try {
-    //         const records = await GetRecords(db);
-    //     }
-    //     catch (error) {
-    //         console.error('Failed to fetch records:', error);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     fetchRecords();
-    // }, []);
-
     return (
         <View style={styles.container}>
             {tabs.map((tab) => {

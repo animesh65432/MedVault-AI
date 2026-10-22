@@ -17,9 +17,9 @@ const MedicineDetail: React.FC = () => {
             console.error("Invalid medicine ID:", id);
             return;
         }
-        let reminderId = Number(id);
+        let Id = Number(id);
         try {
-            const medicineDetail = await GetMedicineDetailId(db, reminderId);
+            const medicineDetail = await GetMedicineDetailId(db, Id);
             setMedicineDetail(medicineDetail);
         } catch (error) {
             console.log("Failed to fetch medicine details:", error);

@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     fab: {
         position: "absolute",
         right: scale(20),
-        bottom: scale(40),
+        bottom: scale(180),
         width: scale(52),
         height: scale(52),
         borderRadius: scale(26),

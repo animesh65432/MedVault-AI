@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
         color: '#EEF6A2',
     },
     footer: {
-        paddingBottom: vScale(40),
+        paddingBottom: vScale(80),
         paddingTop: vScale(8),
     },
     saveButton: {

@@ -54,22 +54,18 @@ export const CreateRecord = async (
 
 export const GetSummaryRecords = async (
     db: SQLiteDatabase,
-    order: "ASC" | "DESC" = "DESC",
     limit: number = 20,
     offset: number = 0
 ): Promise<RecordSummaryWithDocuments[]> => {
-
-
     const records = await db.getAllAsync<
         RecordTypes
     >(
         `SELECT *
          FROM Records
-         ORDER BY UpdatedAt ${order === "ASC" ? "ASC" : "DESC"}
+         ORDER BY UpdatedAt DESC
          LIMIT ? OFFSET ?`,
-        [limit, offset]
+        [limit, (offset * limit) + 1]
     );
-
     if (records.length === 0) {
         return [];
     }
@@ -151,3 +147,16 @@ export const GetRecordsCount = async (db: SQLiteDatabase): Promise<number> => {
     );
     return result?.count ?? 0;
 };
+
+export const GetRecordById = async (
+    db: SQLiteDatabase,
+    recordId: number
+) => {
+    const record = await db.getFirstAsync<RecordTypes>(
+        `SELECT *
+        FROM Records
+        WHERE Id = ?`,
+        [recordId]
+    );
+    console.log("Fetched record:", record);
+}
