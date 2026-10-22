@@ -1,11 +1,15 @@
+import RecordDetailsPage from "@/components/RecordDetailsPage";
 import { GetRecordById } from "@/db/Record";
+import { DocumentRow, RecordDetails } from "@/types";
 import { useLocalSearchParams } from 'expo-router';
 import { useSQLiteContext } from "expo-sqlite";
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
 
 const RecordPage: React.FC = () => {
     const db = useSQLiteContext();
+    const [IsLoading, SetIsLoading] = useState<boolean>(false);
+    const [recordDetails, setRecordDetails] = useState<RecordDetails | null>(null);
+    const [Documents, SetDocuments] = useState<DocumentRow[]>([])
     const [IsLoading, SetIsLoading] = useState<boolean>(false)
     const { id } = useLocalSearchParams();
 
@@ -17,7 +21,9 @@ const RecordPage: React.FC = () => {
         }
         let Id = Number(id);
         try {
-            await GetRecordById(db, Id);
+            const { record } = await GetRecordById(db, Id);
+
+            console.log("Fetched record details:", record);
         }
         catch (error) {
             console.log("Failed to fetch medicine details:", error);
@@ -32,7 +38,10 @@ const RecordPage: React.FC = () => {
         fetchRecordDetails()
     }, [id])
     return (
-        <View></View>
+        <RecordDetailsPage
+            record={recordDetails}
+            Documents={Documents}
+        />
     )
 }
 

@@ -150,13 +150,29 @@ export const GetRecordsCount = async (db: SQLiteDatabase): Promise<number> => {
 
 export const GetRecordById = async (
     db: SQLiteDatabase,
-    recordId: number
+    recordId: number,
+    limit: number = 20,
+    offset: number = 0
 ) => {
     const record = await db.getFirstAsync<RecordTypes>(
-        `SELECT *
+        `SELECT Id, Name, CreatedAt
         FROM Records
         WHERE Id = ?`,
         [recordId]
     );
-    console.log("Fetched record:", record);
-}
+
+    const documents = await db.getAllAsync<DocumentRow>(
+        `SELECT d.*
+        FROM Documents d
+        INNER JOIN RecordDocuments rd
+             ON d.Id = rd.DocumentId
+         WHERE rd.RecordId = ?
+         LIMIT ? OFFSET ?`,
+        [recordId, limit, offset]
+    );
+
+    return {
+        record,
+        documents,
+    };
+};

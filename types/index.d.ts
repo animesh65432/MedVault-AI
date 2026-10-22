@@ -472,3 +472,9 @@ export type RecordSummaryWithDocuments = {
     CreatedAt: string;
     documents: DocumentRow[];
 }
+
+export type RecordDetails = {
+    CreatedAt: string;
+    Id: number,
+    Name: string
+}
