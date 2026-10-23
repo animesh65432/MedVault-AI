@@ -1,9 +1,9 @@
 import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
 import { CheckRecordExists, CreateRecord } from '@/db/Record';
 import { usePdfThumbnail } from '@/hooks/usePdfThumbnail';
-import { DocumentRow } from '@/types';
 import { formatDate } from "@/utils/formatDate";
 import { fs } from '@/utils/fs';
+import { getSelectedDocumentsDateRange } from '@/utils/getSelectedDocumentsDateRange';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -15,32 +15,6 @@ import Toast from 'react-native-toast-message';
 import Doucuments from "./Documents";
 import Navabr from './Navabr';
 import SelectionModeNavbar from './SelectionModeNavbar';
-
-function getSelectedDocumentsDateRange(
-    documents: DocumentRow[]
-): { oldestDate: string; newestDate: string } | null {
-    if (documents.length === 0) return null;
-
-    const getDate = (document: DocumentRow) =>
-        document.date ?? document.CreatedAt;
-
-    let oldestDate = getDate(documents[0]);
-    let newestDate = getDate(documents[0]);
-
-    for (const document of documents) {
-        const currentDate = getDate(document);
-
-        if (currentDate.localeCompare(oldestDate) < 0) {
-            oldestDate = currentDate;
-        }
-
-        if (currentDate.localeCompare(newestDate) > 0) {
-            newestDate = currentDate;
-        }
-    }
-
-    return { oldestDate, newestDate };
-}
 
 const CreateRecordPage: React.FC = () => {
     const { height } = Dimensions.get('window');
