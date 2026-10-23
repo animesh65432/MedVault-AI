@@ -151,7 +151,7 @@ export const GetRecordsCount = async (db: SQLiteDatabase): Promise<number> => {
 export const GetRecordById = async (
     db: SQLiteDatabase,
     recordId: number,
-    limit: number = 20,
+    limit: number = 10,
     offset: number = 0
 ) => {
     const record = await db.getFirstAsync<RecordTypes>(

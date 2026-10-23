@@ -1,4 +1,5 @@
 import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
+import { GetRecordById } from '@/db/Record';
 import { usePdfThumbnail } from '@/hooks/usePdfThumbnail';
 import { DocumentRow, RecordDetails } from '@/types';
 import { formatDate } from '@/utils/formatDate';
@@ -8,18 +9,26 @@ import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { Entypo } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React, { useContext, useEffect, useState } from 'react';
+import { useSQLiteContext } from 'expo-sqlite';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Documents from './Documents';
 import Navbar from './Navbar';
 import SelectionModeNavbar from "./SelectionModeNavbar";
 
 type Props = {
     record: RecordDetails;
     Documents: DocumentRow[];
+    id: number;
 }
 
-const RecordDetailsPage: React.FC<Props> = ({ record, Documents: DefaultDocuments }) => {
+const PageSize = 10;
+
+const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocuments }) => {
     const { height } = Dimensions.get('window');
+    const db = useSQLiteContext();
+    const pageRef = useRef<number>(1);
+    const IsLoadingMoreRef = useRef<boolean>(false);
     const [SelectedIds, setSelectedIds] = useState<number[]>([]);
     const { SelectedDocuments, setSelectedDocuments } = useContext(SelectedDocumentsContext);
     const router = useRouter();
@@ -49,6 +58,22 @@ const RecordDetailsPage: React.FC<Props> = ({ record, Documents: DefaultDocument
     }, []);
 
     const ShowdefultPdf = thumbFailed && hasPdf;
+
+    const LoadMoreDocuments = async () => {
+        IsLoadingMoreRef.current = true;
+        try {
+            const { documents } = await GetRecordById(db, id, (PageSize * pageRef.current) + 1, 10);
+            if (documents.length > 0) {
+                setSelectedDocuments(prev => [...prev, ...documents]);
+                pageRef.current += 1;
+            }
+        } catch (error) {
+            console.error("Failed to load more documents:", error);
+        }
+        finally {
+            IsLoadingMoreRef.current = false;
+        }
+    }
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             <View
@@ -138,7 +163,12 @@ const RecordDetailsPage: React.FC<Props> = ({ record, Documents: DefaultDocument
                         </View>
                     }
                 </View>
-
+                <Documents
+                    documents={SelectedDocuments}
+                    SelectedIds={SelectedIds}
+                    setSelectedIds={setSelectedIds}
+                    SelectionMode={SelectionMode}
+                />
             </ScrollView>
         </View>
     )

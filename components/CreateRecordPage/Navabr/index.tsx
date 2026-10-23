@@ -7,9 +7,10 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 type Props = {
     handleCreateRecord: () => void;
+    IsCreateing: boolean;
 }
 
-const Navbar: React.FC<Props> = ({ handleCreateRecord }) => {
+const Navbar: React.FC<Props> = ({ IsCreateing, handleCreateRecord }) => {
     const router = useRouter();
     return (
         <View style={styles.container}>
@@ -20,6 +21,7 @@ const Navbar: React.FC<Props> = ({ handleCreateRecord }) => {
                 ]}
                 hitSlop={8}
                 onPress={() => router.push("/Documents")}
+                disabled={IsCreateing}
             >
                 <AntDesign
                     name="arrow-left"

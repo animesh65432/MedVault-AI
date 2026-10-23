@@ -19,6 +19,7 @@ import SelectionModeNavbar from './SelectionModeNavbar';
 const CreateRecordPage: React.FC = () => {
     const { height } = Dimensions.get('window');
     const db = useSQLiteContext();
+    const [IsCreateing, setIsCreateing] = useState<boolean>(false);
     const [SelectedIds, setSelectedIds] = useState<number[]>([]);
     const { SelectedDocuments, setSelectedDocuments } = useContext(SelectedDocumentsContext);
     const router = useRouter();
@@ -62,6 +63,7 @@ const CreateRecordPage: React.FC = () => {
             })
             return;
         }
+        setIsCreateing(true);
         try {
             const recordExists = await CheckRecordExists(db, Title);
             if (recordExists) {
@@ -91,6 +93,9 @@ const CreateRecordPage: React.FC = () => {
                 text1: "Failed to create record."
             });
         }
+        finally {
+            setIsCreateing(false);
+        }
     }
 
     return (
@@ -108,6 +113,7 @@ const CreateRecordPage: React.FC = () => {
                 {!SelectionMode &&
                     <Navabr
                         handleCreateRecord={handleCreateRecord}
+                        IsCreateing={IsCreateing}
                     />
                 }
             </View>

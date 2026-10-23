@@ -43,6 +43,12 @@ const RecordPage: React.FC = () => {
         return <DocumentSkeleton />
     }
 
+    if (!id || typeof id !== 'string' || isNaN(Number(id))) {
+        return <RecordNotFound
+            text="Record"
+        />
+    }
+
     if (!recordDetails) {
         return <RecordNotFound
             text="Record"
@@ -53,6 +59,7 @@ const RecordPage: React.FC = () => {
         <RecordDetailsPage
             record={recordDetails}
             Documents={Documents}
+            id={Number(id)}
         />
     )
 }
