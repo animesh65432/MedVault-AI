@@ -1,27 +1,33 @@
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import { router } from "expo-router";
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-const DocumentNotFound: React.FC = () => {
+type Props = {
+    text: string
+}
+
+const NotFound: React.FC<Props> = ({ text }) => {
     return (
         <View style={styles.container}>
-            <View style={styles.iconWrap}>
-                <Feather name="file" size={fs(28)} color="#234338" />
-            </View>
-
-            <Text style={styles.title}>Document not found</Text>
+            <AntDesign
+                name="folder"
+                size={scale(50)}
+                color="#234338"
+            />
+            <Text style={styles.title}>{text} not found</Text>
             <Text style={styles.subtitle}>
-                This document may have been deleted or the link is no longer valid.
+                This {text.toLocaleLowerCase()} may have been deleted or the link is no longer valid.
             </Text>
 
             <Pressable
                 style={({ pressed }) => [styles.backButton, pressed && styles.pressed]}
                 onPress={() => router.back()}
             >
-                <Feather name="arrow-left" size={fs(15)} color="#EEF6A2" />
+                <Feather name="arrow-left" size={fs(20)} color="#EEF6A2" />
                 <Text style={styles.backText}>Go back</Text>
             </Pressable>
         </View>
@@ -47,12 +53,12 @@ const styles = StyleSheet.create({
         marginBottom: scale(6),
     },
     title: {
-        fontSize: fs(16),
+        fontSize: fs(20),
         fontFamily: 'Aeonik-Medium',
         color: '#0D1F1C',
     },
     subtitle: {
-        fontSize: fs(13),
+        fontSize: fs(16),
         fontFamily: 'Aeonik-Regular',
         color: '#5F5E5A',
         textAlign: 'center',
@@ -69,7 +75,7 @@ const styles = StyleSheet.create({
         paddingVertical: scale(10),
     },
     backText: {
-        fontSize: fs(13),
+        fontSize: fs(16),
         fontFamily: 'Aeonik-Medium',
         color: '#EEF6A2',
     },
@@ -78,4 +84,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default DocumentNotFound;
+export default NotFound;

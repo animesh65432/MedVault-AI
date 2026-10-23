@@ -1,6 +1,6 @@
-import DocumentNotFound from "@/components/DocumentNotFound";
 import DocumentSkeleton from "@/components/DocumentSkeleton";
 import DocumentView from "@/components/DocumentView";
+import DocumentNotFound from "@/components/NotFound";
 import { GetDocumentById } from "@/db/document";
 import { UploadedDocument } from "@/types";
 import { useLocalSearchParams } from "expo-router";
@@ -46,7 +46,9 @@ const Document: React.FC = () => {
     }
 
     if (!Document) {
-        return <DocumentNotFound />;
+        return <DocumentNotFound
+            text="Document"
+        />;
     }
 
     return (
