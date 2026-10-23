@@ -22,7 +22,7 @@ type Props = {
     id: number;
 }
 
-const PageSize = 10;
+const PageSize = 9;
 
 const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocuments }) => {
     const { height } = Dimensions.get('window');
@@ -60,20 +60,49 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
     const ShowdefultPdf = thumbFailed && hasPdf;
 
     const LoadMoreDocuments = async () => {
+        if (IsLoadingMoreRef.current) {
+            return;
+        }
+
         IsLoadingMoreRef.current = true;
+
         try {
-            const { documents } = await GetRecordById(db, id, (PageSize * pageRef.current) + 1, 10);
-            if (documents.length > 0) {
-                setSelectedDocuments(prev => [...prev, ...documents]);
-                pageRef.current += 1;
+            const offset = pageRef.current * PageSize;
+
+            const { documents } = await GetRecordById(
+                db,
+                id,
+                PageSize,
+                offset
+            );
+
+            if (documents.length === 0) {
+                return;
+            }
+
+            setSelectedDocuments(previous => {
+                const existingIds = new Set(
+                    previous.map(doc => doc.Id)
+                );
+
+                const uniqueDocuments = documents.filter(
+                    doc => !existingIds.has(doc.Id)
+                );
+
+                return [...previous, ...uniqueDocuments];
+            });
+
+            pageRef.current += 1;
+
+            if (documents.length < PageSize) {
             }
         } catch (error) {
             console.error("Failed to load more documents:", error);
-        }
-        finally {
+        } finally {
             IsLoadingMoreRef.current = false;
         }
-    }
+    };
+
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             <View
@@ -95,6 +124,7 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
             <ScrollView
                 style={styles.container}
                 contentContainerStyle={{ gap: vScale(20) }}
+                onScroll={LoadMoreDocuments}
             >
                 <View
                     style={{

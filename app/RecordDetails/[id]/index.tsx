@@ -22,7 +22,7 @@ const RecordPage: React.FC = () => {
         }
         let Id = Number(id);
         try {
-            const { record, documents } = await GetRecordById(db, Id);
+            const { record, documents } = await GetRecordById(db, Id, 9, 0);
             setRecordDetails(record);
             SetDocuments(documents);
         }
