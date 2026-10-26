@@ -76,7 +76,7 @@ const Documents: React.FC<Props> = ({
         return (
             <View style={styles.emptyContainer}>
                 <View style={styles.emptyContent}>
-                    <AntDesign name="folder" size={scale(24)} color="#082e28" />
+                    <AntDesign name="folder" size={scale(34)} color="#082e28" />
                     <Text style={styles.emptyText}>No documents yet</Text>
                 </View>
             </View>
@@ -123,14 +123,14 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
     emptyContent: {
-        flexDirection: "row",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         gap: scale(10)
     },
     emptyText: {
         fontFamily: "Aeonik-Medium",
-        fontSize: scale(18),
+        fontSize: scale(22),
         color: "black",
     },
 });

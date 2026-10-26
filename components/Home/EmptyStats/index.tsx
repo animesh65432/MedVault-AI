@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        gap: vScale(5),
+        gap: vScale(15),
         paddingHorizontal: scale(20),
         paddingTop: vScale(40),
         paddingBottom: vScale(32),

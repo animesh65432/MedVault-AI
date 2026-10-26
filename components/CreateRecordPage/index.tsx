@@ -298,6 +298,7 @@ export const styles = StyleSheet.create({
         fontSize: scale(18),
         color: "#23423B",
         width: "80%",
+        textAlign: "center"
     },
 })
 

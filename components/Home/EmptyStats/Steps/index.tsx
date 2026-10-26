@@ -99,12 +99,12 @@ const styles = StyleSheet.create({
         gap: vScale(4)
     },
     title: {
-        fontSize: scale(15),
+        fontSize: scale(18),
         fontFamily: "Aeonik-Medium",
         color: "#0D483F"
     },
     description: {
-        fontSize: scale(13),
+        fontSize: scale(14),
         fontFamily: "Aeonik-Medium",
         color: "#7A7A6E"
     },

@@ -6,10 +6,12 @@ import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 type Props = {
-    handleCreateRecord: () => void;
+    handleUpdateRecord: () => void;
+    handleDeleteRecord: () => void;
+    IsDeleting: boolean;
 }
 
-const Navbar: React.FC<Props> = ({ handleCreateRecord }) => {
+const Navbar: React.FC<Props> = ({ handleUpdateRecord, handleDeleteRecord }) => {
     const router = useRouter();
     return (
         <View style={styles.container}>
@@ -29,20 +31,38 @@ const Navbar: React.FC<Props> = ({ handleCreateRecord }) => {
 
             </Pressable>
 
-            <Pressable
-                style={({ pressed }) => [
-                    styles.iconButton,
-                    pressed && styles.pressed,
-                ]}
-                hitSlop={8}
-                onPress={handleCreateRecord}
+            <View
+                style={styles.SaveAndCloseButton}
             >
-                <Entypo
-                    name="check"
-                    size={scale(24)}
-                    color={"#fff"}
-                />
-            </Pressable>
+                <Pressable
+                    style={({ pressed }) => [
+                        styles.iconButton,
+                        pressed && styles.pressed,
+                    ]}
+                    hitSlop={8}
+                    onPress={handleDeleteRecord}
+                >
+                    <AntDesign
+                        name="delete"
+                        size={scale(20)}
+                        color="white"
+                    />
+                </Pressable>
+                <Pressable
+                    style={({ pressed }) => [
+                        styles.iconButton,
+                        pressed && styles.pressed,
+                    ]}
+                    hitSlop={8}
+                    onPress={handleUpdateRecord}
+                >
+                    <Entypo
+                        name="check"
+                        size={scale(24)}
+                        color={"#fff"}
+                    />
+                </Pressable>
+            </View>
         </View>
     );
 };
@@ -81,6 +101,13 @@ const styles = StyleSheet.create({
         opacity: 0.6,
         transform: [{ scale: 0.96 }],
     },
+    SaveAndCloseButton: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: scale(8),
+    }
 });
 
 export default Navbar;

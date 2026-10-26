@@ -3,6 +3,7 @@ import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Entypo from '@expo/vector-icons/Entypo';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { router } from "expo-router";
 import React, { useState } from 'react';
@@ -37,22 +38,42 @@ const Navbar: React.FC<Props> = ({ title, IsDeleteLoading, onDelete }) => {
                 </Pressable>
                 <Text style={styles.backText}>{title}</Text>
             </View>
-
-            <Pressable
-                hitSlop={10}
-                disabled={IsDeleteLoading}
-                onPress={() => setShowDocumentDeleteConfirmation(true)}
+            <View
+                style={styles.ShareAndDeleteButtonContainer}
             >
-                {IsDeleteLoading ? (
-                    <ActivityIndicator size="small" color="#5F5E5A" />
-                ) : (
-                    <AntDesign
-                        name="delete"
-                        size={scale(22)}
-                        color="#234338"
-                    />
-                )}
-            </Pressable>
+                <Pressable
+                    style={styles.ButtonDiv}
+                    hitSlop={10}
+                    disabled={IsDeleteLoading}
+                    onPress={() => setShowDocumentDeleteConfirmation(true)}
+                >
+                    {IsDeleteLoading ? (
+                        <ActivityIndicator size="small" color="#5F5E5A" />
+                    ) : (
+                        <Entypo
+                            name="share"
+                            size={24}
+                            color="#f7f5f5"
+                        />
+                    )}
+                </Pressable>
+                <Pressable
+                    style={styles.ButtonDiv}
+                    hitSlop={10}
+                    disabled={IsDeleteLoading}
+                    onPress={() => setShowDocumentDeleteConfirmation(true)}
+                >
+                    {IsDeleteLoading ? (
+                        <ActivityIndicator size="small" color="#5F5E5A" />
+                    ) : (
+                        <AntDesign
+                            name="delete"
+                            size={scale(20)}
+                            color="#f7f5f5"
+                        />
+                    )}
+                </Pressable>
+            </View>
 
             <DeleteDocumentModel
                 visible={ShowDocumentDeleteConfirmation}
@@ -104,6 +125,20 @@ const styles = StyleSheet.create({
     deleteButtonDisabled: {
         opacity: 0.6,
     },
+    ButtonDiv: {
+        backgroundColor: "#234338",
+        borderRadius: scale(18),
+        padding: scale(8),
+        minWidth: scale(40),
+        minHeight: scale(34),
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    ShareAndDeleteButtonContainer: {
+        display: "flex",
+        flexDirection: "row",
+        gap: scale(5),
+    }
 });
 
 export default Navbar;

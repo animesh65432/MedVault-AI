@@ -178,7 +178,8 @@ const styles = StyleSheet.create({
         fontFamily: "Aeonik-Medium",
         fontSize: scale(12),
         color: "#23423B",
-        width: "80%",
+        width: "90%",
+        textAlign: "center"
     },
     circle: {
         position: "absolute",

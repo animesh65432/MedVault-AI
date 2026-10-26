@@ -50,6 +50,8 @@ export const shareDocuments = async (docs: DocumentRow[]) => {
         docs.map(ensureLocal)
     );
 
+    console.log(`Sharing ${docs} documents:`, uris);
+
     if (docs.length === 1) {
         await Share.open({
             url: uris[0],

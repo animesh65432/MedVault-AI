@@ -54,7 +54,7 @@ const Navbar: React.FC<Props> = ({
             </View>
             {SelectedDocuments.length > 0 &&
                 <TouchableOpacity
-                    onPress={() => router.push("/CreateRecord")}
+                    onPress={() => router.back()}
                 >
                     <Text style={styles.AddButton}>Add</Text>
                 </TouchableOpacity>

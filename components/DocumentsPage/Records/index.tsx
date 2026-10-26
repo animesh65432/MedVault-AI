@@ -69,7 +69,10 @@ const Records: React.FC<Props> = ({ SetCurrentDate, navbarHeight, onScroll }) =>
         isLoadingMoreRef.current = true;
         try {
             const rows = await GetSummaryRecords(db, PAGE_SIZE, offsetRef.current);
-            setRecords((prev) => [...prev, ...rows]);
+            setRecords((prev) => {
+                const seen = new Set(prev.map((r) => r.Id));
+                return [...prev, ...rows.filter((r) => !seen.has(r.Id))];
+            });
             offsetRef.current += rows.length;
             hasMoreRef.current = rows.length === PAGE_SIZE;
         } catch (e) {

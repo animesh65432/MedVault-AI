@@ -1,5 +1,5 @@
 import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
-import { GetRecordById } from '@/db/Record';
+import { DeleteRecordById, GetRecordById } from '@/db/Record';
 import { usePdfThumbnail } from '@/hooks/usePdfThumbnail';
 import { DocumentRow, RecordDetails } from '@/types';
 import { formatDate } from '@/utils/formatDate';
@@ -12,6 +12,7 @@ import { useRouter } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import Documents from './Documents';
 import Navbar from './Navbar';
 import SelectionModeNavbar from "./SelectionModeNavbar";
@@ -27,6 +28,8 @@ const PageSize = 9;
 const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocuments }) => {
     const { height } = Dimensions.get('window');
     const db = useSQLiteContext();
+    const [IsDeleting, setIsDeleting] = useState<boolean>(false);
+    const [IsUpdating, setIsUpdating] = useState<boolean>(false);
     const pageRef = useRef<number>(1);
     const IsLoadingMoreRef = useRef<boolean>(false);
     const [SelectedIds, setSelectedIds] = useState<number[]>([]);
@@ -103,6 +106,50 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
         }
     };
 
+    const handleDeleteRecord = async () => {
+        setIsDeleting(true);
+        try {
+            await DeleteRecordById(db, id);
+            router.back();
+            Toast.show({
+                type: "success",
+                text1: "Success",
+                text2: "Record deleted successfully.",
+            });
+        } catch (error) {
+            Toast.show({
+                type: "error",
+                text1: "Error",
+                text2: "Failed to delete the record. Please try again.",
+            });
+        }
+        finally {
+            setIsDeleting(false);
+        }
+
+    }
+
+    const handleUpdateRecord = async () => {
+        setIsUpdating(true);
+        try {
+            if (Title.trim().length === 0 || SelectedDocuments.length === 0) {
+                Toast.show({
+                    type: "error",
+                    text1: "Error",
+                    text2: "Title and documents cannot be empty.",
+                });
+                return;
+            }
+
+
+        } catch (error) {
+            console.log("Failed to update the record:", error);
+        }
+        finally {
+            setIsUpdating(false);
+        }
+    }
+
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             <View
@@ -117,7 +164,9 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
                 }
                 {!SelectionMode &&
                     <Navbar
-                        handleCreateRecord={() => { }}
+                        handleUpdateRecord={handleUpdateRecord}
+                        handleDeleteRecord={handleDeleteRecord}
+                        IsDeleting={IsDeleting}
                     />
                 }
             </View>
@@ -162,10 +211,14 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
                             onChangeText={setTitle}
                         />
                     </View>
-
                     <TouchableOpacity
                         style={styles.Select_PhotosContainer}
-                        onPress={() => router.push("/AddDocuments")}
+                        onPress={() => router.push({
+                            pathname: "/AddDocuments",
+                            params: {
+                                title: Title,
+                            }
+                        })}
                     >
                         <Entypo name="camera" size={scale(28)} color="#23423B" />
                         <Text style={styles.selectPhotosText}>Select Photos</Text>
@@ -300,9 +353,12 @@ export const styles = StyleSheet.create({
     },
     previewFallbackText: {
         fontFamily: "Aeonik-Medium",
-        fontSize: scale(18),
+        fontSize: scale(22),
         color: "#23423B",
         width: "80%",
+        justifyContent: "center",
+        textAlign: "center",
+        marginTop: vScale(10)
     },
 })
 

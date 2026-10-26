@@ -33,20 +33,14 @@ export const CreateRecord = async (
 ): Promise<number> => {
     let recordId = 0;
 
-    await db.withExclusiveTransactionAsync(async (txn) => {
-
-        const result = await txn.runAsync(
+    await db.withTransactionAsync(async () => {
+        const result = await db.runAsync(
             `INSERT INTO Records (Name) VALUES (?)`,
             [name]
         );
-
         recordId = result.lastInsertRowId;
 
-        await AssignDocumentsToRecord(
-            txn,
-            documentIds,
-            recordId
-        );
+        await AssignDocumentsToRecord(db, documentIds, recordId);
     });
 
     return recordId;
@@ -57,15 +51,19 @@ export const GetSummaryRecords = async (
     limit: number = 20,
     offset: number = 0
 ): Promise<RecordSummaryWithDocuments[]> => {
+    console.log(`Fetching records with limit: ${limit}, offset: ${offset}`);
     const records = await db.getAllAsync<
         RecordTypes
     >(
         `SELECT *
-         FROM Records
-         ORDER BY UpdatedAt DESC
-         LIMIT ? OFFSET ?`,
-        [limit, (offset * limit) + 1]
+        FROM Records
+        ORDER BY CreatedAt DESC
+        LIMIT ? OFFSET ?`,
+        [limit, offset]
     );
+
+    console.log("Fetched records:", records?.[0]?.Name);
+
     if (records.length === 0) {
         return [];
     }
@@ -101,8 +99,8 @@ export const GetSummaryRecords = async (
 
         documents = await db.getAllAsync<DocumentRow>(
             `SELECT *
-             FROM Documents
-             WHERE Id IN (${placeholders})`,
+            FROM Documents
+            WHERE Id IN (${placeholders})`,
             documentIds
         );
     }
@@ -110,7 +108,6 @@ export const GetSummaryRecords = async (
     const documentsMap = new Map(
         documents.map(document => [document.Id, document])
     );
-
 
     return records.map(record => {
         const ids = Array.isArray(record.PreviewDocIds)
@@ -154,7 +151,6 @@ export const GetRecordById = async (
     limit: number,
     offset: number
 ) => {
-    console.log(`Fetching record with ID: ${recordId}, limit: ${limit}, offset: ${offset}`);
     const record = await db.getFirstAsync<RecordTypes>(
         `SELECT Id, Name, CreatedAt
         FROM Records
@@ -176,4 +172,42 @@ export const GetRecordById = async (
         record,
         documents,
     };
+};
+
+export const DeleteRecordById = async (
+    db: SQLiteDatabase,
+    recordId: number
+): Promise<void> => {
+    await db.withExclusiveTransactionAsync(async (txn) => {
+        await txn.runAsync(
+            `DELETE FROM RecordDocuments WHERE RecordId = ?`,
+            [recordId]
+        );
+
+        await txn.runAsync(
+            `DELETE FROM Records WHERE Id = ?`,
+            [recordId]
+        );
+    });
+}
+
+export const UpdateRecord = async (
+    db: SQLiteDatabase,
+    recordId: number,
+    name: string,
+    documentIds: number[]
+): Promise<void> => {
+    await db.withExclusiveTransactionAsync(async (txn) => {
+        await txn.runAsync(
+            `UPDATE Records SET Name = ? WHERE Id = ?`,
+            [name, recordId]
+        );
+
+        await txn.runAsync(
+            `DELETE FROM RecordDocuments WHERE RecordId = ?`,
+            [recordId]
+        );
+
+        await AssignDocumentsToRecord(txn, documentIds, recordId);
+    });
 };

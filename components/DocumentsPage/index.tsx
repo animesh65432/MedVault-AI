@@ -87,6 +87,7 @@ const DocumentsPage: React.FC = () => {
             setdocuments(rows);
             pageRef.current = 1;
             hasMoreRef.current = rows.length === PAGE_SIZE;
+
         } catch (error) {
             console.error("Failed to fetch documents:", error);
         } finally {
