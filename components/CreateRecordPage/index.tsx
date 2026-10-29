@@ -1,50 +1,83 @@
 import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
+import { GetAllDocumentsByDocumentIds } from '@/db/document';
 import { CheckRecordExists, CreateRecord } from '@/db/Record';
 import { usePdfThumbnail } from '@/hooks/usePdfThumbnail';
+import { DocumentRow } from '@/types';
 import { formatDate } from "@/utils/formatDate";
 import { fs } from '@/utils/fs';
 import { getSelectedDocumentsDateRange } from '@/utils/getSelectedDocumentsDateRange';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import Entypo from '@expo/vector-icons/Entypo';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
+import DocumentSkeleton from '../DocumentSkeleton';
 import Doucuments from "./Documents";
 import Navabr from './Navabr';
 import SelectionModeNavbar from './SelectionModeNavbar';
 
 const CreateRecordPage: React.FC = () => {
     const { height } = Dimensions.get('window');
+    const [IsLoading, setIsLoading] = useState<boolean>(false);
+    const [IsLoadingMore, setIsLoadingMore] = useState<boolean>(false);
+    const isLoadingMoreRef = useRef(false);
+    const [Documents, setDocuments] = useState<DocumentRow[]>([]);
     const db = useSQLiteContext();
     const [IsCreateing, setIsCreateing] = useState<boolean>(false);
     const [SelectedIds, setSelectedIds] = useState<number[]>([]);
-    const { SelectedDocuments, setSelectedDocuments } = useContext(SelectedDocumentsContext);
     const router = useRouter();
     const [Title, setTitle] = useState<string>("");
-    const hasImage = SelectedDocuments.length > 0 && !SelectedDocuments[0].IsPdf;
-    const hasPdf = SelectedDocuments.length > 0 && !!SelectedDocuments[0].IsPdf;
-    const { thumbUri, thumbFailed } = usePdfThumbnail(SelectedDocuments[0]?.SourceFilePath ?? '', SelectedDocuments[0]?.IsPdf);
+    const { SelectedDocumentsIds, setSelectedDocumentsIds } = useContext(SelectedDocumentsContext)
+    const hasImage = Documents.length > 0 && !Documents[0].IsPdf;
+    const hasPdf = Documents.length > 0 && !!Documents[0].IsPdf;
+    const { thumbUri, thumbFailed } = usePdfThumbnail(Documents[0]?.SourceFilePath ?? '', Documents[0]?.IsPdf);
     const heroHeight = height * 0.8;
     const textColor = hasImage ? "#fff" : "#23423B";
-    const dateRange = getSelectedDocumentsDateRange(SelectedDocuments);
+    const dateRange = getSelectedDocumentsDateRange(Documents);
 
     const SelectionMode = SelectedIds.length > 0;
 
     const removeSelectedDocuments = () => {
         if (SelectedIds.length === 0) return;
-        const remainingDocuments = SelectedDocuments.filter(doc => !SelectedIds.includes(doc.Id));
-        setSelectedDocuments(remainingDocuments);
+        const remainingDocuments = Documents.filter(doc => !SelectedIds.includes(doc.Id));
+        setDocuments(remainingDocuments);
         setSelectedIds([]);
     }
 
+    const fetchDocuments = async () => {
+        if (SelectedDocumentsIds.length === 0) {
+            setDocuments([]);
+            return;
+        }
+        setIsLoading(true);
+        try {
+            const documents = await GetAllDocumentsByDocumentIds(db, SelectedDocumentsIds.slice(0, 9));
+            setDocuments(documents);
+        }
+        catch (error) {
+            console.error("Failed to fetch documents:", error);
+        }
+        finally {
+            setIsLoading(false);
+        }
+    }
+
     useEffect(() => {
-        return () => {
-            setSelectedDocuments([]);
-        };
-    }, []);
+        fetchDocuments();
+    }, [SelectedDocumentsIds]);
+
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setDocuments([]);
+                setSelectedDocumentsIds([]);
+            };
+        }, [])
+    );
+
 
     const ShowdefultPdf = thumbFailed && hasPdf;
 
@@ -56,7 +89,7 @@ const CreateRecordPage: React.FC = () => {
             })
             return;
         }
-        else if (SelectedDocuments.length === 0) {
+        else if (Documents.length === 0) {
             Toast.show({
                 type: "error",
                 text1: "didn't select any documents to create a record."
@@ -73,18 +106,14 @@ const CreateRecordPage: React.FC = () => {
                 });
                 return;
             }
-            const filteredDocumentIds = SelectedDocuments.map(doc => doc.Id);
-
-            await CreateRecord(db, Title, filteredDocumentIds);
-
+            await CreateRecord(db, Title, SelectedDocumentsIds);
             router.push("/Documents")
-
             Toast.show({
                 type: "success",
                 text1: "Record created successfully!"
             });
 
-            setSelectedDocuments([]);
+            setDocuments([]);
 
         } catch (error) {
             console.error("Failed to create record:", error);
@@ -96,6 +125,36 @@ const CreateRecordPage: React.FC = () => {
         finally {
             setIsCreateing(false);
         }
+    }
+
+    const loadMoreDocuments = async () => {
+        if (isLoadingMoreRef.current) return;
+        if (SelectedDocumentsIds.length === 0) return;
+        if (Documents.length >= SelectedDocumentsIds.length) return;
+
+        isLoadingMoreRef.current = true;
+        setIsLoadingMore(true);
+        try {
+            const currentCount = Documents.length;
+            const nextDocuments = await GetAllDocumentsByDocumentIds(
+                db,
+                SelectedDocumentsIds.slice(currentCount, currentCount + 9)
+            );
+            setDocuments(prev => {
+                return [...prev, ...nextDocuments];
+            });
+        } catch (error) {
+            console.error("Failed to load more documents:", error);
+        } finally {
+            isLoadingMoreRef.current = false;
+            setIsLoadingMore(false);
+        }
+    };
+
+    if (IsLoading) {
+        return (
+            <DocumentSkeleton />
+        );
     }
 
     return (
@@ -120,6 +179,7 @@ const CreateRecordPage: React.FC = () => {
             <ScrollView
                 style={styles.container}
                 contentContainerStyle={{ gap: vScale(20) }}
+                onScroll={loadMoreDocuments}
             >
                 <View
                     style={{
@@ -131,7 +191,7 @@ const CreateRecordPage: React.FC = () => {
                     {hasImage && (
                         <>
                             <Image
-                                source={{ uri: SelectedDocuments[0].SourceFilePath }}
+                                source={{ uri: Documents[0].SourceFilePath }}
                                 style={styles.RecordIntroImage}
                                 resizeMode="stretch"
                             />
@@ -171,12 +231,12 @@ const CreateRecordPage: React.FC = () => {
                                 <Text style={styles.pdfIconText}>PDF</Text>
                             </View>
                             <Text style={styles.previewFallbackText}>
-                                {SelectedDocuments[0].title}
+                                {Documents[0].title}
                             </Text>
                         </View>
                     }
 
-                    {SelectedDocuments.length > 0
+                    {Documents.length > 0
                         &&
                         <View style={styles.descriptionContainer}>
                             {dateRange &&
@@ -188,7 +248,7 @@ const CreateRecordPage: React.FC = () => {
                     }
                 </View>
                 <Doucuments
-                    documents={SelectedDocuments}
+                    documents={Documents}
                     SelectedIds={SelectedIds}
                     setSelectedIds={setSelectedIds}
                     SelectionMode={SelectionMode}

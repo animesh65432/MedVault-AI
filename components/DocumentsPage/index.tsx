@@ -2,6 +2,7 @@ import { COLORS } from "@/app/(tabs)/_layout";
 import ChatBotAI from "@/components/ChatBotAI";
 import Documents from "@/components/Documents";
 import DocumentsSkeleton from "@/components/DocumentsSkeleton";
+import { SelectedDocumentsContext } from "@/context/SelectedDocuments";
 import { delete_documents, GetDocuments } from "@/db/document";
 import { DocumentRow } from "@/types";
 import { formatDate } from "@/utils/formatDate";
@@ -10,7 +11,7 @@ import { shareDocuments } from "@/utils/shareDocuments";
 import { vScale } from "@/utils/vScale";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Animated, LayoutChangeEvent, StyleSheet, Text, View } from "react-native";
 import BelowNavbar from "./BelowNavbar";
 import Navbar from "./Navbar";
@@ -19,10 +20,10 @@ import Tabs from "./Tabs";
 
 export type TypeTabs = "Documents" | "Records"
 
-
 const PAGE_SIZE = 10;
 
 const DocumentsPage: React.FC = () => {
+    const { SelectedDocumentsIds } = useContext(SelectedDocumentsContext);
     const db = useSQLiteContext();
     const navigation = useNavigation();
     const [activeTab, setActiveTab] = useState<TypeTabs>("Documents");
@@ -160,6 +161,7 @@ const DocumentsPage: React.FC = () => {
         fetchDocuments()
     }
 
+    console.log("DocumentsPage document Idss", SelectedDocumentsIds.length)
     return (
         <View style={styles.container}>
             <Animated.View
@@ -187,7 +189,6 @@ const DocumentsPage: React.FC = () => {
                     <Text style={styles.date_text}>{formatDate(CurrentDate)}</Text>
                 </View>
             </Animated.View>
-
             {activeTab === "Documents" &&
                 <>
                     {isLoading && documents.length === 0 ? (

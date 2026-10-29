@@ -15,36 +15,36 @@ import {
 
 type Props = {
     doc: DocumentRow;
-    SelectedDocuments: DocumentRow[];
-    setSelectedDocuments: React.Dispatch<React.SetStateAction<DocumentRow[]>>;
+    DocumentsIds: number[];
+    setDocumentsIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-function ChckIfSelected(doc: DocumentRow, SelectedDocuments: DocumentRow[]) {
-    return SelectedDocuments.some((d) => d.Id === doc.Id);
+function ChckIfSelected(doc: DocumentRow, DocumentsIds: number[]) {
+    return DocumentsIds.includes(doc.Id);
 }
 
-const Document: React.FC<Props> = ({ SelectedDocuments, doc, setSelectedDocuments }) => {
+const Document: React.FC<Props> = ({ setDocumentsIds, DocumentsIds, doc }) => {
     const { thumbUri, thumbFailed } = usePdfThumbnail(
         doc.SourceFilePath,
         doc.IsPdf
     )
 
     const toogleSelect = () => {
-        setSelectedDocuments((prev) => {
-            return [...prev, doc]
+        setDocumentsIds((prev) => {
+            return [...prev, doc.Id]
         })
     }
 
     const handlePress = () => {
-        if (SelectedDocuments.length === 0) {
+        if (DocumentsIds.length === 0) {
             toogleSelect()
             return
         }
-        setSelectedDocuments((prev) =>
-            prev.includes(doc)
-                ? prev.filter((d) => d.Id !== doc.Id)
-                : [...prev, doc]
-        )
+        else if (ChckIfSelected(doc, DocumentsIds)) {
+            setDocumentsIds((prev) => prev.filter((id) => id !== doc.Id))
+        } else {
+            setDocumentsIds((prev) => [...prev, doc.Id])
+        }
     }
 
     const renderPreview = () => {
@@ -88,8 +88,7 @@ const Document: React.FC<Props> = ({ SelectedDocuments, doc, setSelectedDocument
         )
     }
 
-    const isSelected = ChckIfSelected(doc, SelectedDocuments);
-
+    const isSelected = ChckIfSelected(doc, DocumentsIds);
 
     return (
         <TouchableOpacity

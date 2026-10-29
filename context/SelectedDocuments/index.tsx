@@ -1,20 +1,25 @@
-import { DocumentRow } from "@/types";
 import React, { createContext, useState } from "react";
 
+
 export const SelectedDocumentsContext = createContext<{
-    SelectedDocuments: DocumentRow[];
-    setSelectedDocuments: React.Dispatch<React.SetStateAction<DocumentRow[]>>;
+    SelectedDocumentsIds: number[];
+    setSelectedDocumentsIds: React.Dispatch<React.SetStateAction<number[]>>;
 }>({
-    SelectedDocuments: [],
-    setSelectedDocuments: () => { },
+    SelectedDocumentsIds: [],
+    setSelectedDocumentsIds: () => { },
 });
 
 const SelectedDocumentsProvider: React.FC<{
     children: React.ReactNode;
 }> = ({ children }) => {
-    const [SelectedDocuments, setSelectedDocuments] = useState<DocumentRow[]>([]);
+    const [SelectedDocumentsIds, setSelectedDocumentsIds] = useState<number[]>([]);
 
-    return <SelectedDocumentsContext.Provider value={{ SelectedDocuments, setSelectedDocuments }}>
+    return <SelectedDocumentsContext.Provider
+        value={{
+            SelectedDocumentsIds,
+            setSelectedDocumentsIds
+        }}
+    >
         {children}
     </SelectedDocumentsContext.Provider>
 }

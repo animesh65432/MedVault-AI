@@ -45,7 +45,7 @@ function TabIcon({
     <View style={[styles.tabIconWrap, focused && styles.focusedTabIconWrap]}>
       <Ionicons
         name={iconName}
-        size={scale(22)}
+        size={scale(28)}
         color={focused ? COLORS.active : COLORS.inactive}
       />
     </View>

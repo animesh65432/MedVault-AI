@@ -241,16 +241,29 @@ export type DocumentRow = {
     IsPdf: boolean;
 }
 
-export type SearchSuggestion = {
+export type DocumentSuggestion = {
+    kind: 'document'
     documentId: number
     title: string
     field: string
     snippet: string
-    date: string | null,
-    type: TypeOfDocumenet,
-    SourceFilePath: string,
+    date: string | null
+    type: TypeOfDocumenet
+    SourceFilePath: string
     IsPdf: boolean
 }
+
+export type RecordSuggestion = {
+    kind: 'record'
+    recordId: number
+    name: string
+    field: string
+    snippet: string
+    date: Date
+}
+
+export type SearchSuggestion = DocumentSuggestion | RecordSuggestion
+
 
 type SourceConfig = {
     ftsTable: string

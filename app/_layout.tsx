@@ -21,6 +21,7 @@ import { initExecutorch } from 'react-native-executorch';
 import { ExpoResourceFetcher } from 'react-native-executorch-expo-resource-fetcher';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
+import { PaperProvider } from 'react-native-paper';
 import 'react-native-reanimated';
 import Toast from "react-native-toast-message";
 
@@ -104,80 +105,82 @@ function RootLayoutContent() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen
-          name="RecordModel"
-          options={{
-            presentation: 'transparentModal',
-            animation: 'fade',
+      <PaperProvider>
+        <Stack
+          screenOptions={{
             headerShown: false,
-            contentStyle: {
-              backgroundColor: 'transparent',
-            },
           }}
-        />
-        <Stack.Screen
-          name="UploadModal"
-          options={{
-            presentation: 'transparentModal',
-            animation: 'fade',
-            headerShown: false,
-            contentStyle: {
-              backgroundColor: 'transparent',
-            },
-          }}
-        />
-        <Stack.Screen
-          name="Chat"
-          options={{
-            presentation: 'modal',
-            animation: 'slide_from_bottom',
-            headerShown: false,
-            gestureEnabled: true,
-          }}
-        />
-        <Stack.Screen
-          name="SearchDocuments"
-          options={{
-            presentation: 'modal',
-            animation: "fade_from_bottom",
-            headerShown: false,
-            gestureEnabled: true,
-          }}
-        />
-        <Stack.Screen
-          name="CreateRecord"
-          options={{
-            presentation: 'modal',
-            animation: "slide_from_right",
-            headerShown: false,
-            gestureEnabled: true,
-          }}
-        />
-        <Stack.Screen
-          name="AddDocuments"
-          options={{
-            presentation: 'modal',
-            animation: "slide_from_right",
-            headerShown: false,
-            gestureEnabled: true,
-          }}
-        />
-        <Stack.Screen
-          name="RecordDetails"
-          options={{
-            presentation: 'modal',
-            animation: "slide_from_right",
-            headerShown: false,
-            gestureEnabled: true,
-          }}
-        />
-      </Stack>
+        >
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen
+            name="RecordModel"
+            options={{
+              presentation: 'transparentModal',
+              animation: 'fade',
+              headerShown: false,
+              contentStyle: {
+                backgroundColor: 'transparent',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="UploadModal"
+            options={{
+              presentation: 'transparentModal',
+              animation: 'fade',
+              headerShown: false,
+              contentStyle: {
+                backgroundColor: 'transparent',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Chat"
+            options={{
+              presentation: 'modal',
+              animation: 'slide_from_bottom',
+              headerShown: false,
+              gestureEnabled: true,
+            }}
+          />
+          <Stack.Screen
+            name="SearchDocuments"
+            options={{
+              presentation: 'modal',
+              animation: "fade_from_bottom",
+              headerShown: false,
+              gestureEnabled: true,
+            }}
+          />
+          <Stack.Screen
+            name="CreateRecord"
+            options={{
+              presentation: 'modal',
+              animation: "slide_from_right",
+              headerShown: false,
+              gestureEnabled: true,
+            }}
+          />
+          <Stack.Screen
+            name="AddDocuments"
+            options={{
+              presentation: 'modal',
+              animation: "slide_from_right",
+              headerShown: false,
+              gestureEnabled: true,
+            }}
+          />
+          <Stack.Screen
+            name="RecordDetails"
+            options={{
+              presentation: 'modal',
+              animation: "slide_from_right",
+              headerShown: false,
+              gestureEnabled: true,
+            }}
+          />
+        </Stack>
+      </PaperProvider>
     </GestureHandlerRootView>
   );
 }

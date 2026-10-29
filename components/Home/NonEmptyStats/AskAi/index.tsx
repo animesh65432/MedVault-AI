@@ -1,5 +1,6 @@
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
+import { vScale } from '@/utils/vScale'
 import Icon from '@expo/vector-icons/AntDesign'
 import { useRouter } from 'expo-router'
 import React from 'react'
@@ -62,17 +63,20 @@ const styles = StyleSheet.create({
     textContainer: {
         flex: 1,
         justifyContent: 'center',
+        display: "flex",
+        flexDirection: "column",
+        gap: vScale(3),
     },
 
     title: {
-        fontSize: fs(15),
+        fontSize: fs(17),
         fontFamily: 'Aeonik-Medium',
         color: '#EEF6A2',
         marginBottom: scale(3),
     },
 
     description: {
-        fontSize: fs(13),
+        fontSize: fs(16),
         fontFamily: 'Aeonik-Regular',
         color: 'rgba(238, 246, 162, 0.65)',
     },

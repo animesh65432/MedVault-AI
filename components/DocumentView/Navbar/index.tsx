@@ -1,6 +1,8 @@
 import DeleteDocumentModel from '@/components/DeleteDocumentModel';
+import { UploadedDocument } from '@/types';
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
+import { shareDocuments } from '@/utils/shareDocuments';
 import { vScale } from '@/utils/vScale';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -12,15 +14,26 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-nati
 type Props = {
     onDelete: () => void;
     IsDeleteLoading: boolean;
-    title: string
+    title: string;
+    document: UploadedDocument;
 };
 
-const Navbar: React.FC<Props> = ({ title, IsDeleteLoading, onDelete }) => {
+const Navbar: React.FC<Props> = ({ document, title, IsDeleteLoading, onDelete }) => {
     const [ShowDocumentDeleteConfirmation, setShowDocumentDeleteConfirmation] = useState(false);
 
     const handleConfirmDelete = () => {
         onDelete();
     };
+
+    const handleShare = async () => {
+        try {
+            await shareDocuments([
+                document as Parameters<typeof shareDocuments>[0][number],
+            ]);
+        } catch (error) {
+            console.log('Error sharing document:', error);
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -44,8 +57,7 @@ const Navbar: React.FC<Props> = ({ title, IsDeleteLoading, onDelete }) => {
                 <Pressable
                     style={styles.ButtonDiv}
                     hitSlop={10}
-                    disabled={IsDeleteLoading}
-                    onPress={() => setShowDocumentDeleteConfirmation(true)}
+                    onPress={handleShare}
                 >
                     {IsDeleteLoading ? (
                         <ActivityIndicator size="small" color="#5F5E5A" />

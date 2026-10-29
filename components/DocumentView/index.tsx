@@ -693,6 +693,7 @@ const DocumentView: React.FC<Props> = ({ document, setDocument }) => {
                 title={document.type}
                 IsDeleteLoading={IsDeleteLoading}
                 onDelete={handleDeleteDocument}
+                document={document}
             />
             <ScrollView
                 contentContainerStyle={{ paddingBottom: scale(80) }}

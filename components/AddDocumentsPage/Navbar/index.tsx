@@ -8,13 +8,15 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import NavbarPhoto from './NavbarPhoto';
 
 type Props = {
-    SelectedDocuments: DocumentRow[]
+    LasSelectedDocument: DocumentRow | null;
+    DocumentsCount: number;
 }
 
 const Navbar: React.FC<Props> = ({
-    SelectedDocuments,
+    LasSelectedDocument,
+    DocumentsCount
 }) => {
-    const router = useRouter()
+    const router = useRouter();
     return (
         <View
             style={styles.NavbarContainer}
@@ -29,7 +31,7 @@ const Navbar: React.FC<Props> = ({
                     onPress={() => router.back()}
                 />
 
-                {SelectedDocuments.length === 0 &&
+                {DocumentsCount === 0 &&
                     <Text style={styles.text}>Add photos</Text>
                 }
                 <View style={styles.SelectedContainer}>
@@ -37,22 +39,22 @@ const Navbar: React.FC<Props> = ({
                         style={styles.ImageContainer}
                     >
                         {
-                            SelectedDocuments.length > 0 &&
+                            LasSelectedDocument &&
                             <NavbarPhoto
-                                document={SelectedDocuments[SelectedDocuments.length - 1]}
+                                document={LasSelectedDocument as DocumentRow}
                             />
                         }
                     </View>
 
-                    {SelectedDocuments.length > 0
+                    {DocumentsCount > 0
                         &&
                         <Text style={styles.SelectedText}>
-                            {SelectedDocuments.length} selected
+                            {DocumentsCount} selected
                         </Text>
                     }
                 </View>
             </View>
-            {SelectedDocuments.length > 0 &&
+            {LasSelectedDocument &&
                 <TouchableOpacity
                     onPress={() => router.back()}
                 >

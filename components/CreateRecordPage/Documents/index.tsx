@@ -8,7 +8,7 @@ type Props = {
     documents: DocumentRow[];
     SelectedIds: number[];
     setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
-    SelectionMode: boolean;
+    SelectionMode: boolean
 }
 
 const Documents: React.FC<Props> = ({ SelectionMode, documents, SelectedIds, setSelectedIds }) => {

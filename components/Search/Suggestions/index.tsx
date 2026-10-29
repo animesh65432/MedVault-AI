@@ -5,6 +5,7 @@ import { vScale } from '@/utils/vScale'
 import React from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import Empty from '../Empty'
+import Record from './Record'
 import Suggestion from './Suggestion'
 
 type Props = {
@@ -21,11 +22,20 @@ const Suggestions: React.FC<Props> = ({ SearchSuggestions }) => {
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={true}
         >
-            {SearchSuggestions.map((item) => (
-                <Suggestion
-                    key={item.documentId}
-                    suggestion={item} />
-            ))}
+            {SearchSuggestions.map((item) => {
+                return item.kind === 'document' ? (
+                    <Suggestion
+                        key={item.documentId}
+                        suggestion={item}
+                    />
+                ) : (
+                    <Record
+                        key={item.recordId}
+                        record={item}
+                    />
+                )
+            })}
+
         </ScrollView>
     )
 }

@@ -1,5 +1,5 @@
 import { BillingItem, DocumentRow, DocumentType, LabTest, Medicine, Reminder, SearchSuggestion, UploadedDocument } from "@/types";
-import { SOURCES } from "@/utils/contensnt";
+import { SOURCES, WITHOUT_RECORDS_SOURCES } from "@/utils/contensnt";
 import { toLocalDateString } from "@/utils/toLocalDateString";
 import { SQLiteDatabase } from "expo-sqlite";
 
@@ -276,13 +276,15 @@ export const GetSearchByKeyword = async (
     searchQuery: string,
     ORDER: "DESC" | "ASC",
     LIMIT: number,
-    OFFSET: number
+    OFFSET: number,
+    Option: "Records_With_Documents" | "Documents" = "Records_With_Documents"
 ): Promise<DocumentRow[]> => {
     const q = searchQuery.trim();
     if (!q) return [];
     const matchTerm = `"${q.replace(/"/g, '""')}"*`;
+    const Sources = Option === "Records_With_Documents" ? SOURCES : WITHOUT_RECORDS_SOURCES;
 
-    const subQueries = SOURCES.map(src =>
+    const subQueries = Sources.map(src =>
         src.directDocId
             ? `SELECT ${src.ftsTable}.rowid AS docId
                FROM ${src.ftsTable}
@@ -329,8 +331,24 @@ export const GetSearchSuggestions = async (
     const q = query.trim()
     if (!q) return []
     const matchTerm = `"${q.replace(/"/g, '""')}"*`
+
     try {
-        const queries = SOURCES.map(async (src) => {
+        const queries = SOURCES.map((src) => {
+            if (src.ftsTable === "RecordsSearch") {
+                return db.getAllAsync<any>(
+                    `SELECT
+                        Records.Id as recordId,
+                        Records.Name as name,
+                        Records.CreatedAt as date,
+                        snippet(RecordsSearch, 0, '⟪', '⟫', '…', 10) as snip
+                    FROM RecordsSearch
+                    JOIN Records ON Records.Id = RecordsSearch.rowid
+                    WHERE RecordsSearch MATCH ?
+                    ORDER BY rank
+                    LIMIT ?`,
+                    [matchTerm, perSourceLimit]
+                )
+            }
             if (src.directDocId) {
                 return db.getAllAsync<any>(
                     `SELECT
@@ -366,29 +384,47 @@ export const GetSearchSuggestions = async (
             )
         })
 
-        const resultsPerSource = await Promise.all(queries)
+        const settled = await Promise.allSettled(queries)
 
         const merged: SearchSuggestion[] = []
 
-        resultsPerSource.forEach((rows, i) => {
-            rows.forEach((row: any) => {
-                merged.push({
-                    documentId: row.documentId,
-                    title: row.title,
-                    date: row.date,
-                    field: SOURCES[i].label,
-                    snippet: row.snip,
-                    type: row.type || null,
-                    SourceFilePath: row.SourceFilePath,
-                    IsPdf: row.IsPdf,
-                })
+        settled.forEach((res, i) => {
+            const src = SOURCES[i]
+            if (res.status === "rejected") {
+                console.error(`Search failed for ${src.ftsTable}:`, res.reason)
+                return
+            }
+            res.value.forEach((row: any) => {
+                if (src.ftsTable === "RecordsSearch") {
+                    merged.push({
+                        kind: 'record',
+                        recordId: row.recordId,
+                        name: row.name,
+                        field: src.label,
+                        snippet: row.snip,
+                        date: row.date
+                    })
+                } else {
+                    merged.push({
+                        kind: 'document',
+                        documentId: row.documentId,
+                        title: row.title,
+                        date: row.date,
+                        field: src.label,
+                        snippet: row.snip,
+                        type: row.type || null,
+                        SourceFilePath: row.SourceFilePath,
+                        IsPdf: row.IsPdf,
+                    })
+                }
             })
         })
 
-        const seen = new Set<number>()
+        const seen = new Set<string>()
         const deduped = merged.filter(s => {
-            if (seen.has(s.documentId)) return false
-            seen.add(s.documentId)
+            const key = s.kind === 'record' ? `r:${s.recordId}` : `d:${s.documentId}`
+            if (seen.has(key)) return false
+            seen.add(key)
             return true
         })
 
@@ -703,5 +739,38 @@ export const runSqlRaw = async (db: SQLiteDatabase, sqlRaw: string): Promise<any
     } catch (error) {
         console.error("Error executing raw SQL:", error);
         throw error;
+    }
+}
+
+export const GetCountofDocumentsByRecordId = async (db: SQLiteDatabase, recordId: string): Promise<number> => {
+    const result = await db.getFirstAsync<{ count: number }>(
+        `SELECT COUNT(*) AS count FROM RecordDocuments WHERE RecordId = ?`,
+        [recordId]
+    );
+    return result?.count ?? 0;
+}
+
+export const GetDocumentsIdsByRecordId = async (db: SQLiteDatabase, recordId: string): Promise<number[]> => {
+    const rows = await db.getAllAsync<{ DocumentId: number }>(
+        `SELECT DocumentId FROM RecordDocuments WHERE RecordId = ?`,
+        [recordId]
+    );
+
+    return rows.map(row => row.DocumentId);
+}
+
+export const GetAllDocumentsByDocumentIds = async (db: SQLiteDatabase, documentIds: number[]): Promise<DocumentRow[]> => {
+    if (documentIds.length === 0) return [];
+
+    const placeholders = documentIds.map(() => '?').join(', ');
+    try {
+        const rows = await db.getAllAsync<DocumentRow>(
+            `SELECT * FROM Documents WHERE Id IN (${placeholders})`,
+            documentIds
+        );
+        return rows;
+    } catch (error) {
+        console.log("Error getting documents by IDs:", error);
+        return []
     }
 }

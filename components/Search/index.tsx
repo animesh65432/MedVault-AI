@@ -113,12 +113,13 @@ const Search: React.FC<Props> = ({ showResults }) => {
 
         const timeout = setTimeout(async () => {
             if (cancelled) return
-
             try {
-                const results = await GetSearchSuggestions(db, searchQuery)
+                const results = await GetSearchSuggestions(db, searchQuery);
+                console.log("Fetched search suggestions:", results)
                 if (!cancelled) {
                     setSearchSuggestions(results)
                 }
+
             } catch (error) {
                 console.log("Failed to fetch search documents:", error)
             }
@@ -232,8 +233,6 @@ const Search: React.FC<Props> = ({ showResults }) => {
                         setSelectedDate={setSelectedDate}
                     />
                 }
-
-
                 {documents.length !== 0 && showResults && !IsSearchIng &&
                     <NonEmpty
                         selectedIds={selectedIds}

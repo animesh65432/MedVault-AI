@@ -58,7 +58,7 @@ const Document: React.FC<Props> = ({ document }) => {
                 <View style={[styles.tile, styles.fallback]}>
                     <FontAwesome
                         name="file-pdf-o"
-                        size={scale(40)}
+                        size={scale(60)}
                         color="#0D483F"
                     />
                     <View style={[styles.doc_type_container]}>
@@ -158,14 +158,14 @@ const styles = StyleSheet.create({
     },
     FallbackText: {
         fontFamily: 'Aeonik-Medium',
-        fontSize: scale(13),
+        fontSize: scale(15),
         color: '#1d1d1d',
         textAlign: 'center',
-        marginTop: vScale(48),
+        marginTop: vScale(18)
     },
     FallbackDate: {
         fontFamily: 'Aeonik-Medium',
-        fontSize: scale(11),
+        fontSize: scale(13),
         color: '#8A8A7C',
         marginLeft: "auto",
         marginTop: vScale(4),

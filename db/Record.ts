@@ -62,8 +62,6 @@ export const GetSummaryRecords = async (
         [limit, offset]
     );
 
-    console.log("Fetched records:", records?.[0]?.Name);
-
     if (records.length === 0) {
         return [];
     }
@@ -174,22 +172,12 @@ export const GetRecordById = async (
     };
 };
 
-export const DeleteRecordById = async (
-    db: SQLiteDatabase,
-    recordId: number
-): Promise<void> => {
-    await db.withExclusiveTransactionAsync(async (txn) => {
-        await txn.runAsync(
-            `DELETE FROM RecordDocuments WHERE RecordId = ?`,
-            [recordId]
-        );
-
-        await txn.runAsync(
-            `DELETE FROM Records WHERE Id = ?`,
-            [recordId]
-        );
+export const DeleteRecordById = async (db: SQLiteDatabase, recordId: number) => {
+    await db.withTransactionAsync(async () => {
+        await db.runAsync(`DELETE FROM RecordDocuments WHERE RecordId = ?`, [recordId]);
+        await db.runAsync(`DELETE FROM Records WHERE Id = ?`, [recordId]);
     });
-}
+};
 
 export const UpdateRecord = async (
     db: SQLiteDatabase,
@@ -197,17 +185,25 @@ export const UpdateRecord = async (
     name: string,
     documentIds: number[]
 ): Promise<void> => {
-    await db.withExclusiveTransactionAsync(async (txn) => {
-        await txn.runAsync(
+    await db.withTransactionAsync(async () => {
+        await db.runAsync(
             `UPDATE Records SET Name = ? WHERE Id = ?`,
             [name, recordId]
         );
 
-        await txn.runAsync(
+        await db.runAsync(
             `DELETE FROM RecordDocuments WHERE RecordId = ?`,
             [recordId]
         );
 
-        await AssignDocumentsToRecord(txn, documentIds, recordId);
+        await AssignDocumentsToRecord(db, documentIds, recordId);
     });
 };
+
+export const GetRecordDocumentIds = async (db: SQLiteDatabase, recordId: string): Promise<number[]> => {
+    const rows = await db.getAllAsync<{ DocumentId: number }>(
+        'SELECT DocumentId FROM RecordDocuments WHERE RecordId = ?',
+        [recordId]
+    );
+    return rows.map(r => r.DocumentId);
+}

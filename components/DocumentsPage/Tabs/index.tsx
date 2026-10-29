@@ -1,4 +1,5 @@
 import { scale } from '@/utils/scale';
+import { Entypo } from '@expo/vector-icons';
 import React from 'react';
 import {
     Pressable,
@@ -17,9 +18,8 @@ const Tabs: React.FC<Props> = ({ activeTab, setActiveTab }) => {
     const tabs: TypeTabs[] = ['Documents', 'Records'];
     return (
         <View style={styles.container}>
-            {tabs.map((tab) => {
+            {tabs.map((tab, index) => {
                 const isActive = activeTab === tab;
-
                 return (
                     <Pressable
                         key={tab}
@@ -31,6 +31,22 @@ const Tabs: React.FC<Props> = ({ activeTab, setActiveTab }) => {
                         accessibilityRole="tab"
                         accessibilityState={{ selected: isActive }}
                     >
+
+                        {index === 0 &&
+                            <Entypo
+                                name='folder'
+                                size={scale(24)}
+                                color={isActive ? '#FFFFFF' : '#23423B'}
+                            />
+                        }
+                        {index === 1 &&
+                            <Entypo
+                                name="text-document"
+                                size={scale(24)}
+                                color={isActive ? '#FFFFFF' : '#23423B'}
+                            />
+                        }
+
                         <Text
                             style={[
                                 styles.tabText,
@@ -59,6 +75,9 @@ const styles = StyleSheet.create({
 
     tab: {
         flex: 1,
+        display: "flex",
+        flexDirection: "row",
+        gap: scale(8),
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: scale(12),
@@ -71,9 +90,9 @@ const styles = StyleSheet.create({
     },
 
     tabText: {
-        fontSize: scale(14),
-        fontWeight: '500',
-        color: '#6E827B',
+        fontSize: scale(16),
+        color: '#23423B',
+        fontFamily: "Aeonik-Medium",
     },
 
     activeTabText: {

@@ -1,5 +1,6 @@
 import { usePdfThumbnail } from "@/hooks/usePdfThumbnail"
-import { SearchSuggestion as SearchSuggestionTypes } from "@/types"
+import { DocumentSuggestion } from "@/types"
+import { formatDate } from "@/utils/formatDate"
 import { fs } from '@/utils/fs'
 import { scale } from "@/utils/scale"
 import { vScale } from "@/utils/vScale"
@@ -10,10 +11,10 @@ import React from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 type Props = {
-    suggestion: SearchSuggestionTypes
+    suggestion: DocumentSuggestion
 }
 
-function renderSnippet(snippet: string) {
+export function renderSnippet(snippet: string) {
     const parts = snippet.split(/(⟪.*?⟫)/g)
     return parts.map((part, i) => {
         if (part.startsWith('⟪') && part.endsWith('⟫')) {
@@ -64,7 +65,7 @@ const Suggestion: React.FC<Props> = ({ suggestion }) => {
                         {suggestion.title}
                     </Text>
                     {suggestion.date && (
-                        <Text style={styles.date}>{suggestion.date}</Text>
+                        <Text style={styles.date}>{formatDate(suggestion.date)}</Text>
                     )}
                 </View>
                 <Text style={styles.field}>{suggestion.field}</Text>

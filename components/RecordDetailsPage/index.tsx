@@ -1,5 +1,5 @@
 import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
-import { DeleteRecordById, GetRecordById } from '@/db/Record';
+import { DeleteRecordById, GetRecordById, UpdateRecord } from '@/db/Record';
 import { usePdfThumbnail } from '@/hooks/usePdfThumbnail';
 import { DocumentRow, RecordDetails } from '@/types';
 import { formatDate } from '@/utils/formatDate';
@@ -8,12 +8,12 @@ import { getSelectedDocumentsDateRange } from '@/utils/getSelectedDocumentsDateR
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { Entypo } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
-import Documents from './Documents';
+import DocumentsComponent from './Documents';
 import Navbar from './Navbar';
 import SelectionModeNavbar from "./SelectionModeNavbar";
 
@@ -27,38 +27,42 @@ const PageSize = 9;
 
 const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocuments }) => {
     const { height } = Dimensions.get('window');
+    const { setSelectedDocumentsIds, SelectedDocumentsIds } = useContext(SelectedDocumentsContext);
     const db = useSQLiteContext();
     const [IsDeleting, setIsDeleting] = useState<boolean>(false);
     const [IsUpdating, setIsUpdating] = useState<boolean>(false);
+    const [Documents, setDocuments] = useState<DocumentRow[]>([]);
     const pageRef = useRef<number>(1);
     const IsLoadingMoreRef = useRef<boolean>(false);
     const [SelectedIds, setSelectedIds] = useState<number[]>([]);
-    const { SelectedDocuments, setSelectedDocuments } = useContext(SelectedDocumentsContext);
     const router = useRouter();
     const [Title, setTitle] = useState<string>(record.Name || '');
-    const hasImage = SelectedDocuments.length > 0 && !SelectedDocuments[0].IsPdf;
-    const hasPdf = SelectedDocuments.length > 0 && !!SelectedDocuments[0].IsPdf;
-    const { thumbUri, thumbFailed } = usePdfThumbnail(SelectedDocuments[0]?.SourceFilePath ?? '', SelectedDocuments[0]?.IsPdf);
-    const dateRange = getSelectedDocumentsDateRange(SelectedDocuments);
+    const hasImage = Documents.length > 0 && !Documents[0].IsPdf;
+    const hasPdf = Documents.length > 0 && !!Documents[0].IsPdf;
+    const { thumbUri, thumbFailed } = usePdfThumbnail(Documents[0]?.SourceFilePath ?? '', Documents[0]?.IsPdf);
+    const dateRange = getSelectedDocumentsDateRange(Documents);
     const heroHeight = height * 0.8;
     const textColor = hasImage ? "#fff" : "#23423B";
     const SelectionMode = SelectedIds.length > 0;
 
     const removeSelectedDocuments = () => {
         if (SelectedIds.length === 0) return;
-        const remainingDocuments = SelectedDocuments.filter(doc => !SelectedIds.includes(doc.Id));
-        setSelectedDocuments(remainingDocuments);
+        const remainingDocuments = Documents.filter(doc => !SelectedIds.includes(doc.Id));
+        setDocuments(remainingDocuments);
         setSelectedIds([]);
     }
 
-    useEffect(() => {
-        if (DefaultDocuments.length > 0) {
-            setSelectedDocuments(DefaultDocuments);
-        }
-        return () => {
-            setSelectedDocuments([]);
-        };
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            if (DefaultDocuments.length > 0) {
+                setDocuments(DefaultDocuments);
+            }
+            return () => {
+                setDocuments([]);
+                setSelectedDocumentsIds([]);
+            };
+        }, [id])
+    );
 
     const ShowdefultPdf = thumbFailed && hasPdf;
 
@@ -83,7 +87,7 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
                 return;
             }
 
-            setSelectedDocuments(previous => {
+            setDocuments(previous => {
                 const existingIds = new Set(
                     previous.map(doc => doc.Id)
                 );
@@ -110,13 +114,14 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
         setIsDeleting(true);
         try {
             await DeleteRecordById(db, id);
-            router.back();
             Toast.show({
                 type: "success",
                 text1: "Success",
                 text2: "Record deleted successfully.",
             });
+            router.push("/Documents")
         } catch (error) {
+            console.log("Failed to delete the record:", error);
             Toast.show({
                 type: "error",
                 text1: "Error",
@@ -132,7 +137,7 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
     const handleUpdateRecord = async () => {
         setIsUpdating(true);
         try {
-            if (Title.trim().length === 0 || SelectedDocuments.length === 0) {
+            if (Title.trim().length === 0 || Documents.length === 0) {
                 Toast.show({
                     type: "error",
                     text1: "Error",
@@ -141,6 +146,13 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
                 return;
             }
 
+            await UpdateRecord(db, id, Title, Documents.map(doc => doc.Id));
+
+            Toast.show({
+                type: "success",
+                text1: "Success",
+                text2: "Record updated successfully.",
+            });
 
         } catch (error) {
             console.log("Failed to update the record:", error);
@@ -149,6 +161,8 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
             setIsUpdating(false);
         }
     }
+
+    console.log("RecordDetails  Documents Ids", SelectedDocumentsIds.length);
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -185,7 +199,7 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
                     {hasImage && (
                         <>
                             <Image
-                                source={{ uri: SelectedDocuments[0].SourceFilePath }}
+                                source={{ uri: Documents[0].SourceFilePath }}
                                 style={styles.RecordIntroImage}
                                 resizeMode="stretch"
                             />
@@ -217,6 +231,7 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
                             pathname: "/AddDocuments",
                             params: {
                                 title: Title,
+                                recordId: id.toString(),
                             }
                         })}
                     >
@@ -230,12 +245,12 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
                                 <Text style={styles.pdfIconText}>PDF</Text>
                             </View>
                             <Text style={styles.previewFallbackText}>
-                                {SelectedDocuments[0].title}
+                                {Documents[0].title}
                             </Text>
                         </View>
                     }
 
-                    {SelectedDocuments.length > 0
+                    {Documents.length > 0
                         &&
                         <View style={styles.descriptionContainer}>
                             {dateRange &&
@@ -246,8 +261,8 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
                         </View>
                     }
                 </View>
-                <Documents
-                    documents={SelectedDocuments}
+                <DocumentsComponent
+                    documents={Documents}
                     SelectedIds={SelectedIds}
                     setSelectedIds={setSelectedIds}
                     SelectionMode={SelectionMode}

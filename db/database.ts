@@ -255,7 +255,8 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
             );
 
             CREATE VIRTUAL TABLE IF NOT EXISTS RecordsSearch USING fts5(
-                name ,
+                name,
+                CreatedAt,
                 content='Records',
                 content_rowid='Id'
             );
@@ -439,8 +440,19 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 INSERT INTO BillingItemsSearch(rowid, name, price) VALUES (new.Id, new.name, new.price);
             END;
 
-            CREATE TRIGGER IF NOT EXISTS RecordsSearch AFTER INSERT ON Records BEGIN
-                INSERT INTO RecordsSearch(rowid, name) VALUES (new.Id, new.name);
+            CREATE TRIGGER IF NOT EXISTS records_ai AFTER INSERT ON Records BEGIN
+                INSERT INTO RecordsSearch(rowid, name, CreatedAt) 
+                VALUES (new.Id, new.name,new.CreatedAt);
+            END;
+
+            CREATE TRIGGER IF NOT EXISTS records_ad AFTER DELETE ON Records BEGIN
+               INSERT INTO RecordsSearch(RecordsSearch, rowid, name, CreatedAt) 
+               VALUES('delete', old.Id, old.Name, old.CreatedAt);
+            END;
+
+            CREATE TRIGGER IF NOT EXISTS records_au AFTER UPDATE OF Name ON Records BEGIN
+              INSERT INTO RecordsSearch(RecordsSearch, rowid, name, CreatedAt) VALUES('delete', old.Id, old.Name, old.CreatedAt);
+              INSERT INTO RecordsSearch(rowid, name, CreatedAt) VALUES (new.Id, new.Name, new.CreatedAt);
             END;
 
             CREATE TRIGGER IF NOT EXISTS billingitems_ad AFTER DELETE ON BillingItems BEGIN

@@ -7,6 +7,7 @@ const SearchDocuments: React.FC = () => {
         ShowResults: string;
     }>();
     const showResults = ShowResults === "true";
+
     return (
         <Search
             showResults={showResults}
