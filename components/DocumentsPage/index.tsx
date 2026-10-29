@@ -160,8 +160,6 @@ const DocumentsPage: React.FC = () => {
         setSelectedIds([])
         fetchDocuments()
     }
-
-    console.log("DocumentsPage document Idss", SelectedDocumentsIds.length)
     return (
         <View style={styles.container}>
             <Animated.View

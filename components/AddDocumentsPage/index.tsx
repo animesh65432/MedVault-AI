@@ -115,6 +115,9 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
 
     async function RecordsDocumentsCount() {
         try {
+            if (!recordId || SelectedDocumentsIds.length > 0) {
+                return;
+            }
             const defaultSelectedDocumentIds = await GetRecordDocumentIds(db, recordId);
             setSelectedDocumentsIds(defaultSelectedDocumentIds);
         } catch (error) {

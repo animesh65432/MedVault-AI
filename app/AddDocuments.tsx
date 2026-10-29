@@ -9,14 +9,12 @@ const AddDocuments: React.FC = () => {
         startDate,
         endDate,
         SelectedCategoried,
-        title,
         recordId
     } = useLocalSearchParams<{
         searchQuery?: string;
         startDate?: string;
         endDate?: string;
         SelectedCategoried?: TypeOfDocumenet;
-        title?: string;
         recordId?: string;
     }>();
 

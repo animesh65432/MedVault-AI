@@ -2,9 +2,8 @@ import DocumentsSkeleton from "@/components/DocumentsSkeleton";
 import { DocumentRow } from "@/types";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import React, { useCallback } from "react";
-import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
+import { Animated, FlatList, StyleSheet } from "react-native";
 import Document from "./Document";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(
@@ -64,15 +63,7 @@ const Documents: React.FC<Props> = ({
             removeClippedSubviews
             onEndReached={onEndReached}
             onEndReachedThreshold={0.5}
-            ListEmptyComponent={
-                <View style={styles.emptyContainer}>
-                    <View style={styles.emptyContent}>
-                        <AntDesign name="folder" size={scale(24)} color="#082e28" />
-                        <Text style={styles.emptyText}>No documents yet</Text>
-                    </View>
-                </View>
-            }
-            ListFooterComponent={isLoadingMore ? <DocumentsSkeleton count={3} /> : null}
+            ListFooterComponent={isLoadingMore ? <DocumentsSkeleton count={10} /> : null}
         />
     );
 };

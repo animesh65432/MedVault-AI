@@ -155,20 +155,8 @@ export const GetRecordById = async (
         WHERE Id = ?`,
         [recordId]
     );
-    const documents = await db.getAllAsync<DocumentRow>(
-        `SELECT d.*
-    FROM Documents d
-    INNER JOIN RecordDocuments rd
-        ON d.Id = rd.DocumentId
-    WHERE rd.RecordId = ?
-    ORDER BY d.Id DESC
-    LIMIT ? OFFSET ?`,
-        [recordId, limit, offset]
-    );
-
     return {
-        record,
-        documents,
+        record
     };
 };
 

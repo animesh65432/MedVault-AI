@@ -1,5 +1,5 @@
 import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
-import { DeleteRecordById, GetRecordById, UpdateRecord } from '@/db/Record';
+import { DeleteRecordById, UpdateRecord } from '@/db/Record';
 import { usePdfThumbnail } from '@/hooks/usePdfThumbnail';
 import { DocumentRow, RecordDetails } from '@/types';
 import { formatDate } from '@/utils/formatDate';
@@ -8,9 +8,9 @@ import { getSelectedDocumentsDateRange } from '@/utils/getSelectedDocumentsDateR
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { Entypo } from '@expo/vector-icons';
-import { useFocusEffect, useRouter } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useCallback, useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import DocumentsComponent from './Documents';
@@ -29,6 +29,7 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
     const { height } = Dimensions.get('window');
     const { setSelectedDocumentsIds, SelectedDocumentsIds } = useContext(SelectedDocumentsContext);
     const db = useSQLiteContext();
+    const navigation = useNavigation();
     const [IsDeleting, setIsDeleting] = useState<boolean>(false);
     const [IsUpdating, setIsUpdating] = useState<boolean>(false);
     const [Documents, setDocuments] = useState<DocumentRow[]>([]);
@@ -52,17 +53,13 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
         setSelectedIds([]);
     }
 
-    useFocusEffect(
-        useCallback(() => {
-            if (DefaultDocuments.length > 0) {
-                setDocuments(DefaultDocuments);
-            }
-            return () => {
-                setDocuments([]);
-                setSelectedDocumentsIds([]);
-            };
-        }, [id])
-    );
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('beforeRemove', () => {
+            setSelectedDocumentsIds([]);
+        });
+        return unsubscribe;
+    }, [navigation]);
 
     const ShowdefultPdf = thumbFailed && hasPdf;
 
@@ -76,12 +73,7 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
         try {
             const offset = pageRef.current * PageSize;
 
-            const { documents } = await GetRecordById(
-                db,
-                id,
-                PageSize,
-                offset
-            );
+            const documents: any[] = []
 
             if (documents.length === 0) {
                 return;
@@ -160,9 +152,7 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocu
         finally {
             setIsUpdating(false);
         }
-    }
-
-    console.log("RecordDetails  Documents Ids", SelectedDocumentsIds.length);
+    };
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>

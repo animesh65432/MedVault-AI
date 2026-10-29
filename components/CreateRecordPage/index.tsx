@@ -9,18 +9,20 @@ import { getSelectedDocumentsDateRange } from '@/utils/getSelectedDocumentsDateR
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import Entypo from '@expo/vector-icons/Entypo';
-import { useFocusEffect, useRouter } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
 import DocumentSkeleton from '../DocumentSkeleton';
+import DocumentsSkeleton from '../DocumentsSkeleton';
 import Doucuments from "./Documents";
 import Navabr from './Navabr';
 import SelectionModeNavbar from './SelectionModeNavbar';
 
 const CreateRecordPage: React.FC = () => {
     const { height } = Dimensions.get('window');
+    const navigation = useNavigation();
     const [IsLoading, setIsLoading] = useState<boolean>(false);
     const [IsLoadingMore, setIsLoadingMore] = useState<boolean>(false);
     const isLoadingMoreRef = useRef(false);
@@ -69,15 +71,12 @@ const CreateRecordPage: React.FC = () => {
         fetchDocuments();
     }, [SelectedDocumentsIds]);
 
-    useFocusEffect(
-        useCallback(() => {
-            return () => {
-                setDocuments([]);
-                setSelectedDocumentsIds([]);
-            };
-        }, [])
-    );
-
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('beforeRemove', () => {
+            setSelectedDocumentsIds([]);
+        });
+        return unsubscribe;
+    }, [navigation]);
 
     const ShowdefultPdf = thumbFailed && hasPdf;
 
@@ -136,12 +135,15 @@ const CreateRecordPage: React.FC = () => {
         setIsLoadingMore(true);
         try {
             const currentCount = Documents.length;
+
             const nextDocuments = await GetAllDocumentsByDocumentIds(
                 db,
                 SelectedDocumentsIds.slice(currentCount, currentCount + 9)
             );
             setDocuments(prev => {
-                return [...prev, ...nextDocuments];
+                const existing = new Set(prev.map(d => d.Id));
+                const fresh = nextDocuments.filter(d => !existing.has(d.Id));
+                return [...prev, ...fresh];
             });
         } catch (error) {
             console.error("Failed to load more documents:", error);
@@ -253,6 +255,8 @@ const CreateRecordPage: React.FC = () => {
                     setSelectedIds={setSelectedIds}
                     SelectionMode={SelectionMode}
                 />
+                {isLoadingMoreRef.current && <DocumentsSkeleton count={3} />}
+
             </ScrollView>
         </View>
     );
