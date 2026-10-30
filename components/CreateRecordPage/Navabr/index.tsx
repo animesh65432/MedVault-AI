@@ -1,8 +1,9 @@
+import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
 import { scale } from '@/utils/scale';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 type Props = {
@@ -11,7 +12,15 @@ type Props = {
 }
 
 const Navbar: React.FC<Props> = ({ IsCreateing, handleCreateRecord }) => {
+    const { setSelectedDocumentsIds } = useContext(SelectedDocumentsContext);
     const router = useRouter();
+
+    const handleBackPress = () => {
+        setSelectedDocumentsIds([]);
+        router.back();
+    };
+
+
     return (
         <View style={styles.container}>
             <Pressable
@@ -20,7 +29,7 @@ const Navbar: React.FC<Props> = ({ IsCreateing, handleCreateRecord }) => {
                     pressed && styles.pressed,
                 ]}
                 hitSlop={8}
-                onPress={() => router.push("/Documents")}
+                onPress={handleBackPress}
                 disabled={IsCreateing}
             >
                 <AntDesign

@@ -1,16 +1,18 @@
 import DocumentSkeleton from "@/components/DocumentSkeleton";
 import RecordNotFound from "@/components/NotFound";
 import RecordDetailsPage from "@/components/RecordDetailsPage";
+import { SelectedDocumentsContext } from "@/context/SelectedDocuments";
 import { GetRecordById } from "@/db/Record";
-import { DocumentRow, RecordDetails } from "@/types";
+import { GetDocumentsIdsByRecordId } from "@/db/document";
+import { RecordDetails } from "@/types";
 import { useLocalSearchParams } from 'expo-router';
 import { useSQLiteContext } from "expo-sqlite";
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 const RecordPage: React.FC = () => {
     const db = useSQLiteContext();
+    const { setSelectedDocumentsIds } = useContext(SelectedDocumentsContext);
     const [recordDetails, setRecordDetails] = useState<RecordDetails | null>(null);
-    const [Documents, SetDocuments] = useState<DocumentRow[]>([])
     const [IsLoading, SetIsLoading] = useState<boolean>(false)
     const { id } = useLocalSearchParams();
 
@@ -22,7 +24,9 @@ const RecordPage: React.FC = () => {
         }
         let Id = Number(id);
         try {
-            const { record } = await GetRecordById(db, Id, 9, 0);
+            const { record } = await GetRecordById(db, Id);
+            const DocumentIds = await GetDocumentsIdsByRecordId(db, Id);
+            setSelectedDocumentsIds(DocumentIds);
             setRecordDetails(record);
         }
         catch (error) {
@@ -57,7 +61,6 @@ const RecordPage: React.FC = () => {
     return (
         <RecordDetailsPage
             record={recordDetails}
-            Documents={Documents}
             id={Number(id)}
         />
     )

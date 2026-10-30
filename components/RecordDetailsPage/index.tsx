@@ -19,13 +19,12 @@ import SelectionModeNavbar from "./SelectionModeNavbar";
 
 type Props = {
     record: RecordDetails;
-    Documents: DocumentRow[];
     id: number;
 }
 
 const PageSize = 9;
 
-const RecordDetailsPage: React.FC<Props> = ({ id, record, Documents: DefaultDocuments }) => {
+const RecordDetailsPage: React.FC<Props> = ({ id, record }) => {
     const { height } = Dimensions.get('window');
     const { setSelectedDocumentsIds, SelectedDocumentsIds } = useContext(SelectedDocumentsContext);
     const db = useSQLiteContext();

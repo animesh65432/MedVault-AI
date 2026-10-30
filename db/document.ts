@@ -750,7 +750,7 @@ export const GetCountofDocumentsByRecordId = async (db: SQLiteDatabase, recordId
     return result?.count ?? 0;
 }
 
-export const GetDocumentsIdsByRecordId = async (db: SQLiteDatabase, recordId: string): Promise<number[]> => {
+export const GetDocumentsIdsByRecordId = async (db: SQLiteDatabase, recordId: number): Promise<number[]> => {
     const rows = await db.getAllAsync<{ DocumentId: number }>(
         `SELECT DocumentId FROM RecordDocuments WHERE RecordId = ?`,
         [recordId]

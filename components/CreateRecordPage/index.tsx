@@ -14,7 +14,6 @@ import { useSQLiteContext } from 'expo-sqlite';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
-import DocumentSkeleton from '../DocumentSkeleton';
 import DocumentsSkeleton from '../DocumentsSkeleton';
 import Doucuments from "./Documents";
 import Navabr from './Navabr';
@@ -24,7 +23,6 @@ const CreateRecordPage: React.FC = () => {
     const { height } = Dimensions.get('window');
     const navigation = useNavigation();
     const [IsLoading, setIsLoading] = useState<boolean>(false);
-    const [IsLoadingMore, setIsLoadingMore] = useState<boolean>(false);
     const isLoadingMoreRef = useRef(false);
     const [Documents, setDocuments] = useState<DocumentRow[]>([]);
     const db = useSQLiteContext();
@@ -46,6 +44,7 @@ const CreateRecordPage: React.FC = () => {
         if (SelectedIds.length === 0) return;
         const remainingDocuments = Documents.filter(doc => !SelectedIds.includes(doc.Id));
         setDocuments(remainingDocuments);
+        setSelectedDocumentsIds(prev => prev.filter(id => !SelectedIds.includes(id)));
         setSelectedIds([]);
     }
 
@@ -54,9 +53,16 @@ const CreateRecordPage: React.FC = () => {
             setDocuments([]);
             return;
         }
-        setIsLoading(true);
+
+        const isInitialLoad = Documents.length === 0;
+        if (isInitialLoad) setIsLoading(true);
+
         try {
-            const documents = await GetAllDocumentsByDocumentIds(db, SelectedDocumentsIds.slice(0, 9));
+            const count = Math.max(Documents.length, 9);
+            const documents = await GetAllDocumentsByDocumentIds(
+                db,
+                SelectedDocumentsIds.slice(0, count)
+            );
             setDocuments(documents);
         }
         catch (error) {
@@ -132,7 +138,6 @@ const CreateRecordPage: React.FC = () => {
         if (Documents.length >= SelectedDocumentsIds.length) return;
 
         isLoadingMoreRef.current = true;
-        setIsLoadingMore(true);
         try {
             const currentCount = Documents.length;
 
@@ -149,15 +154,9 @@ const CreateRecordPage: React.FC = () => {
             console.error("Failed to load more documents:", error);
         } finally {
             isLoadingMoreRef.current = false;
-            setIsLoadingMore(false);
         }
     };
 
-    if (IsLoading) {
-        return (
-            <DocumentSkeleton />
-        );
-    }
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -213,6 +212,7 @@ const CreateRecordPage: React.FC = () => {
                         <TextInput
                             style={[styles.titleContainer, { color: textColor }]}
                             placeholder="Add a title"
+                            value={Title}
                             placeholderTextColor={hasImage ? "rgba(255,255,255,0.7)" : "#23423B"}
                             autoFocus
                             onChangeText={setTitle}
@@ -249,14 +249,15 @@ const CreateRecordPage: React.FC = () => {
                         </View>
                     }
                 </View>
-                <Doucuments
-                    documents={Documents}
-                    SelectedIds={SelectedIds}
-                    setSelectedIds={setSelectedIds}
-                    SelectionMode={SelectionMode}
-                />
+                {IsLoading
+                    ? <DocumentsSkeleton count={9} />
+                    : <Doucuments
+                        documents={Documents}
+                        SelectedIds={SelectedIds}
+                        setSelectedIds={setSelectedIds}
+                        SelectionMode={SelectionMode}
+                    />}
                 {isLoadingMoreRef.current && <DocumentsSkeleton count={3} />}
-
             </ScrollView>
         </View>
     );
