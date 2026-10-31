@@ -1,6 +1,5 @@
 import { SelectedDocumentsContext } from "@/context/SelectedDocuments"
-import { GetDocumentById, GetDocuments, GetSearchByKeyword } from "@/db/document"
-import { GetRecordDocumentIds } from "@/db/Record"
+import { GetDocumentById, GetDocuments, GetDocumentsIdsByRecordId, GetSearchByKeyword } from "@/db/document"
 import { DocumentRow, TypeOfDocumenet } from "@/types"
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
@@ -35,7 +34,7 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
     const scrollY = useRef(new Animated.Value(0)).current;
     const [navbarHeight, setNavbarHeight] = useState(0);
     const [filterHeight, setFilterHeight] = useState(0);
-    const { SelectedDocumentsIds, setSelectedDocumentsIds } = useContext(SelectedDocumentsContext);
+    const { SelectedDocumentsIds, setSelectedDocumentsIds, LoadedRecordId, setLoadedRecordId } = useContext(SelectedDocumentsContext);
     const [documents, setdocuments] = useState<DocumentRow[]>([]);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const pageRef = useRef(0);
@@ -113,13 +112,12 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
         }
     }, [db, category, dates, input]);
 
-    async function RecordsDocumentsCount() {
+    async function GetRecordsDocumentsIds() {
         try {
-            if (!recordId || SelectedDocumentsIds.length > 0) {
-                return;
-            }
-            const defaultSelectedDocumentIds = await GetRecordDocumentIds(db, recordId);
-            setSelectedDocumentsIds(defaultSelectedDocumentIds);
+            if (!recordId || LoadedRecordId === recordId) return;
+            const ids = await GetDocumentsIdsByRecordId(db, Number(recordId));
+            setSelectedDocumentsIds(ids);
+            setLoadedRecordId(recordId);
         } catch (error) {
             console.error("Failed to get document count by recordId:", error);
         }
@@ -144,7 +142,7 @@ const AddDocumentsPage: React.FC<Props> = ({ searchQuery, startDate, endDate, Se
     }, [SelectedDocumentsIds])
 
     useEffect(() => {
-        RecordsDocumentsCount();
+        GetRecordsDocumentsIds();
     }, [recordId]);
 
     const loadMore = useCallback(() => load(false), [load]);

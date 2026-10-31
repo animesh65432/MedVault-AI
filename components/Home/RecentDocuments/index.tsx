@@ -65,6 +65,7 @@ const RecentDocuments = () => {
 const style = StyleSheet.create({
     container: {
         flexDirection: "column",
+        gap: scale(10),
     },
     title: {
         fontSize: scale(20),

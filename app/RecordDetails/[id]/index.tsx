@@ -19,6 +19,7 @@ const RecordPage: React.FC = () => {
     async function fetchRecordDetails() {
         SetIsLoading(true);
         if (typeof id !== 'string') {
+            SetIsLoading(false);
             console.error("Invalid medicine ID:", id);
             return;
         }

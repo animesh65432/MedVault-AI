@@ -1,4 +1,5 @@
 import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
+import { GetAllDocumentsByDocumentIds } from '@/db/document';
 import { DeleteRecordById, UpdateRecord } from '@/db/Record';
 import { usePdfThumbnail } from '@/hooks/usePdfThumbnail';
 import { DocumentRow, RecordDetails } from '@/types';
@@ -10,9 +11,10 @@ import { vScale } from '@/utils/vScale';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation, useRouter } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
+import DocumentsSkeleton from '../DocumentsSkeleton';
 import DocumentsComponent from './Documents';
 import Navbar from './Navbar';
 import SelectionModeNavbar from "./SelectionModeNavbar";
@@ -22,18 +24,16 @@ type Props = {
     id: number;
 }
 
-const PageSize = 9;
-
 const RecordDetailsPage: React.FC<Props> = ({ id, record }) => {
     const { height } = Dimensions.get('window');
     const { setSelectedDocumentsIds, SelectedDocumentsIds } = useContext(SelectedDocumentsContext);
     const db = useSQLiteContext();
     const navigation = useNavigation();
     const [IsDeleting, setIsDeleting] = useState<boolean>(false);
+    const [IsLoading, setIsLoading] = useState<boolean>(false);
     const [IsUpdating, setIsUpdating] = useState<boolean>(false);
     const [Documents, setDocuments] = useState<DocumentRow[]>([]);
-    const pageRef = useRef<number>(1);
-    const IsLoadingMoreRef = useRef<boolean>(false);
+    const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
     const [SelectedIds, setSelectedIds] = useState<number[]>([]);
     const router = useRouter();
     const [Title, setTitle] = useState<string>(record.Name || '');
@@ -62,42 +62,56 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record }) => {
 
     const ShowdefultPdf = thumbFailed && hasPdf;
 
-    const LoadMoreDocuments = async () => {
-        if (IsLoadingMoreRef.current) {
+    const fetchDocuments = async () => {
+        if (SelectedDocumentsIds.length === 0) {
+            setDocuments([]);
             return;
         }
 
-        IsLoadingMoreRef.current = true;
+        const isInitialLoad = Documents.length === 0;
+        if (isInitialLoad) setIsLoading(true);
 
         try {
-            const offset = pageRef.current * PageSize;
+            const count = Math.max(Documents.length, 9);
+            const documents = await GetAllDocumentsByDocumentIds(
+                db,
+                SelectedDocumentsIds.slice(0, count)
+            );
+            setDocuments(documents);
+        }
+        catch (error) {
+            console.error("Failed to fetch documents:", error);
+        }
+        finally {
+            setIsLoading(false);
+        }
+    }
 
-            const documents: any[] = []
+    useEffect(() => {
+        fetchDocuments();
+    }, [SelectedDocumentsIds]);
 
-            if (documents.length === 0) {
-                return;
-            }
+    const loadMoreDocuments = async () => {
+        if (isLoadingMore) return;
+        if (SelectedDocumentsIds.length === 0) return;
+        if (Documents.length >= SelectedDocumentsIds.length) return;
+        setIsLoadingMore(true);
+        try {
+            const currentCount = Documents.length;
 
-            setDocuments(previous => {
-                const existingIds = new Set(
-                    previous.map(doc => doc.Id)
-                );
-
-                const uniqueDocuments = documents.filter(
-                    doc => !existingIds.has(doc.Id)
-                );
-
-                return [...previous, ...uniqueDocuments];
+            const nextDocuments = await GetAllDocumentsByDocumentIds(
+                db,
+                SelectedDocumentsIds.slice(currentCount, currentCount + 9)
+            );
+            setDocuments(prev => {
+                const existing = new Set(prev.map(d => d.Id));
+                const fresh = nextDocuments.filter(d => !existing.has(d.Id));
+                return [...prev, ...fresh];
             });
-
-            pageRef.current += 1;
-
-            if (documents.length < PageSize) {
-            }
         } catch (error) {
             console.error("Failed to load more documents:", error);
         } finally {
-            IsLoadingMoreRef.current = false;
+            setIsLoadingMore(false);
         }
     };
 
@@ -110,7 +124,8 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record }) => {
                 text1: "Success",
                 text2: "Record deleted successfully.",
             });
-            router.push("/Documents")
+            setSelectedDocumentsIds([]);
+            router.replace("/Documents");
         } catch (error) {
             console.log("Failed to delete the record:", error);
             Toast.show({
@@ -137,7 +152,7 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record }) => {
                 return;
             }
 
-            await UpdateRecord(db, id, Title, Documents.map(doc => doc.Id));
+            await UpdateRecord(db, id, Title, SelectedDocumentsIds);
 
             Toast.show({
                 type: "success",
@@ -176,7 +191,7 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record }) => {
             <ScrollView
                 style={styles.container}
                 contentContainerStyle={{ gap: vScale(20) }}
-                onScroll={LoadMoreDocuments}
+                onScroll={loadMoreDocuments}
             >
                 <View
                     style={{
@@ -250,12 +265,16 @@ const RecordDetailsPage: React.FC<Props> = ({ id, record }) => {
                         </View>
                     }
                 </View>
-                <DocumentsComponent
-                    documents={Documents}
-                    SelectedIds={SelectedIds}
-                    setSelectedIds={setSelectedIds}
-                    SelectionMode={SelectionMode}
-                />
+                {IsLoading ?
+                    <DocumentsSkeleton count={9} /> :
+                    <DocumentsComponent
+                        documents={Documents}
+                        SelectedIds={SelectedIds}
+                        setSelectedIds={setSelectedIds}
+                        SelectionMode={SelectionMode}
+                    />
+                }
+                {isLoadingMore && <DocumentsSkeleton count={3} />}
             </ScrollView>
         </View>
     )

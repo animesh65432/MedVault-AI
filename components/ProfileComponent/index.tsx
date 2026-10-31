@@ -132,7 +132,7 @@ export default function ProfileScreen() {
             <View style={styles.statsRow}>
                 <TouchableOpacity
                     style={styles.statBox}
-                    onPress={() => router.push("/Search")}
+                    onPress={() => router.push("/SearchDocuments")}
                 >
                     <Text style={styles.statNum}>{counts.documentsCount}</Text>
                     <Text style={styles.statLabel}>Documents</Text>

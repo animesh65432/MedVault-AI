@@ -1,9 +1,9 @@
+import { SelectedDocumentsContext } from '@/context/SelectedDocuments';
 import { scale } from '@/utils/scale';
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo, } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { Icon, IconButton, Menu } from 'react-native-paper';
 
 type Props = {
     handleUpdateRecord: () => void;
@@ -13,8 +13,15 @@ type Props = {
 
 const Navbar: React.FC<Props> = ({ handleUpdateRecord, handleDeleteRecord }) => {
     const router = useRouter();
+    const { setSelectedDocumentsIds, setLoadedRecordId } = useContext(SelectedDocumentsContext);
     const [visible, setVisible] = useState(false);
     const closeMenu = () => setVisible(false);
+
+    const handleBackPress = () => {
+        setSelectedDocumentsIds([]);
+        setLoadedRecordId(null);
+        router.back();
+    }
 
     return (
         <View style={styles.container}>
@@ -24,7 +31,7 @@ const Navbar: React.FC<Props> = ({ handleUpdateRecord, handleDeleteRecord }) => 
                     pressed && styles.pressed,
                 ]}
                 hitSlop={8}
-                onPress={() => router.push("/Documents")}
+                onPress={handleBackPress}
             >
                 <AntDesign
                     name="arrow-left"
@@ -51,42 +58,20 @@ const Navbar: React.FC<Props> = ({ handleUpdateRecord, handleDeleteRecord }) => 
                         color={"#fff"}
                     />
                 </Pressable>
-                <Menu
-                    visible={visible}
-                    onDismiss={closeMenu}
-                    anchor={
-                        <IconButton
-                            style={styles.iconButton}
-                            icon="dots-vertical"
-                            onPress={() => setVisible(true)}
-                            iconColor='white'
-                        />
-                    }
-                    contentStyle={styles.MenuContainer}
+                <Pressable
+                    style={({ pressed }) => [
+                        styles.iconButton,
+                        pressed && styles.pressed,
+                    ]}
+                    hitSlop={8}
+                    onPress={handleDeleteRecord}
                 >
-                    <Menu.Item
-                        leadingIcon={({ size }) => (
-                            <Icon source="share-outline" size={size} color="#23423B" />
-                        )}
-                        title="Share"
-                        titleStyle={styles.MenuItemTextStyle}
-                        onPress={() => {
-                            closeMenu();
-                        }}
+                    <AntDesign
+                        name="delete"
+                        size={scale(20)}
+                        color="#fff"
                     />
-
-                    <Menu.Item
-                        leadingIcon={({ size }) => (
-                            <Icon source="delete-outline" size={size} color="#23423B" />
-                        )}
-                        title="Delete"
-                        titleStyle={styles.MenuItemTextStyle}
-                        onPress={() => {
-                            handleDeleteRecord();
-                            closeMenu();
-                        }}
-                    />
-                </Menu>
+                </Pressable>
             </View>
         </View>
     );

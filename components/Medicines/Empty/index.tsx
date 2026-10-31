@@ -9,14 +9,18 @@ const Empty: React.FC = () => {
     return (
         <View style={styles.container}>
             <View style={styles.iconCircle}>
-                <Feather name="package" size={scale(26)} color="#9BAFA6" />
+                <Feather
+                    name="package"
+                    size={scale(36)}
+                    color="#9BAFA6"
+                />
             </View>
-
-            <Text style={styles.title}>No medicines yet</Text>
-
-            <Text style={styles.subtitle}>
-                Medicines you add will show up here, organized by date.
-            </Text>
+            <View style={styles.textContainer}>
+                <Text style={styles.title}>No medicines yet</Text>
+                <Text style={styles.subtitle}>
+                    Medicines you add will show up here, organized by date.
+                </Text>
+            </View>
         </View>
     )
 }
@@ -28,7 +32,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingHorizontal: scale(32),
         paddingVertical: vScale(60),
-        gap: vScale(6),
+        gap: vScale(20),
     },
     iconCircle: {
         width: scale(64),
@@ -37,22 +41,28 @@ const styles = StyleSheet.create({
         backgroundColor: "#EDF2F1",
         alignItems: "center",
         justifyContent: "center",
-        marginBottom: vScale(14),
     },
     title: {
-        fontSize: fs(15),
+        fontSize: fs(25),
         fontFamily: "Aeonik-Medium",
         color: "#234338",
         textAlign: "center",
     },
     subtitle: {
-        fontSize: fs(12.5),
+        fontSize: fs(16),
         fontFamily: "Aeonik-Regular",
         color: "#9BAFA6",
         textAlign: "center",
         lineHeight: fs(18),
         marginTop: vScale(2),
     },
+    textContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        display: "flex",
+        flexDirection: "column",
+        gap: vScale(17),
+    }
 })
 
 export default Empty

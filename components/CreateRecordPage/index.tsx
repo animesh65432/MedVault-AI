@@ -11,7 +11,7 @@ import { vScale } from '@/utils/vScale';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useNavigation, useRouter } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Toast from 'react-native-toast-message';
 import DocumentsSkeleton from '../DocumentsSkeleton';
@@ -23,7 +23,7 @@ const CreateRecordPage: React.FC = () => {
     const { height } = Dimensions.get('window');
     const navigation = useNavigation();
     const [IsLoading, setIsLoading] = useState<boolean>(false);
-    const isLoadingMoreRef = useRef(false);
+    const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
     const [Documents, setDocuments] = useState<DocumentRow[]>([]);
     const db = useSQLiteContext();
     const [IsCreateing, setIsCreateing] = useState<boolean>(false);
@@ -112,7 +112,7 @@ const CreateRecordPage: React.FC = () => {
                 return;
             }
             await CreateRecord(db, Title, SelectedDocumentsIds);
-            router.push("/Documents")
+            router.replace("/Documents")
             Toast.show({
                 type: "success",
                 text1: "Record created successfully!"
@@ -133,11 +133,11 @@ const CreateRecordPage: React.FC = () => {
     }
 
     const loadMoreDocuments = async () => {
-        if (isLoadingMoreRef.current) return;
+        if (isLoadingMore) return;
         if (SelectedDocumentsIds.length === 0) return;
         if (Documents.length >= SelectedDocumentsIds.length) return;
 
-        isLoadingMoreRef.current = true;
+        setIsLoadingMore(true);
         try {
             const currentCount = Documents.length;
 
@@ -153,7 +153,7 @@ const CreateRecordPage: React.FC = () => {
         } catch (error) {
             console.error("Failed to load more documents:", error);
         } finally {
-            isLoadingMoreRef.current = false;
+            setIsLoadingMore(false);
         }
     };
 
@@ -257,7 +257,7 @@ const CreateRecordPage: React.FC = () => {
                         setSelectedIds={setSelectedIds}
                         SelectionMode={SelectionMode}
                     />}
-                {isLoadingMoreRef.current && <DocumentsSkeleton count={3} />}
+                {isLoadingMore && <DocumentsSkeleton count={3} />}
             </ScrollView>
         </View>
     );
