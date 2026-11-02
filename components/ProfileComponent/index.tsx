@@ -9,7 +9,7 @@ import { fs } from '@/utils/fs';
 import { resetAllData } from '@/utils/resetAllData';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
@@ -25,6 +25,7 @@ import {
 } from 'react-native';
 import GenrateSummaryCard from './Genratesummary';
 import LogoutModal from './LogOutModel';
+
 
 export default function ProfileScreen() {
     const db = useSQLiteContext()
@@ -85,11 +86,19 @@ export default function ProfileScreen() {
         OnChangeIsAlarmActive(false)
         setOnboardingCompleteAndCache(false)
     }
-
-    console.log("ProfilePic", profilePic)
-
     return (
         <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+            <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.backButton}
+                onPress={() => router.back()}
+            >
+                <AntDesign
+                    name="arrow-left"
+                    size={scale(24)}
+                    color="white"
+                />
+            </TouchableOpacity>
             <View style={styles.header}>
                 {profilePic ?
                     <View
@@ -204,7 +213,10 @@ function MenuRow({ icon, label, danger, last, OnPress }: { icon: any; label: str
 
 const styles = StyleSheet.create({
     screen: { flex: 1, backgroundColor: '#F5F5F3' },
-    content: { paddingBottom: vScale(120) },
+    content: {
+        paddingBottom: vScale(120),
+        paddingTop: vScale(40),
+    },
     header: {
         alignItems: 'center',
         paddingTop: vScale(32),
@@ -315,5 +327,14 @@ const styles = StyleSheet.create({
         height: scale(96),
         borderRadius: scale(48),
         marginBottom: vScale(14),
-    }
+    },
+    backButton: {
+        width: scale(44),
+        height: scale(44),
+        borderRadius: scale(22),
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#0D483F',
+        marginLeft: scale(20)
+    },
 });

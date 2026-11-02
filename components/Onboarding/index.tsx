@@ -62,9 +62,9 @@ const Onboarding: React.FC = () => {
                         accent: '#1F4D43'
                     },
                     text: {
-                        primary: '#1C1C1E',
+                        primary: '#1F4D43',
                         secondary: '#8E8E93',
-                        contrast: '#FFFFFF'
+                        contrast: '#FFFFFF',
                     }
                 }}
                 animationDuration={800}
@@ -90,7 +90,7 @@ const Onboarding: React.FC = () => {
         </View>
 
     )
-}
+};
 
 const styles = StyleSheet.create({
     container: {

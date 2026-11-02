@@ -1,4 +1,5 @@
 import { Onboarding } from "@/components";
+import AppSplash from "@/components/AppSplash";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import NameInputScreen from "@/components/Onboarding/NameInputScreen";
 import { toastConfig } from "@/components/toastConfig";
@@ -16,18 +17,18 @@ import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import { SQLiteProvider } from "expo-sqlite";
 import { StatusBar } from 'expo-status-bar';
-import { useContext, useEffect } from 'react';
-import { initExecutorch } from 'react-native-executorch';
-import { ExpoResourceFetcher } from 'react-native-executorch-expo-resource-fetcher';
+import { ComponentType, useCallback, useContext, useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { PaperProvider } from 'react-native-paper';
 import 'react-native-reanimated';
 import Toast from "react-native-toast-message";
 
-initExecutorch({
-  resourceFetcher: ExpoResourceFetcher
-});
+const TypedAppSplash = AppSplash as ComponentType<{
+  ready: boolean;
+  onFinish: () => void;
+}>;
+
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -41,6 +42,24 @@ Notifications.setNotificationHandler({
 export const unstable_settings = {
   anchor: '(tabs)',
 };
+
+SplashScreen.preventAutoHideAsync();
+
+function SplashOverlay() {
+  const { isHydrated: onboardingHydrated } = useContext(OnboardingContext);
+  const { isHydrated: userNameHydrated } = useContext(UserNameContext);
+  const [done, setDone] = useState(false);
+  const handleFinish = useCallback(() => setDone(true), []);
+
+  if (done) return null;
+
+  return (
+    <TypedAppSplash
+      ready={onboardingHydrated && userNameHydrated}
+      onFinish={handleFinish}
+    />
+  );
+}
 
 function RootLayoutContent() {
   const router = useRouter();
@@ -179,6 +198,15 @@ function RootLayoutContent() {
               gestureEnabled: true,
             }}
           />
+          <Stack.Screen
+            name="Profile"
+            options={{
+              presentation: 'modal',
+              animation: "slide_from_right",
+              headerShown: false,
+              gestureEnabled: true,
+            }}
+          />
         </Stack>
       </PaperProvider>
     </GestureHandlerRootView>
@@ -195,15 +223,10 @@ export default function RootLayout() {
     'Aeonik-Black': require('../assets/fonts/aeonik/Aeonik-Black.ttf'),
   });
 
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
 
-  if (!loaded && !error) {
-    return null;
-  }
+  useEffect(() => {
+    if (loaded || error) SplashScreen.hideAsync().catch(() => { })
+  }, [loaded, error])
 
   return (
     <ErrorBoundary>
@@ -219,6 +242,7 @@ export default function RootLayout() {
                   <AlarmProvider>
                     <UserNameProvider>
                       <RootLayoutContent />
+                      <SplashOverlay />
                       <Toast
                         config={toastConfig}
                       />

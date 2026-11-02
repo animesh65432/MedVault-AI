@@ -6,10 +6,9 @@ import { shareDocuments } from '@/utils/shareDocuments';
 import { vScale } from '@/utils/vScale';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { router } from "expo-router";
 import React, { useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type Props = {
     onDelete: () => void;
@@ -37,18 +36,18 @@ const Navbar: React.FC<Props> = ({ document, title, IsDeleteLoading, onDelete })
 
     return (
         <View style={styles.container}>
-            <View style={styles.backButton}>
-                <Pressable
-                    hitSlop={10}
-                    disabled={IsDeleteLoading}
+            <View style={styles.backButtonContainer}>
+                <TouchableOpacity
+                    activeOpacity={0.7}
+                    style={styles.backButton}
                     onPress={() => router.back()}
                 >
-                    <MaterialIcons
-                        name="arrow-back"
+                    <AntDesign
+                        name="arrow-left"
                         size={scale(24)}
-                        color="#234338"
+                        color="white"
                     />
-                </Pressable>
+                </TouchableOpacity>
                 <Text style={styles.backText}>{title}</Text>
             </View>
             <View
@@ -106,7 +105,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: vScale(40),
     },
-    backButton: {
+    backButtonContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: scale(8),
@@ -150,7 +149,15 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         gap: scale(5),
-    }
+    },
+    backButton: {
+        width: scale(44),
+        height: scale(44),
+        borderRadius: scale(22),
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#0D483F',
+    },
 });
 
 export default Navbar;

@@ -21,7 +21,7 @@ const Intro = ({ onPressStart }: Props) => {
                     <Image
                         style={styles.LogoContainer}
                         resizeMode="cover"
-                        source={require('../../../assets/images/icon.png')}
+                        source={require('../../../assets/images/app-icon.png')}
                     />
                     <View>
                         <Text style={styles.title}>
@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        gap: scale(20)
+        gap: scale(20),
+        flex: 1,
     },
     image: {
         width: scale(320),
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         marginTop: "auto",
     },
     title: {
-        fontSize: scale(24),
+        fontSize: scale(26),
         textAlign: 'center',
         fontFamily: 'Aeonik-Medium'
     },
@@ -77,23 +78,23 @@ const styles = StyleSheet.create({
         gap: scale(8)
     },
     subtitle: {
-        fontSize: fs(32),
+        fontSize: fs(36),
         textAlign: 'center',
         fontFamily: 'Aeonik-Medium',
     },
 
     button: {
-        width: scale(350),
+        alignSelf: 'stretch',
         backgroundColor: '#1F4D43',
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: scale(40),
-        height: vScale(56),
-        borderRadius: scale(10)
+        borderRadius: scale(10),
+        paddingVertical: vScale(20),
     },
     buttonText: {
         color: 'white',
-        fontSize: fs(20),
+        fontSize: fs(24),
         fontFamily: 'Aeonik-Medium',
     },
     ImageContainer: {
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     subtitleText: {
-        fontSize: fs(32),
+        fontSize: fs(36),
         textAlign: 'center',
         fontFamily: 'Aeonik-Medium',
         color: '#1F4D43',

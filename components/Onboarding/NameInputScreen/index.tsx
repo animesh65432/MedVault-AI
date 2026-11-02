@@ -1,7 +1,7 @@
 import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     Animated,
     KeyboardAvoidingView,
@@ -31,12 +31,32 @@ export default function NameInputScreen({
     onContinue: (name: string) => void;
     isActive: boolean;
 }) {
+    const [index, setIndex] = useState(0);
     const [name, setName] = useState('');
     const [focused, setFocused] = useState(false);
     const pressScale = useRef(new Animated.Value(1)).current;
     const underlineWidth = useRef(new Animated.Value(0.5)).current;
 
     const canContinue = name.trim().length > 0;
+    const fullPlaceholder = "What's your name?";
+    const [placeholder, setPlaceholder] = useState('');
+
+    useEffect(() => {
+        let index = 0;
+
+        const interval = setInterval(() => {
+            index++;
+
+            setPlaceholder(fullPlaceholder.slice(0, index));
+
+            if (index >= fullPlaceholder.length) {
+                clearInterval(interval);
+            }
+        }, 100);
+
+        return () => clearInterval(interval);
+    }, []);
+
 
     const handleFocus = () => {
         setFocused(true);
@@ -57,7 +77,6 @@ export default function NameInputScreen({
     };
 
     const handleContinue = () => {
-        console.log('handleContinue called with name:', name);
         if (!canContinue) return;
         Animated.sequence([
             Animated.timing(pressScale, { toValue: 0.9, duration: 80, useNativeDriver: true }),
@@ -65,7 +84,6 @@ export default function NameInputScreen({
         ]).start();
         onContinue(name.trim());
     };
-
     return (
         <KeyboardAvoidingView
             style={styles.container}
@@ -88,12 +106,6 @@ export default function NameInputScreen({
                         )}
                     </View>
                 </View>
-
-                <Text style={styles.title}>What's your name?</Text>
-                <Text style={styles.subtitle}>
-                    We'll use this to personalize your records.
-                </Text>
-
                 <View style={styles.inputWrap}>
                     <ScrollView
                         style={{ width: '100%' }}
@@ -101,23 +113,19 @@ export default function NameInputScreen({
                         keyboardShouldPersistTaps="always"
                     >
                         <View style={styles.inputRow}>
-                            {isActive ? (
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Your name"
-                                    placeholderTextColor="#B7C0BA"
-                                    value={name}
-                                    onChangeText={setName}
-                                    onFocus={handleFocus}
-                                    onBlur={handleBlur}
-                                    autoCapitalize="words"
-                                    returnKeyType="done"
-                                    onSubmitEditing={handleContinue}
-                                />
-                            ) : (
-                                <View style={styles.input} />
-                            )}
-
+                            {name.trim().length === 0 &&
+                                <Text style={styles.PlaceHolderText}>{placeholder}</Text>
+                            }
+                            <TextInput
+                                style={styles.input}
+                                value={name}
+                                onChangeText={setName}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                autoCapitalize="words"
+                                returnKeyType="done"
+                                onSubmitEditing={handleContinue}
+                            />
                             <Animated.View style={{ transform: [{ scale: pressScale }] }}>
                                 <TouchableOpacity
                                     style={[styles.fab, !canContinue && styles.fabDisabled]}
@@ -286,5 +294,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#B7C4BB',
         shadowOpacity: 0,
         elevation: 0,
+    },
+    PlaceHolderText: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        fontSize: fs(22),
+        color: COLORS.gray,
+        textAlign: 'center',
+        paddingVertical: scale(10),
+        fontFamily: 'Aeonik-Medium',
     },
 });

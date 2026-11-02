@@ -18,7 +18,6 @@ type Props = {
     doc: DocumentRow
     selectedIds: number[]
     setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>
-    SetCurrentDate?: React.Dispatch<React.SetStateAction<string>>
 }
 
 const Document: React.FC<Props> = ({ doc, selectedIds, setSelectedIds }) => {
