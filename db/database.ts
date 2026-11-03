@@ -295,15 +295,23 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
             )) WHERE Id = old.RecordId;
             END;
             
+            
+            CREATE TABLE IF NOT EXISTS ChatRecords (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                Name TEXT NOT NULL
+            );
+
             CREATE TABLE IF NOT EXISTS ChatMessages (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                ChatRecordId INTEGER NOT NULL,
                 UserMessage TEXT NOT NULL,
                 AIResponse TEXT NOT NULL,
                 ShowMore INTEGER NOT NULL DEFAULT 0,
                 TableName TEXT,
                 Types TEXT,
                 Soucres TEXT,
-                CreatedAt TEXT NOT NULL DEFAULT (datetime('now'))
+                CreatedAt TEXT NOT NULL DEFAULT (datetime('now')),
+                FOREIGN KEY (ChatRecordId) REFERENCES ChatRecords(Id) ON DELETE CASCADE
             );
 
             CREATE TABLE IF NOT EXISTS DoseLogs (

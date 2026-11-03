@@ -17,8 +17,8 @@
       "package": "com.dutta12.MedVaultAI",
       "adaptiveIcon": {
         "backgroundColor": "#1C3932",
-        "foregroundImage": "./assets/images/app-icon.png",
-        "monochromeImage": "./assets/images/app-icon.png"
+        "foregroundImage": "./assets/images/icon.png",
+        "monochromeImage": "./assets/images/icon.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -30,11 +30,11 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-Icon.png",
+          "image": "./assets/images/app-icon.png",
           "backgroundColor": "#103D37",
           "imageWidth": 140,
           "dark": {
-            "image": "./assets/images/splash-Icon.png",
+            "image": "./assets/images/app-icon.png",
             "backgroundColor": "#103D37"
           }
         }

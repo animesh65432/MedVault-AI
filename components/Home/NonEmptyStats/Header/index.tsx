@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     greeting: {
-        fontSize: fs(19),
+        fontSize: fs(18),
         fontFamily: 'Aeonik-Medium',
         color: '#0D483F'
     },

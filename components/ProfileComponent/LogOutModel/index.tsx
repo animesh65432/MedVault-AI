@@ -44,7 +44,7 @@ const LogoutModel: React.FC<Props> = ({ visible, setVisible, handleConfirm }) =>
                         <AntDesign
                             name="logout"
                             size={scale(24)}
-                            color={COLORS.danger}
+                            color="#0D483F"
                         />
                     </View>
 
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         width: scale(56),
         height: scale(56),
         borderRadius: scale(28),
-        backgroundColor: COLORS.dangerBg,
+        backgroundColor: "#dfe7e5",
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: vScale(16),
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
         borderRadius: scale(14),
         paddingVertical: vScale(14),
         alignItems: 'center',
-        backgroundColor: COLORS.danger,
+        backgroundColor: "#0D483F",
     },
     confirmText: {
         fontSize: fs(15),

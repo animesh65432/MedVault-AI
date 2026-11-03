@@ -92,3 +92,4 @@ export const Placehodlers = [
     "Search by medicine",
     "Search by Record"
 ]
+
