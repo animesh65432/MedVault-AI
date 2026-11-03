@@ -31,7 +31,6 @@ export default function NameInputScreen({
     onContinue: (name: string) => void;
     isActive: boolean;
 }) {
-    const [index, setIndex] = useState(0);
     const [name, setName] = useState('');
     const [focused, setFocused] = useState(false);
     const pressScale = useRef(new Animated.Value(1)).current;

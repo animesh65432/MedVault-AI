@@ -26,9 +26,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: vScale(15),
         paddingHorizontal: scale(20),
-        paddingTop: vScale(40),
+        paddingTop: vScale(50),
         paddingBottom: vScale(32),
-        backgroundColor: "#F6F5EE",
+        backgroundColor: "#fff",
     },
     image: {
         width: scale(250),

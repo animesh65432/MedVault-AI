@@ -1,11 +1,12 @@
 import SpechtoText from "@/components/SpeechtoText";
 import { RecentSearchContext } from "@/context/RecentSearch";
+import { Placehodlers } from "@/utils/contensnt";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useRouter } from "expo-router";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, TextInput, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -16,13 +17,22 @@ type Props = {
 }
 
 const InputBox: React.FC<Props> = ({ showResults, searchQuery, setSearchQuery }) => {
-    const [showModelSpeechToText, setShowModelSpeechToText] = useState(false)
+    const [showModelSpeechToText, setShowModelSpeechToText] = useState(false);
+    const [placeholderText, setPlaceholderText] = useState(Placehodlers[0]);
     const { addRecentSearch } = useContext(RecentSearchContext)
     const router = useRouter()
 
     const onChangeText = (text: string) => {
         setSearchQuery(text)
     }
+
+    useEffect(() => {
+        if (searchQuery.length > 0) return;
+        const id = setInterval(() => {
+            setPlaceholderText(Placehodlers[Math.floor(Math.random() * Placehodlers.length)]);
+        }, 700);
+        return () => clearInterval(id);
+    }, [searchQuery.length]);
 
     const onSubmitEditing = async () => {
         const trimmed = searchQuery.trim()
@@ -52,7 +62,7 @@ const InputBox: React.FC<Props> = ({ showResults, searchQuery, setSearchQuery })
                 onChangeText={onChangeText}
                 onSubmitEditing={onSubmitEditing}
                 value={searchQuery}
-                placeholder="Search by document,doctor,hospital ..."
+                placeholder={placeholderText}
                 placeholderTextColor="#5A7A74"
                 returnKeyType="search"
                 autoFocus
@@ -95,7 +105,7 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         fontFamily: "Aeonik-Regular",
-        fontSize: scale(16),
+        fontSize: scale(20),
         color: "#5A7A74",
     },
 })

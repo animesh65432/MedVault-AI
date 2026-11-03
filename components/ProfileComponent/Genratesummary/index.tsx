@@ -35,7 +35,7 @@ export default function GenrateSummaryCard() {
             setTimeout(() => {
                 setLoading(false);
                 setProgress(0);
-            }, 400); // brief pause so the 100% state is visible before resetting
+            }, 400);
         }
     };
 
@@ -81,8 +81,7 @@ export default function GenrateSummaryCard() {
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: scale(16),
+        borderRadius: scale(20),
         padding: scale(20),
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -91,6 +90,7 @@ const styles = StyleSheet.create({
         elevation: 2,
         width: '90%',
         alignSelf: 'center',
+        backgroundColor: "#0D483F",
     },
     iconCircle: {
         width: scale(48),
@@ -102,20 +102,20 @@ const styles = StyleSheet.create({
         marginBottom: vScale(12),
     },
     cardTitle: {
-        fontFamily: 'Aeonik-Bold',
+        fontFamily: 'Aeonik-Medium',
         fontSize: fs(18),
-        color: '#0D1F1C',
+        color: 'white',
         marginBottom: vScale(4),
     },
     cardSubtitle: {
         fontFamily: 'Aeonik-Regular',
         fontSize: fs(14),
-        color: '#666666',
+        color: "#e2dede",
         marginBottom: vScale(16),
         lineHeight: fs(20),
     },
     button: {
-        backgroundColor: '#0D483F',
+        backgroundColor: 'white',
         borderRadius: scale(12),
         paddingVertical: vScale(14),
         flexDirection: 'row',
@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontFamily: 'Aeonik-Medium',
-        fontSize: fs(15),
-        color: '#FAFAF8',
+        fontSize: fs(16),
+        color: '#0D483F',
     },
     progressTrack: {
         height: 4,

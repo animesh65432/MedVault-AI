@@ -1,4 +1,3 @@
-import AnimatedCounter from "@/components/AnimatedCounter"
 import DocsIcon from "@/components/DocsIcon"
 import { CountTypes } from "@/types"
 import { fs } from "@/utils/fs"
@@ -13,6 +12,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native"
+import Animated, { SlideInLeft } from "react-native-reanimated"
 
 const Stats: React.FC<CountTypes> = ({
     documentsCount,
@@ -21,20 +21,25 @@ const Stats: React.FC<CountTypes> = ({
     const router = useRouter()
 
     return (
-        <View style={styles.container}>
+        <Animated.View
+            style={styles.container}
+            entering={SlideInLeft.duration(400)}
+        >
             <TouchableOpacity
                 activeOpacity={0.85}
                 style={styles.statBox}
                 onPress={() => router.push("/Documents")}
             >
                 <View style={styles.topRow}>
-                    {documentsCount < 10 ?
-                        <Text style={styles.CounterText}> {0}{documentsCount}</Text> :
-                        <AnimatedCounter
-                            targetValue={documentsCount}
-                        />
+                    {
+                        documentsCount > 9 ?
+                            <Text style={styles.CounterText}>
+                                {documentsCount}
+                            </Text> :
+                            <Text style={styles.CounterText}>
+                                0{documentsCount}
+                            </Text>
                     }
-
                     <View style={styles.FirstIconContainer}>
                         <DocsIcon
                             width={scale(25)}
@@ -61,11 +66,14 @@ const Stats: React.FC<CountTypes> = ({
                 onPress={() => router.push("/Medicines")}
             >
                 <View style={styles.topRow}>
-                    {medicinesCount < 10 ?
-                        <Text style={styles.CounterText}> {0}{medicinesCount}</Text> :
-                        <AnimatedCounter
-                            targetValue={medicinesCount}
-                        />
+                    {
+                        medicinesCount > 9 ?
+                            <Text style={styles.CounterText}>
+                                {medicinesCount}
+                            </Text> :
+                            <Text style={styles.CounterText}>
+                                0{medicinesCount}
+                            </Text>
                     }
                     <View style={styles.iconContainer}>
                         <MaterialCommunityIcons
@@ -85,7 +93,7 @@ const Stats: React.FC<CountTypes> = ({
                 </Text>
             </TouchableOpacity>
 
-        </View>
+        </Animated.View>
     )
 }
 

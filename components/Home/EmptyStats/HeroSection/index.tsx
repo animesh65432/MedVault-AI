@@ -3,13 +3,17 @@ import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from 'react-native';
+import Animated, { ZoomIn } from 'react-native-reanimated';
 
 const GREEN = '#0D483F';
 const LIME = '#D9F99D';
 
 const HeroSection: React.FC = () => {
     return (
-        <View style={styles.container}>
+        <Animated.View
+            style={styles.container}
+            entering={ZoomIn.springify().damping(10).stiffness(100)}
+        >
             <View style={[styles.card, styles.cardLab]}>
                 <Feather
                     name="thermometer"
@@ -38,7 +42,7 @@ const HeroSection: React.FC = () => {
             <View style={styles.badge}>
                 <AntDesign name="lock" size={scale(15)} color={LIME} />
             </View>
-        </View>
+        </Animated.View>
     );
 }
 

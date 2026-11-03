@@ -84,3 +84,11 @@ export const TypesOfDocuments: { label: string, value: selectedType }[] = [
     { label: "Other", value: "Other" },
     { label: "All Types", value: "All Types" },
 ]
+
+export const Placehodlers = [
+    "Search by document",
+    "Search by doctor",
+    "Search by hospital",
+    "Search by medicine",
+    "Search by Record"
+]

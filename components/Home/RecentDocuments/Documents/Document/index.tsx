@@ -7,6 +7,7 @@ import { vScale } from "@/utils/vScale"
 import { useRouter } from "expo-router"
 import React, { useState } from 'react'
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import Animated, { SlideInRight } from "react-native-reanimated"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 
 type Props = {
@@ -37,41 +38,45 @@ const Document: React.FC<Props> = ({ document }) => {
         </>
     )
     return (
-        <TouchableOpacity
-            onPress={() => router.push({
-                pathname: "/document/[id]",
-                params: { id: String(document.Id) },
-            })}
+        <Animated.View
+            entering={SlideInRight.duration(500)}
         >
-            {hasImage ? (
-                <ImageBackground
-                    source={{ uri: source ?? undefined }}
-                    style={styles.tile}
-                    imageStyle={styles.tileImage}
-                    resizeMode="stretch"
-                    onError={() => setLoadError(true)}
-                >
-                    <View style={styles.overlay} />
-                    {content}
-                </ImageBackground>
-            ) : (
-                <View style={[styles.tile, styles.fallback]}>
-                    <FontAwesome
-                        name="file-pdf-o"
-                        size={scale(60)}
-                        color="#0D483F"
-                    />
-                    <View style={[styles.doc_type_container]}>
-                        <DocIcon
-                            type={document.type}
+            <TouchableOpacity
+                onPress={() => router.push({
+                    pathname: "/document/[id]",
+                    params: { id: String(document.Id) },
+                })}
+            >
+                {hasImage ? (
+                    <ImageBackground
+                        source={{ uri: source ?? undefined }}
+                        style={styles.tile}
+                        imageStyle={styles.tileImage}
+                        resizeMode="stretch"
+                        onError={() => setLoadError(true)}
+                    >
+                        <View style={styles.overlay} />
+                        {content}
+                    </ImageBackground>
+                ) : (
+                    <View style={[styles.tile, styles.fallback]}>
+                        <FontAwesome
+                            name="file-pdf-o"
+                            size={scale(60)}
+                            color="#0D483F"
                         />
-                        <Text style={styles.doc_type_text}>{document.type}</Text>
+                        <View style={[styles.doc_type_container]}>
+                            <DocIcon
+                                type={document.type}
+                            />
+                            <Text style={styles.doc_type_text}>{document.type}</Text>
+                        </View>
+                        <Text style={styles.FallbackText}>{document.title}</Text>
+                        <Text style={styles.FallbackDate}>{formatDate(document.date)}</Text>
                     </View>
-                    <Text style={styles.FallbackText}>{document.title}</Text>
-                    <Text style={styles.FallbackDate}>{formatDate(document.date)}</Text>
-                </View>
-            )}
-        </TouchableOpacity>
+                )}
+            </TouchableOpacity>
+        </Animated.View>
     )
 }
 

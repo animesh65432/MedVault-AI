@@ -141,7 +141,7 @@ export default function ProfileScreen() {
             <View style={styles.statsRow}>
                 <TouchableOpacity
                     style={styles.statBox}
-                    onPress={() => router.push("/SearchDocuments")}
+                    onPress={() => router.push("/Documents")}
                 >
                     <Text style={styles.statNum}>{counts.documentsCount}</Text>
                     <Text style={styles.statLabel}>Documents</Text>
@@ -212,7 +212,7 @@ function MenuRow({ icon, label, danger, last, OnPress }: { icon: any; label: str
 }
 
 const styles = StyleSheet.create({
-    screen: { flex: 1, backgroundColor: '#F5F5F3' },
+    screen: { flex: 1, backgroundColor: '#fff' },
     content: {
         paddingBottom: vScale(120),
         paddingTop: vScale(40),
@@ -249,13 +249,13 @@ const styles = StyleSheet.create({
         marginBottom: vScale(2),
     },
     memberSince: {
-        fontFamily: 'Aeonik-Regular',
-        fontSize: fs(13),
+        fontFamily: 'Aeonik-Medium',
+        fontSize: fs(15),
         color: '#8A8A85',
     },
     statsRow: {
         flexDirection: 'row',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#0D483F',
         borderRadius: scale(16),
         marginHorizontal: scale(20),
         marginBottom: vScale(20),
@@ -271,12 +271,12 @@ const styles = StyleSheet.create({
     statNum: {
         fontFamily: 'Aeonik-Bold',
         fontSize: fs(18),
-        color: '#0D483F',
+        color: 'white',
     },
     statLabel: {
         fontFamily: 'Aeonik-Regular',
         fontSize: fs(11),
-        color: '#8A8A85',
+        color: '#e1e1e1',
         marginTop: vScale(2),
     },
     menuCard: {

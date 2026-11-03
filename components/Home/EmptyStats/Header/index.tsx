@@ -2,17 +2,32 @@ import { UserNameContext } from '@/context/UserName'
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import Animated, { FadeIn } from "react-native-reanimated"
+import Animated from "react-native-reanimated"
 
 const Header: React.FC = () => {
     const { userName } = useContext(UserNameContext)
+    const [placeholder, setPlaceholder] = useState("")
+    const fullPlaceholder = "safe in one private place.";
+
+    useEffect(() => {
+        let index = 0;
+        const interval = setInterval(() => {
+            index++;
+            setPlaceholder(fullPlaceholder.slice(0, index));
+            if (index >= fullPlaceholder.length) {
+                clearInterval(interval);
+            }
+        }, 200);
+
+        return () => clearInterval(interval);
+    }, []);
+
 
     return (
         <Animated.View
             style={styles.container}
-            entering={FadeIn.duration(350)}
         >
             <View style={styles.titleAndDescriptionContainer}>
                 <View style={styles.titleContainer}>
@@ -20,7 +35,7 @@ const Header: React.FC = () => {
                 </View>
                 <View style={styles.descriptionContainer}>
                     <Text style={styles.description}>Keep every prescription, report and bill</Text>
-                    <Text style={styles.description}> safe in one private place.</Text>
+                    <Text style={styles.description}>{placeholder}</Text>
                 </View>
             </View>
         </Animated.View>
@@ -44,12 +59,12 @@ const styles = StyleSheet.create({
     },
     title: {
         fontFamily: "Aeonik-Medium",
-        fontSize: fs(25),
+        fontSize: fs(28),
         color: '#0D483F',
     },
     description: {
         fontFamily: "Aeonik-Medium",
-        fontSize: fs(16),
+        fontSize: fs(18),
         color: '#7A7A6E',
     },
     avatar: {
