@@ -1,4 +1,4 @@
-import { FILTER_OPTIONS } from '@/utils/contensnt'
+import { FILTER_OPTIONS } from '@/utils/constants'
 import { fs } from '@/utils/fs'
 import { scale } from '@/utils/scale'
 import { Feather, Fontisto } from '@expo/vector-icons'

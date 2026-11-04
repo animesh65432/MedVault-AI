@@ -71,6 +71,7 @@ export const DurationUnitOptions = [
     { label: "months", value: "months" },
 ]
 export const TypesOfDocuments: { label: string, value: selectedType }[] = [
+    { label: "All", value: "All Types" },
     { label: "Prescription", value: "Prescription" },
     { label: "Prescription Receipt", value: "Prescription Receipt" },
     { label: "Lab Report", value: "Lab Report" },
@@ -81,9 +82,9 @@ export const TypesOfDocuments: { label: string, value: selectedType }[] = [
     { label: "Insurance Document", value: "Insurance Document" },
     { label: "Consent Form", value: "Consent Form" },
     { label: "Medical History Record", value: "Medical History Record" },
-    { label: "Other", value: "Other" },
-    { label: "All Types", value: "All Types" },
+    { label: "Other", value: "Other" }
 ]
+
 
 export const Placehodlers = [
     "Search by document",

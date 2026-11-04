@@ -1,5 +1,5 @@
 import { Medicine as MedicineType } from "@/types";
-import { DosageUnitOptions } from "@/utils/contensnt";
+import { DosageUnitOptions } from "@/utils/constants";
 import { fixdays } from '@/utils/fixdays';
 import { FrequencyOptions } from "@/utils/frequencyOptions";
 import { fs } from "@/utils/fs";

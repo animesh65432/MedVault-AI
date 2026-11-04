@@ -46,7 +46,10 @@ const RecentConversations: React.FC<Props> = ({
             >
                 <Entypo name="chat" size={scale(24)} color={COLORS.text} />
                 <View style={styles.itemContent}>
-                    <Text style={styles.itemTitle} numberOfLines={1}>
+                    <Text
+                        style={styles.itemTitle}
+                        numberOfLines={1}
+                    >
                         {title}
                     </Text>
                     <Text style={styles.itemTime}>{time}</Text>

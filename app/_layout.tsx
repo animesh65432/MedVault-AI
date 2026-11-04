@@ -190,6 +190,15 @@ function RootLayoutContent() {
             }}
           />
           <Stack.Screen
+            name="AttachmentPage"
+            options={{
+              presentation: 'modal',
+              animation: 'slide_from_bottom',
+              headerShown: false,
+              gestureEnabled: true,
+            }}
+          />
+          <Stack.Screen
             name="RecordDetails"
             options={{
               presentation: 'modal',

@@ -1,6 +1,6 @@
 import SpechtoText from "@/components/SpeechtoText";
 import { RecentSearchContext } from "@/context/RecentSearch";
-import { Placehodlers } from "@/utils/contensnt";
+import { Placehodlers } from "@/utils/constants";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import AntDesign from '@expo/vector-icons/AntDesign';

@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { KeyboardStickyView } from "react-native-keyboard-controller";
 import EmptyScreen from "./EmptyScreen";
 import InputBox from "./InputBox";
 
@@ -12,7 +13,10 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
     return (
         <View style={styles.Container}>
             <EmptyScreen />
-            <InputBox />
+            <KeyboardStickyView
+            >
+                <InputBox />
+            </KeyboardStickyView>
         </View>
     )
 }

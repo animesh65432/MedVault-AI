@@ -2,12 +2,14 @@ import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
+import { useKeyboardState } from 'react-native-keyboard-controller'
 import DummyQuestions from './DummyQuestions'
 import Header from './Header'
 import HeroSection from './HeroSection'
 import RecentConverSations from './RecentConverSations'
 
 const EmptyScreen: React.FC = () => {
+    const isKeyboardVisible = useKeyboardState((state) => state.isVisible);
     return (
         <View style={styles.Container}>
             <Header />
@@ -15,8 +17,8 @@ const EmptyScreen: React.FC = () => {
                 style={styles.BelowContainer}
             >
                 <HeroSection />
-                <DummyQuestions />
-                <RecentConverSations />
+                {!isKeyboardVisible && <DummyQuestions />}
+                {!isKeyboardVisible && <RecentConverSations />}
             </View>
         </View>
     )

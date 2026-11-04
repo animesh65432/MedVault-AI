@@ -1,5 +1,5 @@
 import { BillingItem, DocumentRow, DocumentType, LabTest, Medicine, Reminder, SearchSuggestion, UploadedDocument } from "@/types";
-import { SOURCES, WITHOUT_RECORDS_SOURCES } from "@/utils/contensnt";
+import { SOURCES, WITHOUT_RECORDS_SOURCES } from "@/utils/constants";
 import { toLocalDateString } from "@/utils/toLocalDateString";
 import { SQLiteDatabase } from "expo-sqlite";
 
