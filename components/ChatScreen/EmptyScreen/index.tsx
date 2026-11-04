@@ -5,6 +5,7 @@ import { StyleSheet, View } from 'react-native'
 import DummyQuestions from './DummyQuestions'
 import Header from './Header'
 import HeroSection from './HeroSection'
+import RecentConverSations from './RecentConverSations'
 
 const EmptyScreen: React.FC = () => {
     return (
@@ -15,6 +16,7 @@ const EmptyScreen: React.FC = () => {
             >
                 <HeroSection />
                 <DummyQuestions />
+                <RecentConverSations />
             </View>
         </View>
     )
@@ -27,13 +29,12 @@ const styles = StyleSheet.create({
         paddingVertical: vScale(40),
         display: "flex",
         flexDirection: "column",
-        gap: vScale(30),
-        backgroundColor: "#F9F9F9",
+        gap: vScale(10)
     },
     BelowContainer: {
         display: "flex",
         flexDirection: "column",
-        gap: vScale(30),
+        gap: vScale(20),
     }
 })
 
