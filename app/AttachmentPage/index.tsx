@@ -25,7 +25,9 @@ const AttachmentPage: React.FC = () => {
                 selected={selected}
                 onSelect={(value) => setSelected(value)}
             />
-            <Documents />
+            <Documents
+                selected={selected}
+            />
         </View>
     )
 }
