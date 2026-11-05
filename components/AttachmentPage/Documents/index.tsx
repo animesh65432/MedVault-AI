@@ -15,15 +15,15 @@ import Document from "./Document";
 
 type Props = {
     selected: string;
+    documentsIds: number[],
+    setDocumentsIds: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
 const PAGE_SIZE = 40;
 
-const Documents: React.FC<Props> = ({ selected }) => {
+const Documents: React.FC<Props> = ({ selected, documentsIds, setDocumentsIds }) => {
     const db = useSQLiteContext();
-
     const [page, setPage] = useState(0);
-    const [documentsIds, setDocumentsIds] = useState<number[]>([]);
     const [documents, setDocuments] = useState<DocumentRow[]>([]);
     const [initialLoading, setInitialLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);

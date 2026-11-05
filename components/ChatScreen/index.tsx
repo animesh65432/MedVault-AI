@@ -1,8 +1,10 @@
-import React from "react";
+import { } from "@/db/Chat";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardStickyView } from "react-native-keyboard-controller";
 import EmptyScreen from "./EmptyScreen";
 import InputBox from "./InputBox";
+import NonEmpty from "./NonEmpty";
 
 type Props = {
     currentDocument: boolean;
@@ -10,12 +12,21 @@ type Props = {
 }
 
 const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
+    const [message, setMessage] = useState("");
     return (
         <View style={styles.Container}>
-            <EmptyScreen />
+            {message.trim().length === 0 &&
+                <EmptyScreen />
+            }
+            {message.trim().length > 0 &&
+                <NonEmpty />
+            }
             <KeyboardStickyView
             >
-                <InputBox />
+                <InputBox
+                    message={message}
+                    setMessage={setMessage}
+                />
             </KeyboardStickyView>
         </View>
     )

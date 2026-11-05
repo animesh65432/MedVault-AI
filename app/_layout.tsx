@@ -4,6 +4,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import NameInputScreen from "@/components/Onboarding/NameInputScreen";
 import { toastConfig } from "@/components/toastConfig";
 import { AlarmContext, AlarmProvider } from "@/context/Alarm";
+import { AttachmentDocumentsIdsProvider } from "@/context/AttachmentDocumentsIds";
 import { NetworkProvider } from "@/context/Netwrok";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { RecentSearchProvider } from "@/context/RecentSearch";
@@ -190,7 +191,7 @@ function RootLayoutContent() {
             }}
           />
           <Stack.Screen
-            name="AttachmentPage"
+            name="Attachment"
             options={{
               presentation: 'modal',
               animation: 'slide_from_bottom',
@@ -250,12 +251,14 @@ export default function RootLayout() {
                 <SelectedDocumentsProvider>
                   <AlarmProvider>
                     <UserNameProvider>
-                      <RootLayoutContent />
-                      <SplashOverlay />
-                      <Toast
-                        config={toastConfig}
-                      />
-                      <StatusBar style="auto" />
+                      <AttachmentDocumentsIdsProvider>
+                        <RootLayoutContent />
+                        <SplashOverlay />
+                        <Toast
+                          config={toastConfig}
+                        />
+                        <StatusBar style="auto" />
+                      </AttachmentDocumentsIdsProvider>
                     </UserNameProvider>
                   </AlarmProvider>
                 </SelectedDocumentsProvider>

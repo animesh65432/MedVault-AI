@@ -1,13 +1,16 @@
+import { AttachmentDocumentsIdsContext } from '@/context/AttachmentDocumentsIds';
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Documents from './Documents';
 import Navbar from './Navbar';
+import SelectionBar from './SelectionBar';
 
 const AttachmentPage: React.FC = () => {
+    const { documentsIds, setDocumentsIds } = useContext(AttachmentDocumentsIdsContext);
     const [selected, setSelected] = useState("All Types")
     const router = useRouter()
     return (
@@ -27,7 +30,17 @@ const AttachmentPage: React.FC = () => {
             />
             <Documents
                 selected={selected}
+                documentsIds={documentsIds}
+                setDocumentsIds={setDocumentsIds}
             />
+            {documentsIds.length > 0 &&
+                <SelectionBar
+                    count={documentsIds.length}
+                    onAttach={() => {
+                        router.back()
+                    }}
+                />
+            }
         </View>
     )
 }
@@ -40,7 +53,9 @@ const styles = StyleSheet.create({
         paddingVertical: scale(40),
         display: "flex",
         flexDirection: "column",
-        gap: scale(10)
+        gap: scale(10),
+        flex: 1,
+        position: "relative"
     },
     title: {
         fontSize: fs(24),

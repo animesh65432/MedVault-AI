@@ -3,7 +3,7 @@ import { vScale } from '@/utils/vScale';
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Pressable,
     StyleSheet,
@@ -11,11 +11,13 @@ import {
     View,
 } from 'react-native';
 
+type Props = {
+    message: string;
+    setMessage: React.Dispatch<React.SetStateAction<string>>;
+}
 
-
-const InputBox: React.FC = () => {
+const InputBox: React.FC<Props> = ({ message, setMessage }) => {
     const router = useRouter();
-    const [message, setMessage] = useState('')
     return (
         <View style={styles.Container}>
             <View style={styles.TextInputContainer}>
@@ -35,7 +37,7 @@ const InputBox: React.FC = () => {
                             name="attachment"
                             size={scale(22)}
                             color="#0D483F"
-                            onPress={() => router.push("/AttachmentPage")}
+                            onPress={() => router.push("/Attachment")}
                         />
                     </Pressable>
 
