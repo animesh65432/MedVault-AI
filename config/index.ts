@@ -15,6 +15,7 @@ export const ClassificationChatType = "https://llm.kiranduttta234.workers.dev"
 export const ExcuteLlmUrl = "https://excute-sql.kiranduttta234.workers.dev"
 export const GenralAiResponseUrl = "https://generalai.kiranduttta234.workers.dev/"
 export const ExplainWithDocumentUrl = "https://explain-documents-with-ai.kiranduttta234.workers.dev"
+export const GIVE_CHAT_NAME_URL = "https://givechatname.kiranduttta234.workers.dev/"
 export const API_KEY_SCANIMAGEURL = "medvault-secret-123"
 export const API_KEY = "medvault-secret-123";
 export const GEMINI_MODEL_URL = "https://huggingface.co/animeshssssssssss/MedVault-Gemma-3n/resolve/main/gemma-3n-E2B-it-int4.task"

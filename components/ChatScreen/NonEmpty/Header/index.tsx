@@ -15,17 +15,24 @@ const Header: React.FC = () => {
                     size={scale(40)}
                     color="black"
                 />
-                <View>
+                <View style={styles.secondChild}>
                     <Image
                         source={require("../../../../assets/images/app-icon.png")}
                         style={styles.image}
                     />
                     <View>
-                        <Text>MedVault AI</Text>
-                        {isOnline ?
-                            <Text></Text> :
-                            <Text></Text>
-                        }
+                        <Text style={styles.title}>MedVault AI</Text>
+                        <View style={styles.SubtitleContainer}>
+                            <Entypo
+                                name="dot-single"
+                                size={scale(22)}
+                                color="#0d280d"
+                            />
+                            {isOnline ?
+                                <Text style={styles.subtitle}>Online</Text> :
+                                <Text style={styles.subtitle}>Offline</Text>
+                            }
+                        </View>
                     </View>
                 </View>
             </View>
@@ -46,17 +53,37 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingHorizontal: scale(10),
-        paddingVertical: scale(35)
+        paddingTop: scale(30),
+        backgroundColor: "#fff"
     },
     image: {
-        width: scale(40),
-        height: scale(40)
+        width: scale(50),
+        height: scale(60)
     },
     firstChild: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         gap: scale(10)
+    },
+    secondChild: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        gap: scale(10)
+    },
+    title: {
+        fontFamily: "Aeonik-Medium",
+        fontSize: scale(18),
+    },
+    subtitle: {
+        fontFamily: "Aeonik-Regular",
+        fontSize: scale(12)
+    },
+    SubtitleContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center"
     }
 })
 

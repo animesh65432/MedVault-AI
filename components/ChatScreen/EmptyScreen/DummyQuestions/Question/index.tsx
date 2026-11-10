@@ -26,17 +26,17 @@ const styles = StyleSheet.create({
         borderRadius: scale(24),
         display: "flex",
         flexDirection: "column",
-        gap: scale(5)
+        gap: scale(5),
     },
     title: {
         fontSize: scale(18),
         fontFamily: "Aeonik-Bold",
-        color: "#23423B"
+        color: "black"
     },
     subtitle: {
         fontSize: scale(14),
         fontFamily: "Aeonik-Regular",
-        color: "#23423B"
+        color: "#202121"
     }
 })
 

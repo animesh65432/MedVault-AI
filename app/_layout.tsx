@@ -5,6 +5,7 @@ import NameInputScreen from "@/components/Onboarding/NameInputScreen";
 import { toastConfig } from "@/components/toastConfig";
 import { AlarmContext, AlarmProvider } from "@/context/Alarm";
 import { AttachmentDocumentsIdsProvider } from "@/context/AttachmentDocumentsIds";
+import { ChatRoomProvider } from "@/context/ChatRoom";
 import { NetworkProvider } from "@/context/Netwrok";
 import { OnboardingContext, OnboardingProvider } from "@/context/Onboarding";
 import { RecentSearchProvider } from "@/context/RecentSearch";
@@ -252,12 +253,14 @@ export default function RootLayout() {
                   <AlarmProvider>
                     <UserNameProvider>
                       <AttachmentDocumentsIdsProvider>
-                        <RootLayoutContent />
-                        <SplashOverlay />
-                        <Toast
-                          config={toastConfig}
-                        />
-                        <StatusBar style="auto" />
+                        <ChatRoomProvider>
+                          <RootLayoutContent />
+                          <SplashOverlay />
+                          <Toast
+                            config={toastConfig}
+                          />
+                          <StatusBar style="auto" />
+                        </ChatRoomProvider>
                       </AttachmentDocumentsIdsProvider>
                     </UserNameProvider>
                   </AlarmProvider>

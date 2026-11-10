@@ -1,12 +1,12 @@
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 const COLORS = {
     text: 'black',
-    accent: '#23423B',
+    accent: '#06441c',
     muted: '#6B7280',
 };
 
@@ -35,7 +35,11 @@ const RecentConversations: React.FC<Props> = ({
                     accessibilityLabel="See all conversations"
                 >
                     <Text style={styles.seeAllText}>See All</Text>
-                    <AntDesign name="arrow-right" size={fs(15)} color={COLORS.accent} />
+                    <AntDesign
+                        name="arrow-right"
+                        size={fs(15)}
+                        color={COLORS.accent}
+                    />
                 </Pressable>
             </View>
 
@@ -44,7 +48,11 @@ const RecentConversations: React.FC<Props> = ({
                 onPress={onPress}
                 accessibilityRole="button"
             >
-                <Entypo name="chat" size={scale(24)} color={COLORS.text} />
+                <MaterialIcons
+                    name="chat"
+                    size={scale(24)}
+                    color="#085f27"
+                />
                 <View style={styles.itemContent}>
                     <Text
                         style={styles.itemTitle}

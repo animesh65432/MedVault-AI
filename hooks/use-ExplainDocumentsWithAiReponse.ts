@@ -9,7 +9,8 @@ export const useExplainDocumentsWithAiReponse = () => {
         question: string,
         data: unknown,
         userName: string,
-        history: ChatMessagePayload[] = []
+        history: ChatMessagePayload[] = [],
+        firstTimeCalled: boolean = false
     ) => {
         try {
             setError(null);
@@ -24,7 +25,8 @@ export const useExplainDocumentsWithAiReponse = () => {
                     question,
                     data,
                     history,
-                    userName
+                    userName,
+                    firstTimeCalled
                 }),
             });
 

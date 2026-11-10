@@ -104,11 +104,20 @@ const Document: React.FC<Props> = ({ setDocumentsIds, DocumentsIds, doc }) => {
             >
                 {renderPreview()}
             </View>
-            <View
-                style={[styles.circle]}
-            >
-                {isSelected && <Text style={styles.checkText}>✓</Text>}
-            </View>
+            {isSelected &&
+                <View
+                    style={[styles.circle]}
+                >
+                    {isSelected && <Text style={styles.checkText}>✓</Text>}
+                </View>
+            }
+            {!isSelected &&
+                <View
+                    style={[styles.selectedCircle]}
+                >
+                    {isSelected && <Text style={styles.checkText}>✓</Text>}
+                </View>
+            }
         </TouchableOpacity>
     )
 }
@@ -187,7 +196,7 @@ const styles = StyleSheet.create({
         borderRadius: scale(11),
         borderWidth: 2,
         borderColor: "#FFFFFF",
-        backgroundColor: "rgba(0,0,0,0.25)",
+        backgroundColor: "#0f451c",
         alignItems: "center",
         justifyContent: "center",
     },
@@ -199,6 +208,19 @@ const styles = StyleSheet.create({
         fontSize: fs(12),
         color: "#FFFFFF",
     },
+    selectedCircle: {
+        position: "absolute",
+        top: scale(8),
+        left: scale(8),
+        width: scale(22),
+        height: scale(22),
+        borderRadius: scale(11),
+        borderWidth: 2,
+        borderColor: "#FFFFFF",
+        backgroundColor: "#e6e6e6",
+        alignItems: "center",
+        justifyContent: "center",
+    }
 })
 
 export default Document

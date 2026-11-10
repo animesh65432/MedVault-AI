@@ -14,9 +14,10 @@ import {
 type Props = {
     message: string;
     setMessage: React.Dispatch<React.SetStateAction<string>>;
+    handleSendMessage: () => void;
 }
 
-const InputBox: React.FC<Props> = ({ message, setMessage }) => {
+const InputBox: React.FC<Props> = ({ message, setMessage, handleSendMessage }) => {
     const router = useRouter();
     return (
         <View style={styles.Container}>
@@ -48,7 +49,7 @@ const InputBox: React.FC<Props> = ({ message, setMessage }) => {
                         ]}
                         disabled={!message.trim()}
                         onPress={() => {
-                            console.log(message)
+                            handleSendMessage();
                             setMessage('')
                         }}
                     >

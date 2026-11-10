@@ -10,8 +10,8 @@ const Questions = [{
     icon: (
         <Entypo
             name="text-document"
-            size={scale(44)}
-            color="#23423B"
+            size={scale(40)}
+            color="#085f27"
         />
     ),
 },
@@ -20,8 +20,8 @@ const Questions = [{
     subtitle: "Check Prescriptions",
     icon: (<MaterialCommunityIcons
         name="pill"
-        size={scale(44)}
-        color="#23423B"
+        size={scale(40)}
+        color="#085f27"
     />)
 },
 {
@@ -29,8 +29,8 @@ const Questions = [{
     subtitle: "Explore past records",
     icon: (<MaterialCommunityIcons
         name="file-clock"
-        size={scale(44)}
-        color="#23423B"
+        size={scale(40)}
+        color="#085f27"
     />)
 },
 {
@@ -38,8 +38,8 @@ const Questions = [{
     subtitle: "Upcoming doses",
     icon: (<MaterialIcons
         name="calendar-month"
-        size={scale(44)}
-        color="#23423B"
+        size={scale(40)}
+        color="#085f27"
     />)
 }
 ]

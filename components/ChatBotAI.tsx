@@ -44,7 +44,7 @@ const ChatBotAI: React.FC<Props> = ({ currentDocument, documentId }) => {
         <FontAwesome5
             name="robot"
             size={scale(24)}
-            color="white"
+            color="#EEF6A2"
         />
     </Pressable>
 };
