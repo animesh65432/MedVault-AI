@@ -1,11 +1,24 @@
+import { ChatMessage } from '@/types'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
+import Messages from '../Messages'
 import Header from './Header'
 
-const NonEmpty: React.FC = () => {
+type Props = {
+    IsLoading: boolean;
+    messages: ChatMessage[];
+    AllMessageLoading: boolean;
+}
+
+const NonEmpty: React.FC<Props> = ({ IsLoading, messages, AllMessageLoading }) => {
     return (
         <View style={styles.Conainer}>
             <Header />
+            <Messages
+                IsLoading={IsLoading}
+                messages={messages}
+                AllMessageLoading={AllMessageLoading}
+            />
         </View>
     )
 }

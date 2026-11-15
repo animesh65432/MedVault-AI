@@ -4,47 +4,42 @@ import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import Question from './Question';
 
-const Questions = [{
-    title: "Explain my report",
-    subtitle: "Understand results",
-    icon: (
-        <Entypo
-            name="text-document"
-            size={scale(40)}
-            color="#085f27"
-        />
-    ),
-},
-{
-    title: "My Medications",
-    subtitle: "Check Prescriptions",
-    icon: (<MaterialCommunityIcons
-        name="pill"
-        size={scale(40)}
-        color="#085f27"
-    />)
-},
-{
-    title: "Health History",
-    subtitle: "Explore past records",
-    icon: (<MaterialCommunityIcons
-        name="file-clock"
-        size={scale(40)}
-        color="#085f27"
-    />)
-},
-{
-    title: "Reminders",
-    subtitle: "Upcoming doses",
-    icon: (<MaterialIcons
-        name="calendar-month"
-        size={scale(40)}
-        color="#085f27"
-    />)
-}
-]
+const Questions = [
+    {
+        id: 'report',
+        title: "Explain my report",
+        subtitle: "Understand your latest reports.",
+        question: "Analyze my latest medical reports. Explain the findings, abnormal values, and important health indicators.",
+        icon: <Entypo name="text-document" size={scale(40)} color="#085f27" />,
+    },
+    {
+        id: 'medications',
+        title: "My medications",
+        subtitle: "Review my prescriptions.",
+        question: "Show my prescribed medications with their dosage, frequency, and duration.",
+        icon: <MaterialCommunityIcons name="pill" size={scale(40)} color="#085f27" />,
+    },
+    {
+        id: 'history',
+        title: "Health history",
+        subtitle: "Explore previous records.",
+        question: "Summarize my medical history, including previous diagnoses, lab tests, and treatments.",
+        icon: <MaterialCommunityIcons name="file-clock" size={scale(40)} color="#085f27" />,
+    },
+    {
+        id: 'reminders',
+        title: "Reminders",
+        subtitle: "Check upcoming doses.",
+        question: "Show my upcoming medication reminders with their scheduled dates and times.",
+        icon: <MaterialIcons name="calendar-month" size={scale(40)} color="#085f27" />,
+    },
+];
 
-const DummyQuestions: React.FC = () => {
+type Props = {
+    onQuestionPress: (question: string) => void;
+};
+
+const DummyQuestions: React.FC<Props> = ({ onQuestionPress }) => {
     return (
         <FlatList
             data={Questions}
@@ -52,17 +47,19 @@ const DummyQuestions: React.FC = () => {
             style={styles.Container}
             contentContainerStyle={styles.Content}
             columnWrapperStyle={styles.Row}
-            keyExtractor={(item) => item.title}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
                 <Question
                     title={item.title}
                     subtitle={item.subtitle}
                     icon={item.icon}
+                    onQuestionPress={onQuestionPress}
+                    question={item.question}
                 />
             )}
         />
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     Container: {
@@ -74,6 +71,6 @@ const styles = StyleSheet.create({
     Row: {
         gap: scale(20),
     },
-})
+});
 
-export default DummyQuestions
+export default DummyQuestions;

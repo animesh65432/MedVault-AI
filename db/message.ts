@@ -1,19 +1,23 @@
 import { ChatMessage, SourcesTypes, TypeOfDocumenet } from "@/types";
 import { SQLiteDatabase } from "expo-sqlite";
 
+
 export const insertChatMessage = async (
     db: SQLiteDatabase,
     userMessage: string,
     aiResponse: string,
+    recordId: number,
     showMore: boolean = false,
     tableName: string | null = null,
     types: TypeOfDocumenet[] | null = [],
     sources: SourcesTypes[] | null = [],
 ): Promise<number> => {
+
     const result = await db.runAsync(
-        `INSERT INTO ChatMessages (UserMessage, AIResponse, ShowMore, TableName, Types, Soucres)
-         VALUES (?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO ChatMessages (ChatRecordId , UserMessage, AIResponse, ShowMore, TableName, Types, Soucres)
+         VALUES (?,?, ?, ?, ?, ?, ?)`,
         [
+            recordId,
             userMessage,
             aiResponse,
             showMore ? 1 : 0,
@@ -25,7 +29,7 @@ export const insertChatMessage = async (
     return result.lastInsertRowId;
 };
 
-export const loadChatMessages = async (db: SQLiteDatabase): Promise<ChatMessage[]> => {
+export const loadChatMessages = async (db: SQLiteDatabase, chatRecordId: number): Promise<ChatMessage[]> => {
     const rows = await db.getAllAsync<{
         Id: number;
         UserMessage: string;
@@ -35,7 +39,11 @@ export const loadChatMessages = async (db: SQLiteDatabase): Promise<ChatMessage[
         Types: string | null;
         Soucres: string | null;
         CreatedAt: string;
-    }>(`SELECT * FROM ChatMessages ORDER BY CreatedAt ASC`);
+    }>(`SELECT *
+     FROM ChatMessages
+     WHERE chatRecordId = ?
+     ORDER BY CreatedAt ASC`, [chatRecordId]
+    );
 
     return rows.map((r) => ({
         Id: r.Id,
@@ -43,8 +51,9 @@ export const loadChatMessages = async (db: SQLiteDatabase): Promise<ChatMessage[
         AIResponse: r.AIResponse,
         ShowMore: !!r.ShowMore,
         TableName: r.TableName,
-        Types: r.Types ? (JSON.parse(r.Types) as TypeOfDocumenet[]) : null,
-        Soucres: r.Soucres ? (JSON.parse(r.Soucres) as SourcesTypes[]) : null,
+        Types: r.Types ? (JSON.parse(r.Types) as TypeOfDocumenet[]) : [],
+        Soucres: r.Soucres ? (JSON.parse(r.Soucres) as SourcesTypes[]) : [],
         CreatedAt: r.CreatedAt,
     }));
 };
+

@@ -4,19 +4,16 @@ import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import React, { useEffect, useRef } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import TemplateQuestions from "../TemplateQuestions";
 import Message from "./Message";
 
 type Props = {
     messages: ChatMessage[]
-    onSelectTemplate: (question: string) => void;
     IsLoading: boolean;
     AllMessageLoading: boolean
 }
-const Messages: React.FC<Props> = ({ AllMessageLoading, messages, onSelectTemplate, IsLoading }) => {
+const Messages: React.FC<Props> = ({ AllMessageLoading, messages, IsLoading }) => {
     const listRef = useRef<FlatList>(null);
     const prevLengthRef = useRef(0);
-
     useEffect(() => {
         if (messages.length > prevLengthRef.current) {
             const newIndex = messages.length - 1;
@@ -35,14 +32,6 @@ const Messages: React.FC<Props> = ({ AllMessageLoading, messages, onSelectTempla
         return (
             <View style={style.SpinnerContainer}>
                 <Spinner size={scale(32)} color="#234338" />
-            </View>
-        )
-    }
-
-    if (messages.length === 0) {
-        return (
-            <View style={style.TemplateQuestionsContainer}>
-                <TemplateQuestions onSelect={onSelectTemplate} />
             </View>
         )
     }
@@ -88,8 +77,14 @@ const style = StyleSheet.create({
     },
     SpinnerContainer: {
         flex: 1,
+        display: "flex",
+        flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
+    },
+    logo: {
+        width: scale(32),
+        height: scale(32),
     }
 })
 

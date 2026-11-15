@@ -2,10 +2,12 @@ import { NetworkContext } from '@/context/Netwrok';
 import { scale } from '@/utils/scale';
 import Entypo from '@expo/vector-icons/Entypo';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useRouter } from 'expo-router';
 import React, { useContext } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 const Header: React.FC = () => {
+    const router = useRouter();
     const { isOnline } = useContext(NetworkContext)
     return (
         <View style={styles.Container}>
@@ -14,6 +16,7 @@ const Header: React.FC = () => {
                     name="keyboard-arrow-left"
                     size={scale(40)}
                     color="black"
+                    onPress={() => router.back()}
                 />
                 <View style={styles.secondChild}>
                     <Image

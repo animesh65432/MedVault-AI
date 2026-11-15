@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
         borderColor: "#0D483F"
     },
     label: {
-        fontSize: fs(14),
-        fontFamily: "Aeonik-Medium",
+        fontSize: fs(15),
+        fontFamily: "Aeonik-Bold",
         color: "#333",
     },
     labelActive: {

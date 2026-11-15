@@ -1,17 +1,18 @@
 import { NetworkContext } from "@/context/Netwrok";
 import { UserNameContext } from "@/context/UserName";
+import { GetRecentDocument, createChatRecord } from "@/db/Chat";
 import { runSqlRaw } from "@/db/document";
-import { insertChatMessage } from "@/db/message";
+import { insertChatMessage, loadChatMessages } from "@/db/message";
 import { useCheckMessageType } from "@/hooks/use-CheckMessageType";
 import { useExplainDocumentsWithAiReponse } from "@/hooks/use-ExplainDocumentsWithAiReponse";
 import { useGenralAiResponse } from "@/hooks/use-GenralAiResponse";
 import { useGiveChatName } from "@/hooks/use-GiveChatName";
 import { useMakeSqlRaw } from "@/hooks/use-MakeSqlRaw";
-import { SourcesTypes, TypeOfDocumenet } from "@/types";
+import { ChatMessage, RecentCoversation, SourcesTypes, TypeOfDocumenet } from "@/types";
 import { fixSources } from "@/utils/fixSources";
 import { makeHistoryPayload } from "@/utils/makehistoryPayload";
 import { useSQLiteContext } from "expo-sqlite";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardStickyView } from "react-native-keyboard-controller";
 import EmptyScreen from "./EmptyScreen";
@@ -23,30 +24,39 @@ type Props = {
     documentId: number | undefined;
 }
 
-type ChatMessage = {
-    Id: number;
-    UserMessage: string;
-    AIResponse: string;
-    ShowMore: boolean;
-    TableName: string;
-    Types: TypeOfDocumenet[];
-    Soucres: SourcesTypes[];
-    CreatedAt: string;
-};
-
 const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
     const [message, setMessage] = useState("");
-
+    const [RecentDocuments, setRecentDocuments] = useState<RecentCoversation[]>([]);
+    const [chatRecordId, setChatRecordId] = useState<number | null>(null);
+    const [hasSentMessage, setHasSentMessage] = useState<boolean>(false);
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const db = useSQLiteContext();
+    const [ShowRecentConversations, setShowRecentConversations] = useState<boolean>(false);
     const { GiveChatName } = useGiveChatName();
     const [IsLoading, setIsLoading] = useState<boolean>(false);
+    const [AllMessageLoading, setAllMessageLoading] = useState(false);
     const { CheckMessageType } = useCheckMessageType();
     const { MakesqlRaw } = useMakeSqlRaw();
     const { ExplainDocumentsWithAiReponse } = useExplainDocumentsWithAiReponse();
     const { GenralAiResponse } = useGenralAiResponse();
     const { userName } = useContext(UserNameContext)
     const { isOnline } = useContext(NetworkContext);
+
+
+    async function fetchRecentDocument() {
+        try {
+            const recent_documents = await GetRecentDocument(db);
+            if (recent_documents) {
+                setShowRecentConversations(true)
+                setRecentDocuments(recent_documents)
+            }
+            else {
+                setShowRecentConversations(false)
+            }
+        } catch (error) {
+            console.log("Error fetching recent documents:", error);
+        }
+    }
 
     const handleSendMessage = async () => {
         if (!isOnline) {
@@ -66,6 +76,7 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
             return;
         }
         setIsLoading(true);
+        setHasSentMessage(true);
         const tempId = Date.now();
         const historyMessages = makeHistoryPayload(messages);
         try {
@@ -90,7 +101,8 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
             let showMoreTable = "";
             let types: TypeOfDocumenet[] = [];
             let sources: SourcesTypes[] = [];
-            let ChatName: string | null = null
+            let ChatName: string | null = null;
+            let ChatRecordId: number | null = chatRecordId;
 
             if (messageType === "DATABASE_QUERY") {
                 const data = await MakesqlRaw(message, historyMessages);
@@ -113,8 +125,6 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
                         historyMessages
                     );
 
-                    console.log("answerText:", answerText);
-
                     hasMore = totalCount > 3;
                     showMoreTable = data.table ?? "";
                     types = data.types ?? [];
@@ -135,10 +145,17 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
             }
             else {
                 answerText = await GenralAiResponse(message, userName, historyMessages);
-
             }
 
-            ChatName = await GiveChatName(message);
+            if (!chatRecordId) {
+                ChatName = await GiveChatName(message)
+                ChatRecordId = await createChatRecord(db, ChatName ?? "New Chat");
+                setChatRecordId(ChatRecordId);
+            }
+
+            if (ChatRecordId === null) {
+                throw new Error("Failed to create chat record");
+            }
 
             const finalAnswer = answerText ?? "Something went wrong. Please try again.";
 
@@ -146,6 +163,7 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
                 db,
                 message,
                 finalAnswer,
+                ChatRecordId,
                 hasMore,
                 showMoreTable,
                 types,
@@ -184,13 +202,50 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
         }
     };
 
+    const fetchMessages = async () => {
+        if (!chatRecordId) {
+            return null;
+        }
+        setAllMessageLoading(true);
+        try {
+            const loadedMessages = await loadChatMessages(db, chatRecordId);
+            setMessages(loadedMessages);
+        } finally {
+            setAllMessageLoading(false);
+        }
+    };
+
+
+    useEffect(() => {
+        fetchRecentDocument()
+    }, [])
+
+    useEffect(() => {
+        fetchMessages();
+    }, [chatRecordId])
+
+    const onQuestionPress = (question: string) => {
+        setMessage(question);
+    };
+
+    const showEmptyScreen = hasSentMessage === false && chatRecordId === null;
+
     return (
         <View style={styles.Container}>
-            {message.length === 0 &&
-                <EmptyScreen />
+            {showEmptyScreen &&
+                <EmptyScreen
+                    setChatRecordId={setChatRecordId}
+                    onQuestionPress={onQuestionPress}
+                    recentDocuments={RecentDocuments}
+                    ShowRecentConversations={ShowRecentConversations}
+                />
             }
-            {message.length > 0 &&
-                <NonEmpty />
+            {!showEmptyScreen &&
+                <NonEmpty
+                    IsLoading={IsLoading}
+                    messages={messages}
+                    AllMessageLoading={AllMessageLoading}
+                />
             }
             <KeyboardStickyView
             >

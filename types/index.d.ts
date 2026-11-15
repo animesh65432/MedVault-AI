@@ -378,8 +378,8 @@ export type ChatMessage = {
     AIResponse: string,
     ShowMore: boolean,
     TableName: string | null,
-    Types: TypeOfDocumenet[] | null,
-    Soucres: SourcesTypes[] | null,
+    Types: TypeOfDocumenet[],
+    Soucres: SourcesTypes[],
     CreatedAt: string,
 }
 
@@ -490,4 +490,10 @@ export type RecordDetails = {
     CreatedAt: string;
     Id: number,
     Name: string
+}
+
+export type RecentCoversation = {
+    Id: number;
+    Name: string;
+    CreatedAt: string;
 }

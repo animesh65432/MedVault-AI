@@ -1,11 +1,26 @@
+import { RecentCoversation } from "@/types";
 import { SQLiteDatabase } from "expo-sqlite";
 
-export const GetALLChatCounts = async (db: SQLiteDatabase) => {
+export const GetRecentDocument = async (db: SQLiteDatabase): Promise<RecentCoversation[] | null> => {
     try {
-        const count = await db.getAllAsync(`SELECT COUNT(*) as count FROM ChatRecords`);
-        console.log("Total chat records count:", count[0]);
-        return 1;
+        const RecentDocuments = await db.getAllAsync(
+            `SELECT * FROM ChatRecords 
+            ORDER BY CreatedAt DESC
+            LIMIT 1`
+        ) as RecentCoversation[];
+        return RecentDocuments;
     } catch (error) {
-        return 0;
+        return null;
+    }
+}
+
+export const createChatRecord = async (db: SQLiteDatabase, ChatName: string): Promise<number | null> => {
+    try {
+        const ChatRecord = await db.runAsync(`
+        INSERT INTO ChatRecords 
+        (Name) VALUES (?)`, [ChatName]);
+        return ChatRecord.lastInsertRowId;
+    } catch (error) {
+        return null;
     }
 }

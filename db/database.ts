@@ -298,7 +298,8 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
             
             CREATE TABLE IF NOT EXISTS ChatRecords (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                Name TEXT NOT NULL
+                Name TEXT NOT NULL,
+                CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
             );
 
             CREATE TABLE IF NOT EXISTS ChatMessages (

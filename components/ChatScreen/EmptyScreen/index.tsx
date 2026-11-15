@@ -1,3 +1,4 @@
+import { RecentCoversation } from "@/types"
 import { scale } from '@/utils/scale'
 import { vScale } from '@/utils/vScale'
 import React from 'react'
@@ -8,7 +9,14 @@ import Header from './Header'
 import HeroSection from './HeroSection'
 import RecentConverSations from './RecentConverSations'
 
-const EmptyScreen: React.FC = () => {
+type Props = {
+    ShowRecentConversations: boolean;
+    recentDocuments: RecentCoversation[];
+    onQuestionPress: (question: string) => void;
+    setChatRecordId: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+const EmptyScreen: React.FC<Props> = ({ onQuestionPress, recentDocuments, ShowRecentConversations, setChatRecordId }) => {
     const isKeyboardVisible = useKeyboardState((state) => state.isVisible);
     return (
         <View style={styles.Container}>
@@ -17,8 +25,20 @@ const EmptyScreen: React.FC = () => {
                 style={styles.BelowContainer}
             >
                 <HeroSection />
-                {!isKeyboardVisible && <DummyQuestions />}
-                {!isKeyboardVisible && <RecentConverSations />}
+                {!isKeyboardVisible &&
+                    <DummyQuestions
+                        onQuestionPress={onQuestionPress}
+                    />}
+                {ShowRecentConversations &&
+                    <>
+                        {!isKeyboardVisible &&
+                            <RecentConverSations
+                                recentDocuments={recentDocuments}
+                                setChatRecordId={setChatRecordId}
+                            />
+                        }
+                    </>
+                }
             </View>
         </View>
     )

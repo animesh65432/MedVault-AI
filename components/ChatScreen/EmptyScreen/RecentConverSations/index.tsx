@@ -1,6 +1,8 @@
+import { RecentCoversation } from '@/types';
+import { formatDate } from '@/utils/formatDate';
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
-import { AntDesign, MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
@@ -11,25 +13,24 @@ const COLORS = {
 };
 
 type Props = {
-    title?: string;
-    time?: string;
-    onSeeAllPress?: () => void;
-    onPress?: () => void;
+    recentDocuments: RecentCoversation[];
+    setChatRecordId: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 const RecentConversations: React.FC<Props> = ({
-    title = 'DR SEN PRESCRIPTION',
-    time = '2hr ago',
-    onSeeAllPress,
-    onPress,
+    recentDocuments,
+    setChatRecordId
 }) => {
+    if (!recentDocuments || recentDocuments.length === 0) {
+        return null;
+    }
+
     return (
         <View>
             <View style={styles.header}>
                 <Text style={styles.heading}>Recent Conversations</Text>
                 <Pressable
                     style={styles.seeAll}
-                    onPress={onSeeAllPress}
                     hitSlop={scale(8)}
                     accessibilityRole="button"
                     accessibilityLabel="See all conversations"
@@ -45,8 +46,8 @@ const RecentConversations: React.FC<Props> = ({
 
             <Pressable
                 style={styles.item}
-                onPress={onPress}
                 accessibilityRole="button"
+                onPress={() => setChatRecordId(recentDocuments[0].Id)}
             >
                 <MaterialIcons
                     name="chat"
@@ -58,9 +59,16 @@ const RecentConversations: React.FC<Props> = ({
                         style={styles.itemTitle}
                         numberOfLines={1}
                     >
-                        {title}
+                        {recentDocuments[0].Name}
                     </Text>
-                    <Text style={styles.itemTime}>{time}</Text>
+                </View>
+                <View style={styles.arrowIconContainer}>
+                    <Text style={styles.itemTime}>{formatDate(recentDocuments[0].CreatedAt)}</Text>
+                    <FontAwesome5
+                        name="chevron-right"
+                        size={scale(14)}
+                        color={COLORS.accent}
+                    />
                 </View>
             </Pressable>
         </View>
@@ -94,14 +102,14 @@ const styles = StyleSheet.create({
         gap: scale(10),
         marginTop: scale(12),
         backgroundColor: "white",
-        padding: scale(10),
+        padding: scale(12),
         borderRadius: scale(18),
     },
     itemContent: {
         flex: 1,
     },
     itemTitle: {
-        fontSize: fs(15),
+        fontSize: fs(16),
         fontFamily: 'Aeonik-Medium',
         color: COLORS.text,
     },
@@ -110,6 +118,13 @@ const styles = StyleSheet.create({
         fontFamily: 'Aeonik-Medium',
         color: COLORS.muted,
     },
+    arrowIconContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: scale(8),
+    }
 });
 
 export default RecentConversations;

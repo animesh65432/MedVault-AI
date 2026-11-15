@@ -1,22 +1,30 @@
 import { scale } from '@/utils/scale';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
 type Props = {
     title: string;
     subtitle: string;
     icon: React.ReactNode;
-}
+    onQuestionPress: (question: string) => void;
+    question: string;
+};
 
-const Question: React.FC<Props> = ({ title, subtitle, icon }) => {
+const Question: React.FC<Props> = ({ question, title, subtitle, icon, onQuestionPress }) => {
     return (
-        <View style={styles.Container}>
+        <Pressable
+            style={({ pressed }) => [
+                styles.Container,
+                pressed && { opacity: 0.7 }
+            ]}
+            onPress={() => onQuestionPress(question)}
+        >
             {icon}
             <Text style={styles.title}>{title}</Text>
             <Text style={styles.subtitle}>{subtitle}</Text>
-        </View>
-    )
-}
+        </Pressable>
+    );
+};
 
 const styles = StyleSheet.create({
     Container: {
@@ -24,20 +32,18 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         padding: scale(20),
         borderRadius: scale(24),
-        display: "flex",
-        flexDirection: "column",
         gap: scale(5),
     },
     title: {
         fontSize: scale(18),
         fontFamily: "Aeonik-Bold",
-        color: "black"
+        color: "black",
     },
     subtitle: {
         fontSize: scale(14),
         fontFamily: "Aeonik-Regular",
-        color: "#202121"
-    }
-})
+        color: "#202121",
+    },
+});
 
-export default Question
+export default Question;

@@ -43,7 +43,10 @@ const Message: React.FC<Props> = ({ isAwaitingReply, item }) => {
             ) : item.AIResponse ? (
                 <View style={style.aiRow}>
                     <View style={style.aiBubble}>
-                        <Markdown style={markdownStyles} rules={markdownRules}>
+                        <Markdown
+                            style={markdownStyles}
+                            rules={markdownRules}
+                        >
                             {item.AIResponse}
                         </Markdown>
                         {item.ShowMore && item.TableName && item.TableName?.length > 0 &&
@@ -65,8 +68,8 @@ const Message: React.FC<Props> = ({ isAwaitingReply, item }) => {
 const markdownStyles = StyleSheet.create({
     body: {
         color: "#0D1F1C",
-        fontFamily: "Aeonik-Regular",
-        fontSize: fs(15),
+        fontFamily: "Aeonik-Medium",
+        fontSize: fs(16),
         lineHeight: fs(22),
     },
     heading1: {
@@ -161,15 +164,16 @@ const style = StyleSheet.create({
         borderRadius: scale(18),
         borderBottomRightRadius: scale(4),
         paddingHorizontal: scale(16),
-        paddingVertical: vScale(10),
+        paddingVertical: vScale(10)
     },
     userText: {
         color: "#FAFAF8",
-        fontFamily: "Aeonik-Regular",
-        fontSize: fs(15),
+        fontFamily: "Aeonik-Medium",
+        fontSize: fs(16),
         lineHeight: fs(21),
     },
     aiRow: {
+        display: "flex",
         flexDirection: "row",
         alignItems: "flex-start",
     },
@@ -190,6 +194,10 @@ const style = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+    },
+    logo: {
+        width: scale(32),
+        height: scale(32),
     }
 })
 
