@@ -2,10 +2,12 @@ import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from "react-native";
 
 const Header: React.FC = () => {
+    const router = useRouter();
     return (
         <View style={styles.Container}>
             <Image
@@ -22,6 +24,7 @@ const Header: React.FC = () => {
                 size={scale(28)}
                 color="#213320"
                 style={styles.historyIcon}
+                onPress={() => router.push("/ChatHistory")}
             />
         </View>
     )

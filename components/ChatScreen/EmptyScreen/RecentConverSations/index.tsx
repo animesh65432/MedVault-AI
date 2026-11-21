@@ -3,6 +3,7 @@ import { formatDate } from '@/utils/formatDate';
 import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import { AntDesign, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
@@ -21,6 +22,7 @@ const RecentConversations: React.FC<Props> = ({
     recentDocuments,
     setChatRecordId
 }) => {
+    const router = useRouter();
     if (!recentDocuments || recentDocuments.length === 0) {
         return null;
     }
@@ -31,6 +33,7 @@ const RecentConversations: React.FC<Props> = ({
                 <Text style={styles.heading}>Recent Conversations</Text>
                 <Pressable
                     style={styles.seeAll}
+                    onPress={() => router.push("/ChatHistory")}
                     hitSlop={scale(8)}
                     accessibilityRole="button"
                     accessibilityLabel="See all conversations"
@@ -92,9 +95,9 @@ const styles = StyleSheet.create({
         gap: scale(5),
     },
     seeAllText: {
-        fontSize: fs(15),
+        fontSize: fs(16),
         fontFamily: 'Aeonik-Medium',
-        color: COLORS.accent,
+        color: "#03220e",
     },
     item: {
         flexDirection: 'row',

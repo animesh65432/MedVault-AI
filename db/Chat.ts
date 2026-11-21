@@ -24,3 +24,14 @@ export const createChatRecord = async (db: SQLiteDatabase, ChatName: string): Pr
         return null;
     }
 }
+
+export const GetAllChatTitles = async (db: SQLiteDatabase): Promise<RecentCoversation[] | null> => {
+    try {
+        const messages = await db.getAllAsync(
+            `SELECT * FROM ChatRecords`
+        ) as RecentCoversation[];
+        return messages;
+    } catch (error) {
+        return null;
+    }
+}

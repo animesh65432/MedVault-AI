@@ -39,11 +39,6 @@ const Header: React.FC = () => {
                     </View>
                 </View>
             </View>
-            <Entypo
-                name="dots-three-vertical"
-                size={scale(24)}
-                color="black"
-            />
         </View>
     )
 }
