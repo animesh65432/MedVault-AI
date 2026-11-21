@@ -1,6 +1,5 @@
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
-import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -33,15 +32,6 @@ const InputBox: React.FC<Props> = ({ message, setMessage, handleSendMessage }) =
                 />
 
                 <View style={styles.BottomContainer}>
-                    <Pressable style={styles.IconButton}>
-                        <Entypo
-                            name="attachment"
-                            size={scale(22)}
-                            color="#0D483F"
-                            onPress={() => router.push("/Attachment")}
-                        />
-                    </Pressable>
-
                     <Pressable
                         style={[
                             styles.SendButton,
@@ -114,6 +104,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0D483F',
         alignItems: 'center',
         justifyContent: 'center',
+        marginLeft: "auto"
     },
 })
 

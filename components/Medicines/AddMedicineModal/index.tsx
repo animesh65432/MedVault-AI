@@ -105,12 +105,14 @@ const AddMedicineModal: React.FC<Props> = ({
                 DocumentId: DocumentId
             } as AddMedicineTypes;
 
-            const medicineId = await CreateMedicine(db, medicine)
+            const medicineId = await CreateMedicine(db, medicine);
 
             addMedicineFromeState({
-                ...medicine,
                 Id: medicineId,
-                DocumentId: DocumentId,
+                name: medicine.name,
+                dosage: medicine.dosage,
+                frequency: medicine.frequency,
+                duration_days: medicine.duration,
             } as MedicineWithDetailsTypes);
         } catch (error) {
             console.log("Error saving medicine:", error);

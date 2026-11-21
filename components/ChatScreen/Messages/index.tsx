@@ -35,7 +35,6 @@ const Messages: React.FC<Props> = ({ AllMessageLoading, messages, IsLoading }) =
             </View>
         )
     }
-
     const lastId = messages[messages.length - 1]?.Id;
 
     return (

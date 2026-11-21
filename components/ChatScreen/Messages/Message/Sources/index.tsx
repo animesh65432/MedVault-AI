@@ -37,7 +37,6 @@ const Sources: React.FC<Props> = ({ sources }) => {
             setSelectedImageIndex(index >= 0 ? index : 0);
         }
     };
-
     return (
         <View style={style.container}>
             <View style={style.labelRow}>

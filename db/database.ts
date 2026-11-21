@@ -305,6 +305,7 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
             CREATE TABLE IF NOT EXISTS ChatMessages (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 ChatRecordId INTEGER NOT NULL,
+                Action TEXT NOT NULL DEFAULT 'NONE',
                 UserMessage TEXT NOT NULL,
                 AIResponse TEXT NOT NULL,
                 ShowMore INTEGER NOT NULL DEFAULT 0,

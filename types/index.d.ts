@@ -11,6 +11,8 @@ export type TypeOfDocumenet =
     | "Medical History Record"
     | "Other";
 
+export type ActionType = "NONE" | "ADD_DOCUMENT" | "CREATE_RECORD" | "CREATE_REMINDER" | "CREATE_MEDICINE"
+
 export type ReminderRepeat = "once" | "daily" | "weekly";
 
 export type Reminder = {
@@ -381,6 +383,7 @@ export type ChatMessage = {
     Types: TypeOfDocumenet[],
     Soucres: SourcesTypes[],
     CreatedAt: string,
+    Action: ActionType
 }
 
 export type ChatMessagePayload = {

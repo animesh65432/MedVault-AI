@@ -282,7 +282,6 @@ const MedicineCard: React.FC<MedicineCardProps> = ({
                             {!!medicine.dosage && <Pill text={medicine.dosage} />}
                             {!!medicine.frequency && <Pill text={medicine.frequency} />}
                             {!!medicine.duration_days && <Pill text={fixdays(medicine.duration_days)} />}
-                            {medicine.timing.length > 0 ? <Pill text={medicine.timing.join(" , ")} /> : null}
                         </View>
                     )
                 )}

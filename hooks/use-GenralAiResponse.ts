@@ -1,11 +1,10 @@
 import { GenralAiResponseUrl } from "@/config";
-import { ChatMessagePayload } from "@/types";
 import { useState } from "react";
 
 export const useGenralAiResponse = () => {
     const [error, setError] = useState<string | null>(null);
 
-    const GenralAiResponse = async (text: string, userName: string, history: ChatMessagePayload[]) => {
+    const GenralAiResponse = async (text: string, userName: string) => {
         try {
             const response = await fetch(GenralAiResponseUrl, {
                 method: "POST",
@@ -14,7 +13,6 @@ export const useGenralAiResponse = () => {
                 },
                 body: JSON.stringify({
                     text,
-                    history,
                     userName
                 }),
             })
@@ -29,7 +27,9 @@ export const useGenralAiResponse = () => {
                 throw new Error(data.error || "Unknown error");
             }
 
-            return data.airesponse
+            const res = JSON.parse(data.airesponse);
+
+            return res;
         }
         catch (err: any) {
             setError(err);

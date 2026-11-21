@@ -1,6 +1,5 @@
-import { ChatMessage, SourcesTypes, TypeOfDocumenet } from "@/types";
+import { ActionType, ChatMessage, SourcesTypes, TypeOfDocumenet } from "@/types";
 import { SQLiteDatabase } from "expo-sqlite";
-
 
 export const insertChatMessage = async (
     db: SQLiteDatabase,
@@ -11,11 +10,12 @@ export const insertChatMessage = async (
     tableName: string | null = null,
     types: TypeOfDocumenet[] | null = [],
     sources: SourcesTypes[] | null = [],
+    action: ActionType = "NONE"
 ): Promise<number> => {
 
     const result = await db.runAsync(
-        `INSERT INTO ChatMessages (ChatRecordId , UserMessage, AIResponse, ShowMore, TableName, Types, Soucres)
-         VALUES (?,?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO ChatMessages (ChatRecordId , UserMessage, AIResponse, ShowMore, TableName, Types, Soucres,Action)
+         VALUES (?,?, ?, ?, ?, ?, ?,?)`,
         [
             recordId,
             userMessage,
@@ -24,6 +24,7 @@ export const insertChatMessage = async (
             tableName,
             types ? JSON.stringify(types) : null,
             sources ? JSON.stringify(sources) : null,
+            action
         ]
     );
     return result.lastInsertRowId;
@@ -39,6 +40,7 @@ export const loadChatMessages = async (db: SQLiteDatabase, chatRecordId: number)
         Types: string | null;
         Soucres: string | null;
         CreatedAt: string;
+        Action: ActionType;
     }>(`SELECT *
      FROM ChatMessages
      WHERE chatRecordId = ?
@@ -54,6 +56,7 @@ export const loadChatMessages = async (db: SQLiteDatabase, chatRecordId: number)
         Types: r.Types ? (JSON.parse(r.Types) as TypeOfDocumenet[]) : [],
         Soucres: r.Soucres ? (JSON.parse(r.Soucres) as SourcesTypes[]) : [],
         CreatedAt: r.CreatedAt,
+        Action: r.Action
     }));
 };
 

@@ -3,7 +3,7 @@ import { fs } from "@/utils/fs";
 import { scale } from "@/utils/scale";
 import { vScale } from "@/utils/vScale";
 import Feather from "@expo/vector-icons/Feather";
-import { router } from "expo-router";
+import { type Href, useRouter } from "expo-router";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { RedirectToTable } from "./utils";
@@ -14,11 +14,13 @@ type Props = {
 };
 
 const ShowMore: React.FC<Props> = ({ Types, tableName }) => {
+    const router = useRouter();
     const handleRedirect = () => {
+        console.log(tableName === "Records" ? { select: Types } : null);
         router.push({
             pathname: RedirectToTable(tableName),
-            params: Types.length > 0 ? { types: JSON.stringify(Types) } : undefined,
-        });
+            params: tableName === "Records" ? { tableName } : Types.length > 0 ? { types: JSON.stringify(Types) } : undefined,
+        } as Href);
     };
 
     return (

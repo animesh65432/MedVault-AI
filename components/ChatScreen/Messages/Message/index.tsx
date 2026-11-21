@@ -4,8 +4,9 @@ import { fs } from '@/utils/fs';
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Markdown from "react-native-markdown-display";
+import Action from "./Action";
 import ShowMore from "./ShowMore";
 import Sources from "./Sources";
 
@@ -38,6 +39,11 @@ const Message: React.FC<Props> = ({ isAwaitingReply, item }) => {
 
             {isAwaitingReply ? (
                 <View style={style.aiRow}>
+                    <Image
+                        source={require('../../../../assets/images/app-icon.png')}
+                        style={style.logo}
+                        resizeMode="contain"
+                    />
                     <TypingDots />
                 </View>
             ) : item.AIResponse ? (
@@ -57,6 +63,11 @@ const Message: React.FC<Props> = ({ isAwaitingReply, item }) => {
                         }
                         {item.Soucres &&
                             <Sources sources={item.Soucres} />
+                        }
+                        {item.Action !== "NONE" &&
+                            <Action
+                                Action={item.Action}
+                            />
                         }
                     </View>
                 </View>
@@ -196,8 +207,8 @@ const style = StyleSheet.create({
         alignItems: "center",
     },
     logo: {
-        width: scale(32),
-        height: scale(32),
+        width: scale(42),
+        height: scale(42),
     }
 })
 

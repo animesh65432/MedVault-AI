@@ -9,8 +9,7 @@ export const useExplainDocumentsWithAiReponse = () => {
         question: string,
         data: unknown,
         userName: string,
-        history: ChatMessagePayload[] = [],
-        firstTimeCalled: boolean = false
+        history: ChatMessagePayload[] = []
     ) => {
         try {
             setError(null);
@@ -25,8 +24,7 @@ export const useExplainDocumentsWithAiReponse = () => {
                     question,
                     data,
                     history,
-                    userName,
-                    firstTimeCalled
+                    userName
                 }),
             });
 
@@ -36,10 +34,9 @@ export const useExplainDocumentsWithAiReponse = () => {
                 throw new Error(result.error || `HTTP ${response.status}`);
             }
 
-            return result.answer as string;
+            return JSON.parse(result.answer)
         } catch (err: any) {
             setError(err.message ?? String(err));
-            console.log("ExplainDocumentsWithAiReponse error:", err);
             return undefined;
         }
     };

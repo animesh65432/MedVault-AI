@@ -176,7 +176,6 @@ const MedicinesComponent: React.FC = () => {
     const OnToggoleAddMedicine = () => {
         setIsAddMedicineModalOpen((prev) => !prev)
     }
-
     return (
         <View style={styles.container}>
             <Navbar />

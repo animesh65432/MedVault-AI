@@ -8,7 +8,7 @@ import { useExplainDocumentsWithAiReponse } from "@/hooks/use-ExplainDocumentsWi
 import { useGenralAiResponse } from "@/hooks/use-GenralAiResponse";
 import { useGiveChatName } from "@/hooks/use-GiveChatName";
 import { useMakeSqlRaw } from "@/hooks/use-MakeSqlRaw";
-import { ChatMessage, RecentCoversation, SourcesTypes, TypeOfDocumenet } from "@/types";
+import { ActionType, ChatMessage, RecentCoversation, SourcesTypes, TypeOfDocumenet } from "@/types";
 import { fixSources } from "@/utils/fixSources";
 import { makeHistoryPayload } from "@/utils/makehistoryPayload";
 import { useSQLiteContext } from "expo-sqlite";
@@ -42,7 +42,6 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
     const { userName } = useContext(UserNameContext)
     const { isOnline } = useContext(NetworkContext);
 
-
     async function fetchRecentDocument() {
         try {
             const recent_documents = await GetRecentDocument(db);
@@ -71,6 +70,7 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
                     Types: [],
                     Soucres: [],
                     CreatedAt: new Date().toISOString(),
+                    Action: "NONE"
                 },
             ]);
             return;
@@ -91,6 +91,7 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
                     Types: [],
                     Soucres: [],
                     CreatedAt: new Date().toISOString(),
+                    Action: "NONE"
                 },
             ]);
 
@@ -103,6 +104,7 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
             let sources: SourcesTypes[] = [];
             let ChatName: string | null = null;
             let ChatRecordId: number | null = chatRecordId;
+            let action: ActionType = "NONE";
 
             if (messageType === "DATABASE_QUERY") {
                 const data = await MakesqlRaw(message, historyMessages);
@@ -112,18 +114,20 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
                 } else {
                     const docs = await runSqlRaw(db, data.sql);
                     let totalCount = 0;
-
                     if (data.countSql) {
                         const countResult = await runSqlRaw(db, data.countSql);
                         totalCount = countResult?.[0]?.total ?? 0;
                     }
 
-                    answerText = await ExplainDocumentsWithAiReponse(
+                    let res = await ExplainDocumentsWithAiReponse(
                         message,
                         docs,
                         userName,
                         historyMessages
                     );
+
+                    answerText = res.reply
+                    action = res?.action ?? "NONE";
 
                     hasMore = totalCount > 3;
                     showMoreTable = data.table ?? "";
@@ -134,17 +138,20 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
                 if (!currentDocument) {
                     answerText = "I couldn't load the open document. Please try again.";
                 } else {
-                    answerText = await ExplainDocumentsWithAiReponse(
+                    let res = await ExplainDocumentsWithAiReponse(
                         message,
                         currentDocument,
                         userName,
                         historyMessages
                     );
-
+                    answerText = res.reply;
+                    action = res?.action ?? "NONE";
                 }
             }
             else {
-                answerText = await GenralAiResponse(message, userName, historyMessages);
+                let res = await GenralAiResponse(message, userName);
+                action = res?.action ?? "NONE";
+                answerText = res?.reply;
             }
 
             if (!chatRecordId) {
@@ -167,7 +174,8 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
                 hasMore,
                 showMoreTable,
                 types,
-                sources
+                sources,
+                action
             );
 
             setMessages((prevMessages) =>
