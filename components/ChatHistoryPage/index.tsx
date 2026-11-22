@@ -1,35 +1,20 @@
-import { GetAllChatTitles } from "@/db/Chat";
-import { RecentCoversation } from '@/types';
 import { scale } from '@/utils/scale';
-import { useFocusEffect } from '@react-navigation/native';
-import { useSQLiteContext } from 'expo-sqlite';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import ChatList from "./ChatList";
 import Header from './Header';
 
 const ChathistoryPage: React.FC = () => {
-    const db = useSQLiteContext();
-    const [Messages, setMessages] = useState<RecentCoversation[]>([]);
-
-    async function GetChatHistory() {
-        try {
-            const messages = await GetAllChatTitles(db);
-        } catch (error) {
-
-        }
-    };
-
-
-    useFocusEffect(
-        useCallback(() => {
-            GetChatHistory();
-            return () => {
-            };
-        }, [])
-    );
+    const [query, setQuery] = useState<string>("")
     return (
         <View style={styles.Conatiner}>
-            <Header />
+            <Header
+                query={query}
+                setQuery={setQuery}
+            />
+            <ChatList
+                query={query}
+            />
         </View>
     )
 }
@@ -40,6 +25,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(20),
         paddingVertical: scale(20),
         paddingTop: scale(30),
+        display: "flex",
+        flexDirection: "column",
+        gap: scale(15),
     },
 
 })

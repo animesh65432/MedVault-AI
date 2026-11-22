@@ -22,9 +22,10 @@ import NonEmpty from "./NonEmpty";
 type Props = {
     currentDocument: boolean;
     documentId: number | undefined;
+    ChatId: number | undefined;
 }
 
-const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
+const ChatScreen: React.FC<Props> = ({ ChatId, currentDocument, documentId }) => {
     const [message, setMessage] = useState("");
     const [RecentDocuments, setRecentDocuments] = useState<RecentCoversation[]>([]);
     const [chatRecordId, setChatRecordId] = useState<number | null>(null);
@@ -189,6 +190,7 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
                             TableName: showMoreTable,
                             Types: types,
                             Soucres: sources,
+                            Action: action
                         }
                         : msg
                 )
@@ -201,6 +203,7 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
                         ? {
                             ...msg,
                             AIResponse: "Error processing your message. Please try again.",
+                            Action: "NONE"
                         }
                         : msg
                 )
@@ -227,6 +230,12 @@ const ChatScreen: React.FC<Props> = ({ currentDocument, documentId }) => {
     useEffect(() => {
         fetchRecentDocument()
     }, [])
+
+    useEffect(() => {
+        if (ChatId) {
+            setChatRecordId(ChatId)
+        }
+    }, [ChatId])
 
     useEffect(() => {
         fetchMessages();
