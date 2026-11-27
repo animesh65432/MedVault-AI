@@ -8,9 +8,11 @@ type Props = {
     IsLoading: boolean;
     messages: ChatMessage[];
     AllMessageLoading: boolean;
+    SuggestedQuestions: string[];
+    setMessage: React.Dispatch<React.SetStateAction<string>>
 }
 
-const NonEmpty: React.FC<Props> = ({ IsLoading, messages, AllMessageLoading }) => {
+const NonEmpty: React.FC<Props> = ({ setMessage, SuggestedQuestions, IsLoading, messages, AllMessageLoading }) => {
     return (
         <View style={styles.Conainer}>
             <Header />
@@ -18,6 +20,8 @@ const NonEmpty: React.FC<Props> = ({ IsLoading, messages, AllMessageLoading }) =
                 IsLoading={IsLoading}
                 messages={messages}
                 AllMessageLoading={AllMessageLoading}
+                SuggestedQuestions={SuggestedQuestions}
+                setMessage={setMessage}
             />
         </View>
     )

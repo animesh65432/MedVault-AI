@@ -107,12 +107,6 @@ const markdownStyles = StyleSheet.create({
     ordered_list: {
         marginVertical: vScale(4),
     },
-    list_item: {
-        marginVertical: vScale(2),
-    },
-    bullet_list_icon: {
-        color: "#234338",
-    },
     table: {
         borderWidth: 1,
         borderColor: "#0D1F1C20",
@@ -129,11 +123,6 @@ const markdownStyles = StyleSheet.create({
         padding: scale(8),
         minWidth: scale(90),
     },
-    tr: {
-        borderBottomWidth: 1,
-        borderColor: "#0D1F1C15",
-        flexDirection: "row",
-    },
     td: {
         color: "#0D1F1C",
         fontFamily: "Aeonik-Regular",
@@ -149,6 +138,49 @@ const markdownStyles = StyleSheet.create({
     em: {
         fontStyle: "italic",
         color: "#0D1F1C99",
+    },
+    code_inline: {
+        backgroundColor: "#23433815",
+        color: "#234338",
+        fontFamily: "Aeonik-Medium",
+        fontSize: fs(14),
+        borderRadius: scale(4),
+        paddingHorizontal: scale(4),
+    },
+
+    blockquote: {
+        backgroundColor: "#2343380D",
+        borderLeftWidth: scale(3),
+        borderLeftColor: "#234338",
+        paddingHorizontal: scale(10),
+        paddingVertical: vScale(4),
+        marginVertical: vScale(6),
+        borderRadius: scale(4),
+    },
+
+    link: {
+        color: "#234338",
+        textDecorationLine: "underline",
+    },
+    bullet_list_icon: {
+        color: "#234338",
+        fontSize: fs(20),
+        lineHeight: fs(22),
+        marginRight: scale(6),
+    },
+    ordered_list_icon: {
+        color: "#234338",
+        fontFamily: "Aeonik-Medium",
+        marginRight: scale(6),
+    },
+    list_item: {
+        marginVertical: vScale(2),
+        alignItems: "flex-start",
+    },
+    tr: {
+        borderBottomWidth: 1,
+        borderColor: "#0D1F1C15",
+        flexDirection: "row",
     },
 });
 
@@ -211,7 +243,6 @@ const style = StyleSheet.create({
         height: scale(42),
     }
 })
-
 
 
 export default Message

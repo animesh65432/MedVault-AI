@@ -1,7 +1,6 @@
 import { scale } from '@/utils/scale';
 import { vScale } from '@/utils/vScale';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useRouter } from 'expo-router';
 import React from 'react';
 import {
     Pressable,
@@ -17,7 +16,6 @@ type Props = {
 }
 
 const InputBox: React.FC<Props> = ({ message, setMessage, handleSendMessage }) => {
-    const router = useRouter();
     return (
         <View style={styles.Container}>
             <View style={styles.TextInputContainer}>

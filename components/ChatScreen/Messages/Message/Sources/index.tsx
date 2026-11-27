@@ -40,7 +40,7 @@ const Sources: React.FC<Props> = ({ sources }) => {
     return (
         <View style={style.container}>
             <View style={style.labelRow}>
-                <Feather name="paperclip" size={fs(12)} color="#0D1F1C99" />
+                <Feather name="paperclip" size={fs(15)} color="#0D1F1C99" />
                 <Text style={style.label}>
                     {sources.length === 1 ? "1 source" : `${sources.length} sources`}
                 </Text>
@@ -105,7 +105,7 @@ const style = StyleSheet.create({
     },
     label: {
         fontFamily: "Aeonik-Medium",
-        fontSize: fs(11),
+        fontSize: fs(13),
         color: "#0D1F1C99",
     },
     chipRow: {

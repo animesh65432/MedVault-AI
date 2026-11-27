@@ -5,13 +5,16 @@ import { vScale } from "@/utils/vScale";
 import React, { useEffect, useRef } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import Message from "./Message";
+import SuggestedQuestionsComponent from "./SuggestedQuestions";
 
 type Props = {
-    messages: ChatMessage[]
+    messages: ChatMessage[];
     IsLoading: boolean;
-    AllMessageLoading: boolean
+    AllMessageLoading: boolean;
+    SuggestedQuestions: string[];
+    setMessage: React.Dispatch<React.SetStateAction<string>>
 }
-const Messages: React.FC<Props> = ({ AllMessageLoading, messages, IsLoading }) => {
+const Messages: React.FC<Props> = ({ setMessage, SuggestedQuestions, AllMessageLoading, messages, IsLoading }) => {
     const listRef = useRef<FlatList>(null);
     const prevLengthRef = useRef(0);
     useEffect(() => {
@@ -26,7 +29,7 @@ const Messages: React.FC<Props> = ({ AllMessageLoading, messages, IsLoading }) =
             });
         }
         prevLengthRef.current = messages.length;
-    }, [messages]);
+    }, [messages, SuggestedQuestions]);
 
     if (AllMessageLoading) {
         return (
@@ -34,8 +37,10 @@ const Messages: React.FC<Props> = ({ AllMessageLoading, messages, IsLoading }) =
                 <Spinner size={scale(32)} color="#234338" />
             </View>
         )
-    }
+    };
+
     const lastId = messages[messages.length - 1]?.Id;
+
 
     return (
         <FlatList
@@ -60,6 +65,12 @@ const Messages: React.FC<Props> = ({ AllMessageLoading, messages, IsLoading }) =
             }}
             keyboardShouldPersistTaps="handled"
             keyboardDismissMode="interactive"
+            ListFooterComponent={
+                <SuggestedQuestionsComponent
+                    SuggestedQuestions={SuggestedQuestions}
+                    setMessage={setMessage}
+                />
+            }
         />
     )
 }

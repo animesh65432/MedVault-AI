@@ -8,6 +8,7 @@ import { useExplainDocumentsWithAiReponse } from "@/hooks/use-ExplainDocumentsWi
 import { useGenralAiResponse } from "@/hooks/use-GenralAiResponse";
 import { useGiveChatName } from "@/hooks/use-GiveChatName";
 import { useMakeSqlRaw } from "@/hooks/use-MakeSqlRaw";
+import { useSuggestedQuestions } from "@/hooks/use-SuggestedQuestions";
 import { ActionType, ChatMessage, RecentCoversation, SourcesTypes, TypeOfDocumenet } from "@/types";
 import { fixSources } from "@/utils/fixSources";
 import { makeHistoryPayload } from "@/utils/makehistoryPayload";
@@ -27,6 +28,11 @@ type Props = {
 
 const ChatScreen: React.FC<Props> = ({ ChatId, currentDocument, documentId }) => {
     const [message, setMessage] = useState("");
+    const [SuggestedQuestions, setSuggestedQuestions] = useState<string[]>([
+        "Which medicines am I currently taking ?",
+        "Show my latest lab report results ?",
+        "What was the last My Report ?",
+    ]);
     const [RecentDocuments, setRecentDocuments] = useState<RecentCoversation[]>([]);
     const [chatRecordId, setChatRecordId] = useState<number | null>(null);
     const [hasSentMessage, setHasSentMessage] = useState<boolean>(false);
@@ -40,6 +46,7 @@ const ChatScreen: React.FC<Props> = ({ ChatId, currentDocument, documentId }) =>
     const { MakesqlRaw } = useMakeSqlRaw();
     const { ExplainDocumentsWithAiReponse } = useExplainDocumentsWithAiReponse();
     const { GenralAiResponse } = useGenralAiResponse();
+    const { MakeSuggestedQuestions } = useSuggestedQuestions()
     const { userName } = useContext(UserNameContext)
     const { isOnline } = useContext(NetworkContext);
 
@@ -145,6 +152,7 @@ const ChatScreen: React.FC<Props> = ({ ChatId, currentDocument, documentId }) =>
                         userName,
                         historyMessages
                     );
+
                     answerText = res.reply;
                     action = res?.action ?? "NONE";
                 }
@@ -178,6 +186,10 @@ const ChatScreen: React.FC<Props> = ({ ChatId, currentDocument, documentId }) =>
                 sources,
                 action
             );
+
+            const Suggestion_Questions = await MakeSuggestedQuestions(message, historyMessages);
+
+            setSuggestedQuestions(Suggestion_Questions);
 
             setMessages((prevMessages) =>
                 prevMessages.map((msg) =>
@@ -259,9 +271,11 @@ const ChatScreen: React.FC<Props> = ({ ChatId, currentDocument, documentId }) =>
             }
             {!showEmptyScreen &&
                 <NonEmpty
+                    SuggestedQuestions={SuggestedQuestions}
                     IsLoading={IsLoading}
                     messages={messages}
                     AllMessageLoading={AllMessageLoading}
+                    setMessage={setMessage}
                 />
             }
             <KeyboardStickyView

@@ -14,7 +14,7 @@ type Props = {
 
 const Header: React.FC<Props> = ({ remindersCount }) => {
     const router = useRouter();
-    const { profilePic, userName } = useContext(UserNameContext);
+    const { userName } = useContext(UserNameContext);
 
     const getFirstName = (name: string, maxLength = 20): string => {
         const firstName = name.trim().split(/\s+/)[0] ?? '';
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     greeting: {
-        fontSize: fs(18),
-        fontFamily: 'Aeonik-Medium',
+        fontSize: fs(20),
+        fontFamily: 'Aeonik-Bold',
         color: '#0D483F'
     },
     NameContainer: {

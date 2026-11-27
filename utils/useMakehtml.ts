@@ -1,4 +1,5 @@
 import { ActiveMedicine, HighRiskDocument, PatientSummary } from "@/db/patient_summary";
+import { formatDate } from "@/utils/formatDate";
 
 const COLORS = {
   dark: "#0D483F",
@@ -7,12 +8,6 @@ const COLORS = {
   lime: "#D9F99D",
   limeSoft: "#EEF6A2",
   offWhite: "#FAFAF8",
-};
-
-const formatDate = (d: string) => {
-  const date = new Date(d);
-  if (isNaN(date.getTime())) return d;
-  return date.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
 };
 
 const endDate = (start: string, days: number | null) => {

@@ -80,7 +80,7 @@ const style = StyleSheet.create({
     },
     SeeAllText: {
         fontSize: scale(15),
-        fontFamily: "Aeonik-Medium",
+        fontFamily: "Aeonik-Bold",
         color: "#5c5f5f",
     }
 })
