@@ -26,7 +26,6 @@ const COLORS = {
 
 export default function NameInputScreen({
     onContinue,
-    isActive
 }: {
     onContinue: (name: string) => void;
     isActive: boolean;
@@ -161,7 +160,6 @@ export default function NameInputScreen({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.bg,
         paddingHorizontal: scale(24),
         paddingTop: scale(100),
     },

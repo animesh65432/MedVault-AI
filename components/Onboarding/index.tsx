@@ -1,14 +1,20 @@
 import { OnboardingContext } from '@/context';
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import Intro from "./Intro";
+import StepOne from './StepOne';
 
 const OnboardingScreen: React.FC = () => {
+    const onboardingRef = useRef<Onboarding>(null);
     const { setOnboardingCompleteAndCache } = useContext(OnboardingContext);
 
     const finishOnboarding = async () => {
         await setOnboardingCompleteAndCache(true);
+    };
+
+    const skipToLastPage = () => {
+        onboardingRef.current?.goToPage(1, true);
     };
 
     return (
@@ -18,6 +24,7 @@ const OnboardingScreen: React.FC = () => {
             source={require('../../assets/images/backgroundImage.png')}
         >
             <Onboarding
+                ref={onboardingRef}
                 onSkip={finishOnboarding}
                 onDone={finishOnboarding}
                 bottomBarHighlight={false}
@@ -26,13 +33,13 @@ const OnboardingScreen: React.FC = () => {
                     {
                         backgroundColor: 'transparent',
                         image: <View />,
-                        title: <Intro />,
+                        title: <Intro skipToLastPage={skipToLastPage} />,
                         subtitle: '',
                     },
                     {
                         backgroundColor: 'transparent',
                         image: <View />,
-                        title: <Intro />,
+                        title: <StepOne />,
                         subtitle: '',
                     }
                 ]}

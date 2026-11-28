@@ -4,8 +4,11 @@ import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
+type Props = {
+    skipToLastPage: () => void
 
-const Intro: React.FC = () => {
+}
+const Intro: React.FC<Props> = ({ skipToLastPage }) => {
     return (
         <View style={styles.container}>
             <Image
@@ -18,7 +21,10 @@ const Intro: React.FC = () => {
                 <Text style={styles.title}>finally</Text>
                 <View style={styles.BelowContainer}>
                     <Text style={styles.title}>organized</Text>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={skipToLastPage}
+                    >
                         <MaterialIcons
                             name="arrow-forward-ios"
                             size={fs(30)}
